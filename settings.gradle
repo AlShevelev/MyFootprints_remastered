@@ -1,2 +1,4 @@
+include ':common_entities'
+include ':utils'
 include ':app'
 rootProject.name = "MyFootprintsRemastered"
