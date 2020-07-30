@@ -1,3 +1,4 @@
+include ':storages'
 include ':common_entities'
 include ':utils'
 include ':app'

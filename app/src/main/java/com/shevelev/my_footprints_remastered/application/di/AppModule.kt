@@ -3,8 +3,10 @@ package com.shevelev.my_footprints_remastered.application.di
 import android.app.Application
 import android.content.Context
 import com.shevelev.my_footprints_remastered.BuildConfig
-import com.shevelev.my_footprints_remastered.common_entities.coroutines.DispatchersProvider
-import com.shevelev.my_footprints_remastered.common_entities.di_scopes.ApplicationScope
+import com.shevelev.my_footprints_remastered.storages.db.builder.DatabaseBuilder
+import com.shevelev.my_footprints_remastered.storages.db.core.DbCore
+import com.shevelev.my_footprints_remastered.utils.coroutines.DispatchersProvider
+import com.shevelev.my_footprints_remastered.utils.di_scopes.ApplicationScope
 import com.shevelev.my_footprints_remastered.utils.logging.TimberTreeDebug
 import com.shevelev.my_footprints_remastered.utils.logging.TimberTreeRelease
 import dagger.Module
@@ -39,7 +41,7 @@ class AppModule(
             else -> throw UnsupportedOperationException("This flavor is not supported: ${BuildConfig.FLAVOR}")
         }
 
-//    @Provides
-//    @ApplicationScope
-//    internal fun provideRoomDbCore(appContext: Context): DbCore = DatabaseBuilder.build(appContext)
+    @Provides
+    @ApplicationScope
+    internal fun provideRoomDbCore(appContext: Context): DbCore = DatabaseBuilder.build(appContext)
 }
