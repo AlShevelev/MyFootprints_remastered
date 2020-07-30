@@ -4,17 +4,22 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
-import androidx.appcompat.app.AppCompatActivity
 import com.shevelev.my_footprints_remastered.R
+import com.shevelev.my_footprints_remastered.application.App
+import com.shevelev.my_footprints_remastered.ui.main_activity.di.MainActivityComponent
+import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view.ActivityBase
 
-
-class MainActivity : AppCompatActivity() {
+class MainActivity : ActivityBase() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         setNavigationBarButtonsColor()
     }
+
+    override fun inject(key: String) = App.injections.get<MainActivityComponent>(key).inject(this)
+
+    override fun releaseInjection(key: String) = App.injections.release<MainActivityComponent>(key)
 
     /**
      * Make a navigation bar light with dark buttons

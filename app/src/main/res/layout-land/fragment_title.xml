@@ -1,122 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <ImageView
-        android:id="@+id/lastFootprint"
+    <data>
+        <variable name="viewModel" type="com.shevelev.my_footprints_remastered.ui.title_fragment.view_model.TitleFragmentViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
+        android:layout_height="match_parent">
 
-        android:src="@drawable/img_title_empty_landscape"
-        tools:ignore="ContentDescription" />
+        <ImageView
+            android:id="@+id/lastFootprint"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/hGuideline8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.8" />
+            android:src="@drawable/img_title_empty_landscape"
+            tools:ignore="ContentDescription" />
 
-    <View
-        android:id="@+id/buttonsBackground"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/hGuideline8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.8" />
 
-        android:background="@drawable/bcg_title_buttons_panel"
+        <View
+            android:id="@+id/buttonsBackground"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
 
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="@id/hGuideline8"
-        app:layout_constraintVertical_bias="1.0" />
+            android:background="@drawable/bcg_title_buttons_panel"
 
-    <Button
-        android:id="@+id/newFootprintButton"
-        style="@style/TitleScreen.Button"
-        android:layout_width="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="@id/hGuideline8"
+            app:layout_constraintVertical_bias="1.0" />
 
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/titleScreenButtonsMargin"
+        <Button
+            android:id="@+id/newFootprintButton"
+            style="@style/TitleScreen.Button"
+            android:layout_width="wrap_content"
 
-        android:drawableTop="@drawable/ic_camera_35_28"
-        android:text="@string/newFootprint"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/titleScreenButtonsMargin"
 
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/myWorldButton"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hGuideline8" />
+            android:drawableTop="@drawable/ic_camera_35_28"
+            android:text="@string/newFootprint"
 
-    <Button
-        android:id="@+id/myWorldButton"
-        style="@style/TitleScreen.Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/myWorldButton"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/hGuideline8" />
 
-        android:layout_marginTop="@dimen/titleScreenButtonsMargin"
+        <Button
+            android:id="@+id/myWorldButton"
+            style="@style/TitleScreen.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 
-        android:drawableTop="@drawable/ic_globe_28_28"
-        android:text="@string/myWorld"
+            android:layout_marginTop="@dimen/titleScreenButtonsMargin"
 
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/galleryButton"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/newFootprintButton"
-        app:layout_constraintTop_toBottomOf="@+id/hGuideline8"
-        app:layout_constraintVertical_bias="0.521" />
+            android:drawableTop="@drawable/ic_globe_28_28"
+            android:text="@string/myWorld"
 
-    <Button
-        android:id="@+id/galleryButton"
-        style="@style/TitleScreen.Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/galleryButton"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/newFootprintButton"
+            app:layout_constraintTop_toBottomOf="@+id/hGuideline8"
+            app:layout_constraintVertical_bias="0.521" />
 
-        android:drawableTop="@drawable/ic_gallery_28_28"
-        android:text="@string/gallery"
+        <Button
+            android:id="@+id/galleryButton"
+            style="@style/TitleScreen.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 
-        android:layout_marginTop="@dimen/titleScreenButtonsMargin"
+            android:drawableTop="@drawable/ic_gallery_28_28"
+            android:text="@string/gallery"
 
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/settingsButton"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/myWorldButton"
-        app:layout_constraintTop_toBottomOf="@+id/hGuideline8" />
+            android:layout_marginTop="@dimen/titleScreenButtonsMargin"
 
-    <Button
-        android:id="@+id/settingsButton"
-        style="@style/TitleScreen.Button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/settingsButton"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/myWorldButton"
+            app:layout_constraintTop_toBottomOf="@+id/hGuideline8" />
 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        <Button
+            android:id="@+id/settingsButton"
+            style="@style/TitleScreen.Button"
 
-        android:drawableTop="@drawable/ic_settings_28_28"
-        android:text="@string/settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 
-        android:layout_marginTop="@dimen/titleScreenButtonsMargin"
+            android:drawableTop="@drawable/ic_settings_28_28"
+            android:text="@string/settings"
 
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/galleryButton"
-        app:layout_constraintTop_toBottomOf="@+id/hGuideline8" />
+            android:layout_marginTop="@dimen/titleScreenButtonsMargin"
 
-    <TextView
-        android:id="@+id/totalFootprintsText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/galleryButton"
+            app:layout_constraintTop_toBottomOf="@+id/hGuideline8" />
 
-        android:layout_marginTop="@dimen/titleScreenTotalLabelMargin"
-        android:layout_marginStart="@dimen/titleScreenTotalLabelMargin"
+        <TextView
+            android:id="@+id/totalFootprintsText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 
-        style="@style/TitleScreen.TotalLabel"
+            android:layout_marginTop="@dimen/titleScreenTotalLabelMargin"
+            android:layout_marginStart="@dimen/titleScreenTotalLabelMargin"
 
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+            style="@style/TitleScreen.TotalLabel"
 
-        tools:text="TOTAL FOOTPRINTS: 156"
-        android:text="TOTAL FOOTPRINTS: 156"
-        />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            tools:text="TOTAL FOOTPRINTS: 156"
+            android:text="TOTAL FOOTPRINTS: 156"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

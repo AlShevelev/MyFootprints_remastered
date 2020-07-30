@@ -5,6 +5,6 @@
 
     <fragment
         android:id="@+id/titleFragment"
-        android:name="com.shevelev.my_footprints_remastered.ui.title_fragment.TitleFragment"
+        android:name="com.shevelev.my_footprints_remastered.ui.title_fragment.view.TitleFragment"
         android:label="TitleFragment" />
 </navigation>

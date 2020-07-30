@@ -4,6 +4,9 @@ import android.app.Application
 import com.shevelev.my_footprints_remastered.application.di.AppComponent
 import com.shevelev.my_footprints_remastered.application.di.AppModule
 import com.shevelev.my_footprints_remastered.application.di.DaggerAppComponent
+import com.shevelev.my_footprints_remastered.ui.di.UIComponent
+import com.shevelev.my_footprints_remastered.ui.main_activity.di.MainActivityComponent
+import com.shevelev.my_footprints_remastered.ui.title_fragment.di.TitleFragmentComponent
 import com.shevelev.my_footprints_remastered.utils.id_hash.IdUtil
 import kotlin.reflect.KClass
 
@@ -63,13 +66,18 @@ class DependencyInjectionStorage(private val app: Application) {
         }
     }
 
-    @Suppress("IMPLICIT_CAST_TO_ANY", "UNCHECKED_CAST")
+    @Suppress("IMPLICIT_CAST_TO_ANY", "UNCHECKED_CAST", "UNUSED_PARAMETER")
     private fun <T> provideComponent(type: KClass<*>, args: Array<out Any?>): T {
         @Suppress("EXPERIMENTAL_API_USAGE")
         return when (type) {
             AppComponent::class -> DaggerAppComponent.builder().appModule(AppModule(app)).build()
 
-//            MainActivityComponent::class -> getBase<AppComponent>().mainActivity.build()
+            UIComponent::class -> getBase<AppComponent>().ui.build()
+
+            MainActivityComponent::class -> getBase<UIComponent>().mainActivity.build()
+
+            TitleFragmentComponent::class -> getBase<MainActivityComponent>().titleFragment.build()
+
             else -> throw UnsupportedOperationException("This component is not supported: ${type.simpleName}")
         } as T
     }
