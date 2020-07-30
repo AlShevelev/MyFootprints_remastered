@@ -1,5 +1,8 @@
 <resources>
-    <string name="app_name">MyFootprintsRemastered</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="appName">My Footprints (remastered)</string>
+
+    <string name="newFootprint">New footprint</string>
+    <string name="myWorld">My world</string>
+    <string name="gallery">Gallery</string>
+    <string name="settings">Settings</string>
 </resources>

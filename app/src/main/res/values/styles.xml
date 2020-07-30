@@ -1,10 +1,26 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="TitleScreen.Button" parent="Widget.AppCompat.TextView">
+        <item name="android:background">@null</item>
+        <item name="android:textSize">@dimen/textSizeNormal</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:drawablePadding">6dp</item>
+        <item name="android:drawableTint">@color/title_button</item>
+        <item name="android:textColor">@color/title_button</item>
+        <item name="textAllCaps">true</item>
+    </style>
+
+    <style name="TitleScreen.TotalLabel" parent="Widget.AppCompat.TextView">
+        <item name="android:background">@drawable/bcg_title_total_footprints</item>
+        <item name="android:padding">6dp</item>
+        <item name="android:textSize">@dimen/textSizeNormal</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>

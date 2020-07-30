@@ -11,15 +11,8 @@
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
 
-        android:src="@drawable/img_title_empty_portrait"
+        android:src="@drawable/img_title_empty_landscape"
         tools:ignore="ContentDescription" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/hGuideline6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.6" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/hGuideline8"
@@ -27,13 +20,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.8" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/vGuideline5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
 
     <View
         android:id="@+id/buttonsBackground"
@@ -43,72 +29,77 @@
         android:background="@drawable/bcg_title_buttons_panel"
 
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="@id/hGuideline6"
-        app:layout_constraintVertical_bias="1.0"
-        />
+        app:layout_constraintTop_toTopOf="@id/hGuideline8"
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/newFootprintButton"
+        style="@style/TitleScreen.Button"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
 
-        android:text="@string/newFootprint"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/titleScreenButtonsMargin"
+
         android:drawableTop="@drawable/ic_camera_35_28"
-
-        style="@style/TitleScreen.Button"
-
-        android:layout_marginTop="@dimen/titleScreenButtonsMargin"
-
-        app:layout_constraintBottom_toTopOf="@+id/hGuideline8"
-        app:layout_constraintEnd_toStartOf="@+id/vGuideline5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hGuideline6" />
-
-    <Button
-        android:id="@+id/myWorldButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:text="@string/myWorld"
-        android:drawableTop="@drawable/ic_globe_28_28"
-
-        style="@style/TitleScreen.Button"
-
-        android:layout_marginTop="@dimen/titleScreenButtonsMargin"
-
-        app:layout_constraintBottom_toTopOf="@+id/hGuideline8"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/vGuideline5"
-        app:layout_constraintTop_toBottomOf="@+id/hGuideline6" />
-
-    <Button
-        android:id="@+id/galleryButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:text="@string/gallery"
-        android:drawableTop="@drawable/ic_gallery_28_28"
-
-        style="@style/TitleScreen.Button"
+        android:text="@string/newFootprint"
 
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/vGuideline5"
+        app:layout_constraintEnd_toStartOf="@+id/myWorldButton"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/hGuideline8" />
 
     <Button
-        android:id="@+id/settingsButton"
+        android:id="@+id/myWorldButton"
+        style="@style/TitleScreen.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:text="@string/settings"
-        android:drawableTop="@drawable/ic_settings_28_28"
+        android:layout_marginTop="@dimen/titleScreenButtonsMargin"
 
+        android:drawableTop="@drawable/ic_globe_28_28"
+        android:text="@string/myWorld"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/galleryButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/newFootprintButton"
+        app:layout_constraintTop_toBottomOf="@+id/hGuideline8"
+        app:layout_constraintVertical_bias="0.521" />
+
+    <Button
+        android:id="@+id/galleryButton"
         style="@style/TitleScreen.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:drawableTop="@drawable/ic_gallery_28_28"
+        android:text="@string/gallery"
+
+        android:layout_marginTop="@dimen/titleScreenButtonsMargin"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/settingsButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/myWorldButton"
+        app:layout_constraintTop_toBottomOf="@+id/hGuideline8" />
+
+    <Button
+        android:id="@+id/settingsButton"
+        style="@style/TitleScreen.Button"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:drawableTop="@drawable/ic_settings_28_28"
+        android:text="@string/settings"
+
+        android:layout_marginTop="@dimen/titleScreenButtonsMargin"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/vGuideline5"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/galleryButton"
         app:layout_constraintTop_toBottomOf="@+id/hGuideline8" />
 
     <TextView
@@ -116,16 +107,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        tools:text = "TOTAL FOOTPRINTS: 156"
-        android:text="TOTAL FOOTPRINTS: 156"
-
-        style="@style/TitleScreen.TotalLabel"
-
         android:layout_marginTop="@dimen/titleScreenTotalLabelMargin"
         android:layout_marginStart="@dimen/titleScreenTotalLabelMargin"
 
-        app:layout_constraintTop_toTopOf="parent"
+        style="@style/TitleScreen.TotalLabel"
+
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        tools:text="TOTAL FOOTPRINTS: 156"
+        android:text="TOTAL FOOTPRINTS: 156"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

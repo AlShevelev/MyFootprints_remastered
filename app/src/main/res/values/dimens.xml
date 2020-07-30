@@ -1,0 +1,6 @@
+<resources>
+    <dimen name="textSizeNormal">15sp</dimen>
+
+    <dimen name="titleScreenButtonsMargin">5dp</dimen>
+    <dimen name="titleScreenTotalLabelMargin">5dp</dimen>
+</resources>
