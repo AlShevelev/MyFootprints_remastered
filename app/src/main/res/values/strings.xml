@@ -6,5 +6,7 @@
     <string name="gallery">Gallery</string>
     <string name="settings">Settings</string>
 
+    <string name="totalFootprints">Total footprints: {0}</string>
+
     <string name="generalError">Unfortunately, an error was encountered during the operation.</string>
 </resources>

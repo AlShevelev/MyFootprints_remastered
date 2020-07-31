@@ -17,7 +17,7 @@
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
 
-            android:src="@drawable/img_title_empty_landscape"
+            tools:src="@android:drawable/btn_star"
             tools:ignore="ContentDescription" />
 
         <androidx.constraintlayout.widget.Guideline
@@ -122,7 +122,7 @@
             app:layout_constraintTop_toTopOf="parent"
 
             tools:text="TOTAL FOOTPRINTS: 156"
-            android:text="TOTAL FOOTPRINTS: 156"
+            android:text="@{viewModel.total}"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
