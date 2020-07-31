@@ -40,8 +40,7 @@ constructor(
      * Direct command for view
      */
     protected val _command = SingleLiveData<ViewCommand>()
-    val command: LiveData<ViewCommand>
-        get() = _command
+    val command: LiveData<ViewCommand>  = _command
 
     /**
      * On configuration change we need to show dialog if it wasn't closed.

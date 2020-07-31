@@ -46,6 +46,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/titleScreenButtonsMargin"
 
+            android:onClick="@{() -> viewModel.onNewFootprintClick()}"
+
             android:drawableTop="@drawable/ic_camera_35_28"
             android:text="@string/newFootprint"
 

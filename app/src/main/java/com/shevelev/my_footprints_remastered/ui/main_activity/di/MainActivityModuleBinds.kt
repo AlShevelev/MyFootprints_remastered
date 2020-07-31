@@ -1,5 +1,7 @@
 package com.shevelev.my_footprints_remastered.ui.main_activity.di
 
+import com.shevelev.my_footprints_remastered.ui.main_activity.navigation.MainActivityNavigation
+import com.shevelev.my_footprints_remastered.ui.main_activity.navigation.MainActivityNavigationImpl
 import com.shevelev.my_footprints_remastered.ui.title_fragment.model.data_updater.TitleDataUpdaterConsumer
 import com.shevelev.my_footprints_remastered.ui.title_fragment.model.data_updater.TitleDataUpdaterImpl
 import com.shevelev.my_footprints_remastered.ui.title_fragment.model.data_updater.TitleDataUpdaterProvider
@@ -21,4 +23,7 @@ abstract class MainActivityModuleBinds {
     @ActivityScope
     abstract fun provideTitleDataUpdaterForConsumer(updater: TitleDataUpdaterImpl): TitleDataUpdaterConsumer
 
+    @Binds
+    @ActivityScope
+    abstract fun provideMainActivityNavigation(navigation: MainActivityNavigationImpl): MainActivityNavigation
 }

@@ -12,13 +12,20 @@ import coil.request.RequestDisposable
 import com.shevelev.my_footprints_remastered.R
 import com.shevelev.my_footprints_remastered.application.App
 import com.shevelev.my_footprints_remastered.databinding.FragmentTitleBinding
+import com.shevelev.my_footprints_remastered.ui.main_activity.navigation.MainActivityNavigation
+import com.shevelev.my_footprints_remastered.ui.main_activity.view_commands.MoveToShowPhoto
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view.FragmentBaseMVVM
+import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_commands.ViewCommand
 import com.shevelev.my_footprints_remastered.ui.title_fragment.di.TitleFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.title_fragment.view_model.TitleFragmentViewModel
 import kotlinx.android.synthetic.main.fragment_title.*
+import javax.inject.Inject
 
 class TitleFragment : FragmentBaseMVVM<FragmentTitleBinding, TitleFragmentViewModel>() {
     private var lastFootprintDispose: RequestDisposable? = null
+
+    @Inject
+    internal lateinit var navigation: MainActivityNavigation
 
     override fun provideViewModelType(): Class<TitleFragmentViewModel> = TitleFragmentViewModel::class.java
 
@@ -41,6 +48,12 @@ class TitleFragment : FragmentBaseMVVM<FragmentTitleBinding, TitleFragmentViewMo
     override fun onDestroyView() {
         lastFootprintDispose?.takeIf { !it.isDisposed } ?.dispose()
         super.onDestroyView()
+    }
+
+    override fun processViewCommand(command: ViewCommand) {
+        when(command) {
+            is MoveToShowPhoto -> navigation.moveToSelectPhoto(this)
+        }
     }
 
     private fun updateLastFootprintImage(lastFootprintUri: Uri) {

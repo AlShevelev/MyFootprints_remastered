@@ -5,6 +5,7 @@ import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.shevelev.my_footprints_remastered.R
+import com.shevelev.my_footprints_remastered.ui.main_activity.view_commands.MoveToShowPhoto
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_model.ViewModelBase
 import com.shevelev.my_footprints_remastered.ui.title_fragment.model.TitleFragmentModel
 import com.shevelev.my_footprints_remastered.utils.coroutines.DispatchersProvider
@@ -41,6 +42,10 @@ constructor(
 
             model.titleData.init()
         }
+    }
+
+    fun onNewFootprintClick() {
+        _command.value = MoveToShowPhoto()
     }
 
     private fun getTotalFootprintsText(total: Int) = appContext.getStringFormatted(R.string.totalFootprints, total).toUpper()

@@ -63,6 +63,8 @@
 
             style="@style/TitleScreen.Button"
 
+            android:onClick="@{() -> viewModel.onNewFootprintClick()}"
+
             android:layout_marginTop="@dimen/titleScreenButtonsMargin"
 
             app:layout_constraintBottom_toTopOf="@+id/hGuideline8"
