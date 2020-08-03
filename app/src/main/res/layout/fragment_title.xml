@@ -17,7 +17,7 @@
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
 
-            tools:src="@android:drawable/btn_star"
+            android:src="@drawable/img_title_empty"
             tools:ignore="ContentDescription" />
 
         <androidx.constraintlayout.widget.Guideline

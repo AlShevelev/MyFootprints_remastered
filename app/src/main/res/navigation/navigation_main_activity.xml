@@ -17,6 +17,6 @@
     </fragment>
     <fragment
         android:id="@+id/selectPhotoFragment"
-        android:name="com.shevelev.my_footprints_remastered.ui.select_photo_fragment.SelectPhotoFragment"
+        android:name="com.shevelev.my_footprints_remastered.ui.select_photo_fragment.view.SelectPhotoFragment"
         android:label="SelectPhotoFragment" />
 </navigation>

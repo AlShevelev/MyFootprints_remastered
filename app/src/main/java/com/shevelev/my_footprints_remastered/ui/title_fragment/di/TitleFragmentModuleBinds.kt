@@ -19,8 +19,8 @@ abstract class TitleFragmentModuleBinds {
     @Binds
     @IntoMap
     @ViewModelKey(TitleFragmentViewModel::class)
-    abstract fun provideProfileViewModel(viewModel: TitleFragmentViewModel): ViewModel
+    abstract fun provideViewModel(viewModel: TitleFragmentViewModel): ViewModel
 
     @Binds
-    abstract fun provideProfileModel(model: TitleFragmentModelImpl): TitleFragmentModel
+    abstract fun provideModel(model: TitleFragmentModelImpl): TitleFragmentModel
 }

@@ -1,8 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#00ff00">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <data>
+        <variable name="viewModel" type="com.shevelev.my_footprints_remastered.ui.select_photo_fragment.view_model.SelectPhotoFragmentViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/screenPadding">
+
+        <com.shevelev.my_footprints_remastered.ui.shared.widgets.ScreenHeader
+            android:layout_height="@dimen/screenHeaderHeight"
+            android:layout_width="match_parent"
+            app:title = "@{viewModel.title}"
+            app:on_back_click = "@{ () -> viewModel.onBackButtonClick() }"
+            />
+    </LinearLayout>
+</layout>

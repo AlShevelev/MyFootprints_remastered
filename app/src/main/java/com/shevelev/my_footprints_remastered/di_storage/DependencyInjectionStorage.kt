@@ -6,6 +6,7 @@ import com.shevelev.my_footprints_remastered.application.di.AppModule
 import com.shevelev.my_footprints_remastered.application.di.DaggerAppComponent
 import com.shevelev.my_footprints_remastered.ui.di.UIComponent
 import com.shevelev.my_footprints_remastered.ui.main_activity.di.MainActivityComponent
+import com.shevelev.my_footprints_remastered.ui.select_photo_fragment.di.SelectPhotoFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.title_fragment.di.TitleFragmentComponent
 import com.shevelev.my_footprints_remastered.utils.id_hash.IdUtil
 import kotlin.reflect.KClass
@@ -77,6 +78,8 @@ class DependencyInjectionStorage(private val app: Application) {
             MainActivityComponent::class -> getBase<UIComponent>().mainActivity.build()
 
             TitleFragmentComponent::class -> getBase<MainActivityComponent>().titleFragment.build()
+
+            SelectPhotoFragmentComponent::class -> getBase<MainActivityComponent>().selectPhotoFragment.build()
 
             else -> throw UnsupportedOperationException("This component is not supported: ${type.simpleName}")
         } as T
