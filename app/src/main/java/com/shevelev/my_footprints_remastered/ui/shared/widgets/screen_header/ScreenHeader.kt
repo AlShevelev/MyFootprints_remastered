@@ -1,4 +1,4 @@
-package com.shevelev.my_footprints_remastered.ui.shared.widgets
+package com.shevelev.my_footprints_remastered.ui.shared.widgets.screen_header
 
 import android.content.Context
 import android.util.AttributeSet

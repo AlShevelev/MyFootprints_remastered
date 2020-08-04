@@ -41,6 +41,8 @@ abstract class FragmentBase: Fragment() {
         }
     }
 
+    open fun onDialogResult(isCanceled: Boolean, requestCode: Int, data: Any?) {}
+
     protected open fun inject(key: String) {}
 
     protected open fun releaseInjection(key: String) {}

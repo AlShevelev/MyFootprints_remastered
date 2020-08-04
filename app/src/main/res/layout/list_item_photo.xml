@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.shevelev.my_footprints_remastered.ui.shared.widgets.square_frame_layout.SquareFrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/bcg_photo_grid_cell_image"
+    android:padding="@dimen/strokeThin"
+    android:layout_margin="@dimen/photoGridCellMargin">
+
+    <ImageView
+        android:id="@+id/photoImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        tools:src = "@drawable/img_title_empty"
+        android:scaleType="centerCrop"
+
+        tools:ignore="ContentDescription" />
+</com.shevelev.my_footprints_remastered.ui.shared.widgets.square_frame_layout.SquareFrameLayout>

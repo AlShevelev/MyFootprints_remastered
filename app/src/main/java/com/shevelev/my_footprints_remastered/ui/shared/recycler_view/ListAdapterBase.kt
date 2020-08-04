@@ -13,7 +13,7 @@ abstract class ListAdapterBase<TEventsProcessor: ListItemEventsProcessor, TItem:
 ) : RecyclerView.Adapter<ViewHolderBase<TEventsProcessor, TItem>>(),
     AdapterRawDataAccess<TItem> {
 
-    private var items: List<TItem> = listOf()
+    protected var items: List<TItem> = listOf()
 
     open fun update(newItems: List<TItem>) {
         val diffCallback = createDiffAlg(items, newItems)

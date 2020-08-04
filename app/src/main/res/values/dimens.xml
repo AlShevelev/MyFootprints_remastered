@@ -1,6 +1,8 @@
 <resources>
     <dimen name="textSizeNormal">15sp</dimen>
 
+    <dimen name="strokeThin">1dp</dimen>
+
     <dimen name="titleScreenButtonsMargin">5dp</dimen>
     <dimen name="titleScreenTotalLabelMargin">5dp</dimen>
 
@@ -9,4 +11,6 @@
     <dimen name="headerTextMargin">8dp</dimen>
 
     <dimen name="toolButtonSize">40dp</dimen>
+
+    <dimen name="photoGridCellMargin">2dp</dimen>
 </resources>

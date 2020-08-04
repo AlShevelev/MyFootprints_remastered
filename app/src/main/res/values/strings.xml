@@ -1,6 +1,8 @@
 <resources>
     <string name="appName">My Footprints (remastered)</string>
 
+    <string name="ok">OK</string>
+
     <string name="newFootprint">New footprint</string>
     <string name="myWorld">My world</string>
     <string name="gallery">Gallery</string>
@@ -11,4 +13,7 @@
     <string name="retry">Retry</string>
 
     <string name="generalError">Unfortunately, an error was encountered during the operation.</string>
+
+    <string name="externalStorageExplanation">We need permission to read files on your device. We use it to fill a photo list.</string>
+    <string name="externalStorageDenied">You didn\'t grant a permission - we can\'t move to footprint creation, sorry.</string>
 </resources>

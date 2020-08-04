@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.shevelev.my_footprints_remastered.ui.shared.widgets.square_frame_layout.SquareFrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/photoGridCellMargin">
+
+    <ImageButton
+        android:id="@+id/cameraButton"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        app:srcCompat="@drawable/ic_camera_35_28"
+
+        android:background="@drawable/bcg_photo_grid_cell_tools"
+        android:tint="@color/common_button"
+
+        android:layout_gravity="center"
+        tools:ignore="ContentDescription" />
+</com.shevelev.my_footprints_remastered.ui.shared.widgets.square_frame_layout.SquareFrameLayout>
