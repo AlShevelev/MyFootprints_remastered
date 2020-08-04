@@ -9,7 +9,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true">
 
         <ImageView
             android:id="@+id/lastFootprint"
@@ -17,8 +18,25 @@
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
 
+            android:visibility="@{viewModel.lastFootprintVisibility}"
+            tools:visibility="visible"
+
             android:src="@drawable/img_title_empty"
             tools:ignore="ContentDescription" />
+
+        <ProgressBar
+            android:id="@+id/loading"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:visibility="@{viewModel.loadingVisibility}"
+            tools:visibility="visible"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/hGuideline6"
@@ -50,22 +68,21 @@
 
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="@id/hGuideline6"
-            app:layout_constraintVertical_bias="1.0"
-            />
+            app:layout_constraintVertical_bias="1.0" />
 
         <Button
             android:id="@+id/newFootprintButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:text="@string/newFootprint"
-            android:drawableTop="@drawable/ic_camera_35_28"
-
             style="@style/TitleScreen.Button"
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/titleScreenButtonsMargin"
+
+            android:drawableTop="@drawable/ic_camera_35_28"
 
             android:onClick="@{() -> viewModel.onNewFootprintClick()}"
 
-            android:layout_marginTop="@dimen/titleScreenButtonsMargin"
+            android:text="@string/newFootprint"
 
             app:layout_constraintBottom_toTopOf="@+id/hGuideline8"
             app:layout_constraintEnd_toStartOf="@+id/vGuideline5"
@@ -74,15 +91,15 @@
 
         <Button
             android:id="@+id/myWorldButton"
+            style="@style/TitleScreen.Button"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
 
-            android:text="@string/myWorld"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/titleScreenButtonsMargin"
+
             android:drawableTop="@drawable/ic_globe_28_28"
 
-            style="@style/TitleScreen.Button"
-
-            android:layout_marginTop="@dimen/titleScreenButtonsMargin"
+            android:text="@string/myWorld"
 
             app:layout_constraintBottom_toTopOf="@+id/hGuideline8"
             app:layout_constraintEnd_toEndOf="parent"
@@ -91,13 +108,13 @@
 
         <Button
             android:id="@+id/galleryButton"
+            style="@style/TitleScreen.Button"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
 
-            android:text="@string/gallery"
+            android:layout_height="wrap_content"
             android:drawableTop="@drawable/ic_gallery_28_28"
 
-            style="@style/TitleScreen.Button"
+            android:text="@string/gallery"
 
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/vGuideline5"
@@ -106,13 +123,13 @@
 
         <Button
             android:id="@+id/settingsButton"
+            style="@style/TitleScreen.Button"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
 
-            android:text="@string/settings"
+            android:layout_height="wrap_content"
             android:drawableTop="@drawable/ic_settings_28_28"
 
-            style="@style/TitleScreen.Button"
+            android:text="@string/settings"
 
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -121,19 +138,18 @@
 
         <TextView
             android:id="@+id/totalFootprintsText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            tools:text = "TOTAL FOOTPRINTS: 156"
-            android:text="@{viewModel.total}"
-
             style="@style/TitleScreen.TotalLabel"
+            android:layout_width="wrap_content"
 
-            android:layout_marginTop="@dimen/titleScreenTotalLabelMargin"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/titleScreenTotalLabelMargin"
 
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="@dimen/titleScreenTotalLabelMargin"
+
+            android:text="@{viewModel.total}"
             app:layout_constraintStart_toStartOf="parent"
-            />
+
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="TOTAL FOOTPRINTS: 156" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

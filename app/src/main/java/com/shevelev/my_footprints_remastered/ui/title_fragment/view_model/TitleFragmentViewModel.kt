@@ -2,6 +2,7 @@ package com.shevelev.my_footprints_remastered.ui.title_fragment.view_model
 
 import android.content.Context
 import android.net.Uri
+import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.shevelev.my_footprints_remastered.R
@@ -27,19 +28,31 @@ constructor(
     private val _total = MutableLiveData<String>(getTotalFootprintsText(0))
     val total = _total as LiveData<String>
 
-    private val _lastFootprintUri = MutableLiveData<Uri>(getLastFootprintUri(null))
+    private val _lastFootprintUri = MutableLiveData<Uri>()
     val lastFootprintUri = _lastFootprintUri as LiveData<Uri>
+
+    private val _loadingVisibility = MutableLiveData<Int>(View.VISIBLE)
+    val loadingVisibility: LiveData<Int> = _loadingVisibility
+
+    private val _lastFootprintVisibility = MutableLiveData<Int>(View.INVISIBLE)
+    val lastFootprintVisibility: LiveData<Int> = _lastFootprintVisibility
 
     init {
         launch {
             model.titleData.totalFootprints.collect {
                 _total.value = getTotalFootprintsText(it)
             }
+        }
 
+        launch {
             model.titleData.lastFootprintFileName.collect {
                 _lastFootprintUri.value = getLastFootprintUri(it)
+                _loadingVisibility.value = View.INVISIBLE
+                _lastFootprintVisibility.value = View.VISIBLE
             }
+        }
 
+        launch {
             model.titleData.init()
         }
     }
