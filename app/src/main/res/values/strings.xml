@@ -7,11 +7,13 @@
     <string name="myWorld">My world</string>
     <string name="gallery">Gallery</string>
     <string name="settings">Settings</string>
-
+    <string name="save">Save</string>
+    <string name="addComment">Add comment</string>
     <string name="totalFootprints">Total footprints: {0}</string>
     <string name="selectPhoto">Select photo</string>
     <string name="retry">Retry</string>
     <string name="createFootprint">Create footprint</string>
+    <string name="addPhoto">Add photo</string>
 
     <string name="generalError">Unfortunately, an error was encountered during the operation.</string>
 

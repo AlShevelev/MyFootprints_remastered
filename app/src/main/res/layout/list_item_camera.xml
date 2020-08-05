@@ -16,7 +16,7 @@
         app:srcCompat="@drawable/ic_camera_35_28"
 
         android:background="@drawable/bcg_photo_grid_cell_tools"
-        android:tint="@color/common_button"
+        android:tint="@color/tool_button"
 
         android:layout_gravity="center"
         tools:ignore="ContentDescription" />

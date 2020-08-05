@@ -10,13 +10,9 @@
 
     <ImageButton
         android:id="@+id/backButton"
-        android:layout_width="@dimen/toolButtonSize"
-        android:layout_height="@dimen/toolButtonSize"
         app:srcCompat="@drawable/ic_back_16_16"
 
-        android:background="@null"
-
-        android:tint="@color/common_button"
+        style="@style/Button.Tool"
 
         android:layout_gravity="center_vertical"
 
