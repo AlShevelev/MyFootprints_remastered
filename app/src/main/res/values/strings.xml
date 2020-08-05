@@ -11,6 +11,7 @@
     <string name="totalFootprints">Total footprints: {0}</string>
     <string name="selectPhoto">Select photo</string>
     <string name="retry">Retry</string>
+    <string name="createFootprint">Create footprint</string>
 
     <string name="generalError">Unfortunately, an error was encountered during the operation.</string>
 

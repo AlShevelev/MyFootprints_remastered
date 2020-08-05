@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable name="viewModel" type="com.shevelev.my_footprints_remastered.ui.title_fragment.view_model.TitleFragmentViewModel" />
+        <variable name="viewModel" type="com.shevelev.my_footprints_remastered.ui.activity_main.fragment_title.view_model.TitleFragmentViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

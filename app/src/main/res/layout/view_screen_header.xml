@@ -32,6 +32,6 @@
         android:layout_gravity="center_vertical"
         android:layout_marginStart="@dimen/headerTextMargin"
 
-        style="@style/Text.SizeNormal.Normal.Black"
+        style="@style/Text.SizeLarge.Normal.Black"
      />
 </LinearLayout>

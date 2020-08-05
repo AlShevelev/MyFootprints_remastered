@@ -48,4 +48,8 @@
     <style name="Text.SizeNormal.Normal.Black" parent="Common.Base.TextStyle.Single.Line">
         <item name="android:textSize">@dimen/textSizeNormal</item>
     </style>
+
+    <style name="Text.SizeLarge.Normal.Black" parent="Common.Base.TextStyle.Single.Line">
+        <item name="android:textSize">@dimen/textSizeLarge</item>
+    </style>
 </resources>

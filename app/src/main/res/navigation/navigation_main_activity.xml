@@ -5,11 +5,11 @@
 
     <fragment
         android:id="@+id/titleFragment"
-        android:name="com.shevelev.my_footprints_remastered.ui.title_fragment.view.TitleFragment"
+        android:name="com.shevelev.my_footprints_remastered.ui.activity_main.fragment_title.view.TitleFragment"
         android:label="TitleFragment" >
         <action
-            android:id="@+id/action_titleFragment_to_selectPhotoFragment"
-            app:destination="@id/selectPhotoFragment"
+            android:id="@+id/action_titleFragment_to_createFootprintFragment"
+            app:destination="@id/createFootprintFragment"
             app:enterAnim="@anim/nav_slide_in_right"
             app:exitAnim="@anim/nav_slide_out_left"
             app:popEnterAnim="@anim/nav_slide_in_left"
@@ -17,6 +17,14 @@
     </fragment>
     <fragment
         android:id="@+id/selectPhotoFragment"
-        android:name="com.shevelev.my_footprints_remastered.ui.select_photo_fragment.view.SelectPhotoFragment"
+        android:name="com.shevelev.my_footprints_remastered.ui.activity_main.fragment_select_photo.view.SelectPhotoFragment"
         android:label="SelectPhotoFragment" />
+    <fragment
+        android:id="@+id/createFootprintFragment"
+        android:name="com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.view.CreateFootprintFragment"
+        android:label="CreateFootprintFragment" >
+        <action
+            android:id="@+id/action_createFootprintFragment_to_selectPhotoFragment"
+            app:destination="@id/selectPhotoFragment" />
+    </fragment>
 </navigation>
