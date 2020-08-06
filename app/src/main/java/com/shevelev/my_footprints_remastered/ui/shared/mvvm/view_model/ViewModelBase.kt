@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModel
 import com.shevelev.my_footprints_remastered.R
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.model.ModelBase
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.model.ModelBaseImpl
-import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_commands.ShowMessageResCommand
-import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_commands.ViewCommand
+import com.shevelev.my_footprints_remastered.ui.view_commands.ShowMessageRes
+import com.shevelev.my_footprints_remastered.ui.view_commands.ViewCommand
 import com.shevelev.my_footprints_remastered.utils.coroutines.DispatchersProvider
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
@@ -39,7 +39,7 @@ constructor(
     /**
      * Direct command for view
      */
-    protected val _command = SingleLiveData<ViewCommand>()
+    private val _command = SingleLiveData<ViewCommand>()
     val command: LiveData<ViewCommand>  = _command
 
     /**
@@ -54,8 +54,12 @@ constructor(
         super.onCleared()
     }
 
+    protected fun sendCommand(command: ViewCommand) {
+        _command.value = command
+    }
+
     private fun handleError(error: Throwable){
         Timber.e(error)
-        _command.value = ShowMessageResCommand(R.string.generalError)
+        _command.value = ShowMessageRes(R.string.generalError)
     }
 }

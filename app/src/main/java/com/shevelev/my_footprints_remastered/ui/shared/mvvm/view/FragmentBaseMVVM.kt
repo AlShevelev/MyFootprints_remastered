@@ -8,13 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.LayoutRes
+import androidx.annotation.StringRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProviders
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.model.ModelBase
-import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_commands.ShowMessageResCommand
-import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_commands.ShowMessageTextCommand
-import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_commands.ViewCommand
+import com.shevelev.my_footprints_remastered.ui.view_commands.ShowMessageRes
+import com.shevelev.my_footprints_remastered.ui.view_commands.ShowMessageText
+import com.shevelev.my_footprints_remastered.ui.view_commands.ViewCommand
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_model.FragmentViewModelFactory
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_model.ViewModelBase
 import javax.inject.Inject
@@ -59,14 +60,18 @@ abstract class FragmentBaseMVVM<VDB: ViewDataBinding, VM: ViewModelBase<out Mode
 
     protected open fun processViewCommand(command: ViewCommand) {}
 
+    protected fun showMessage(text: String) = Toast.makeText(context, text, Toast.LENGTH_LONG).show()
+
+    protected fun showMessage(@StringRes text: Int) = Toast.makeText(context, text, Toast.LENGTH_LONG).show()
+
     /**
      * Process input _command
      * @return true if the _command has been processed
      */
     private fun processViewCommandGeneral(command: ViewCommand) =
         when(command) {
-            is ShowMessageResCommand -> Toast.makeText(context, command.textResId, Toast.LENGTH_LONG).show()
-            is ShowMessageTextCommand -> Toast.makeText(context, command.text, Toast.LENGTH_LONG).show()
+            is ShowMessageRes -> showMessage(command.textResId)
+            is ShowMessageText -> showMessage(command.text)
             else -> processViewCommand(command)
         }
 }

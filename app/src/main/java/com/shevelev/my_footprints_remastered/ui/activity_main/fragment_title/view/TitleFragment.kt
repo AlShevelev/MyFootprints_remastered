@@ -11,11 +11,11 @@ import com.shevelev.my_footprints_remastered.R
 import com.shevelev.my_footprints_remastered.application.App
 import com.shevelev.my_footprints_remastered.databinding.FragmentTitleBinding
 import com.shevelev.my_footprints_remastered.ui.activity_main.navigation.MainActivityNavigation
-import com.shevelev.my_footprints_remastered.ui.activity_main.view_commands.MoveToCreateFootprint
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view.FragmentBaseMVVM
-import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_commands.ViewCommand
+import com.shevelev.my_footprints_remastered.ui.view_commands.ViewCommand
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_title.di.TitleFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_title.view_model.TitleFragmentViewModel
+import com.shevelev.my_footprints_remastered.ui.view_commands.MoveToCreateFootprint
 import kotlinx.android.synthetic.main.fragment_title.*
 import javax.inject.Inject
 

@@ -16,7 +16,6 @@ interface MainActivityComponent {
     }
 
     val titleFragment: TitleFragmentComponent.Builder
-    val selectPhotoFragment: SelectPhotoFragmentComponent.Builder
     val createFootprintFragment: CreateFootprintFragmentComponent.Builder
 
     fun inject(activity: MainActivity)

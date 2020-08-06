@@ -23,7 +23,7 @@
             app:layout_constraintStart_toStartOf="parent"
 
             app:layout_constraintTop_toTopOf="parent"
-            app:on_back_click="@{ () -> viewModel.onBackButtonClick() }"
+            app:on_back_click="@{ () -> viewModel.onBackClick() }"
             app:title="@{viewModel.title}" />
 
         <androidx.constraintlayout.widget.Guideline
@@ -80,6 +80,8 @@
             app:srcCompat="@drawable/img_title_empty"
 
             android:scaleType="centerCrop"
+
+            app:on_add_click = "@{() -> viewModel.onAddPhotoClick()}"
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

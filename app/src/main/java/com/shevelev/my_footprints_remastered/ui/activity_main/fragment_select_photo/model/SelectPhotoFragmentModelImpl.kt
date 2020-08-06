@@ -1,5 +1,7 @@
 package com.shevelev.my_footprints_remastered.ui.activity_main.fragment_select_photo.model
 
+import android.net.Uri
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.model.data_bridge.CreateFootprintFragmentDataBridge
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_select_photo.model.photo_items_source.PhotoItemsSource
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_select_photo.view.grid.CameraListItem
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_select_photo.view.grid.GalleryListItem
@@ -10,13 +12,15 @@ import com.shevelev.my_footprints_remastered.utils.coroutines.DispatchersProvide
 import com.shevelev.my_footprints_remastered.utils.id_hash.IdUtil
 import kotlinx.coroutines.withContext
 import timber.log.Timber
+import java.io.File
 import javax.inject.Inject
 
 class SelectPhotoFragmentModelImpl
 @Inject
 constructor(
     private val dispatchersProvider: DispatchersProvider,
-    private val photoItemsSource: PhotoItemsSource
+    private val photoItemsSource: PhotoItemsSource,
+    private val dataBridge: CreateFootprintFragmentDataBridge
 ) : ModelBaseImpl(), SelectPhotoFragmentModel {
 
     override suspend fun getItems(): List<VersionedListItem> =
@@ -32,4 +36,8 @@ constructor(
             })
             result
         }
+
+    override fun storeSelectedPhoto(photo: File) = dataBridge.putSelectedPhoto(photo)
+
+    override fun storeSelectedPhoto(photo: Uri) = dataBridge.putSelectedPhoto(photo)
 }

@@ -1,19 +1,23 @@
 package com.shevelev.my_footprints_remastered.ui.activity_main.fragment_select_photo.view_model
 
 import android.content.Context
+import android.net.Uri
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.shevelev.my_footprints_remastered.R
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_select_photo.model.SelectPhotoFragmentModel
-import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_commands.MoveBack
-import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_commands.ShowMessageResCommand
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_model.ViewModelBase
 import com.shevelev.my_footprints_remastered.ui.shared.recycler_view.versioned.VersionedListItem
+import com.shevelev.my_footprints_remastered.ui.shared.widgets.screen_header.ScreenHeaderBindingCall
+import com.shevelev.my_footprints_remastered.ui.view_commands.MoveBack
+import com.shevelev.my_footprints_remastered.ui.view_commands.OpenCamera
+import com.shevelev.my_footprints_remastered.ui.view_commands.OpenGallery
+import com.shevelev.my_footprints_remastered.ui.view_commands.ShowMessageRes
 import com.shevelev.my_footprints_remastered.utils.coroutines.DispatchersProvider
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import java.lang.Exception
+import java.io.File
 import javax.inject.Inject
 
 class SelectPhotoFragmentViewModel
@@ -23,7 +27,8 @@ constructor(
     dispatchersProvider: DispatchersProvider,
     model: SelectPhotoFragmentModel
 ) : ViewModelBase<SelectPhotoFragmentModel>(dispatchersProvider, model),
-    PhotosListItemEventsProcessor {
+    PhotosListItemEventsProcessor,
+    ScreenHeaderBindingCall {
 
     val title = appContext.getString(R.string.selectPhoto)
 
@@ -39,33 +44,41 @@ constructor(
     init {
         launch {
             try {
-                Timber.tag("LOAD_ITEMS").d("Start")
                 _items.value = model.getItems()
-                Timber.tag("LOAD_ITEMS").d("Completed")
                 _listVisibility.value = View.VISIBLE
             } catch (ex: Exception) {
                 Timber.e(ex)
-                _command.value = ShowMessageResCommand(R.string.generalError)
+                sendCommand(ShowMessageRes(R.string.generalError))
             } finally {
                 _progressVisibility.value = View.INVISIBLE
-                Timber.tag("LOAD_ITEMS").d("Progress removed")
             }
         }
     }
 
-    fun onBackButtonClick() {
-        _command.value = MoveBack()
+    override fun onBackClick() {
+        sendCommand(MoveBack())
     }
 
     override fun onCameraClick() {
-        //TODO("Not yet implemented")
+        sendCommand(OpenCamera())
     }
 
     override fun onGalleryClick() {
-        //TODO("Not yet implemented")
+        sendCommand(OpenGallery())
     }
 
-    override fun onPhotoClick(id: Long) {
-        //TODO("Not yet implemented")
+    override fun onPhotoClick(photo: Uri) {
+        model.storeSelectedPhoto(photo)
+        sendCommand(MoveBack())
+    }
+
+    fun onCameraImageCaptured(photo: File) {
+        model.storeSelectedPhoto(photo)
+        sendCommand(MoveBack())
+    }
+
+    fun onGalleryImageCaptured(photo: Uri) {
+        model.storeSelectedPhoto(photo)
+        sendCommand(MoveBack())
     }
 }

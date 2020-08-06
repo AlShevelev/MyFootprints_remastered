@@ -10,8 +10,8 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.model.ModelBase
-import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_commands.ShowMessageResCommand
-import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_commands.ViewCommand
+import com.shevelev.my_footprints_remastered.ui.view_commands.ShowMessageRes
+import com.shevelev.my_footprints_remastered.ui.view_commands.ViewCommand
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_model.ActivityViewModelFactory
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_model.ViewModelBase
 import javax.inject.Inject
@@ -57,7 +57,7 @@ abstract class ActivityBaseMVVM<VDB : ViewDataBinding, VM : ViewModelBase<out Mo
      */
     private fun processViewCommandGeneral(command: ViewCommand) =
         when (command) {
-            is ShowMessageResCommand -> Toast.makeText(this, command.textResId, Toast.LENGTH_LONG).show()
+            is ShowMessageRes -> Toast.makeText(this, command.textResId, Toast.LENGTH_LONG).show()
             else -> processViewCommand(command)
         }
 }

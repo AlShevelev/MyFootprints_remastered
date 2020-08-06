@@ -2,9 +2,13 @@ package com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_f
 
 import androidx.databinding.BindingAdapter
 
+interface AddPhotoStubBindingCall {
+    fun onAddPhotoClick()
+}
+
 @BindingAdapter("on_add_click")
-fun bindAddButtonClick(view: AddPhotoStub, callbackAction: () -> Unit) {
+fun bindAddButtonClick(view: AddPhotoStub, callback: AddPhotoStubBindingCall) {
     view.setOnAddClickListener {
-        callbackAction()
+        callback.onAddPhotoClick()
     }
 }

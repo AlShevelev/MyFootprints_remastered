@@ -17,7 +17,7 @@ class PhotoViewHolder(
     private var imageDispose: RequestDisposable? = null
 
     override fun init(listItem: PhotoListItem, listItemEventsProcessor: PhotosListItemEventsProcessor) {
-        itemView.setOnClickListener { listItemEventsProcessor.onPhotoClick(listItem.id) }
+        itemView.setOnClickListener { listItemEventsProcessor.onPhotoClick(listItem.imageUri) }
         imageDispose = itemView.photoImage.load(listItem.imageUri)
     }
 

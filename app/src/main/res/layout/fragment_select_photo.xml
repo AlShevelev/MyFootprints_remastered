@@ -21,7 +21,7 @@
             android:layout_height="@dimen/screenHeaderHeight"
             android:layout_width="0dp"
             app:title = "@{viewModel.title}"
-            app:on_back_click = "@{ () -> viewModel.onBackButtonClick() }"
+            app:on_back_click = "@{ () -> viewModel.onBackClick() }"
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

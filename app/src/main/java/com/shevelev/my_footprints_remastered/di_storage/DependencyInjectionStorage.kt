@@ -80,7 +80,7 @@ class DependencyInjectionStorage(private val app: Application) {
 
             TitleFragmentComponent::class -> getBase<MainActivityComponent>().titleFragment.build()
 
-            SelectPhotoFragmentComponent::class -> getBase<MainActivityComponent>().selectPhotoFragment.build()
+            SelectPhotoFragmentComponent::class -> getBase<CreateFootprintFragmentComponent>().selectPhotoFragment.build()
 
             CreateFootprintFragmentComponent::class -> getBase<MainActivityComponent>().createFootprintFragment.build()
 

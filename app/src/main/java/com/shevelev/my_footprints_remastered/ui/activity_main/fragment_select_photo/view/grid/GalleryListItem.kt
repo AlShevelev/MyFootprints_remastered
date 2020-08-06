@@ -1,5 +1,6 @@
 package com.shevelev.my_footprints_remastered.ui.activity_main.fragment_select_photo.view.grid
 
+import android.net.Uri
 import com.shevelev.my_footprints_remastered.ui.shared.recycler_view.versioned.VersionedListItem
 
 data class GalleryListItem(

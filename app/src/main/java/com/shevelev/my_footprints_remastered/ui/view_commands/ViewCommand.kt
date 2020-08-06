@@ -1,0 +1,17 @@
+package com.shevelev.my_footprints_remastered.ui.view_commands
+
+import androidx.annotation.StringRes
+
+interface ViewCommand
+
+// Text messages
+class ShowMessageRes(@StringRes val textResId: Int): ViewCommand
+class ShowMessageText(val text: String): ViewCommand
+
+// Navigation
+class MoveBack: ViewCommand
+class MoveToCreateFootprint(): ViewCommand
+class MoveToSelectPhoto(): ViewCommand
+
+class OpenCamera(): ViewCommand
+class OpenGallery(): ViewCommand

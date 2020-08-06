@@ -1,7 +1,10 @@
 package com.shevelev.my_footprints_remastered.ui.shared.widgets.screen_header
 
 import androidx.databinding.BindingAdapter
-import com.shevelev.my_footprints_remastered.ui.shared.widgets.screen_header.ScreenHeader
+
+interface ScreenHeaderBindingCall {
+    fun onBackClick()
+}
 
 @BindingAdapter("title")
 fun bindScreenHeaderTitle(view: ScreenHeader, valueToBind: String?) {
@@ -9,8 +12,8 @@ fun bindScreenHeaderTitle(view: ScreenHeader, valueToBind: String?) {
 }
 
 @BindingAdapter("on_back_click")
-fun bindBackButtonClick(view: ScreenHeader, callbackAction: () -> Unit) {
+fun bindBackButtonClick(view: ScreenHeader, callback: ScreenHeaderBindingCall) {
     view.setOnBackButtonClickListener {
-        callbackAction()
+        callback.onBackClick()
     }
 }

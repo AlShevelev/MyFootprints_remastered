@@ -6,9 +6,9 @@ import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.shevelev.my_footprints_remastered.R
-import com.shevelev.my_footprints_remastered.ui.activity_main.view_commands.MoveToCreateFootprint
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_model.ViewModelBase
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_title.model.TitleFragmentModel
+import com.shevelev.my_footprints_remastered.ui.view_commands.MoveToCreateFootprint
 import com.shevelev.my_footprints_remastered.utils.coroutines.DispatchersProvider
 import com.shevelev.my_footprints_remastered.utils.resources.getStringFormatted
 import com.shevelev.my_footprints_remastered.utils.strings.toUpper
@@ -58,7 +58,7 @@ constructor(
     }
 
     fun onNewFootprintClick() {
-        _command.value = MoveToCreateFootprint()
+        sendCommand(MoveToCreateFootprint())
     }
 
     private fun getTotalFootprintsText(total: Int) = appContext.getStringFormatted(R.string.totalFootprints, total).toUpper()
