@@ -72,16 +72,15 @@
             app:layout_constraintTop_toBottomOf="@+id/header"
             tools:ignore="Autofill" />
 
-        <com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.view.widgets.AddPhotoStub
-            android:id="@+id/addPhoto"
+        <com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.view.widgets.PhotoContainer
+            android:id="@+id/photoContainer"
             android:layout_width="0dp"
             android:layout_height="0dp"
 
             app:srcCompat="@drawable/img_title_empty"
 
-            android:scaleType="centerCrop"
-
             app:on_add_click = "@{() -> viewModel.onAddPhotoClick()}"
+            app:state = "@{viewModel.containerState}"
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -89,6 +88,5 @@
             app:layout_constraintBottom_toTopOf="@id/hGuidelineBottom48"
 
             tools:ignore="ContentDescription" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

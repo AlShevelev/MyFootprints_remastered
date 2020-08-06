@@ -56,6 +56,8 @@ class CreateFootprintFragment : FragmentBaseMVVM<FragmentCreateFootprintBinding,
         }
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) = viewModel.onActive()
+
     @NeedsPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
     internal fun moveToSelectPhoto() = navigation.moveToSelectPhoto(this)
 

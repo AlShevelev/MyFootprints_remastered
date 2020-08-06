@@ -24,7 +24,7 @@ constructor(
     private lateinit var capturedImageFile: File
 
     override fun takeCameraPhoto(fragment: Fragment): Boolean {
-        val currentImageUri = getCapturedFileUri(IdUtil.generateLongId().toString() + ".jpg")
+        val currentImageUri = getCapturedFileUri()
 
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, currentImageUri)
@@ -46,8 +46,8 @@ constructor(
         return true
     }
 
-    private fun getCapturedFileUri(fileName: String): Uri {
-        capturedImageFile = File.createTempFile("tmp_", fileName, appContext.cacheDir)
+    private fun getCapturedFileUri(): Uri {
+        capturedImageFile = File.createTempFile("tmp_", "${IdUtil.generateLongId()}.jpg", appContext.cacheDir)
         return FileProvider.getUriForFile(appContext, BuildConfig.APPLICATION_ID + ".file_provider", capturedImageFile)
     }
 }

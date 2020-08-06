@@ -14,4 +14,8 @@
     <dimen name="toolButtonSize">40dp</dimen>
 
     <dimen name="photoGridCellMargin">2dp</dimen>
+
+    <dimen name="onPhotoButtonSize">@dimen/toolButtonSize</dimen>
+    <dimen name="onPhotoButtonMargin">5dp</dimen>
+    <dimen name="onPhotoSecondButtonMargin">55dp</dimen>
 </resources>

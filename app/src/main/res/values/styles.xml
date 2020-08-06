@@ -47,6 +47,12 @@
         <item name="android:tint">@color/tool_button</item>
     </style>
 
+    <style name="Button.OnPhoto" parent="Widget.AppCompat.TextView">
+        <item name="android:layout_width">@dimen/onPhotoButtonSize</item>
+        <item name="android:layout_height">@dimen/onPhotoButtonSize</item>
+        <item name="android:background">@drawable/bcg_on_photo_button</item>
+    </style>
+
     <!-- Text styles -->
     <style name="Common.Base.TextStyle" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/black</item>
