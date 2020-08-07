@@ -80,6 +80,8 @@
             app:srcCompat="@drawable/img_title_empty"
 
             app:on_add_click = "@{() -> viewModel.onAddPhotoClick()}"
+            app:on_clear_click="@{() -> viewModel.onClearPhotoClick()}"
+            app:on_edit_click="@{() -> viewModel.onEditPhotoClick()}"
             app:state = "@{viewModel.containerState}"
 
             app:layout_constraintStart_toStartOf="parent"

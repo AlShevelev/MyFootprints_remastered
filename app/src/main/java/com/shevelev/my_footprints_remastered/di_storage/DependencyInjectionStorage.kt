@@ -4,11 +4,11 @@ import android.app.Application
 import com.shevelev.my_footprints_remastered.application.di.AppComponent
 import com.shevelev.my_footprints_remastered.application.di.AppModule
 import com.shevelev.my_footprints_remastered.application.di.DaggerAppComponent
-import com.shevelev.my_footprints_remastered.ui.di.UIComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.di.MainActivityComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.di.CreateFootprintFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_select_photo.di.SelectPhotoFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_title.di.TitleFragmentComponent
+import com.shevelev.my_footprints_remastered.ui.di.UIComponent
 import com.shevelev.my_footprints_remastered.utils.id_hash.IdUtil
 import kotlin.reflect.KClass
 
@@ -25,20 +25,20 @@ class DependencyInjectionStorage(private val app: Application) {
     fun <T> getComponent(key: String, type: KClass<*>, args: Array<out Any?>): T {
         val componentsSet = components[type]
 
-        return if(componentsSet == null) {
+        if(componentsSet == null) {
             val component = provideComponent<T>(type, args)
             components[type] = mutableMapOf(key to component as Any)
-
-            component
+            return component
         } else {
             var component = componentsSet[key]
             if(component != null) {
-                component as T
+                return component as T
             }
 
             component = provideComponent<T>(type, args)
             componentsSet[key] = component as Any
-            component
+
+            return component
         }
     }
 

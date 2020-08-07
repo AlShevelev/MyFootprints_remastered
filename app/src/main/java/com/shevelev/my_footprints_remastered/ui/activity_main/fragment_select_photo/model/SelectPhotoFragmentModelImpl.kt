@@ -11,7 +11,6 @@ import com.shevelev.my_footprints_remastered.ui.shared.recycler_view.versioned.V
 import com.shevelev.my_footprints_remastered.utils.coroutines.DispatchersProvider
 import com.shevelev.my_footprints_remastered.utils.id_hash.IdUtil
 import kotlinx.coroutines.withContext
-import timber.log.Timber
 import java.io.File
 import javax.inject.Inject
 
@@ -26,7 +25,6 @@ constructor(
     override suspend fun getItems(): List<VersionedListItem> =
         withContext(dispatchersProvider.ioDispatcher) {
             val photos = photoItemsSource.getGalleryImagesUrls()
-            Timber.tag("LOAD_ITEMS").d("Photos list received")
 
             val result = mutableListOf<VersionedListItem>()
             result.add(CameraListItem(IdUtil.generateLongId(), 0, isFirstItem = true, isLastItem = false))
@@ -39,5 +37,7 @@ constructor(
 
     override fun storeSelectedPhoto(photo: File) = dataBridge.putSelectedPhoto(photo)
 
-    override fun storeSelectedPhoto(photo: Uri) = dataBridge.putSelectedPhoto(photo)
+    override fun storeSelectedPhoto(photo: Uri) {
+        dataBridge.putSelectedPhoto(photo)
+    }
 }

@@ -13,8 +13,8 @@
         android:layout_height="match_parent"
 
         android:scaleType="centerCrop"
+        tools:srcCompat="@drawable/img_title_empty"
 
-        app:srcCompat="@drawable/img_title_empty"
         tools:ignore="ContentDescription" />
 
     <View
@@ -54,7 +54,7 @@
         />
 
     <ImageButton
-        android:id="@+id/clearButton"
+        android:id="@+id/clearPhotoButton"
 
         style="@style/Button.OnPhoto"
 
@@ -71,7 +71,7 @@
         />
 
     <ImageButton
-        android:id="@+id/editButton"
+        android:id="@+id/editPhotoButton"
 
         style="@style/Button.OnPhoto"
 

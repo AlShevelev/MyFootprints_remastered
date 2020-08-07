@@ -14,6 +14,7 @@ import com.shevelev.my_footprints_remastered.ui.shared.widgets.screen_header.Scr
 import com.shevelev.my_footprints_remastered.ui.view_commands.MoveToSelectPhoto
 import com.shevelev.my_footprints_remastered.utils.coroutines.DispatchersProvider
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 class CreateFootprintFragmentViewModel
@@ -39,13 +40,23 @@ constructor(
         sendCommand(MoveToSelectPhoto())
     }
 
+    override fun onClearPhotoClick() {
+        launch {
+            model.clearPhoto()
+            _containerState.value = PhotoContainerState.Initial
+        }
+    }
+
+    override fun onEditPhotoClick() {
+        Timber.d("Edit")
+    }
+
     fun onActive() {
         launch {
-            model.checkNewPhotoSelected { state ->
+            model.processNewPhotoSelected { state ->
                 when(state) {
                     is SelectedPhotoLoadingState.Ready -> _containerState.value = PhotoContainerState.Ready(state.file)
                     is SelectedPhotoLoadingState.Loading -> _containerState.value = PhotoContainerState.Loading
-                    is SelectedPhotoLoadingState.Updating -> _containerState.value = PhotoContainerState.Updating
                 }
             }
         }

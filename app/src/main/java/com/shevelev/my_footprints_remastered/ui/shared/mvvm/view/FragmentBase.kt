@@ -14,6 +14,8 @@ abstract class FragmentBase: Fragment() {
 
     protected open val isBackHandlerEnabled = false
 
+    private var isDestroyedBySystem = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -29,14 +31,20 @@ abstract class FragmentBase: Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        isDestroyedBySystem = false
+    }
+
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putString(INJECTION_KEY, injectionKey)
+        isDestroyedBySystem = true
     }
 
     override fun onDestroy() {
         super.onDestroy()
 
-        if(isRemoving) {
+        if(!isDestroyedBySystem) {
             releaseInjection(injectionKey)
         }
     }

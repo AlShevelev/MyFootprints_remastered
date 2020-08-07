@@ -11,11 +11,6 @@ sealed class PhotoContainerState {
     object Loading : PhotoContainerState()
 
     /**
-     * An image is loading for a second time
-     */
-    object Updating : PhotoContainerState()
-
-    /**
      * An image is ready to set
      */
     data class Ready(val image: File) : PhotoContainerState()

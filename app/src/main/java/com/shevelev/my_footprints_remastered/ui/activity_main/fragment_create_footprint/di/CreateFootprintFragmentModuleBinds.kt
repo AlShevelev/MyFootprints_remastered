@@ -11,6 +11,7 @@ import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_model.FragmentV
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_model.FragmentViewModelFactoryImpl
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_model.ViewModelKey
 import com.shevelev.my_footprints_remastered.utils.di_scopes.FragmentScope
+import com.shevelev.my_footprints_remastered.utils.di_scopes.SubFragmentScope
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap

@@ -22,7 +22,7 @@ constructor(
 
     private var photoImage: File? = null
 
-    override suspend fun checkNewPhotoSelected(callbackAction: (SelectedPhotoLoadingState) -> Unit) {
+    override suspend fun processNewPhotoSelected(callbackAction: (SelectedPhotoLoadingState) -> Unit) {
         val selectedPhotoFile = dataBridge.extractSelectedPhotoFile()
         val selectedPhotoUri = dataBridge.extractSelectedPhotoUri()
 
@@ -32,11 +32,7 @@ constructor(
                 callbackAction(SelectedPhotoLoadingState.Ready(photoImage!!))
             }
             selectedPhotoFile == null && selectedPhotoUri != null -> {
-                if(photoImage == null) {
-                    callbackAction(SelectedPhotoLoadingState.Loading)
-                } else {
-                    callbackAction(SelectedPhotoLoadingState.Updating)
-                }
+                callbackAction(SelectedPhotoLoadingState.Loading)
 
                 withContext(dispatchersProvider.ioDispatcher) {
                     photoImage = copyUriToFile(selectedPhotoUri)
@@ -45,6 +41,13 @@ constructor(
                 callbackAction(SelectedPhotoLoadingState.Ready(photoImage!!))
             }
         }
+    }
+
+    override suspend fun clearPhoto() {
+        withContext(dispatchersProvider.ioDispatcher) {
+            photoImage?.delete()
+        }
+        photoImage = null
     }
 
     private fun copyUriToFile(uri: Uri): File {
