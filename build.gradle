@@ -36,6 +36,7 @@ buildscript {
         permissionsdispatcher_version = "4.6.0"
         three_ten_abp_version = "1.2.4"
         coil_version = "0.11.0"
+        photo_view_version = "2.3.0"
 
         // Dagger
         dagger_version = "2.24"
@@ -64,6 +65,7 @@ allprojects {
     repositories {
         google()
         jcenter()
+        maven { url "https://jitpack.io" }
     }
 }
 
