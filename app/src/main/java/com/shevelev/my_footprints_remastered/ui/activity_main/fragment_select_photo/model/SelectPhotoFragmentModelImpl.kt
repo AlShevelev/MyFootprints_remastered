@@ -35,9 +35,9 @@ constructor(
             result
         }
 
-    override fun storeSelectedPhoto(photo: File) = dataBridge.putSelectedPhoto(photo)
+    override fun storeSelectedPhoto(photo: File) = dataBridge.putPhoto(photo)
 
     override fun storeSelectedPhoto(photo: Uri) {
-        dataBridge.putSelectedPhoto(photo)
+        dataBridge.putPhoto(photo)
     }
 }

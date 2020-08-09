@@ -1,19 +1,28 @@
 package com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.model.data_bridge
 
+import android.graphics.Bitmap
 import android.net.Uri
 import java.io.File
 
 interface CreateFootprintFragmentDataBridge {
-    fun putSelectedPhoto(photo: File)
+    fun putPhoto(photo: File)
 
-    fun putSelectedPhoto(photo: Uri)
+    fun putPhoto(photo: Uri)
+
+    fun putPhoto(photo: Bitmap)
 
     /**
      * Get and remove selected photo
      */
-    fun extractSelectedPhotoFile(): File?
+    fun extractPhotoFile(): File?
+
     /**
      * Get and remove selected photo
      */
-    fun extractSelectedPhotoUri(): Uri?
+    fun extractPhotoUri(): Uri?
+
+    /**
+     * Get and remove selected photo
+     */
+    fun extractPhotoBitmap(): Bitmap?
 }

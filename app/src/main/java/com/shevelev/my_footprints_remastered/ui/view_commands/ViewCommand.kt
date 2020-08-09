@@ -1,6 +1,7 @@
 package com.shevelev.my_footprints_remastered.ui.view_commands
 
 import androidx.annotation.StringRes
+import java.io.File
 
 interface ViewCommand
 
@@ -12,6 +13,7 @@ class ShowMessageText(val text: String): ViewCommand
 class MoveBack: ViewCommand
 class MoveToCreateFootprint(): ViewCommand
 class MoveToSelectPhoto(): ViewCommand
+class MoveToCropPhoto(val photo: File): ViewCommand
 
 class OpenCamera(): ViewCommand
 class OpenGallery(): ViewCommand

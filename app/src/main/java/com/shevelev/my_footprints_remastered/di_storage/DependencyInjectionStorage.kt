@@ -4,11 +4,12 @@ import android.app.Application
 import com.shevelev.my_footprints_remastered.application.di.AppComponent
 import com.shevelev.my_footprints_remastered.application.di.AppModule
 import com.shevelev.my_footprints_remastered.application.di.DaggerAppComponent
+import com.shevelev.my_footprints_remastered.ui.di.UIComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.di.MainActivityComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.di.CreateFootprintFragmentComponent
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_crop_photo.di.CropPhotoFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_select_photo.di.SelectPhotoFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_title.di.TitleFragmentComponent
-import com.shevelev.my_footprints_remastered.ui.di.UIComponent
 import com.shevelev.my_footprints_remastered.utils.id_hash.IdUtil
 import kotlin.reflect.KClass
 
@@ -80,9 +81,11 @@ class DependencyInjectionStorage(private val app: Application) {
 
             TitleFragmentComponent::class -> getBase<MainActivityComponent>().titleFragment.build()
 
+            CreateFootprintFragmentComponent::class -> getBase<MainActivityComponent>().createFootprintFragment.build()
+
             SelectPhotoFragmentComponent::class -> getBase<CreateFootprintFragmentComponent>().selectPhotoFragment.build()
 
-            CreateFootprintFragmentComponent::class -> getBase<MainActivityComponent>().createFootprintFragment.build()
+            CropPhotoFragmentComponent::class -> getBase<CreateFootprintFragmentComponent>().cropPhotoFragment.build()
 
             else -> throw UnsupportedOperationException("This component is not supported: ${type.simpleName}")
         } as T

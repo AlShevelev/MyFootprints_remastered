@@ -71,7 +71,7 @@
         />
 
     <ImageButton
-        android:id="@+id/editPhotoButton"
+        android:id="@+id/cropPhotoButton"
 
         style="@style/Button.OnPhoto"
 
@@ -80,7 +80,23 @@
         android:layout_marginEnd="@dimen/onPhotoSecondButtonMargin"
         android:layout_marginTop="@dimen/onPhotoButtonMargin"
 
-        app:srcCompat="@drawable/ic_edit_19_18"
+        app:srcCompat="@drawable/ic_crop_20_20"
+        tools:ignore="ContentDescription"
+        android:visibility="invisible"
+        tools:visibility="visible"
+        />
+
+    <ImageButton
+        android:id="@+id/filterPhotoButton"
+
+        style="@style/Button.OnPhoto"
+
+        android:layout_gravity="top|end"
+
+        android:layout_marginEnd="@dimen/onPhotoThirdButtonMargin"
+        android:layout_marginTop="@dimen/onPhotoButtonMargin"
+
+        app:srcCompat="@drawable/ic_brush_20_18"
         tools:ignore="ContentDescription"
         android:visibility="invisible"
         tools:visibility="visible"

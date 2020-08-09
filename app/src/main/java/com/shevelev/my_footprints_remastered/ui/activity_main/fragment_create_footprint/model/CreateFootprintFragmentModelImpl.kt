@@ -1,6 +1,7 @@
 package com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.model
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.net.Uri
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.dto.SelectedPhotoLoadingState
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.model.data_bridge.CreateFootprintFragmentDataBridge
@@ -20,22 +21,33 @@ constructor(
 ) : ModelBaseImpl(),
     CreateFootprintFragmentModel {
 
-    private var photoImage: File? = null
+    override var photoImage: File? = null
+    private set
 
     override suspend fun processNewPhotoSelected(callbackAction: (SelectedPhotoLoadingState) -> Unit) {
-        val selectedPhotoFile = dataBridge.extractSelectedPhotoFile()
-        val selectedPhotoUri = dataBridge.extractSelectedPhotoUri()
+        val selectedPhotoFile = dataBridge.extractPhotoFile()
+        val selectedPhotoUri = dataBridge.extractPhotoUri()
+        val selectedPhotoBitmap = dataBridge.extractPhotoBitmap()
 
         when {
-            selectedPhotoFile != null && selectedPhotoUri == null -> {
+            selectedPhotoFile != null -> {
                 photoImage = selectedPhotoFile
                 callbackAction(SelectedPhotoLoadingState.Ready(photoImage!!))
             }
-            selectedPhotoFile == null && selectedPhotoUri != null -> {
+            selectedPhotoUri != null -> {
                 callbackAction(SelectedPhotoLoadingState.Loading)
 
                 withContext(dispatchersProvider.ioDispatcher) {
                     photoImage = copyUriToFile(selectedPhotoUri)
+                }
+
+                callbackAction(SelectedPhotoLoadingState.Ready(photoImage!!))
+            }
+            selectedPhotoBitmap != null -> {
+                callbackAction(SelectedPhotoLoadingState.Loading)
+
+                withContext(dispatchersProvider.ioDispatcher) {
+                    photoImage = copyBitmapToFile(selectedPhotoBitmap)
                 }
 
                 callbackAction(SelectedPhotoLoadingState.Ready(photoImage!!))
@@ -51,7 +63,7 @@ constructor(
     }
 
     private fun copyUriToFile(uri: Uri): File {
-        val targetFile = File.createTempFile("tmp_", "${IdUtil.generateLongId()}.jpg", appContext.cacheDir)
+        val targetFile = createPhotoFile()
 
         appContext.contentResolver.openInputStream(uri).use { input ->
             targetFile.outputStream().use { fileOut ->
@@ -61,4 +73,16 @@ constructor(
 
         return targetFile
     }
+
+    private fun copyBitmapToFile(bitmap: Bitmap): File {
+        val targetFile = createPhotoFile()
+
+        targetFile.outputStream().use { fileOut ->
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 75, fileOut)
+        }
+
+        return targetFile
+    }
+
+    private fun createPhotoFile(): File = File.createTempFile("tmp_", "${IdUtil.generateLongId()}.jpg", appContext.cacheDir)
 }

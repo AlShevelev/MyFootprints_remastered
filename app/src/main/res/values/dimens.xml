@@ -18,4 +18,5 @@
     <dimen name="onPhotoButtonSize">@dimen/toolButtonSize</dimen>
     <dimen name="onPhotoButtonMargin">5dp</dimen>
     <dimen name="onPhotoSecondButtonMargin">55dp</dimen>
+    <dimen name="onPhotoThirdButtonMargin">105dp</dimen>
 </resources>

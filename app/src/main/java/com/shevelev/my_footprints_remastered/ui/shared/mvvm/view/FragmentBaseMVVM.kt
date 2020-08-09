@@ -60,10 +60,6 @@ abstract class FragmentBaseMVVM<VDB: ViewDataBinding, VM: ViewModelBase<out Mode
 
     protected open fun processViewCommand(command: ViewCommand) {}
 
-    protected fun showMessage(text: String) = Toast.makeText(context, text, Toast.LENGTH_LONG).show()
-
-    protected fun showMessage(@StringRes text: Int) = Toast.makeText(context, text, Toast.LENGTH_LONG).show()
-
     /**
      * Process input _command
      * @return true if the _command has been processed

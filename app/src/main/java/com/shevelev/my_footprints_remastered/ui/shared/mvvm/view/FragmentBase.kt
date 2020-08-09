@@ -1,7 +1,9 @@
 package com.shevelev.my_footprints_remastered.ui.shared.mvvm.view
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import com.shevelev.my_footprints_remastered.utils.id_hash.IdUtil
 
@@ -56,4 +58,8 @@ abstract class FragmentBase: Fragment() {
     protected open fun releaseInjection(key: String) {}
 
     protected open fun onBackPressed() { }
+
+    protected fun showMessage(text: String) = Toast.makeText(context, text, Toast.LENGTH_LONG).show()
+
+    protected fun showMessage(@StringRes text: Int) = Toast.makeText(context, text, Toast.LENGTH_LONG).show()
 }

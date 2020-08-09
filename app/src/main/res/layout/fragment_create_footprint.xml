@@ -81,7 +81,8 @@
 
             app:on_add_click = "@{() -> viewModel.onAddPhotoClick()}"
             app:on_clear_click="@{() -> viewModel.onClearPhotoClick()}"
-            app:on_edit_click="@{() -> viewModel.onEditPhotoClick()}"
+            app:on_crop_click="@{() -> viewModel.onCropPhotoClick()}"
+            app:on_filter_click="@{() -> viewModel.onFilterPhotoClick()}"
             app:state = "@{viewModel.containerState}"
 
             app:layout_constraintStart_toStartOf="parent"

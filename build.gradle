@@ -37,6 +37,7 @@ buildscript {
         three_ten_abp_version = "1.2.4"
         coil_version = "0.11.0"
         photo_view_version = "2.3.0"
+        crop_view_version = "1.1.8"
 
         // Dagger
         dagger_version = "2.24"

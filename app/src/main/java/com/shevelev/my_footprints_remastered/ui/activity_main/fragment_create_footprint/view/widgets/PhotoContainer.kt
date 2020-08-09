@@ -18,7 +18,8 @@ constructor(
 
     private var onAddClickListener: (() -> Unit)? = null
     private var onClearClickListener: (() -> Unit)? = null
-    private var onEditClickListener: (() -> Unit)? = null
+    private var onCropClickListener: (() -> Unit)? = null
+    private var onFilterClickListener: (() -> Unit)? = null
 
     var state: PhotoContainerState = PhotoContainerState.Initial
     set(value) {
@@ -31,7 +32,8 @@ constructor(
 
         addPhotoButton.setOnClickListener { onAddClickListener?.invoke() }
         clearPhotoButton.setOnClickListener { onClearClickListener?.invoke() }
-        editPhotoButton.setOnClickListener { onEditClickListener?.invoke() }
+        cropPhotoButton.setOnClickListener { onCropClickListener?.invoke() }
+        filterPhotoButton.setOnClickListener { onFilterClickListener?.invoke() }
 
     }
 
@@ -43,8 +45,12 @@ constructor(
         onClearClickListener = listener
     }
 
-    fun setOnEditClickListener(listener: (() -> Unit)?) {
-        onEditClickListener = listener
+    fun setOnCropClickListener(listener: (() -> Unit)?) {
+        onCropClickListener = listener
+    }
+
+    fun setOnFilterClickListener(listener: (() -> Unit)?) {
+        onFilterClickListener = listener
     }
 
     private fun updateState() {
@@ -59,7 +65,8 @@ constructor(
                 addPhotoButton.visibility = View.VISIBLE
                 loading.visibility = View.INVISIBLE
                 clearPhotoButton.visibility = View.INVISIBLE
-                editPhotoButton.visibility = View.INVISIBLE
+                cropPhotoButton.visibility = View.INVISIBLE
+                filterPhotoButton.visibility = View.INVISIBLE
             }
             is PhotoContainerState.Loading -> {
                 photoImage.visibility = View.VISIBLE
@@ -67,7 +74,8 @@ constructor(
                 addPhotoButton.visibility = View.INVISIBLE
                 loading.visibility = View.VISIBLE
                 clearPhotoButton.visibility = View.INVISIBLE
-                editPhotoButton.visibility = View.INVISIBLE
+                cropPhotoButton.visibility = View.INVISIBLE
+                filterPhotoButton.visibility = View.INVISIBLE
             }
             is PhotoContainerState.Ready -> {
                 photoImage.load((state as PhotoContainerState.Ready).image) {
@@ -79,7 +87,8 @@ constructor(
                 addPhotoButton.visibility = View.INVISIBLE
                 loading.visibility = View.INVISIBLE
                 clearPhotoButton.visibility = View.VISIBLE
-                editPhotoButton.visibility = View.VISIBLE
+                cropPhotoButton.visibility = View.VISIBLE
+                filterPhotoButton.visibility = View.VISIBLE
             }
         }
     }
