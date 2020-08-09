@@ -10,9 +10,8 @@ import com.shevelev.my_footprints_remastered.ui.shared.external_intents.camera.C
 import com.shevelev.my_footprints_remastered.ui.shared.external_intents.camera.CameraHelperImpl
 import com.shevelev.my_footprints_remastered.ui.shared.external_intents.gallery.GalleryHelper
 import com.shevelev.my_footprints_remastered.ui.shared.external_intents.gallery.GalleryHelperImpl
-import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_model.FragmentViewModelFactory
-import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_model.FragmentViewModelFactoryImpl
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_model.ViewModelKey
+import com.shevelev.my_footprints_remastered.utils.di_scopes.SubFragmentScope
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -31,6 +30,7 @@ abstract class SelectPhotoFragmentModuleBinds {
     abstract fun providePhotoItemsSource(source: PhotoItemsSourceImpl): PhotoItemsSource
 
     @Binds
+    @SubFragmentScope
     abstract fun provideCameraHelper(helper: CameraHelperImpl): CameraHelper
 
     @Binds
