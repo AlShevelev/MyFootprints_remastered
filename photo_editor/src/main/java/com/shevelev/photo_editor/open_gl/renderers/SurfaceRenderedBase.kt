@@ -3,8 +3,11 @@ package com.shevelev.photo_editor.open_gl.renderers
 import android.content.Context
 import android.graphics.Bitmap
 import android.opengl.GLES20
+import android.opengl.GLException
 import android.opengl.GLSurfaceView
 import android.opengl.GLUtils
+import android.os.Handler
+import android.util.Size
 import androidx.annotation.CallSuper
 import androidx.annotation.RawRes
 import com.shevelev.my_footprints_remastered.utils.resources.getRawString
@@ -12,6 +15,7 @@ import com.shevelev.photo_editor.R
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.FloatBuffer
+import java.nio.IntBuffer
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
@@ -46,19 +50,44 @@ abstract class SurfaceRenderedBase(
 
     private val textures = IntArray(2)
 
-    override fun onDrawFrame(gl: GL10?) {
+    private lateinit var surfaceSize: Size
+
+    @get:Synchronized @set:Synchronized
+    private var getFrameAsBitmapHandler: Handler? = null
+    @get:Synchronized @set:Synchronized
+    private var getFrameAsBitmapCallback: ((Bitmap?) -> Unit)? = null
+
+    override fun onDrawFrame(gl: GL10) {
         draw(textures[0])
+
+        getFrameAsBitmapHandler?.let { handler ->
+            val bitmap = extractBitmapFromFrame(gl)
+
+            handler.post {
+                getFrameAsBitmapCallback?.invoke(bitmap)
+
+                getFrameAsBitmapHandler = null
+                getFrameAsBitmapCallback = null
+            }
+        }
     }
 
     override fun onSurfaceChanged(gl: GL10?, width: Int, height: Int) {
         GLES20.glViewport(0, 0, width, height)
         GLES20.glClearColor(0f, 0f, 0f, 1f)
 
+        surfaceSize = Size(width, height)
+
         createTextures()
         createProgram()
     }
 
     override fun onSurfaceCreated(gl: GL10?, config: EGLConfig?) {
+    }
+
+    fun startGetFrameAsBitmap(handler: Handler, callback: (Bitmap?) -> Unit) {
+        getFrameAsBitmapHandler = handler
+        getFrameAsBitmapCallback = callback
     }
 
     @CallSuper
@@ -136,5 +165,40 @@ abstract class SurfaceRenderedBase(
 
     protected open fun setFragmentShaderExtParameters() {
         // do nothing in the base class
+    }
+
+    private fun extractBitmapFromFrame(gl: GL10): Bitmap? {
+        val x = 0
+        val y = 0
+        val width = surfaceSize.width
+        val height = surfaceSize.height
+
+        val bitmapBuffer = IntArray(width * height)
+        val bitmapSource = IntArray(width * height)
+
+        val intBuffer = IntBuffer.wrap(bitmapBuffer)
+        intBuffer.position(0)
+
+        try {
+            gl.glReadPixels(x, y, width, height, GL10.GL_RGBA, GL10.GL_UNSIGNED_BYTE, intBuffer)
+            var offset1: Int
+            var offset2: Int
+            for (i in 0 until height) {
+                offset1 = i * width
+                offset2 = (height - i - 1) * width
+                for (j in 0 until width) {
+                    val texturePixel = bitmapBuffer[offset1 + j]
+                    val blue = (texturePixel shr 16) and 0xff
+                    val red = (texturePixel shl 16) and 0x00ff0000
+                    val pixel = (texturePixel and 0xff00ff00.toInt()) or red or blue
+
+                    bitmapSource[offset2 + j] = pixel
+                }
+            }
+        } catch (ex: GLException) {
+            ex.printStackTrace()
+            return null
+        }
+        return Bitmap.createBitmap(bitmapSource, width, height, Bitmap.Config.ARGB_8888)
     }
 }

@@ -22,5 +22,14 @@
             android:checked="true"
 
             android:text="Grayscale" />
+
+        <Button
+            android:id="@+id/getBitmapButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Get bitmap"
+
+            android:layout_gravity="end|top"
+            />
     </FrameLayout>
 </FrameLayout>

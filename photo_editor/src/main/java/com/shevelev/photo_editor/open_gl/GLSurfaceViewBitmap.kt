@@ -3,6 +3,7 @@ package com.shevelev.photo_editor.open_gl
 import android.content.Context
 import android.graphics.Bitmap
 import android.opengl.GLSurfaceView
+import android.os.Handler
 import android.util.AttributeSet
 import android.util.SizeF
 import android.view.Gravity
@@ -15,6 +16,8 @@ constructor(
     context: Context,
     attrs: AttributeSet? = null
 ) : GLSurfaceView(context, attrs) {
+
+    private lateinit var renderer: SurfaceRenderedBase
 
     companion object {
         fun createAndAddToView(context: Context, root: FrameLayout, bitmap: Bitmap, renderer: SurfaceRenderedBase): GLSurfaceViewBitmap {
@@ -31,6 +34,8 @@ constructor(
             surfaceView.setEGLContextClientVersion(2)
             surfaceView.setRenderer(renderer)
             surfaceView.renderMode = RENDERMODE_WHEN_DIRTY
+
+            surfaceView.renderer = renderer
 
             return surfaceView
         }
@@ -50,6 +55,11 @@ constructor(
             testSize = (areaWidth / bitmapSize.width) * bitmapSize.height
             setMeasuredDimension(areaWidth.toInt(), testSize.toInt())
         }
+    }
+
+    fun getBitmap(callback: (Bitmap?) -> Unit) {
+        renderer.startGetFrameAsBitmap(Handler(), callback)
+        requestRender()
     }
 
     private fun setBitmapParameters(bitmap: Bitmap) {
