@@ -19,8 +19,10 @@ import java.nio.IntBuffer
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
-
-abstract class SurfaceRenderedBase(
+/**
+ * Base renderer for all OpenGL renderers
+ */
+abstract class GLSurfaceRenderedBase(
     private val context: Context,
     private val bitmap: Bitmap,
     @RawRes
@@ -48,28 +50,18 @@ abstract class SurfaceRenderedBase(
     private var fragmentShader: Int = 0
     protected var program: Int = 0
 
-    private val textures = IntArray(2)
+    protected val textures = IntArray(2)
 
-    private lateinit var surfaceSize: Size
+    protected lateinit var surfaceSize: Size
+    protected lateinit var surface: GLSurfaceView
 
     @get:Synchronized @set:Synchronized
     private var getFrameAsBitmapHandler: Handler? = null
     @get:Synchronized @set:Synchronized
     private var getFrameAsBitmapCallback: ((Bitmap?) -> Unit)? = null
 
-    override fun onDrawFrame(gl: GL10) {
-        draw(textures[0])
-
-        getFrameAsBitmapHandler?.let { handler ->
-            val bitmap = extractBitmapFromFrame(gl)
-
-            handler.post {
-                getFrameAsBitmapCallback?.invoke(bitmap)
-
-                getFrameAsBitmapHandler = null
-                getFrameAsBitmapCallback = null
-            }
-        }
+    fun attachSurface(surface: GLSurfaceView) {
+        this.surface = surface
     }
 
     override fun onSurfaceChanged(gl: GL10?, width: Int, height: Int) {
@@ -83,11 +75,25 @@ abstract class SurfaceRenderedBase(
     }
 
     override fun onSurfaceCreated(gl: GL10?, config: EGLConfig?) {
+        // do nothing
     }
 
     fun startGetFrameAsBitmap(handler: Handler, callback: (Bitmap?) -> Unit) {
         getFrameAsBitmapHandler = handler
         getFrameAsBitmapCallback = callback
+    }
+
+    protected fun tryToGetFrameAsBitmap(gl: GL10) {
+        getFrameAsBitmapHandler?.let { handler ->
+            val bitmap = extractBitmapFromFrame(gl)
+
+            handler.post {
+                getFrameAsBitmapCallback?.invoke(bitmap)
+
+                getFrameAsBitmapHandler = null
+                getFrameAsBitmapCallback = null
+            }
+        }
     }
 
     @CallSuper
@@ -139,7 +145,15 @@ abstract class SurfaceRenderedBase(
         GLES20.glLinkProgram(program)
     }
 
-    private fun draw(texture: Int) {
+    protected fun draw(texture: Int) {
+        setFragmentShaderParameters(texture)
+
+        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT)
+        GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4)
+    }
+
+    @CallSuper
+    protected open fun setFragmentShaderParameters(texture: Int) {
         GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, 0)
         GLES20.glUseProgram(program)
         GLES20.glDisable(GLES20.GL_BLEND)
@@ -156,15 +170,6 @@ abstract class SurfaceRenderedBase(
         val positionHandle = GLES20.glGetAttribLocation(program, "aPosition")
         GLES20.glVertexAttribPointer(positionHandle, 2, GLES20.GL_FLOAT, false, 0, verticesBuffer)
         GLES20.glEnableVertexAttribArray(positionHandle)
-
-        setFragmentShaderExtParameters()
-
-        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT)
-        GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4)
-    }
-
-    protected open fun setFragmentShaderExtParameters() {
-        // do nothing in the base class
     }
 
     private fun extractBitmapFromFrame(gl: GL10): Bitmap? {

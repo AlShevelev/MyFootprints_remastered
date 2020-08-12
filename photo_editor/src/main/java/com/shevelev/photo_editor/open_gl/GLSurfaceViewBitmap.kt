@@ -8,7 +8,7 @@ import android.util.AttributeSet
 import android.util.SizeF
 import android.view.Gravity
 import android.widget.FrameLayout
-import com.shevelev.photo_editor.open_gl.renderers.SurfaceRenderedBase
+import com.shevelev.photo_editor.open_gl.renderers.GLSurfaceRenderedBase
 
 class GLSurfaceViewBitmap
 @JvmOverloads
@@ -17,10 +17,10 @@ constructor(
     attrs: AttributeSet? = null
 ) : GLSurfaceView(context, attrs) {
 
-    private lateinit var renderer: SurfaceRenderedBase
+    private lateinit var renderer: GLSurfaceRenderedBase
 
     companion object {
-        fun createAndAddToView(context: Context, root: FrameLayout, bitmap: Bitmap, renderer: SurfaceRenderedBase): GLSurfaceViewBitmap {
+        fun createAndAddToView(context: Context, root: FrameLayout, bitmap: Bitmap, renderer: GLSurfaceRenderedBase): GLSurfaceViewBitmap {
             val surfaceView = GLSurfaceViewBitmap(context)
 
             surfaceView.setBitmapParameters(bitmap)
@@ -35,6 +35,7 @@ constructor(
             surfaceView.setRenderer(renderer)
             surfaceView.renderMode = RENDERMODE_WHEN_DIRTY
 
+            renderer.attachSurface(surfaceView)
             surfaceView.renderer = renderer
 
             return surfaceView

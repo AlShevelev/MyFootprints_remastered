@@ -1,10 +1,12 @@
-package com.shevelev.photo_editor.open_gl.renderers
+package com.shevelev.photo_editor.open_gl.renderers.fragment
 
 import android.content.Context
 import android.graphics.Bitmap
 import android.opengl.GLES20
 import android.opengl.GLES31
 import com.shevelev.photo_editor.R
+import com.shevelev.photo_editor.open_gl.renderers.GLSurfaceRenderedBase
+import com.shevelev.photo_editor.open_gl.renderers.GLSurfaceShaderRenderedBase
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.FloatBuffer
@@ -13,7 +15,7 @@ class NewspaperSurfaceRenderer(
     context: Context,
     bitmap: Bitmap,
     private var isGrayscale: Boolean
-) : SurfaceRenderedBase(context, bitmap, R.raw.newspaper) {
+) : GLSurfaceShaderRenderedBase(context, bitmap, R.raw.newspaper) {
 
     private val bitmapSize = floatArrayOf(bitmap.width.toFloat(), bitmap.height.toFloat(), 1f)
 
@@ -29,7 +31,9 @@ class NewspaperSurfaceRenderer(
         resolutionBuffer.position(0)
     }
 
-    override fun setFragmentShaderExtParameters() {
+    override fun setFragmentShaderParameters(texture: Int) {
+        super.setFragmentShaderParameters(texture)
+
         // Screen size in pixels
         val iResolutionHandle = GLES20.glGetUniformLocation(program, "iResolution")
         GLES20.glUniform3fv(iResolutionHandle, 1, resolutionBuffer)
@@ -40,5 +44,6 @@ class NewspaperSurfaceRenderer(
 
     fun updateGrayscale(isGrayscale: Boolean) {
         this.isGrayscale = isGrayscale
+        surface.requestRender()
     }
 }
