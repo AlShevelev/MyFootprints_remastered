@@ -8,22 +8,22 @@ import android.util.Range
 import com.shevelev.my_footprints_remastered.utils.ranges.reduceToRange
 import com.shevelev.photo_editor.open_gl.renderers.GLSurfaceEffectRenderedBase
 
-class BrightnessSurfaceRenderer(context: Context, bitmap: Bitmap): GLSurfaceEffectRenderedBase(context, bitmap) {
-    private var brightness = 1f     // Neutral value
+class ContrastSurfaceRenderer(context: Context, bitmap: Bitmap): GLSurfaceEffectRenderedBase(context, bitmap) {
+    private var contrast = 1f     // Neutral value
 
     private val sourceFactorRange = Range<Float>(0f, 100f)
-    private val brightnessFactorRange = Range<Float>(0.5f, 1.5f)
+    private val contrastFactorRange = Range<Float>(0.5f, 1.5f)
 
     override fun createEffect(factory: EffectFactory): Effect =
-        factory.createEffect(EffectFactory.EFFECT_BRIGHTNESS).apply {
-            setParameter("brightness", brightness)
+        factory.createEffect(EffectFactory.EFFECT_CONTRAST).apply {
+            setParameter("contrast", contrast)
         }
 
     /**
-     * [brightnessFactor] from 0 to 100
+     * [contrastFactor] from 0 to 100
      */
-    fun updateBrightness(brightnessFactor: Float) {
-        this.brightness = brightnessFactor.reduceToRange(sourceFactorRange, brightnessFactorRange)
+    fun updateContrast(contrastFactor: Float) {
+        this.contrast = contrastFactor.reduceToRange(sourceFactorRange, contrastFactorRange)
         surface.requestRender()
     }
 }

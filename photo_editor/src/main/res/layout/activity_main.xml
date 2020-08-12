@@ -1,35 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000000"
     tools:context=".MainActivity">
 
-    <FrameLayout
+    <ImageView
+        android:id="@+id/resultImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/surfaceContainer" >
 
-        <CheckBox
-            android:id="@+id/grayscaleCheckBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
 
-            android:textColor="#ffffff"
+        tools:ignore="ContentDescription" />
 
-            android:checked="true"
+    <Button
+        android:id="@+id/brightnessButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Brightness"
 
-            android:text="Grayscale" />
+        app:layout_constraintBottom_toTopOf="@+id/contrastButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
 
-        <Button
-            android:id="@+id/getBitmapButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Get bitmap"
+    <Button
+        android:id="@+id/contrastButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Contrast"
+        app:layout_constraintBottom_toTopOf="@+id/saturationButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/brightnessButton"
+        tools:ignore="HardcodedText" />
 
-            android:layout_gravity="end|top"
-            />
-    </FrameLayout>
-</FrameLayout>
+
+    <Button
+        android:id="@+id/saturationButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Saturation"
+        app:layout_constraintBottom_toTopOf="@+id/whiteBalanceButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/contrastButton"
+        tools:ignore="HardcodedText" />
+
+    <Button
+        android:id="@+id/whiteBalanceButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="White balance"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/saturationButton"
+        tools:ignore="HardcodedText" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
