@@ -1,12 +1,13 @@
 package com.shevelev.photo_editor
 
 import android.app.Activity
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.SeekBar
+import androidx.appcompat.app.AppCompatActivity
 import com.shevelev.photo_editor.cross_activity_communication.CrossActivityCommunicator
 import com.shevelev.photo_editor.open_gl.GLSurfaceViewBitmap
-import com.shevelev.photo_editor.open_gl.renderers.effect.SaturationSurfaceRenderer
+import com.shevelev.photo_editor.open_gl.renderers.effect.OneEffectSurfaceRenderer
+import com.shevelev.photo_editor.open_gl.renderers.effect.effects.SaturationEffect
 import kotlinx.android.synthetic.main.activity_saturation.*
 
 class SaturationActivity : AppCompatActivity() {
@@ -19,12 +20,12 @@ class SaturationActivity : AppCompatActivity() {
         setContentView(R.layout.activity_saturation)
 
         val bitmap = CrossActivityCommunicator.bitmap!!
-        val renderer = SaturationSurfaceRenderer(this, bitmap)
+        val renderer = OneEffectSurfaceRenderer(this, bitmap, SaturationEffect(saturationBar.progress.toFloat()))
         val surface = GLSurfaceViewBitmap.createAndAddToView(this, surfaceContainer, bitmap, renderer)
 
         saturationBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                renderer.updateSaturation(progress.toFloat())
+                renderer.update(progress.toFloat())
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {

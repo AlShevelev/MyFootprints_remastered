@@ -30,6 +30,10 @@ class MainActivity : AppCompatActivity() {
         whiteBalanceButton.setOnClickListener {
             startActivityForResult(Intent(this, WhiteBalanceActivity::class.java), WhiteBalanceActivity.REQUEST)
         }
+
+        combinedButton.setOnClickListener {
+            startActivityForResult(Intent(this, CombinedActivity::class.java), CombinedActivity.REQUEST)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -49,6 +53,9 @@ class MainActivity : AppCompatActivity() {
                 resultImage.setImageBitmap(CrossActivityCommunicator.bitmap)
             }
             WhiteBalanceActivity.REQUEST -> {
+                resultImage.setImageBitmap(CrossActivityCommunicator.bitmap)
+            }
+            CombinedActivity.REQUEST -> {
                 resultImage.setImageBitmap(CrossActivityCommunicator.bitmap)
             }
         }

@@ -1,13 +1,13 @@
 package com.shevelev.photo_editor
 
 import android.app.Activity
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.SeekBar
+import androidx.appcompat.app.AppCompatActivity
 import com.shevelev.photo_editor.cross_activity_communication.CrossActivityCommunicator
 import com.shevelev.photo_editor.open_gl.GLSurfaceViewBitmap
-import com.shevelev.photo_editor.open_gl.renderers.effect.BrightnessSurfaceRenderer
-import com.shevelev.photo_editor.open_gl.renderers.effect.WhiteBalanceSurfaceRenderer
+import com.shevelev.photo_editor.open_gl.renderers.effect.OneEffectSurfaceRenderer
+import com.shevelev.photo_editor.open_gl.renderers.effect.effects.TemperatureEffect
 import kotlinx.android.synthetic.main.activity_white_balance.*
 
 class WhiteBalanceActivity : AppCompatActivity() {
@@ -20,12 +20,12 @@ class WhiteBalanceActivity : AppCompatActivity() {
         setContentView(R.layout.activity_white_balance)
 
         val bitmap = CrossActivityCommunicator.bitmap!!
-        val renderer = WhiteBalanceSurfaceRenderer(this, bitmap)
+        val renderer = OneEffectSurfaceRenderer(this, bitmap, TemperatureEffect(whiteBalanceBar.progress.toFloat()))
         val surface = GLSurfaceViewBitmap.createAndAddToView(this, surfaceContainer, bitmap, renderer)
 
         whiteBalanceBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                renderer.updateWhiteBalance(progress.toFloat())
+                renderer.update(progress.toFloat())
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {

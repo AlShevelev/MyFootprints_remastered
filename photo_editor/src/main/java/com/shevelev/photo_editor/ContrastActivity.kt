@@ -6,7 +6,8 @@ import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
 import com.shevelev.photo_editor.cross_activity_communication.CrossActivityCommunicator
 import com.shevelev.photo_editor.open_gl.GLSurfaceViewBitmap
-import com.shevelev.photo_editor.open_gl.renderers.effect.ContrastSurfaceRenderer
+import com.shevelev.photo_editor.open_gl.renderers.effect.OneEffectSurfaceRenderer
+import com.shevelev.photo_editor.open_gl.renderers.effect.effects.ContrastEffect
 import kotlinx.android.synthetic.main.activity_contrast.*
 
 class ContrastActivity : AppCompatActivity() {
@@ -18,12 +19,12 @@ class ContrastActivity : AppCompatActivity() {
         setContentView(R.layout.activity_contrast)
 
         val bitmap = CrossActivityCommunicator.bitmap!!
-        val renderer = ContrastSurfaceRenderer(this, bitmap)
+        val renderer = OneEffectSurfaceRenderer(this, bitmap, ContrastEffect(contrastBar.progress.toFloat()))
         val surface = GLSurfaceViewBitmap.createAndAddToView(this, surfaceContainer, bitmap, renderer)
 
-        whiteBalanceBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        contrastBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                renderer.updateContrast(progress.toFloat())
+                renderer.update(progress.toFloat())
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {

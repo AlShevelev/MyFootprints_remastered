@@ -1,21 +1,18 @@
 package com.shevelev.photo_editor
 
 import android.app.Activity
-import android.content.Intent
-import android.graphics.BitmapFactory
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Parcelable
 import android.widget.SeekBar
+import androidx.appcompat.app.AppCompatActivity
 import com.shevelev.photo_editor.cross_activity_communication.CrossActivityCommunicator
 import com.shevelev.photo_editor.open_gl.GLSurfaceViewBitmap
-import com.shevelev.photo_editor.open_gl.renderers.effect.BrightnessSurfaceRenderer
+import com.shevelev.photo_editor.open_gl.renderers.effect.OneEffectSurfaceRenderer
+import com.shevelev.photo_editor.open_gl.renderers.effect.effects.BrightnessEffect
 import kotlinx.android.synthetic.main.activity_brightness.*
 
 class BrightnessActivity : AppCompatActivity() {
     companion object {
         const val REQUEST = 42
-        const val BITMAP = "BITMAP_KEY"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,12 +20,12 @@ class BrightnessActivity : AppCompatActivity() {
         setContentView(R.layout.activity_brightness)
 
         val bitmap = CrossActivityCommunicator.bitmap!!
-        val renderer = BrightnessSurfaceRenderer(this, bitmap)
+        val renderer = OneEffectSurfaceRenderer(this, bitmap, BrightnessEffect(brightnessBar.progress.toFloat()))
         val surface = GLSurfaceViewBitmap.createAndAddToView(this, surfaceContainer, bitmap, renderer)
 
         brightnessBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                renderer.updateBrightness(progress.toFloat())
+                renderer.update(progress.toFloat())
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {

@@ -172,7 +172,7 @@ abstract class GLSurfaceRenderedBase(
         GLES20.glEnableVertexAttribArray(positionHandle)
     }
 
-    private fun extractBitmapFromFrame(gl: GL10): Bitmap? {
+    protected fun extractBitmapFromFrame(gl: GL10): Bitmap? {
         val x = 0
         val y = 0
         val width = surfaceSize.width
