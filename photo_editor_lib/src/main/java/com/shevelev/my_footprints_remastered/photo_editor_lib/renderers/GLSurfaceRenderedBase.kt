@@ -1,4 +1,4 @@
-package com.shevelev.photo_editor.open_gl.renderers
+package com.shevelev.my_footprints_remastered.photo_editor_lib.renderers
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -10,8 +10,8 @@ import android.os.Handler
 import android.util.Size
 import androidx.annotation.CallSuper
 import androidx.annotation.RawRes
+import com.shevelev.my_footprints_remastered.photo_editor_lib.R
 import com.shevelev.my_footprints_remastered.utils.resources.getRawString
-import com.shevelev.photo_editor.R
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.FloatBuffer

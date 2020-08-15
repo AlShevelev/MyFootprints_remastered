@@ -1,4 +1,4 @@
-package com.shevelev.photo_editor.open_gl.renderers.effect.effects
+package com.shevelev.my_footprints_remastered.photo_editor_lib.renderers.effect.effects
 
 import android.media.effect.EffectFactory
 import android.util.Range

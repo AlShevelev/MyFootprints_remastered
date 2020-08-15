@@ -4,10 +4,10 @@ import android.app.Activity
 import android.os.Bundle
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
+import com.shevelev.my_footprints_remastered.photo_editor_lib.GLSurfaceViewBitmap
+import com.shevelev.my_footprints_remastered.photo_editor_lib.renderers.effect.effects.ContrastEffect
 import com.shevelev.photo_editor.cross_activity_communication.CrossActivityCommunicator
-import com.shevelev.photo_editor.open_gl.GLSurfaceViewBitmap
 import com.shevelev.photo_editor.open_gl.renderers.effect.OneEffectSurfaceRenderer
-import com.shevelev.photo_editor.open_gl.renderers.effect.effects.ContrastEffect
 import kotlinx.android.synthetic.main.activity_contrast.*
 
 class ContrastActivity : AppCompatActivity() {

@@ -1,8 +1,9 @@
-package com.shevelev.photo_editor.open_gl.renderers
+package com.shevelev.my_footprints_remastered.photo_editor_lib.renderers
 
 import android.content.Context
 import android.graphics.Bitmap
 import androidx.annotation.RawRes
+import com.shevelev.my_footprints_remastered.photo_editor_lib.renderers.GLSurfaceRenderedBase
 import javax.microedition.khronos.opengles.GL10
 
 /**

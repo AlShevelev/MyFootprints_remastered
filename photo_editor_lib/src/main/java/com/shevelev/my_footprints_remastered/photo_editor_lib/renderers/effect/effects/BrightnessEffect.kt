@@ -1,9 +1,9 @@
-package com.shevelev.photo_editor.open_gl.renderers.effect.effects
+package com.shevelev.my_footprints_remastered.photo_editor_lib.renderers.effect.effects
 
 import android.media.effect.EffectFactory
 import android.util.Range
 
-class ContrastEffect(
+class BrightnessEffect(
     sourceFactorStartValue: Float
 ) : EffectBase(
     Range<Float>(0f, 100f),
@@ -12,7 +12,7 @@ class ContrastEffect(
     1f) {
 
     override fun createEffect(factory: EffectFactory): android.media.effect.Effect =
-        factory.createEffect(EffectFactory.EFFECT_CONTRAST).apply {
-            setParameter("contrast", effectFactor)
+        factory.createEffect(EffectFactory.EFFECT_BRIGHTNESS).apply {
+            setParameter("brightness", effectFactor)
         }
 }

@@ -1,4 +1,4 @@
-package com.shevelev.photo_editor.open_gl
+package com.shevelev.my_footprints_remastered.photo_editor_lib
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -8,7 +8,7 @@ import android.util.AttributeSet
 import android.util.SizeF
 import android.view.Gravity
 import android.widget.FrameLayout
-import com.shevelev.photo_editor.open_gl.renderers.GLSurfaceRenderedBase
+import com.shevelev.my_footprints_remastered.photo_editor_lib.renderers.GLSurfaceRenderedBase
 
 class GLSurfaceViewBitmap
 @JvmOverloads

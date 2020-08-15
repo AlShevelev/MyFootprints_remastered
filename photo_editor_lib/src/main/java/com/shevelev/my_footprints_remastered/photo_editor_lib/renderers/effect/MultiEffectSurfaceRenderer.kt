@@ -4,8 +4,8 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.media.effect.Effect
 import android.media.effect.EffectFactory
-import com.shevelev.photo_editor.open_gl.renderers.GLSurfaceEffectRenderedBase
-import com.shevelev.photo_editor.open_gl.renderers.effect.effects.EffectBase
+import com.shevelev.my_footprints_remastered.photo_editor_lib.renderers.GLSurfaceEffectRenderedBase
+import com.shevelev.my_footprints_remastered.photo_editor_lib.renderers.effect.effects.EffectBase
 
 class MultiEffectSurfaceRenderer(
     context: Context,

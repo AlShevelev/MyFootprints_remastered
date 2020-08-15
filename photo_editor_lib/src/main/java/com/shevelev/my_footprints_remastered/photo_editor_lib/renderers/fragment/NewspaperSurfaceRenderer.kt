@@ -1,12 +1,11 @@
-package com.shevelev.photo_editor.open_gl.renderers.fragment
+package com.shevelev.my_footprints_remastered.photo_editor_lib.renderers.fragment
 
 import android.content.Context
 import android.graphics.Bitmap
 import android.opengl.GLES20
 import android.opengl.GLES31
-import com.shevelev.photo_editor.R
-import com.shevelev.photo_editor.open_gl.renderers.GLSurfaceRenderedBase
-import com.shevelev.photo_editor.open_gl.renderers.GLSurfaceShaderRenderedBase
+import com.shevelev.my_footprints_remastered.photo_editor_lib.R
+import com.shevelev.my_footprints_remastered.photo_editor_lib.renderers.GLSurfaceShaderRenderedBase
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.FloatBuffer

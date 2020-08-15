@@ -1,3 +1,4 @@
+include ':photo_editor_lib'
 include ':photo_editor'
 include ':storages'
 include ':common_entities'

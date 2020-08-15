@@ -1,11 +1,11 @@
-package com.shevelev.photo_editor.open_gl.renderers
+package com.shevelev.my_footprints_remastered.photo_editor_lib.renderers
 
 import android.content.Context
 import android.graphics.Bitmap
 import android.media.effect.Effect
 import android.media.effect.EffectContext
 import android.media.effect.EffectFactory
-import com.shevelev.photo_editor.R
+import com.shevelev.my_footprints_remastered.photo_editor_lib.R
 import javax.microedition.khronos.opengles.GL10
 
 /**
