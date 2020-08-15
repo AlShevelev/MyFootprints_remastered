@@ -11,7 +11,7 @@ import com.shevelev.my_footprints_remastered.photo_editor_lib.renderers.effect.e
 import com.shevelev.my_footprints_remastered.photo_editor_lib.renderers.effect.effects.SaturationEffect
 import com.shevelev.my_footprints_remastered.photo_editor_lib.renderers.effect.effects.TemperatureEffect
 import com.shevelev.photo_editor.cross_activity_communication.CrossActivityCommunicator
-import com.shevelev.photo_editor.open_gl.renderers.effect.MultiEffectSurfaceRenderer
+import com.shevelev.my_footprints_remastered.photo_editor_lib.renderers.effect.MultiEffectSurfaceRenderer
 import kotlinx.android.synthetic.main.activity_combined.*
 
 class CombinedActivity : AppCompatActivity() {

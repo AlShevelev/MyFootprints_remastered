@@ -1,4 +1,5 @@
 <resources>
+    <dimen name="textSizeSmall">13sp</dimen>
     <dimen name="textSizeNormal">15sp</dimen>
     <dimen name="textSizeLarge">17sp</dimen>
 
@@ -19,4 +20,5 @@
     <dimen name="onPhotoButtonMargin">5dp</dimen>
     <dimen name="onPhotoSecondButtonMargin">55dp</dimen>
     <dimen name="onPhotoThirdButtonMargin">105dp</dimen>
+    <dimen name="onPhotoButtonsGap">10dp</dimen>
 </resources>

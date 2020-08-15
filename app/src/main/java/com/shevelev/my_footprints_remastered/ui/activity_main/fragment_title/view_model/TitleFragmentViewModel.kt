@@ -65,7 +65,7 @@ constructor(
 
     private fun getLastFootprintUri(fileName: String?): Uri =
         if(fileName == null) {
-            Uri.parse("android.resource://${appContext.packageName}/drawable/img_test_port")
+            Uri.parse("android.resource://${appContext.packageName}/drawable/img_title_empty")
         } else {
             throw UnsupportedOperationException("Footprint displaying is not supported yet!")
         }

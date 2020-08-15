@@ -37,9 +37,20 @@
             app:exitAnim="@anim/nav_slide_out_left"
             app:popEnterAnim="@anim/nav_slide_in_left"
             app:popExitAnim="@anim/nav_slide_out_right" />
+        <action
+            android:id="@+id/action_createFootprintFragment_to_editPhotoFragment"
+            app:destination="@id/editPhotoFragment"
+            app:enterAnim="@anim/nav_slide_in_right"
+            app:exitAnim="@anim/nav_slide_out_left"
+            app:popEnterAnim="@anim/nav_slide_in_left"
+            app:popExitAnim="@anim/nav_slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/cropPhotoFragment"
         android:name="com.shevelev.my_footprints_remastered.ui.activity_main.fragment_crop_photo.CropPhotoFragment"
         android:label="CropPhotoFragment" />
+    <fragment
+        android:id="@+id/editPhotoFragment"
+        android:name="com.shevelev.my_footprints_remastered.ui.activity_main.fragment_edit_photo.EditPhotoFragment"
+        android:label="EditPhotoFragment" />
 </navigation>

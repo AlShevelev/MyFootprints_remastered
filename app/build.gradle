@@ -60,6 +60,7 @@ dependencies {
     implementation project(":utils")
     implementation project(":common_entities")
     implementation project(":storages")
+    implementation project(":photo_editor_lib")
 
     implementation fileTree(dir: "libs", include: ["*.jar"])
 

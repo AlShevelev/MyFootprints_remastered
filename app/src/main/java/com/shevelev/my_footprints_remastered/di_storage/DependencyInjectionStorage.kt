@@ -8,6 +8,7 @@ import com.shevelev.my_footprints_remastered.ui.di.UIComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.di.MainActivityComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.di.CreateFootprintFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_crop_photo.di.CropPhotoFragmentComponent
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_edit_photo.di.EditPhotoFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_select_photo.di.SelectPhotoFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_title.di.TitleFragmentComponent
 import com.shevelev.my_footprints_remastered.utils.id_hash.IdUtil
@@ -86,6 +87,8 @@ class DependencyInjectionStorage(private val app: Application) {
             SelectPhotoFragmentComponent::class -> getBase<CreateFootprintFragmentComponent>().selectPhotoFragment.build()
 
             CropPhotoFragmentComponent::class -> getBase<CreateFootprintFragmentComponent>().cropPhotoFragment.build()
+
+            EditPhotoFragmentComponent::class -> getBase<CreateFootprintFragmentComponent>().editPhotoFragment.build()
 
             else -> throw UnsupportedOperationException("This component is not supported: ${type.simpleName}")
         } as T

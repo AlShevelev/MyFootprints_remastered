@@ -1,4 +1,4 @@
-package com.shevelev.photo_editor.open_gl.renderers.effect
+package com.shevelev.my_footprints_remastered.photo_editor_lib.renderers.effect
 
 import android.content.Context
 import android.graphics.Bitmap

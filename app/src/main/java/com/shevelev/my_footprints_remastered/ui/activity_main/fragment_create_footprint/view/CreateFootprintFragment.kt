@@ -12,10 +12,7 @@ import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_fo
 import com.shevelev.my_footprints_remastered.ui.activity_main.navigation.MainActivityNavigation
 import com.shevelev.my_footprints_remastered.ui.shared.dialogs.OkDialog
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view.FragmentBaseMVVM
-import com.shevelev.my_footprints_remastered.ui.view_commands.MoveBack
-import com.shevelev.my_footprints_remastered.ui.view_commands.MoveToCropPhoto
-import com.shevelev.my_footprints_remastered.ui.view_commands.MoveToSelectPhoto
-import com.shevelev.my_footprints_remastered.ui.view_commands.ViewCommand
+import com.shevelev.my_footprints_remastered.ui.view_commands.*
 import permissions.dispatcher.NeedsPermission
 import permissions.dispatcher.OnPermissionDenied
 import permissions.dispatcher.OnShowRationale
@@ -44,6 +41,7 @@ class CreateFootprintFragment : FragmentBaseMVVM<FragmentCreateFootprintBinding,
             is MoveBack -> navigation.moveBack(this)
             is MoveToSelectPhoto -> moveToSelectPhotoWithPermissionCheck()
             is MoveToCropPhoto -> navigation.moveToCropPhoto(this, command.photo)
+            is MoveToEditPhoto -> navigation.moveToEditPhoto(this, command.photo)
         }
     }
 

@@ -12,6 +12,7 @@ import com.shevelev.my_footprints_remastered.ui.view_commands.MoveBack
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_model.ViewModelBase
 import com.shevelev.my_footprints_remastered.ui.shared.widgets.screen_header.ScreenHeaderBindingCall
 import com.shevelev.my_footprints_remastered.ui.view_commands.MoveToCropPhoto
+import com.shevelev.my_footprints_remastered.ui.view_commands.MoveToEditPhoto
 import com.shevelev.my_footprints_remastered.ui.view_commands.MoveToSelectPhoto
 import com.shevelev.my_footprints_remastered.utils.coroutines.DispatchersProvider
 import kotlinx.coroutines.launch
@@ -55,7 +56,9 @@ constructor(
     }
 
     override fun onFilterPhotoClick() {
-        Timber.d("Filter")
+        model.photoImage?.let {
+            sendCommand(MoveToEditPhoto(it))
+        }
     }
 
     fun onActive() {

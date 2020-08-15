@@ -22,4 +22,9 @@
     <string name="cameraDenied">You didn\'t grant the permission - we can\'t open a camera application, sorry.</string>
     <string name="noCamera">A camera application is not found</string>
     <string name="noGallery">A gallery application is not found</string>
+
+    <string name="brightness">Brightness</string>
+    <string name="contrast">Contrast</string>
+    <string name="saturation">Saturation</string>
+    <string name="temperature">Temperature</string>
 </resources>

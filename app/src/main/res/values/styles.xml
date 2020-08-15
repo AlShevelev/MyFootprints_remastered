@@ -30,6 +30,17 @@
         <item name="android:background">@color/white75</item>
     </style>
 
+    <!-- Edit photo screen -->
+    <style name="EditPhoto.Filter.Button" parent="Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@color/select_filter_button</item>
+        <item name="android:drawableTint">@color/select_filter_button</item>
+        <item name="android:background">@null</item>
+        <item name="android:textSize">@dimen/textSizeSmall</item>
+    </style>
+
     <!-- Common buttons -->
     <style name="Button.Blue" parent="Widget.AppCompat.TextView">
         <item name="android:layout_height">@dimen/toolButtonSize</item>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_width="match_parent"
+
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <FrameLayout
+        android:id="@+id/surfaceContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <ImageButton
+        android:id="@+id/cancelButton"
+
+        style="@style/Button.OnPhoto"
+
+        android:layout_gravity="top|end"
+
+        android:layout_marginTop="@dimen/onPhotoButtonMargin"
+        android:layout_marginEnd="@dimen/onPhotoButtonMargin"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        app:srcCompat="@drawable/ic_close_14_14"
+        tools:ignore="ContentDescription" />
+
+    <ImageButton
+        android:id="@+id/acceptButton"
+
+        style="@style/Button.OnPhoto"
+
+        android:layout_gravity="top|end"
+
+        android:layout_marginTop="@dimen/onPhotoButtonMargin"
+        android:layout_marginEnd="@dimen/onPhotoButtonsGap"
+
+        app:layout_constraintEnd_toStartOf="@+id/cancelButton"
+        app:layout_constraintTop_toTopOf="parent"
+
+        app:srcCompat="@drawable/ic_ok_18_14"
+        tools:ignore="ContentDescription" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+
+        android:background="@drawable/bcg_edit_photo_buttons_panel"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+    <SeekBar
+        android:id="@+id/effectValuesBar"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="20dp"
+        android:max="100"
+
+        android:progress="50"
+
+        app:layout_constraintBottom_toTopOf="@+id/brightnessButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/brightnessButton"
+
+        style="@style/EditPhoto.Filter.Button"
+        android:layout_marginBottom="@dimen/onPhotoButtonMargin"
+
+        android:drawableTop="@drawable/ic_brightness_20_20"
+
+        android:text="@string/brightness"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/contrastButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="HardcodedText" />
+
+    <Button
+        android:id="@+id/contrastButton"
+
+        style="@style/EditPhoto.Filter.Button"
+        android:layout_marginBottom="@dimen/onPhotoButtonMargin"
+
+        android:drawableTop="@drawable/ic_contrast_20_20"
+
+        android:text="@string/contrast"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/saturationButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/brightnessButton"
+        tools:ignore="HardcodedText" />
+
+    <Button
+        android:id="@+id/saturationButton"
+
+        style="@style/EditPhoto.Filter.Button"
+        android:layout_marginBottom="@dimen/onPhotoButtonMargin"
+
+        android:drawableTop="@drawable/ic_saturation_20_20"
+
+        android:text="@string/saturation"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/temperatureButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/contrastButton"
+        tools:ignore="HardcodedText" />
+
+    <Button
+        android:id="@+id/temperatureButton"
+
+        style="@style/EditPhoto.Filter.Button"
+        android:layout_marginBottom="@dimen/onPhotoButtonMargin"
+
+        android:drawableTop="@drawable/ic_temperature_16_20"
+
+        android:text="@string/temperature"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/saturationButton"
+        tools:ignore="HardcodedText" />
+</androidx.constraintlayout.widget.ConstraintLayout>

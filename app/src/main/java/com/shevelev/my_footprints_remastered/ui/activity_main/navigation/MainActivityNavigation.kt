@@ -12,5 +12,7 @@ interface MainActivityNavigation {
 
     fun moveToCropPhoto(fragment: CreateFootprintFragment, photo: File)
 
+    fun moveToEditPhoto(fragment: CreateFootprintFragment, photo: File)
+
     fun moveBack(fragment: Fragment)
 }

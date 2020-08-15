@@ -5,6 +5,7 @@
     <color name="colorAccent">@color/blue</color>
 
     <color name="black">@android:color/black</color>
+    <color name="black50">#80000000</color>
 
     <color name="grayLight">#F0F0F0</color>
 
