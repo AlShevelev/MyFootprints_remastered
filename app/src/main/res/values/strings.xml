@@ -18,8 +18,12 @@
     <string name="generalError">Unfortunately, an error was encountered during the operation.</string>
 
     <string name="externalStorageExplanation">We need permission to read files on your device. We use it to fill a photo list.</string>
-    <string name="externalStorageDenied">You didn\'t grant the permission - we can\'t move to footprint creation, sorry.</string>
-    <string name="cameraDenied">You didn\'t grant the permission - we can\'t open a camera application, sorry.</string>
+    <string name="externalStorageDenied">You haven\'t granted permission - we can\'t move to selecting photo, sorry.</string>
+
+    <string name="geolocationExplanation">To create a footprint, we need access to the device location.</string>
+    <string name="geolocationDenied">You haven\'t granted permission - we can\'t move to footprint creation, sorry.</string>
+
+    <string name="cameraDenied">You haven\'t granted permission - we can\'t open a camera application, sorry.</string>
     <string name="noCamera">A camera application is not found</string>
     <string name="noGallery">A gallery application is not found</string>
 
