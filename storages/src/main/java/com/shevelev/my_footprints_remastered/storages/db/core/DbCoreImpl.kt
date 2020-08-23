@@ -4,18 +4,25 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.shevelev.my_footprints_remastered.storages.db.dao.FootprintDao
+import com.shevelev.my_footprints_remastered.storages.db.dao.LastLocationDao
 import com.shevelev.my_footprints_remastered.storages.db.entities.FootprintDb
-import com.shevelev.my_footprints_remastered.storages.db.type_converters.DateTimeTypeConverter
+import com.shevelev.my_footprints_remastered.storages.db.entities.LastLocationDb
+import com.shevelev.my_footprints_remastered.storages.db.type_converters.DateTypeConverter
+import com.shevelev.my_footprints_remastered.storages.db.type_converters.ZonedDateTimeTypeConverter
 
 @Database(
     entities = [
-        FootprintDb::class
+        FootprintDb::class,
+        LastLocationDb::class
     ],
     version = 1)
 @TypeConverters(
-    DateTimeTypeConverter::class)
+    ZonedDateTimeTypeConverter::class,
+    DateTypeConverter::class)
 abstract class DbCoreImpl: RoomDatabase(), DbCore {
     abstract override val footprint: FootprintDao
+
+    abstract override val lastLocation: LastLocationDao
 
     /**
      * Run some code in transaction

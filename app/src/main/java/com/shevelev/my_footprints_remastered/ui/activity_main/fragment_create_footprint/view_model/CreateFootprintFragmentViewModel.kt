@@ -8,13 +8,13 @@ import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_fo
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.model.CreateFootprintFragmentModel
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.view.widgets.PhotoContainerBindingCall
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.view.widgets.PhotoContainerState
-import com.shevelev.my_footprints_remastered.ui.view_commands.MoveBack
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_model.ViewModelBase
 import com.shevelev.my_footprints_remastered.ui.shared.widgets.screen_header.ScreenHeaderBindingCall
-import com.shevelev.my_footprints_remastered.ui.view_commands.MoveToCropPhoto
-import com.shevelev.my_footprints_remastered.ui.view_commands.MoveToEditPhoto
-import com.shevelev.my_footprints_remastered.ui.view_commands.MoveToSelectPhoto
+import com.shevelev.my_footprints_remastered.ui.view_commands.*
 import com.shevelev.my_footprints_remastered.utils.coroutines.DispatchersProvider
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -34,13 +34,22 @@ constructor(
     private val _containerState = MutableLiveData<PhotoContainerState>(PhotoContainerState.Initial)
     val containerState: LiveData<PhotoContainerState> = _containerState
 
-    override fun onBackClick() {
-        sendCommand(MoveBack())
+    private var locationTrackingJob: Job? = null
+
+    init {
+        launch {
+            if(!model.geolocationProvider.isLocationTrackingEnabled) {
+                delay(100)
+                sendCommand(AskAboutGeolocation())
+            }
+        }
+
+        startLocationTracking()
     }
 
-    override fun onAddPhotoClick() {
-        sendCommand(MoveToSelectPhoto())
-    }
+    override fun onBackClick() = sendCommand(MoveBack())
+
+    override fun onAddPhotoClick() = sendCommand(MoveToSelectPhoto())
 
     override fun onClearPhotoClick() {
         launch {
@@ -61,7 +70,7 @@ constructor(
         }
     }
 
-    fun onActive() {
+    fun onViewCreated() {
         launch {
             model.processNewPhotoSelected { state ->
                 when(state) {
@@ -70,5 +79,25 @@ constructor(
                 }
             }
         }
+    }
+
+    fun onGotoLocationSettingsSelected() = sendCommand(OpenLocationSettings())
+
+    override fun onCleared() {
+        super.onCleared()
+        stopLocationTracking()
+    }
+
+    private fun startLocationTracking() {
+        stopLocationTracking()
+        locationTrackingJob = launch {
+            model.geolocationProvider.startTracking()
+        }
+    }
+
+    private fun stopLocationTracking() {
+        model.geolocationProvider.stopTracking()
+        locationTrackingJob?.takeIf { isActive }?.cancel()
+        locationTrackingJob = null
     }
 }

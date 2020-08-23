@@ -71,7 +71,7 @@ class SelectPhotoFragment : FragmentBaseMVVM<FragmentSelectPhotoBinding, SelectP
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if(!cameraHelper.processCameraPhotoResult(requestCode, resultCode) { viewModel.onCameraImageCaptured(it) }) {
-            galleryHelper.processCameraPhotoResult(requestCode, resultCode, data) { viewModel.onGalleryImageCaptured(it) }
+            galleryHelper.processGalleryPhotoResult(requestCode, resultCode, data) { viewModel.onGalleryImageCaptured(it) }
         }
     }
 
@@ -102,7 +102,7 @@ class SelectPhotoFragment : FragmentBaseMVVM<FragmentSelectPhotoBinding, SelectP
     }
 
     private fun openGallery() {
-        if(!galleryHelper.takePhoto(this)) {
+        if(!galleryHelper.takeGalleryPhoto(this)) {
             showMessage(R.string.noGallery)
         }
     }

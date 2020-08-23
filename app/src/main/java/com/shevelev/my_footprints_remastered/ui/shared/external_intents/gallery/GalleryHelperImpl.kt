@@ -17,7 +17,7 @@ constructor(
         private const val REQUEST = 1761
     }
 
-    override fun takePhoto(fragment: Fragment): Boolean {
+    override fun takeGalleryPhoto(fragment: Fragment): Boolean {
         val takePictureIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
 
         if (takePictureIntent.resolveActivity(appContext.packageManager) == null) {
@@ -29,7 +29,7 @@ constructor(
 
     }
 
-    override fun processCameraPhotoResult(requestCode: Int, resultCode: Int, data: Intent?, successAction: (Uri) -> Unit): Boolean {
+    override fun processGalleryPhotoResult(requestCode: Int, resultCode: Int, data: Intent?, successAction: (Uri) -> Unit): Boolean {
         if(resultCode != Activity.RESULT_OK || requestCode != REQUEST) {
             return false
         }

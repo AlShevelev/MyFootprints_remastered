@@ -31,4 +31,8 @@
     <string name="contrast">Contrast</string>
     <string name="saturation">Saturation</string>
     <string name="temperature">Temperature</string>
+
+    <string name="enable_location_question">You should enable the Location Services to refine your location</string>
+    <string name="go_to_settings">Go to Settings</string>
+    <string name="not_now">Not now</string>
 </resources>

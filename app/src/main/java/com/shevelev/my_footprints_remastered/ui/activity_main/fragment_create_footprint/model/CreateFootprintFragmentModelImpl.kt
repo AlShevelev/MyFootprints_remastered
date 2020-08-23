@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.dto.SelectedPhotoLoadingState
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.model.data_bridge.CreateFootprintFragmentDataBridge
+import com.shevelev.my_footprints_remastered.ui.activity_main.geolocation.GeolocationProviderManager
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.model.ModelBaseImpl
 import com.shevelev.my_footprints_remastered.utils.coroutines.DispatchersProvider
 import com.shevelev.my_footprints_remastered.utils.id_hash.IdUtil
@@ -17,7 +18,8 @@ class CreateFootprintFragmentModelImpl
 constructor(
     private val  appContext: Context,
     private val dispatchersProvider: DispatchersProvider,
-    private val dataBridge: CreateFootprintFragmentDataBridge
+    private val dataBridge: CreateFootprintFragmentDataBridge,
+    override val geolocationProvider: GeolocationProviderManager
 ) : ModelBaseImpl(),
     CreateFootprintFragmentModel {
 

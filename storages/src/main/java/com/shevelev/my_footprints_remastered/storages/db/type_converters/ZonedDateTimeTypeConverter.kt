@@ -7,7 +7,7 @@ import com.shevelev.my_footprints_remastered.utils.date_time.toZoneDateTime
 import org.threeten.bp.ZonedDateTime
 import java.nio.ByteBuffer
 
-class DateTimeTypeConverter {
+class ZonedDateTimeTypeConverter {
     @TypeConverter
     fun toDb(sourceData: ZonedDateTime?): ByteArray? =
         sourceData?.let {
