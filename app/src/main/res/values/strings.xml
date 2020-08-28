@@ -2,6 +2,7 @@
     <string name="appName">My Footprints (remastered)</string>
 
     <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
 
     <string name="newFootprint">New footprint</string>
     <string name="myWorld">My world</string>
@@ -35,4 +36,10 @@
     <string name="enable_location_question">You should enable the Location Services to refine your location</string>
     <string name="go_to_settings">Go to Settings</string>
     <string name="not_now">Not now</string>
+
+    <string name="pin_background">Pin background</string>
+    <string name="pin_text">Pin text</string>
+    <string name="pin_color_select">Select pin color</string>
+
+    <string name="times_square">Times Square, NYC</string>
 </resources>

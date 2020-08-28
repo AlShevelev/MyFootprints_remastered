@@ -4,6 +4,7 @@
     <dimen name="textSizeLarge">17sp</dimen>
 
     <dimen name="strokeThin">1dp</dimen>
+    <dimen name="strokeNormal">2dp</dimen>
 
     <dimen name="titleScreenButtonsMargin">5dp</dimen>
     <dimen name="titleScreenTotalLabelMargin">5dp</dimen>
@@ -21,4 +22,9 @@
     <dimen name="onPhotoSecondButtonMargin">55dp</dimen>
     <dimen name="onPhotoThirdButtonMargin">105dp</dimen>
     <dimen name="onPhotoButtonsGap">10dp</dimen>
+
+    <!--<editor-fold desc="Color selection control">-->
+    <dimen name="selectColorItemSize">40dp</dimen>
+    <dimen name="selectColorMargin">5dp</dimen>
+    <!--</editor-fold>-->
 </resources>

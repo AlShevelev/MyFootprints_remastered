@@ -1,6 +1,7 @@
 package com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.view
 
 import android.Manifest
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import com.shevelev.my_footprints_remastered.R
@@ -11,9 +12,11 @@ import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_fo
 import com.shevelev.my_footprints_remastered.ui.activity_main.navigation.MainActivityNavigation
 import com.shevelev.my_footprints_remastered.ui.shared.dialogs.ConfirmationDialog
 import com.shevelev.my_footprints_remastered.ui.shared.dialogs.OkDialog
+import com.shevelev.my_footprints_remastered.ui.shared.dialogs.selectColor.SelectColorDialog
 import com.shevelev.my_footprints_remastered.ui.shared.external_intents.location_settings.LocationSettingsHelper
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view.FragmentBaseMVVM
 import com.shevelev.my_footprints_remastered.ui.view_commands.*
+import kotlinx.android.synthetic.main.fragment_create_footprint.*
 import permissions.dispatcher.NeedsPermission
 import permissions.dispatcher.OnPermissionDenied
 import permissions.dispatcher.OnShowRationale
@@ -60,10 +63,14 @@ class CreateFootprintFragment : FragmentBaseMVVM<FragmentCreateFootprintBinding,
         when(requestCode) {
             OkDialog.REQUEST_CODE -> proceedMoveToSelectPhotoPermissionRequest()
             ConfirmationDialog.REQUEST_CODE -> if(!isCanceled) viewModel.onGotoLocationSettingsSelected()
+            SelectColorDialog.REQUEST_CODE -> {}
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) = viewModel.onViewCreated()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        viewModel.onViewCreated()
+        saveButton.setOnClickListener { showColorDialog() }
+    }
 
     @NeedsPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
     internal fun moveToSelectPhoto() = navigation.moveToSelectPhoto(this)
@@ -74,4 +81,8 @@ class CreateFootprintFragment : FragmentBaseMVVM<FragmentCreateFootprintBinding,
 
     @OnPermissionDenied(Manifest.permission.WRITE_EXTERNAL_STORAGE)
     internal fun moveToSelectPhotoDenied() = showMessage(R.string.externalStorageDenied)
+
+    private fun showColorDialog() {
+        SelectColorDialog.show(this, Color.BLACK, Color.WHITE, R.string.times_square)
+    }
 }

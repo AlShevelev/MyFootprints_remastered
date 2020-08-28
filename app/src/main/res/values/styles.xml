@@ -7,6 +7,12 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!-- Theme for dialogs on Main screen -->
+    <style name="App.Activity.Main.Dialog.Theme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/colorPrimary</item>  <!--Buttons-->
+        <item name="android:textColorPrimary">@color/black</item> <!--Text-->
+    </style>
+
     <!-- Title screen -->
     <style name="TitleScreen.Button" parent="Widget.AppCompat.TextView">
         <item name="android:background">@null</item>

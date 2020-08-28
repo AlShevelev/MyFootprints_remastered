@@ -8,6 +8,7 @@
     <color name="black50">#80000000</color>
 
     <color name="grayLight">#F0F0F0</color>
+    <color name="gray">#afafaf</color>
 
     <color name="blueLight">#73E8FF</color>
     <color name="blue">#29B6F6</color>
@@ -16,4 +17,21 @@
     <color name="white">@android:color/white</color>
     <color name="white50">#80FFFFFF</color>
     <color name="white75">#BFFFFFFF</color>
+
+    <color name="red">#d50000</color>
+    <color name="pink">#c51162</color>
+    <color name="purple">#aa00ff</color>
+    <color name="deepPurple">#6200ea</color>
+    <color name="indigo">#304ffe</color>
+    <color name="bluePin">#2962ff</color>
+    <color name="lightBlue">#0091ea</color>
+    <color name="cyan">#00b8d4</color>
+    <color name="teal">#00dfa5</color>
+    <color name="green">#00c853</color>
+    <color name="lightGreen">#64dd17</color>
+    <color name="lime">#aeea00</color>
+    <color name="yellow">#ffd600</color>
+    <color name="amber">#ffab00</color>
+    <color name="orange">#ff6d00</color>
+    <color name="deepOrange">#dd2c00</color>
 </resources>

@@ -1,0 +1,5 @@
+<resources>
+    <!--<editor-fold desc="Color selection control">-->
+    <dimen name="selectColorItemSize">35dp</dimen>
+    <!--</editor-fold>-->
+</resources>

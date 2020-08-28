@@ -1,8 +1,9 @@
 package com.shevelev.my_footprints_remastered.utils.resources
 
 import android.content.Context
-import androidx.annotation.RawRes
-import androidx.annotation.StringRes
+import android.content.res.Configuration
+import android.graphics.drawable.Drawable
+import androidx.annotation.*
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
 import java.io.IOException
@@ -29,3 +30,9 @@ fun Context.getRawString(@RawRes resId: Int): String =
         Timber.e(ex)
         throw ex
     }
+
+fun Context.getDimension(@DimenRes resId: Int): Float = this.resources.getDimension(resId)
+
+fun Context.isPortrait(): Boolean {
+    return resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
+}

@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <com.shevelev.my_footprints_remastered.ui.shared.dialogs.selectColor.SelectColorGridItem
+        android:layout_width="@dimen/selectColorItemSize"
+        android:layout_height="@dimen/selectColorItemSize"
+        android:id="@+id/selectColorGridItem11"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+
+        app:markColor="@color/white"
+        app:strokeColor="@color/black"
+        app:fillColor="@color/black"
+    />
+    <com.shevelev.my_footprints_remastered.ui.shared.dialogs.selectColor.SelectColorGridItem
+        android:layout_width="@dimen/selectColorItemSize"
+        android:layout_height="@dimen/selectColorItemSize"
+        android:id="@+id/selectColorGridItem12"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/selectColorGridItem11"
+
+        app:markColor="@color/black"
+        app:strokeColor="@color/black"
+        app:fillColor="@color/white"
+        android:layout_marginStart="@dimen/selectColorMargin"/>
+    <com.shevelev.my_footprints_remastered.ui.shared.dialogs.selectColor.SelectColorGridItem
+        android:layout_width="@dimen/selectColorItemSize"
+        android:layout_height="@dimen/selectColorItemSize"
+        android:id="@+id/selectColorGridItem13"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/selectColorGridItem12"
+
+        app:markColor="@color/white"
+        app:strokeColor="@color/red"
+        app:fillColor="@color/red"
+        android:layout_marginStart="@dimen/selectColorMargin"/>
+    <com.shevelev.my_footprints_remastered.ui.shared.dialogs.selectColor.SelectColorGridItem
+        android:layout_width="@dimen/selectColorItemSize"
+        android:layout_height="@dimen/selectColorItemSize"
+        android:id="@+id/selectColorGridItem14"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/selectColorGridItem13"
+
+        app:markColor="@color/white"
+        app:strokeColor="@color/pink"
+        app:fillColor="@color/pink"
+        android:layout_marginStart="@dimen/selectColorMargin"/>
+    <com.shevelev.my_footprints_remastered.ui.shared.dialogs.selectColor.SelectColorGridItem
+        android:layout_width="@dimen/selectColorItemSize"
+        android:layout_height="@dimen/selectColorItemSize"
+        android:id="@+id/selectColorGridItem15"
+        app:layout_constraintStart_toEndOf="@+id/selectColorGridItem14"
+        app:layout_constraintTop_toTopOf="parent"
+
+        app:markColor="@color/white"
+        app:strokeColor="@color/purple"
+        app:fillColor="@color/purple"
+        android:layout_marginStart="@dimen/selectColorMargin"/>
+    <com.shevelev.my_footprints_remastered.ui.shared.dialogs.selectColor.SelectColorGridItem
+        android:layout_width="@dimen/selectColorItemSize"
+        android:layout_height="@dimen/selectColorItemSize"
+        android:id="@+id/selectColorGridItem16"
+        app:layout_constraintStart_toEndOf="@+id/selectColorGridItem15"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:markColor="@color/white"
+        app:strokeColor="@color/deepPurple"
+        app:fillColor="@color/deepPurple"
+        android:layout_marginStart="@dimen/selectColorMargin"/>
+    <com.shevelev.my_footprints_remastered.ui.shared.dialogs.selectColor.SelectColorGridItem
+        android:layout_width="@dimen/selectColorItemSize"
+        android:layout_height="@dimen/selectColorItemSize"
+        android:id="@+id/selectColorGridItem21"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/selectColorGridItem11"
+
+        app:markColor="@color/white"
+        app:strokeColor="@color/indigo"
+        app:fillColor="@color/indigo"
+        android:layout_marginTop="@dimen/selectColorMargin"/>
+    <com.shevelev.my_footprints_remastered.ui.shared.dialogs.selectColor.SelectColorGridItem
+        android:layout_width="@dimen/selectColorItemSize"
+        android:layout_height="@dimen/selectColorItemSize"
+        android:id="@+id/selectColorGridItem22"
+        app:layout_constraintStart_toEndOf="@+id/selectColorGridItem21"
+        app:layout_constraintTop_toBottomOf="@+id/selectColorGridItem12"
+
+        app:markColor="@color/white"
+        app:strokeColor="@color/blue"
+        app:fillColor="@color/blue"
+        android:layout_marginTop="@dimen/selectColorMargin"
+        android:layout_marginStart="@dimen/selectColorMargin"/>
+    <com.shevelev.my_footprints_remastered.ui.shared.dialogs.selectColor.SelectColorGridItem
+        android:layout_width="@dimen/selectColorItemSize"
+        android:layout_height="@dimen/selectColorItemSize"
+        android:id="@+id/selectColorGridItem23"
+        app:layout_constraintStart_toEndOf="@+id/selectColorGridItem22"
+        app:layout_constraintTop_toBottomOf="@+id/selectColorGridItem13"
+
+        app:markColor="@color/white"
+        app:strokeColor="@color/lightBlue"
+        app:fillColor="@color/lightBlue"
+        android:layout_marginTop="@dimen/selectColorMargin"
+        android:layout_marginStart="@dimen/selectColorMargin"/>
+    <com.shevelev.my_footprints_remastered.ui.shared.dialogs.selectColor.SelectColorGridItem
+        android:layout_width="@dimen/selectColorItemSize"
+        android:layout_height="@dimen/selectColorItemSize"
+        android:id="@+id/selectColorGridItem24"
+        app:layout_constraintStart_toEndOf="@+id/selectColorGridItem23"
+        app:layout_constraintTop_toBottomOf="@+id/selectColorGridItem14"
+
+        app:markColor="@color/black"
+        app:strokeColor="@color/cyan"
+        app:fillColor="@color/cyan"
+        android:layout_marginTop="@dimen/selectColorMargin"
+        android:layout_marginStart="@dimen/selectColorMargin"/>
+    <com.shevelev.my_footprints_remastered.ui.shared.dialogs.selectColor.SelectColorGridItem
+        android:layout_width="@dimen/selectColorItemSize"
+        android:layout_height="@dimen/selectColorItemSize"
+        android:id="@+id/selectColorGridItem25"
+        app:layout_constraintStart_toEndOf="@+id/selectColorGridItem24"
+        app:layout_constraintTop_toBottomOf="@+id/selectColorGridItem15"
+
+        app:markColor="@color/black"
+        app:strokeColor="@color/teal"
+        app:fillColor="@color/teal"
+        android:layout_marginTop="@dimen/selectColorMargin"
+        android:layout_marginStart="@dimen/selectColorMargin"/>
+    <com.shevelev.my_footprints_remastered.ui.shared.dialogs.selectColor.SelectColorGridItem
+        android:layout_width="@dimen/selectColorItemSize"
+        android:layout_height="@dimen/selectColorItemSize"
+        android:id="@+id/selectColorGridItem26"
+        app:layout_constraintStart_toEndOf="@+id/selectColorGridItem25"
+        app:layout_constraintTop_toBottomOf="@+id/selectColorGridItem16"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:markColor="@color/white"
+        app:strokeColor="@color/green"
+        app:fillColor="@color/green"
+        android:layout_marginTop="@dimen/selectColorMargin"
+        android:layout_marginStart="@dimen/selectColorMargin"/>
+    <com.shevelev.my_footprints_remastered.ui.shared.dialogs.selectColor.SelectColorGridItem
+        android:layout_width="@dimen/selectColorItemSize"
+        android:layout_height="@dimen/selectColorItemSize"
+        android:id="@+id/selectColorGridItem31"
+        app:layout_constraintTop_toBottomOf="@+id/selectColorGridItem21"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        app:markColor="@color/black"
+        app:strokeColor="@color/lightGreen"
+        app:fillColor="@color/lightGreen"
+        android:layout_marginTop="@dimen/selectColorMargin"/>
+    <com.shevelev.my_footprints_remastered.ui.shared.dialogs.selectColor.SelectColorGridItem
+        android:layout_width="@dimen/selectColorItemSize"
+        android:layout_height="@dimen/selectColorItemSize"
+        android:id="@+id/selectColorGridItem32"
+        app:layout_constraintStart_toEndOf="@+id/selectColorGridItem31"
+        app:layout_constraintTop_toBottomOf="@+id/selectColorGridItem22"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        app:markColor="@color/black"
+        app:strokeColor="@color/lime"
+        app:fillColor="@color/lime"
+        android:layout_marginTop="@dimen/selectColorMargin"
+        android:layout_marginStart="@dimen/selectColorMargin"/>
+
+    <com.shevelev.my_footprints_remastered.ui.shared.dialogs.selectColor.SelectColorGridItem
+        android:layout_width="@dimen/selectColorItemSize"
+        android:layout_height="@dimen/selectColorItemSize"
+        android:id="@+id/selectColorGridItem33"
+        app:layout_constraintStart_toEndOf="@+id/selectColorGridItem32"
+        app:layout_constraintTop_toBottomOf="@+id/selectColorGridItem23"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        app:markColor="@color/black"
+        app:strokeColor="@color/yellow"
+        app:fillColor="@color/yellow"
+        android:layout_marginTop="@dimen/selectColorMargin"
+        android:layout_marginStart="@dimen/selectColorMargin"/>
+    <com.shevelev.my_footprints_remastered.ui.shared.dialogs.selectColor.SelectColorGridItem
+        android:layout_width="@dimen/selectColorItemSize"
+        android:layout_height="@dimen/selectColorItemSize"
+        android:id="@+id/selectColorGridItem34"
+        app:layout_constraintStart_toEndOf="@+id/selectColorGridItem33"
+        app:layout_constraintTop_toBottomOf="@+id/selectColorGridItem24"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        app:markColor="@color/white"
+        app:strokeColor="@color/amber"
+        app:fillColor="@color/amber"
+        android:layout_marginTop="@dimen/selectColorMargin"
+        android:layout_marginStart="@dimen/selectColorMargin"/>
+    <com.shevelev.my_footprints_remastered.ui.shared.dialogs.selectColor.SelectColorGridItem
+        android:layout_width="@dimen/selectColorItemSize"
+        android:layout_height="@dimen/selectColorItemSize"
+        android:id="@+id/selectColorGridItem35"
+        app:layout_constraintStart_toEndOf="@+id/selectColorGridItem34"
+        app:layout_constraintTop_toBottomOf="@+id/selectColorGridItem25"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        app:markColor="@color/white"
+        app:strokeColor="@color/orange"
+        app:fillColor="@color/orange"
+        android:layout_marginTop="@dimen/selectColorMargin"
+        android:layout_marginStart="@dimen/selectColorMargin"/>
+    <com.shevelev.my_footprints_remastered.ui.shared.dialogs.selectColor.SelectColorGridItem
+        android:layout_width="@dimen/selectColorItemSize"
+        android:layout_height="@dimen/selectColorItemSize"
+        android:id="@+id/selectColorGridItem36"
+        app:layout_constraintTop_toBottomOf="@+id/selectColorGridItem26"
+        app:layout_constraintStart_toEndOf="@+id/selectColorGridItem35"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        app:markColor="@color/white"
+        app:strokeColor="@color/deepOrange"
+        app:fillColor="@color/deepOrange"
+        android:layout_marginTop="@dimen/selectColorMargin"
+        android:layout_marginStart="@dimen/selectColorMargin"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
