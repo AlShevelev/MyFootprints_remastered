@@ -67,6 +67,8 @@
 
             style="@style/Text.SizeNormal.Normal.Black"
 
+            android:text="@={viewModel.comment}"
+
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/header"

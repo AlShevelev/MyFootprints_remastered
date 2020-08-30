@@ -16,7 +16,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 class CreateFootprintFragmentViewModel
@@ -34,6 +33,8 @@ constructor(
     private val _containerState = MutableLiveData<PhotoContainerState>(PhotoContainerState.Initial)
     val containerState: LiveData<PhotoContainerState> = _containerState
 
+    val comment = MutableLiveData<String>()
+
     private var locationTrackingJob: Job? = null
 
     init {
@@ -45,6 +46,10 @@ constructor(
         }
 
         startLocationTracking()
+
+        comment.observeForever {
+            model.sharedFootprint.comment = it
+        }
     }
 
     override fun onBackClick() = sendCommand(MoveBack())
@@ -59,13 +64,13 @@ constructor(
     }
 
     override fun onCropPhotoClick() {
-        model.photoImage?.let {
+        model.sharedFootprint.image?.let {
             sendCommand(MoveToCropPhoto(it))
         }
     }
 
     override fun onFilterPhotoClick() {
-        model.photoImage?.let {
+        model.sharedFootprint.image?.let {
             sendCommand(MoveToEditPhoto(it))
         }
     }

@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.dto.SelectedPhotoLoadingState
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.model.data_bridge.CreateFootprintFragmentDataBridge
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.model.shared_footprint.SharedFootprint
 import com.shevelev.my_footprints_remastered.ui.activity_main.geolocation.GeolocationProviderManager
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.model.ModelBaseImpl
 import com.shevelev.my_footprints_remastered.utils.coroutines.DispatchersProvider
@@ -19,12 +20,10 @@ constructor(
     private val  appContext: Context,
     private val dispatchersProvider: DispatchersProvider,
     private val dataBridge: CreateFootprintFragmentDataBridge,
-    override val geolocationProvider: GeolocationProviderManager
+    override val geolocationProvider: GeolocationProviderManager,
+    override val sharedFootprint: SharedFootprint
 ) : ModelBaseImpl(),
     CreateFootprintFragmentModel {
-
-    override var photoImage: File? = null
-    private set
 
     override suspend fun processNewPhotoSelected(callbackAction: (SelectedPhotoLoadingState) -> Unit) {
         val selectedPhotoFile = dataBridge.extractPhotoFile()
@@ -33,35 +32,35 @@ constructor(
 
         when {
             selectedPhotoFile != null -> {
-                photoImage = selectedPhotoFile
-                callbackAction(SelectedPhotoLoadingState.Ready(photoImage!!))
+                sharedFootprint.image = selectedPhotoFile
+                callbackAction(SelectedPhotoLoadingState.Ready(sharedFootprint.image!!))
             }
             selectedPhotoUri != null -> {
                 callbackAction(SelectedPhotoLoadingState.Loading)
 
                 withContext(dispatchersProvider.ioDispatcher) {
-                    photoImage = copyUriToFile(selectedPhotoUri)
+                    sharedFootprint.image = copyUriToFile(selectedPhotoUri)
                 }
 
-                callbackAction(SelectedPhotoLoadingState.Ready(photoImage!!))
+                callbackAction(SelectedPhotoLoadingState.Ready(sharedFootprint.image!!))
             }
             selectedPhotoBitmap != null -> {
                 callbackAction(SelectedPhotoLoadingState.Loading)
 
                 withContext(dispatchersProvider.ioDispatcher) {
-                    photoImage = copyBitmapToFile(selectedPhotoBitmap)
+                    sharedFootprint.image = copyBitmapToFile(selectedPhotoBitmap)
                 }
 
-                callbackAction(SelectedPhotoLoadingState.Ready(photoImage!!))
+                callbackAction(SelectedPhotoLoadingState.Ready(sharedFootprint.image!!))
             }
         }
     }
 
     override suspend fun clearPhoto() {
         withContext(dispatchersProvider.ioDispatcher) {
-            photoImage?.delete()
+            sharedFootprint.image?.delete()
         }
-        photoImage = null
+        sharedFootprint.image = null
     }
 
     private fun copyUriToFile(uri: Uri): File {
