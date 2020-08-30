@@ -90,6 +90,8 @@ class DependencyInjectionStorage(private val app: Application) {
 
             EditPhotoFragmentComponent::class -> getBase<CreateFootprintFragmentComponent>().editPhotoFragment.build()
 
+            CreateFootprintFragmentComponent::class -> getBase<CreateFootprintFragmentComponent>().createFootprintMapFragment.build()
+
             else -> throw UnsupportedOperationException("This component is not supported: ${type.simpleName}")
         } as T
     }
