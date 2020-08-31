@@ -19,6 +19,10 @@ constructor() : MainActivityNavigation {
     override fun moveToCreateFootprint(fragment: TitleFragment) =
         fragment.findNavController().navigate(R.id.action_titleFragment_to_createFootprintFragment)
 
+    override fun moveToCreateFootprintMap(fragment: CreateFootprintFragment) {
+        fragment.findNavController().navigate(R.id.action_createFootprintFragment_to_createFootprintMapFragment)
+    }
+
     override fun moveToSelectPhoto(fragment: CreateFootprintFragment) =
         fragment.findNavController().navigate(R.id.action_createFootprintFragment_to_selectPhotoFragment)
 

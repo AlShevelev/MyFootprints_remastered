@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable name="viewModel" type="com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint_map.view_model.CreateFootprintMapFragmentViewModel" />
@@ -13,5 +15,59 @@
         android:paddingStart="@dimen/screenPadding"
         android:paddingEnd="@dimen/screenPadding">
 
+        <com.shevelev.my_footprints_remastered.ui.shared.widgets.screen_header.ScreenHeader
+            android:id="@+id/header"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/screenHeaderHeight"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:on_back_click="@{ () -> viewModel.onBackClick() }"
+            app:title="@{viewModel.title}" />
+
+        <FrameLayout
+            android:id="@+id/mapContainer"
+
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/header"
+            app:layout_constraintBottom_toTopOf="@id/hGuidelineBottom48"
+        />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/hGuidelineBottom48"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_end="53dp" />
+
+        <ImageButton
+            android:id="@+id/mapButton"
+            app:srcCompat="@drawable/ic_image_18_18"
+
+            style="@style/Button.Tool"
+
+            app:on_back_click="@{ () -> viewModel.onBackClick() }"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/hGuidelineBottom48"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="wrap_content"
+            android:text="@string/save"
+
+            style="@style/Button.Blue"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/hGuidelineBottom48"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

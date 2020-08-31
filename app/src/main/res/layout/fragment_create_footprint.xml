@@ -39,6 +39,8 @@
 
             style="@style/Button.Tool"
 
+            app:on_move_to_map_click="@{ () -> viewModel.onMoveToMapClick() }"
+
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/hGuidelineBottom48"
             app:layout_constraintBottom_toBottomOf="parent"

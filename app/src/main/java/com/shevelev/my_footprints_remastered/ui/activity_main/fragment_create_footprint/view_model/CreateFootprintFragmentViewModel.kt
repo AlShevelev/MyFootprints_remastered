@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.shevelev.my_footprints_remastered.R
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.dto.SelectedPhotoLoadingState
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.model.CreateFootprintFragmentModel
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.view.ButtonsBindingCall
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.view.widgets.PhotoContainerBindingCall
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.view.widgets.PhotoContainerState
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_model.ViewModelBase
@@ -26,7 +27,8 @@ constructor(
     model: CreateFootprintFragmentModel
 ) : ViewModelBase<CreateFootprintFragmentModel>(dispatchersProvider, model),
     PhotoContainerBindingCall,
-    ScreenHeaderBindingCall {
+    ScreenHeaderBindingCall,
+    ButtonsBindingCall {
 
     val title = appContext.getString(R.string.createFootprint)
 
@@ -92,6 +94,8 @@ constructor(
         super.onCleared()
         stopLocationTracking()
     }
+
+    override fun onMoveToMapClick() = sendCommand(MoveToCreateFootprintMap())
 
     private fun startLocationTracking() {
         stopLocationTracking()

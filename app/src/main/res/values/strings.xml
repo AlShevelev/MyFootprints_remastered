@@ -14,6 +14,7 @@
     <string name="selectPhoto">Select photo</string>
     <string name="retry">Retry</string>
     <string name="createFootprint">Create footprint</string>
+    <string name="setLocation">Set location</string>
     <string name="addPhoto">Add photo</string>
 
     <string name="generalError">Unfortunately, an error was encountered during the operation.</string>
