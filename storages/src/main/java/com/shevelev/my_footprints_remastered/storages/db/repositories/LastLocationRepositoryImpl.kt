@@ -36,9 +36,9 @@ constructor(
         }
     }
 
-    private fun LastLocationDb.mapToLocation() = Location(provider).apply {
-        latitude = latitude
-        longitude = longitude
-        time = time
+    private fun LastLocationDb.mapToLocation() = Location(provider).also {
+        it.latitude = latitude
+        it.longitude = longitude
+        it.time = time.time
     }
 }

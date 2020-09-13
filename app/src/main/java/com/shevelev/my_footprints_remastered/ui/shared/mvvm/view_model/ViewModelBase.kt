@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.shevelev.my_footprints_remastered.R
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.model.ModelBase
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.model.ModelBaseImpl
+import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_model.single_live_data.SingleLiveDataFirstWinner
 import com.shevelev.my_footprints_remastered.ui.view_commands.ShowMessageRes
 import com.shevelev.my_footprints_remastered.ui.view_commands.ViewCommand
 import com.shevelev.my_footprints_remastered.utils.coroutines.DispatchersProvider
@@ -39,7 +40,7 @@ constructor(
     /**
      * Direct command for view
      */
-    private val _command = SingleLiveData<ViewCommand>()
+    private val _command = SingleLiveDataFirstWinner<ViewCommand>()
     val command: LiveData<ViewCommand>  = _command
 
     /**

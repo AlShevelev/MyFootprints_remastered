@@ -12,10 +12,14 @@ class ShowMessageText(val text: String): ViewCommand
 // Navigation
 class MoveBack: ViewCommand
 class MoveToCreateFootprint : ViewCommand
-class MoveToCreateFootprintMap : ViewCommand
+class MoveToSetLocation : ViewCommand
 class MoveToSelectPhoto : ViewCommand
 class MoveToCropPhoto(val photo: File): ViewCommand
 class MoveToEditPhoto(val photo: File): ViewCommand
+
+// Child fragments for SetLocationFragment
+class AddMapForSetLocation(): ViewCommand
+class AddStubForSetLocation(): ViewCommand
 
 class OpenCamera : ViewCommand
 class OpenGallery : ViewCommand

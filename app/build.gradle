@@ -15,6 +15,12 @@ android {
         versionName "$app_version_name"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        def secureProps = new Properties()
+        if (file("../../../../secure.properties").exists()) {
+            file("../../../../secure.properties")?.withInputStream { secureProps.load(it) }
+        }
+        resValue "string", "mapsApiKey", (secureProps.getProperty("MAPS_API_KEY") ?: "")
     }
 
     compileOptions {
@@ -97,6 +103,8 @@ dependencies {
 
     implementation "com.github.chrisbanes:PhotoView:$photo_view_version"
     implementation "com.isseiaoki:simplecropview:$crop_view_version"
+
+    implementation "com.google.android.gms:play-services-maps:$maps_version"
 
     testImplementation "junit:junit:$junit_version"
     androidTestImplementation "androidx.test.ext:junit:$junit_test_ext_version"

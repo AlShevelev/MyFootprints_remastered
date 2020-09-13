@@ -40,11 +40,8 @@ constructor(
     private var locationTrackingJob: Job? = null
 
     init {
-        launch {
-            if(!model.geolocationProvider.isLocationTrackingEnabled) {
-                delay(100)
-                sendCommand(AskAboutGeolocation())
-            }
+        if(!model.geolocationProvider.isLocationTrackingEnabled) {
+            sendCommand(AskAboutGeolocation())
         }
 
         startLocationTracking()
@@ -95,7 +92,7 @@ constructor(
         stopLocationTracking()
     }
 
-    override fun onMoveToMapClick() = sendCommand(MoveToCreateFootprintMap())
+    override fun onMoveToMapClick() = sendCommand(MoveToSetLocation())
 
     private fun startLocationTracking() {
         stopLocationTracking()

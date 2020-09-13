@@ -7,10 +7,11 @@ import com.shevelev.my_footprints_remastered.application.di.DaggerAppComponent
 import com.shevelev.my_footprints_remastered.ui.di.UIComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.di.MainActivityComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.di.CreateFootprintFragmentComponent
-import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint_map.di.CreateFootprintMapFragmentComponent
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location.di.SetLocationFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_crop_photo.di.CropPhotoFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_edit_photo.di.EditPhotoFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_select_photo.di.SelectPhotoFragmentComponent
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location_stub.di.SetLocationStubFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_title.di.TitleFragmentComponent
 import com.shevelev.my_footprints_remastered.utils.id_hash.IdUtil
 import kotlin.reflect.KClass
@@ -91,7 +92,9 @@ class DependencyInjectionStorage(private val app: Application) {
 
             EditPhotoFragmentComponent::class -> getBase<CreateFootprintFragmentComponent>().editPhotoFragment.build()
 
-            CreateFootprintMapFragmentComponent::class -> getBase<CreateFootprintFragmentComponent>().createFootprintMapFragment.build()
+            SetLocationFragmentComponent::class -> getBase<CreateFootprintFragmentComponent>().setLocationFragment.build()
+
+            SetLocationStubFragmentComponent::class -> getBase<CreateFootprintFragmentComponent>().setLocationStubFragment.build()
 
             else -> throw UnsupportedOperationException("This component is not supported: ${type.simpleName}")
         } as T

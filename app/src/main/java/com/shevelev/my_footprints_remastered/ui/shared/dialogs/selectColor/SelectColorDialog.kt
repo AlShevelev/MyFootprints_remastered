@@ -51,7 +51,7 @@ class SelectColorDialog : DialogFragment() {
             val backgroundColor = savedState?.getInt(BACKGROUND_COLOR_KEY) ?: requireArguments().getInt(BACKGROUND_COLOR_KEY)
 
             AlertDialog.Builder(it, R.style.App_Activity_Main_Dialog_Theme)
-                .setTitle(R.string.pin_color_select)
+                .setTitle(R.string.pinColorSelect)
                 .setCancelable(true)
                 .also { dialog ->
                     // Inflate view

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable name="viewModel" type="com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location_stub.view_model.SetLocationStubFragmentViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/backgroundEarth"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/screenPadding"
+            app:srcCompat="@drawable/img_earth"
+            tools:ignore="ContentDescription" />
+
+        <View
+            android:id="@+id/photoFilter"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white75" />
+
+        <TextView
+            android:id="@+id/textViewTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mapIsUnavailable"
+
+            style="@style/Text.SizeLarge.Normal.Black"
+
+            android:layout_marginBottom="5dp"
+
+            app:layout_constraintBottom_toTopOf="@+id/textViewLocation"
+            app:layout_constraintEnd_toStartOf="@+id/backgroundEarth"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/backgroundEarth"
+            app:layout_constraintTop_toBottomOf="@+id/backgroundEarth" />
+
+        <TextView
+            android:id="@+id/textViewLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="@{viewModel.lastLocation}"
+            tools:text="The current location is 0; 0"
+
+            style="@style/Text.SizeNormal.Normal.Black"
+
+            android:layout_marginTop="5dp"
+
+            app:layout_constraintBottom_toTopOf="@+id/backgroundEarth"
+            app:layout_constraintEnd_toStartOf="@+id/backgroundEarth"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/backgroundEarth"
+            app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

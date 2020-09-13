@@ -4,16 +4,21 @@ import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
+import android.location.LocationListener
 import android.location.LocationManager
 import com.shevelev.my_footprints_remastered.storages.db.repositories.LastLocationRepository
 import com.shevelev.my_footprints_remastered.utils.coroutines.DispatchersProvider
 import com.shevelev.my_footprints_remastered.utils.di_scopes.ActivityScope
-import kotlinx.coroutines.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
+import kotlinx.coroutines.channels.sendBlocking
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.util.*
+import java.util.concurrent.Executors
 import javax.inject.Inject
 
 @FlowPreview
@@ -27,11 +32,12 @@ constructor(
     private val lastLocationRepository: LastLocationRepository
 ) : GeolocationProviderManager,
     GeolocationProviderFlow,
-    GeolocationProviderApp {
+    GeolocationProviderApp,
+    GeolocationProviderListener {
 
-    private val minDistance = 15f
-    private val maxDistance = 100f
-    private val updatesInterval = 10_000L
+    private val minDistance = 15f       // [m]
+    private val maxDistance = 100f      // [m]
+    private val updatesInterval = 10_000L       // [ms]
 
     private var isTracking = false
 
@@ -42,6 +48,8 @@ constructor(
         get() = appContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
     private val allProviders: List<String> by lazy { locationManager.allProviders }
+
+    private val listeners = mutableMapOf<String, LocationListener>()
 
     @get:Synchronized @set:Synchronized
     override lateinit var lastLocation: Location
@@ -75,23 +83,23 @@ constructor(
                 }
             }
 
+            Timber.tag("LOCATION").d("First location: ${lastLocation.latitude}:${lastLocation.longitude}")
+            lastLocationChannel.send(lastLocation)
+
             isTracking = true
 
-            withContext(dispatchersProvider.calculationsDispatcher) {
-                Timber.tag("GEOLOCATION").d("Location tracking started")
-                while(isActive) {
-                    if(isLocationTrackingEnabled && hasPermissions && isAppActive) {
-                        Timber.tag("GEOLOCATION").d("location is received")
-                        getBestLocation()?.let { updateLocation(it) }
-                    }
-                    delay(updatesInterval)
-                }
+            if(hasPermissions && isAppActive) {
+                allProviders.forEach { registerListener(it) }
             }
         }
     }
 
     override fun stopTracking() {
         isTracking = false
+
+        allProviders.forEach { provider ->
+            listeners.remove(provider)?.let { locationManager.removeUpdates(it) }
+        }
         Timber.tag("GEOLOCATION").d("Location tracking completed")
     }
 
@@ -103,18 +111,15 @@ constructor(
         isAppActive = false
     }
 
-    private suspend fun updateLocation(newLocation: Location) {
+    override fun onLocationUpdated(newLocation: Location, provider: String) {
         val oldLocation = lastLocation
 
-        if (newLocation.distanceTo(oldLocation) < maxDistance) {
+        if (newLocation.distanceTo(oldLocation) < maxDistance && provider == LocationManager.NETWORK_PROVIDER) {
             if (newLocation.distanceTo(oldLocation) < minDistance) {
                 return      // Position didn't change
             }
             if (newLocation.accuracy >= oldLocation.accuracy && newLocation.distanceTo(oldLocation) < newLocation.accuracy) {
                 return          // Accuracy got worse and we are still within the accuracy range. Not updating
-            }
-            if (newLocation.time <= oldLocation.time) {
-                return      // Timestamp not never than last
             }
         }
 
@@ -122,51 +127,22 @@ constructor(
 
         lastLocation = newLocation
 
-        withContext(dispatchersProvider.ioDispatcher) {
+        Executors.newSingleThreadExecutor().execute {
             lastLocationRepository.update(newLocation)
         }
 
-        lastLocationChannel.send(newLocation)
+        lastLocationChannel.sendBlocking(newLocation)
     }
 
-    /**
-     * Get the last known location from a specific provider (network/gps)
-     */
-    private fun getLocationByProvider(provider: String): Location? =
+    private fun registerListener(provider: String) {
+        val listener = LocationListenerImpl(provider, this)
+
         try {
-            provider
-                .takeIf { allProviders.contains(it) && locationManager.isProviderEnabled(it) }
-                ?.let { locationManager.getLastKnownLocation(it) }
+            locationManager.requestLocationUpdates(provider, updatesInterval, minDistance, listener)
         } catch (ex: SecurityException) {
             Timber.e(ex)
-            null
         }
 
-    /**
-     * Try to get the 'best' location selected from all providers
-     */
-    private fun getBestLocation(): Location?
-    {
-        val gpsLocation = getLocationByProvider(LocationManager.GPS_PROVIDER)
-        val networkLocation = getLocationByProvider(LocationManager.NETWORK_PROVIDER)
-
-        return when {
-            gpsLocation == null && networkLocation == null -> null
-            gpsLocation == null && networkLocation != null -> networkLocation
-            gpsLocation != null && networkLocation == null -> gpsLocation
-            else -> {
-                val oldInterval = System.currentTimeMillis() - updatesInterval
-
-                val gpsIsOld = gpsLocation!!.time < oldInterval
-                val networkIsOld = networkLocation!!.time < oldInterval
-
-                when {
-                    !gpsIsOld -> gpsLocation
-                    !networkIsOld -> networkLocation
-                    gpsLocation.time > networkLocation.time -> gpsLocation
-                    else -> networkLocation
-                }
-            }
-        }
+        listeners[provider] = listener
     }
 }

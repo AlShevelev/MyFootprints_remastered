@@ -1,8 +1,7 @@
-package com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_model
+package com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_model.single_live_data
 
 import androidx.annotation.MainThread
 import androidx.collection.ArraySet
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.Observer
 
@@ -20,16 +19,8 @@ import androidx.lifecycle.Observer
  *
  * @note from here: https://github.com/googlesamples/android-architecture/blob/dev-todo-mvvm-live/todoapp/app/src/main/java/com/example/android/architecture/blueprints/todoapp/SingleLiveEvent.java
  */
-class SingleLiveData<T> : MediatorLiveData<T>() {
-
-    private val observers = ArraySet<ObserverWrapper<in T>>()
-
-    @MainThread
-    override fun observe(owner: LifecycleOwner, observer: Observer<in T>) {
-        val wrapper = ObserverWrapper(observer)
-        observers.add(wrapper)
-        super.observe(owner, wrapper)
-    }
+abstract class SingleLiveDataBase<T> : MediatorLiveData<T>() {
+    protected val observers = ArraySet<ObserverWrapper<in T>>()
 
     @MainThread
     override fun removeObserver(observer: Observer<in T>) {
@@ -54,8 +45,7 @@ class SingleLiveData<T> : MediatorLiveData<T>() {
         super.setValue(t)
     }
 
-    private class ObserverWrapper<T>(val observer: Observer<T>) : Observer<T> {
-
+    protected class ObserverWrapper<T>(val observer: Observer<T>) : Observer<T> {
         private var pending = false
 
         override fun onChanged(t: T?) {

@@ -16,6 +16,8 @@
     <string name="createFootprint">Create footprint</string>
     <string name="setLocation">Set location</string>
     <string name="addPhoto">Add photo</string>
+    <string name="mapIsUnavailable">The map is unavailable</string>
+    <string name="currentLocationIs">Your last location is: {0} {1}</string>
 
     <string name="generalError">Unfortunately, an error was encountered during the operation.</string>
 
@@ -34,13 +36,13 @@
     <string name="saturation">Saturation</string>
     <string name="temperature">Temperature</string>
 
-    <string name="enable_location_question">You should enable the Location Services to refine your location</string>
-    <string name="go_to_settings">Go to Settings</string>
-    <string name="not_now">Not now</string>
+    <string name="enableLocationQuestion">You should enable the Location Services to refine your location</string>
+    <string name="goToSettings">Go to Settings</string>
+    <string name="notNow">Not now</string>
 
-    <string name="pin_background">Pin background</string>
-    <string name="pin_text">Pin text</string>
-    <string name="pin_color_select">Select pin color</string>
+    <string name="pinBackground">Pin background</string>
+    <string name="pinText">Pin text</string>
+    <string name="pinColorSelect">Select pin color</string>
 
-    <string name="times_square">Times Square, NYC</string>
+    <string name="timesSquare">Times Square, NYC</string>
 </resources>

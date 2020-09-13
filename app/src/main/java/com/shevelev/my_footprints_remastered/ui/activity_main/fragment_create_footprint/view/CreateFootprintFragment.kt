@@ -49,8 +49,8 @@ class CreateFootprintFragment : FragmentBaseMVVM<FragmentCreateFootprintBinding,
             is MoveToSelectPhoto -> moveToSelectPhotoWithPermissionCheck()
             is MoveToCropPhoto -> navigation.moveToCropPhoto(this, command.photo)
             is MoveToEditPhoto -> navigation.moveToEditPhoto(this, command.photo)
-            is MoveToCreateFootprintMap -> navigation.moveToCreateFootprintMap(this)
-            is AskAboutGeolocation -> ConfirmationDialog.show(this, R.string.enable_location_question, R.string.go_to_settings, R.string.not_now)
+            is MoveToSetLocation -> navigation.moveToSetLocation(this)
+            is AskAboutGeolocation -> ConfirmationDialog.show(this, R.string.enableLocationQuestion, R.string.goToSettings, R.string.notNow)
             is OpenLocationSettings -> locationSettingsHelper.openSettings(this)
         }
     }
@@ -84,6 +84,6 @@ class CreateFootprintFragment : FragmentBaseMVVM<FragmentCreateFootprintBinding,
     internal fun moveToSelectPhotoDenied() = showMessage(R.string.externalStorageDenied)
 
     private fun showColorDialog() {
-        SelectColorDialog.show(this, Color.BLACK, Color.WHITE, R.string.times_square)
+        SelectColorDialog.show(this, Color.BLACK, Color.WHITE, R.string.timesSquare)
     }
 }

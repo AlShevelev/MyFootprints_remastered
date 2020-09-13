@@ -45,7 +45,7 @@
             app:popEnterAnim="@anim/nav_slide_in_left"
             app:popExitAnim="@anim/nav_slide_out_right" />
         <action
-            android:id="@+id/action_createFootprintFragment_to_createFootprintMapFragment"
+            android:id="@+id/action_createFootprintFragment_to_setLocationFragment"
             app:destination="@id/createFootprintMapFragment"
             app:enterAnim="@anim/nav_slide_in_right"
             app:exitAnim="@anim/nav_slide_out_left"
@@ -62,6 +62,6 @@
         android:label="EditPhotoFragment" />
     <fragment
         android:id="@+id/createFootprintMapFragment"
-        android:name="com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint_map.view.CreateFootprintMapFragment"
+        android:name="com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location.view.SetLocationFragment"
         android:label="CreateFootprintMapFragment" />
 </navigation>

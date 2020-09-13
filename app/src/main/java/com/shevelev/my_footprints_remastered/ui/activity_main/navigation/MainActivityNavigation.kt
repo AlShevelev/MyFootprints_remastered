@@ -8,7 +8,7 @@ import java.io.File
 interface MainActivityNavigation {
     fun moveToCreateFootprint(fragment: TitleFragment)
 
-    fun moveToCreateFootprintMap(fragment: CreateFootprintFragment)
+    fun moveToSetLocation(fragment: CreateFootprintFragment)
 
     fun moveToSelectPhoto(fragment: CreateFootprintFragment)
 
