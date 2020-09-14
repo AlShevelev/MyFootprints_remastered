@@ -31,7 +31,7 @@ constructor(
     private val dispatchersProvider: DispatchersProvider,
     private val lastLocationRepository: LastLocationRepository
 ) : GeolocationProviderManager,
-    GeolocationProviderFlow,
+    GeolocationProviderData,
     GeolocationProviderApp,
     GeolocationProviderListener {
 

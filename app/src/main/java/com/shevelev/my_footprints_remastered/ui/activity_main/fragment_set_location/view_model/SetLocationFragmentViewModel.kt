@@ -23,7 +23,7 @@ constructor(
     val title = appContext.getString(R.string.setLocation)
 
     init {
-        sendCommand(if(!model.isGooglePlayServicesAvailable) AddMapForSetLocation() else AddStubForSetLocation())
+        sendCommand(if(model.isGooglePlayServicesAvailable) AddMapForSetLocation() else AddStubForSetLocation())
     }
 
     override fun onBackClick() = sendCommand(MoveBack())

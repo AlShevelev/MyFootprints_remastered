@@ -6,7 +6,7 @@ import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_title.mod
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_title.model.data_updater.TitleDataUpdaterImpl
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_title.model.data_updater.TitleDataUpdaterProvider
 import com.shevelev.my_footprints_remastered.ui.activity_main.geolocation.GeolocationProviderApp
-import com.shevelev.my_footprints_remastered.ui.activity_main.geolocation.GeolocationProviderFlow
+import com.shevelev.my_footprints_remastered.ui.activity_main.geolocation.GeolocationProviderData
 import com.shevelev.my_footprints_remastered.ui.activity_main.geolocation.GeolocationProviderManager
 import com.shevelev.my_footprints_remastered.ui.activity_main.geolocation.GeolocationProviderImpl
 import com.shevelev.my_footprints_remastered.utils.di_scopes.ActivityScope
@@ -41,5 +41,5 @@ abstract class MainActivityModuleBinds {
 
     @Binds
     @ActivityScope
-    abstract fun provideGeolocationProviderFlow(provider: GeolocationProviderImpl): GeolocationProviderFlow
+    abstract fun provideGeolocationProviderFlow(provider: GeolocationProviderImpl): GeolocationProviderData
 }

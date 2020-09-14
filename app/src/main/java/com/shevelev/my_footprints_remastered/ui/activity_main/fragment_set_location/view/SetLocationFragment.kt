@@ -1,10 +1,12 @@
 package com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location.view
 
+import com.google.android.gms.maps.SupportMapFragment
 import com.shevelev.my_footprints_remastered.R
 import com.shevelev.my_footprints_remastered.application.App
 import com.shevelev.my_footprints_remastered.databinding.FragmentSetLocationBinding
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location.di.SetLocationFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location.view_model.SetLocationFragmentViewModel
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location_map.view.SetLocationMapFragment
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location_stub.view.SetLocationStubFragment
 import com.shevelev.my_footprints_remastered.ui.activity_main.navigation.MainActivityNavigation
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view.FragmentBaseMVVM
@@ -46,6 +48,7 @@ class SetLocationFragment : FragmentBaseMVVM<FragmentSetLocationBinding, SetLoca
     }
 
     private fun addMap() {
-        Timber.tag("LOCATION_TEST").d("Map")
+        val fragment = SetLocationMapFragment()
+        childFragmentManager.beginTransaction().add(R.id.mapContainer, fragment).commit()
     }
 }

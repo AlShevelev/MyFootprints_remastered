@@ -11,7 +11,6 @@ import com.shevelev.my_footprints_remastered.utils.coroutines.DispatchersProvide
 import com.shevelev.my_footprints_remastered.utils.resources.getStringFormatted
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 class SetLocationStubFragmentViewModel
@@ -28,7 +27,6 @@ constructor(
     init {
         launch {
             model.locationProvider.lastLocationFlow.collect {
-                Timber.tag("DDDDD").d("Collect")
                 _lastLocation.value = appContext.getStringFormatted(
                     R.string.currentLocationIs,
                     Location.convert(it.latitude, Location.FORMAT_DEGREES),

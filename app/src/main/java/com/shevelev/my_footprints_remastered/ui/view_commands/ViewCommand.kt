@@ -1,5 +1,6 @@
 package com.shevelev.my_footprints_remastered.ui.view_commands
 
+import android.location.Location
 import androidx.annotation.StringRes
 import java.io.File
 
@@ -26,3 +27,9 @@ class OpenGallery : ViewCommand
 class OpenLocationSettings : ViewCommand
 
 class AskAboutGeolocation : ViewCommand
+
+class StartLoadingMap : ViewCommand
+data class InitMapUserData(
+    val zoomFactor: Float,
+    val location: Location
+) : ViewCommand

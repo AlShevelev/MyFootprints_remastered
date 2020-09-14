@@ -16,9 +16,10 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
+        // API key loading for Google maps
         def secureProps = new Properties()
-        if (file("../../../../secure.properties").exists()) {
-            file("../../../../secure.properties")?.withInputStream { secureProps.load(it) }
+        if (file("../secure.properties").exists()) {
+            file("../secure.properties")?.withInputStream { secureProps.load(it) }
         }
         resValue "string", "mapsApiKey", (secureProps.getProperty("MAPS_API_KEY") ?: "")
     }

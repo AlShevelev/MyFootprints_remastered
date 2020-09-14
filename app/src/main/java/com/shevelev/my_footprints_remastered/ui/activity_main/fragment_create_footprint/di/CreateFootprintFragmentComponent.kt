@@ -5,6 +5,7 @@ import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_locat
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_crop_photo.di.CropPhotoFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_edit_photo.di.EditPhotoFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_select_photo.di.SelectPhotoFragmentComponent
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location_map.di.SetLocationMapFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location_stub.di.SetLocationStubFragmentComponent
 import com.shevelev.my_footprints_remastered.utils.di_scopes.FragmentScope
 import dagger.Subcomponent
@@ -25,6 +26,7 @@ interface CreateFootprintFragmentComponent {
     val editPhotoFragment: EditPhotoFragmentComponent.Builder
     val setLocationFragment: SetLocationFragmentComponent.Builder
     val setLocationStubFragment: SetLocationStubFragmentComponent.Builder
+    val setLocationMapFragment: SetLocationMapFragmentComponent.Builder
 
     fun inject(fragment: CreateFootprintFragment)
 }
