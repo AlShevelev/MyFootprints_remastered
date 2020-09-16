@@ -28,6 +28,8 @@
 
             app:srcCompat="@drawable/ic_help_12_18"
             tools:ignore="ContentDescription"
+
+            app:on_help_click="@{ () -> viewModel.onHelpButtonClick()}"
             />
 
         <ImageButton
@@ -42,6 +44,8 @@
 
             app:srcCompat="@drawable/ic_color_20_20"
             tools:ignore="ContentDescription"
+
+            app:on_color_dialog_click="@{ () -> viewModel.onColorDialogButtonClick()}"
             />
     </FrameLayout>
 </layout>

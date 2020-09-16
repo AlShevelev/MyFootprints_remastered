@@ -40,6 +40,8 @@ constructor(
     private var locationTrackingJob: Job? = null
 
     init {
+        model.initSharedFootprint()
+
         if(!model.geolocationProvider.isLocationTrackingEnabled) {
             sendCommand(AskAboutGeolocation())
         }

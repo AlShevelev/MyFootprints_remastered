@@ -2,7 +2,9 @@ package com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_f
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.net.Uri
+import com.shevelev.my_footprints_remastered.R
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.dto.SelectedPhotoLoadingState
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.model.data_bridge.CreateFootprintFragmentDataBridge
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.model.shared_footprint.SharedFootprint
@@ -24,6 +26,11 @@ constructor(
     override val sharedFootprint: SharedFootprint
 ) : ModelBaseImpl(),
     CreateFootprintFragmentModel {
+
+    override fun initSharedFootprint() {
+        sharedFootprint.pinTextColor = Color.WHITE
+        sharedFootprint.pinBackgroundColor = appContext.getColor(R.color.red)
+    }
 
     override suspend fun processNewPhotoSelected(callbackAction: (SelectedPhotoLoadingState) -> Unit) {
         val selectedPhotoFile = dataBridge.extractPhotoFile()

@@ -19,7 +19,15 @@ constructor(
 ) : ModelBaseImpl(),
     SetLocationMapFragmentModel {
 
-    override suspend fun    getPinInfo(): PinInfo =
+    override var pinTextColor: Int
+        get() = sharedFootprint.pinTextColor
+        set(value) { sharedFootprint.pinTextColor = value }
+
+    override var pinBackgroundColor: Int
+        get() = sharedFootprint.pinBackgroundColor
+        set(value) { sharedFootprint.pinBackgroundColor = value }
+
+    override suspend fun getPinInfo(): PinInfo =
         withContext(dispatchersProvider.calculationsDispatcher) {
             pinDraw.draw(
                 sharedFootprint.pinBackgroundColor,

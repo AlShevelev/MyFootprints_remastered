@@ -8,8 +8,6 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.shevelev.my_footprints_remastered.R
-import com.shevelev.my_footprints_remastered.ui.shared.dialogs.ConfirmationDialog
-import com.shevelev.my_footprints_remastered.ui.shared.dialogs.OkDialog
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view.FragmentBase
 import com.shevelev.my_footprints_remastered.utils.resources.isPortrait
 
@@ -46,6 +44,8 @@ class SelectColorDialog : DialogFragment() {
     }
 
     override fun onCreateDialog(savedState: Bundle?): Dialog {
+        var dialogView: SelectColorDialogView? = null
+
         return activity?.let {
             val textColor = savedState?.getInt(TEXT_COLOR_KEY) ?: requireArguments().getInt(TEXT_COLOR_KEY)
             val backgroundColor = savedState?.getInt(BACKGROUND_COLOR_KEY) ?: requireArguments().getInt(BACKGROUND_COLOR_KEY)
@@ -57,6 +57,7 @@ class SelectColorDialog : DialogFragment() {
                     // Inflate view
                     SelectColorDialogView(requireContext())
                         .apply {
+                            dialogView = this
                             setSampleText(it.getString(requireArguments().getInt(SAMPLE_TEXT_KEY)))
                             text = textColor
                             background = backgroundColor
@@ -65,10 +66,13 @@ class SelectColorDialog : DialogFragment() {
                         }
                 }
                 .setPositiveButton(R.string.ok) { _, _ ->
-                    (parentFragment as FragmentBase).onDialogResult(false, OkDialog.REQUEST_CODE, null)
+                    (parentFragment as FragmentBase).onDialogResult(
+                        false,
+                        REQUEST_CODE,
+                        TextColors(dialogView!!.text, dialogView!!.background))
                 }
                 .setNegativeButton(R.string.cancel) { _, _ ->
-                    (parentFragment as FragmentBase).onDialogResult(true, ConfirmationDialog.REQUEST_CODE, null)
+                    (parentFragment as FragmentBase).onDialogResult(true, REQUEST_CODE, null)
                 }
                 .create()
         } ?: throw IllegalStateException("Activity cannot be null")
@@ -84,6 +88,6 @@ class SelectColorDialog : DialogFragment() {
     }
 
     override fun onCancel(dialog: DialogInterface) {
-        (parentFragment as FragmentBase).onDialogResult(true, ConfirmationDialog.REQUEST_CODE, null)
+        (parentFragment as FragmentBase).onDialogResult(true, REQUEST_CODE, null)
     }
 }

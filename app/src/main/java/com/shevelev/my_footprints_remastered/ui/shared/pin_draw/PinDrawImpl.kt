@@ -13,6 +13,14 @@ class PinDrawImpl
 constructor(
     private val appContext: Context
 ) : PinDraw {
+
+    private data class MeasuredText(
+        val text: String,
+        val width: Int,
+        val height: Int,
+        val baselineOffset: Int
+    )
+
     private val scaleFactor = 1f
 
     // Sizes [px]
@@ -53,19 +61,34 @@ constructor(
 
         val maxTextWidth = widthMax.scale() - pinWidth - textMargin * 2
 
-        val calculatedText = calculateText(text, paint, maxTextWidth.toFloat())
-        val newText = calculatedText.second
-        val newMaxTextWidth = calculatedText.first.width()
-        val newTextHeight = calculatedText.first.height()
+        val measuredText = measureText(text, paint, maxTextWidth.toFloat())
 
-        val width = pinWidth + textMargin*2 + newMaxTextWidth + textTagHeight/2
+        val width = pinWidth + textMargin*2 + measuredText.width + textTagHeight/2
 
         val output = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(output)
 
-        drawPin(canvas, paint, backgroundColor, pinWidth, height)
-        drawTag(canvas, paint, backgroundColor, textColor, pinWidth, textMargin, newText, newMaxTextWidth, newTextHeight)
-        drawImage(canvas, paint, image, pinWidth)
+        drawPin(
+            canvas,
+            paint,
+            backgroundColor,
+            pinWidth,
+            height)
+
+        drawTag(
+            canvas,
+            paint,
+            backgroundColor,
+            textColor,
+            pinWidth,
+            textMargin,
+            measuredText)
+
+        drawImage(
+            canvas,
+            paint,
+            image,
+            pinWidth)
 
         return PinInfo(output, (pinWidth / width).toFloat())
     }
@@ -74,7 +97,7 @@ constructor(
      * Calculates text length to inscribe in into the painted area
      * @return painted area len and inscribed
      */
-    private fun calculateText(text: String, paint: Paint, maxTextWidth: Float): Pair<Rect, String> {
+    private fun measureText(text: String, paint: Paint, maxTextWidth: Float): MeasuredText {
         val textBounds = Rect()
 
         paint.getTextBounds(text, 0, text.length, textBounds)
@@ -82,13 +105,13 @@ constructor(
         val textWidth = textBounds.width()
 
         if(textWidth <= maxTextWidth) {
-            return Pair(textBounds, text)
+            return MeasuredText(text, textBounds.width(), textBounds.height(), textBounds.bottom)
         }
 
         val oneCharWidth = textWidth / text.length
         val maxChars = (maxTextWidth / oneCharWidth).toInt()
 
-        return Pair(Rect(0, 0, maxChars * oneCharWidth, textBounds.height()), text.substring(0, maxChars-3)+"...")
+        return MeasuredText(text.substring(0, maxChars-3)+"...", maxChars * oneCharWidth, textBounds.height(), textBounds.bottom)
     }
 
     private fun drawPin(canvas: Canvas, paint: Paint, @ColorInt color: Int, pinWidth: Int, pinHeight: Int) {
@@ -123,9 +146,7 @@ constructor(
         @ColorInt textColor: Int,
         pinWidth: Int,
         textMargin: Int,
-        text: String,
-        textWidth: Int,
-        textHeight: Int) {
+        measuredText: MeasuredText) {
 
         val path = Path()
         paint.color = backgroundColor
@@ -133,7 +154,7 @@ constructor(
 
         val left = pinWidth*0.95f
         val leftOffset = pinWidth - left
-        val right = left +leftOffset + textMargin + textWidth
+        val right = left +leftOffset + textMargin + measuredText.width
 
         val top = (pinWidth - textTagHeight) / 2f
         val bottom = (pinWidth + textTagHeight) / 2f
@@ -147,7 +168,11 @@ constructor(
         canvas.drawPath(path, paint)
 
         paint.color = textColor
-        canvas.drawText(text, (pinWidth + textMargin).toFloat(), (pinWidth + textHeight) / 2f, paint)
+        canvas.drawText(
+            measuredText.text,
+            (pinWidth + textMargin).toFloat(),
+            ((pinWidth + measuredText.height) / 2f) - measuredText.baselineOffset,
+            paint)
     }
 
     private fun cropImageToCircle(imageFile: File?): Bitmap? =

@@ -64,13 +64,11 @@ class CreateFootprintFragment : FragmentBaseMVVM<FragmentCreateFootprintBinding,
         when(requestCode) {
             OkDialog.REQUEST_CODE -> proceedMoveToSelectPhotoPermissionRequest()
             ConfirmationDialog.REQUEST_CODE -> if(!isCanceled) viewModel.onGotoLocationSettingsSelected()
-            SelectColorDialog.REQUEST_CODE -> {}
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel.onViewCreated()
-        saveButton.setOnClickListener { showColorDialog() }
     }
 
     @NeedsPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -82,8 +80,4 @@ class CreateFootprintFragment : FragmentBaseMVVM<FragmentCreateFootprintBinding,
 
     @OnPermissionDenied(Manifest.permission.WRITE_EXTERNAL_STORAGE)
     internal fun moveToSelectPhotoDenied() = showMessage(R.string.externalStorageDenied)
-
-    private fun showColorDialog() {
-        SelectColorDialog.show(this, Color.BLACK, Color.WHITE, R.string.timesSquare)
-    }
 }
