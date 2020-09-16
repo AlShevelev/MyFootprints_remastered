@@ -2,6 +2,7 @@ package com.shevelev.my_footprints_remastered.ui.view_commands
 
 import android.location.Location
 import androidx.annotation.StringRes
+import com.shevelev.my_footprints_remastered.ui.shared.pin_draw.PinInfo
 import java.io.File
 
 interface ViewCommand
@@ -31,5 +32,6 @@ class AskAboutGeolocation : ViewCommand
 class StartLoadingMap : ViewCommand
 data class InitMapUserData(
     val zoomFactor: Float,
-    val location: Location
+    val location: Location,
+    val pin: PinInfo
 ) : ViewCommand

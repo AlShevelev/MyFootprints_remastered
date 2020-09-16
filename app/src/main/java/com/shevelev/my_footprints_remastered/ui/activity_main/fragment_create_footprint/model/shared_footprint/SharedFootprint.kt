@@ -13,10 +13,10 @@ constructor() {
     var image: File? = null
 
     @ColorInt
-    var pinTextColor: Int = Color.BLACK
+    var pinTextColor: Int = Color.WHITE
 
     @ColorInt
-    var pinBackgroundColor: Int = Color.WHITE
+    var pinBackgroundColor: Int = Color.RED
 
     var manualSelectedLocation: Location? = null
 }

@@ -17,7 +17,7 @@ import javax.inject.Inject
 class CreateFootprintFragmentModelImpl
 @Inject
 constructor(
-    private val  appContext: Context,
+    private val appContext: Context,
     private val dispatchersProvider: DispatchersProvider,
     private val dataBridge: CreateFootprintFragmentDataBridge,
     override val geolocationProvider: GeolocationProviderManager,
