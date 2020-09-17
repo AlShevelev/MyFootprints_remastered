@@ -1,9 +1,8 @@
 package com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location_map.model
 
-import androidx.annotation.ColorInt
 import com.shevelev.my_footprints_remastered.ui.activity_main.geolocation.GeolocationProviderData
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.model.ModelBase
-import com.shevelev.my_footprints_remastered.ui.shared.pin_draw.PinInfo
+import com.shevelev.my_footprints_remastered.ui.shared.pin_draw.PinDrawInfo
 
 interface SetLocationMapFragmentModel : ModelBase {
     val locationProvider: GeolocationProviderData
@@ -12,5 +11,5 @@ interface SetLocationMapFragmentModel : ModelBase {
 
     var pinBackgroundColor: Int
 
-    suspend fun getPinInfo(): PinInfo
+    suspend fun getPinInfo(): PinDrawInfo
 }

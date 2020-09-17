@@ -34,7 +34,7 @@ constructor(
     private val textMargin = 25.scale()
     private val textTagHeight = 80.scale()
 
-    override fun draw(backgroundColor: Int, textColor: Int, imageFile: File?, text: String?): PinInfo {
+    override fun draw(backgroundColor: Int, textColor: Int, imageFile: File?, text: String?): PinDrawInfo {
         val image = cropImageToCircle(imageFile)
 
         return if(text.isNullOrBlank()) {
@@ -44,7 +44,7 @@ constructor(
         }
     }
 
-    private fun drawWithoutText(image: Bitmap?, @ColorInt color: Int) : PinInfo {
+    private fun drawWithoutText(image: Bitmap?, @ColorInt color: Int) : PinDrawInfo {
         val output = Bitmap.createBitmap(pinWidth, height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(output)
         val paint = Paint()
@@ -52,10 +52,10 @@ constructor(
         drawPin(canvas, paint, color, pinWidth, height)
         drawImage(canvas, paint, image, pinWidth)
 
-        return PinInfo(output, 0.5f)
+        return PinDrawInfo(output, 0.5f)
     }
 
-    private fun drawWithText(image: Bitmap?, text: String, @ColorInt backgroundColor: Int, @ColorInt textColor: Int) : PinInfo {
+    private fun drawWithText(image: Bitmap?, text: String, @ColorInt backgroundColor: Int, @ColorInt textColor: Int) : PinDrawInfo {
         val paint = Paint()
         paint.textSize = appContext.getDimension(R.dimen.textSizeSmall)
 
@@ -90,7 +90,7 @@ constructor(
             image,
             pinWidth)
 
-        return PinInfo(output, (pinWidth / width).toFloat())
+        return PinDrawInfo(output, (pinWidth / width).toFloat())
     }
 
     /**

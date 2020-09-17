@@ -4,7 +4,7 @@ import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_fo
 import com.shevelev.my_footprints_remastered.ui.activity_main.geolocation.GeolocationProviderData
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.model.ModelBaseImpl
 import com.shevelev.my_footprints_remastered.ui.shared.pin_draw.PinDraw
-import com.shevelev.my_footprints_remastered.ui.shared.pin_draw.PinInfo
+import com.shevelev.my_footprints_remastered.ui.shared.pin_draw.PinDrawInfo
 import com.shevelev.my_footprints_remastered.utils.coroutines.DispatchersProvider
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -27,7 +27,7 @@ constructor(
         get() = sharedFootprint.pinBackgroundColor
         set(value) { sharedFootprint.pinBackgroundColor = value }
 
-    override suspend fun getPinInfo(): PinInfo =
+    override suspend fun getPinInfo(): PinDrawInfo =
         withContext(dispatchersProvider.calculationsDispatcher) {
             pinDraw.draw(
                 sharedFootprint.pinBackgroundColor,

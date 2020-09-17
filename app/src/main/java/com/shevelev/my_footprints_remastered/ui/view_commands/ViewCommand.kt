@@ -3,7 +3,7 @@ package com.shevelev.my_footprints_remastered.ui.view_commands
 import android.location.Location
 import androidx.annotation.ColorInt
 import androidx.annotation.StringRes
-import com.shevelev.my_footprints_remastered.ui.shared.pin_draw.PinInfo
+import com.shevelev.my_footprints_remastered.ui.shared.pin_draw.PinDrawInfo
 import java.io.File
 
 interface ViewCommand
@@ -31,10 +31,10 @@ class OpenLocationSettings : ViewCommand
 class AskAboutGeolocation : ViewCommand
 
 class StartLoadingMap : ViewCommand
-data class InitMapUserData(
+
+data class MoveAndZoomMap(
     val zoomFactor: Float,
-    val location: Location,
-    val pin: PinInfo
+    val location: Location
 ) : ViewCommand
 
 data class ShowColorDialog(
