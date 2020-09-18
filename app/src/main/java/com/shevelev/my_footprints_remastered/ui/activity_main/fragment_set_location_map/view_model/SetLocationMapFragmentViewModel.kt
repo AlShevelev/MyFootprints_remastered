@@ -1,5 +1,6 @@
 package com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location_map.view_model
 
+import android.location.Location
 import androidx.annotation.ColorInt
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -29,8 +30,10 @@ constructor(
 
     init {
         launch {
-            model.locationProvider.lastLocationFlow.collect {
-                // Update pin location if it was not located manually
+            model.lastLocationFlow.collect {
+                if(model.manualLocation == null) {
+                    _pin.value = PinInfo(it, model.pinInfo ?: model.updatePinInfo())
+                }
             }
         }
     }
@@ -42,8 +45,8 @@ constructor(
     fun mapLoaded() {
         launch {
             try {
-                sendCommand(MoveAndZoomMap(startZoom, model.locationProvider.lastLocation))
-                _pin.value = PinInfo(model.locationProvider.lastLocation, model.getPinInfo())
+                sendCommand(MoveAndZoomMap(startZoom, model.lastLocation))
+                _pin.value = PinInfo(model.lastLocation, model.pinInfo ?: model.updatePinInfo())
             } catch (ex: Exception) {
                 sendCommand(ShowMessageRes(R.string.generalError))
             }
@@ -54,9 +57,7 @@ constructor(
         sendCommand(ShowColorDialog(model.pinTextColor, model.pinBackgroundColor))
     }
 
-    override fun onHelpButtonClick() {
-        // do noting so far
-    }
+    override fun onHelpButtonClick() = sendCommand(ShowMessageRes(R.string.mapPinHelp))
 
     fun onPinColorSelected(@ColorInt textColor: Int, @ColorInt backgroundColor: Int) {
         model.pinTextColor = textColor
@@ -64,10 +65,15 @@ constructor(
 
         launch {
             try {
-                _pin.value = PinInfo(model.locationProvider.lastLocation, model.getPinInfo())
+                _pin.value = PinInfo(model.lastLocation, model.updatePinInfo())
             } catch (ex: Exception) {
                 sendCommand(ShowMessageRes(R.string.generalError))
             }
         }
+    }
+
+    fun onMapLongClick(location: Location) {
+        model.manualLocation = location
+        _pin.value = PinInfo(model.lastLocation, model.pinInfo!!)
     }
 }

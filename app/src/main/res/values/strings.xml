@@ -45,4 +45,5 @@
     <string name="pinColorSelect">Select pin color</string>
 
     <string name="timesSquare">Times Square, NYC</string>
+    <string name="mapPinHelp">Use a long tap on the map to set pin location manually</string>
 </resources>

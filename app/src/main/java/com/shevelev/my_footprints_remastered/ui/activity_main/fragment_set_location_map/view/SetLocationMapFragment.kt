@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.annotation.ColorInt
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.shevelev.my_footprints_remastered.R
@@ -24,6 +23,8 @@ import com.shevelev.my_footprints_remastered.ui.view_commands.MoveAndZoomMap
 import com.shevelev.my_footprints_remastered.ui.view_commands.ShowColorDialog
 import com.shevelev.my_footprints_remastered.ui.view_commands.StartLoadingMap
 import com.shevelev.my_footprints_remastered.ui.view_commands.ViewCommand
+import com.shevelev.my_footprints_remastered.utils.location.toAndroidLocation
+import com.shevelev.my_footprints_remastered.utils.location.toMapLocation
 
 class SetLocationMapFragment :
     FragmentBaseMVVM<FragmentSetLocationMapBinding,
@@ -81,6 +82,8 @@ class SetLocationMapFragment :
         map.uiSettings.isCompassEnabled = false
         map.uiSettings.isZoomControlsEnabled = true
 
+        map.setOnMapLongClickListener { viewModel.onMapLongClick(it.toAndroidLocation()) }
+
         viewModel.mapLoaded()
     }
 
@@ -91,7 +94,7 @@ class SetLocationMapFragment :
     }
 
     private fun moveAndZoomMap(zoomFactor: Float, lastLocation: Location) {
-        val mapLocation = LatLng(lastLocation.latitude, lastLocation.longitude)
+        val mapLocation = lastLocation.toMapLocation()
         map!!.moveCamera(CameraUpdateFactory.newLatLngZoom(mapLocation, zoomFactor))
     }
 
@@ -100,7 +103,7 @@ class SetLocationMapFragment :
             return
         }
 
-        val mapLocation = LatLng(pinInfo.location.latitude, pinInfo.location.longitude)
+        val mapLocation = pinInfo.location.toMapLocation()
 
         marker?.remove()
 
