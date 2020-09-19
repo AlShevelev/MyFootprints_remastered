@@ -5,13 +5,13 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.net.Uri
 import com.shevelev.my_footprints_remastered.R
+import com.shevelev.my_footprints_remastered.storages.files.FilesHelper
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.dto.SelectedPhotoLoadingState
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.model.data_bridge.CreateFootprintFragmentDataBridge
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.model.shared_footprint.SharedFootprint
 import com.shevelev.my_footprints_remastered.ui.activity_main.geolocation.GeolocationProviderManager
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.model.ModelBaseImpl
 import com.shevelev.my_footprints_remastered.utils.coroutines.DispatchersProvider
-import com.shevelev.my_footprints_remastered.utils.id_hash.IdUtil
 import kotlinx.coroutines.withContext
 import java.io.File
 import javax.inject.Inject
@@ -23,7 +23,8 @@ constructor(
     private val dispatchersProvider: DispatchersProvider,
     private val dataBridge: CreateFootprintFragmentDataBridge,
     override val geolocationProvider: GeolocationProviderManager,
-    override val sharedFootprint: SharedFootprint
+    override val sharedFootprint: SharedFootprint,
+    private val filesHelper: FilesHelper
 ) : ModelBaseImpl(),
     CreateFootprintFragmentModel {
 
@@ -73,27 +74,13 @@ constructor(
         sharedFootprint.image = null
     }
 
-    private fun copyUriToFile(uri: Uri): File {
-        val targetFile = createPhotoFile()
-
-        appContext.contentResolver.openInputStream(uri).use { input ->
-            targetFile.outputStream().use { fileOut ->
-                input?.copyTo(fileOut)
-            }
+    private fun copyUriToFile(uri: Uri): File =
+        filesHelper.createTempFile().also {
+            filesHelper.saveUriToFile(uri, it)
         }
 
-        return targetFile
-    }
-
-    private fun copyBitmapToFile(bitmap: Bitmap): File {
-        val targetFile = createPhotoFile()
-
-        targetFile.outputStream().use { fileOut ->
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 75, fileOut)
+    private fun copyBitmapToFile(bitmap: Bitmap): File =
+        filesHelper.createTempFile().also {
+            filesHelper.saveBitmapToFile(bitmap, it, 75)
         }
-
-        return targetFile
-    }
-
-    private fun createPhotoFile(): File = File.createTempFile("tmp_", "${IdUtil.generateLongId()}.jpg", appContext.cacheDir)
 }

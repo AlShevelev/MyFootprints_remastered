@@ -4,6 +4,8 @@ import com.shevelev.my_footprints_remastered.storages.db.repositories.FootprintR
 import com.shevelev.my_footprints_remastered.storages.db.repositories.FootprintRepositoryImpl
 import com.shevelev.my_footprints_remastered.storages.db.repositories.LastLocationRepository
 import com.shevelev.my_footprints_remastered.storages.db.repositories.LastLocationRepositoryImpl
+import com.shevelev.my_footprints_remastered.storages.files.FilesHelper
+import com.shevelev.my_footprints_remastered.storages.files.FilesHelperImpl
 import com.shevelev.my_footprints_remastered.storages.key_value.KeyValueStorageFacade
 import com.shevelev.my_footprints_remastered.storages.key_value.KeyValueStorageFacadeImpl
 import com.shevelev.my_footprints_remastered.storages.key_value.storages.NameConstants
@@ -42,4 +44,7 @@ abstract class AppModuleBinds {
     @Binds
     abstract fun provideKeyValueStorageFacade(facade: KeyValueStorageFacadeImpl): KeyValueStorageFacade
     //endregion
+
+    @Binds
+    abstract fun provideFilesHelper(helper: FilesHelperImpl): FilesHelper
 }
