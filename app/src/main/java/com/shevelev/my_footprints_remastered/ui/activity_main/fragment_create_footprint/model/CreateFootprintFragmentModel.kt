@@ -11,6 +11,8 @@ interface CreateFootprintFragmentModel : ModelBase {
 
     val sharedFootprint: SharedFootprint
 
+    val canSave: Boolean
+
     fun initSharedFootprint()
 
     suspend fun processNewPhotoSelected(callbackAction: (SelectedPhotoLoadingState) -> Unit)

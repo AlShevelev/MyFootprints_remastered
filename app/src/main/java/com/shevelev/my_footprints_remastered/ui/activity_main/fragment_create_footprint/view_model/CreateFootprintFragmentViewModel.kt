@@ -37,6 +37,9 @@ constructor(
 
     val comment = MutableLiveData<String>()
 
+    private val _saveEnabled = MutableLiveData(model.canSave)
+    val saveEnabled:LiveData<Boolean> = _saveEnabled
+
     private var locationTrackingJob: Job? = null
 
     init {
@@ -61,6 +64,7 @@ constructor(
         launch {
             model.clearPhoto()
             _containerState.value = PhotoContainerState.Initial
+            _saveEnabled.value = model.canSave
         }
     }
 
@@ -84,6 +88,7 @@ constructor(
                     is SelectedPhotoLoadingState.Loading -> _containerState.value = PhotoContainerState.Loading
                 }
             }
+            _saveEnabled.value = model.canSave
         }
     }
 

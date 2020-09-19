@@ -22,6 +22,8 @@ constructor(
 
     val title = appContext.getString(R.string.setLocation)
 
+    val saveEnabled = model.canSave
+
     init {
         sendCommand(if(model.isGooglePlayServicesAvailable) AddMapForSetLocation() else AddStubForSetLocation())
     }

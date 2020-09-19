@@ -32,6 +32,9 @@ constructor(
         sharedFootprint.pinBackgroundColor = appContext.getColor(R.color.red)
     }
 
+    override val canSave: Boolean
+        get() = sharedFootprint.image != null
+
     override suspend fun processNewPhotoSelected(callbackAction: (SelectedPhotoLoadingState) -> Unit) {
         val selectedPhotoFile = dataBridge.extractPhotoFile()
         val selectedPhotoUri = dataBridge.extractPhotoUri()
