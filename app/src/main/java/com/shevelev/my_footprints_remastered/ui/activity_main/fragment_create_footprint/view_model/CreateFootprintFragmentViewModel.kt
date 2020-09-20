@@ -17,6 +17,8 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import timber.log.Timber
+import java.lang.Exception
 import javax.inject.Inject
 
 class CreateFootprintFragmentViewModel
@@ -100,6 +102,17 @@ constructor(
     }
 
     override fun onMoveToMapClick() = sendCommand(MoveToSetLocation())
+
+    override fun onSaveClick() {
+        launch {
+            try {
+                model.save()
+            } catch (ex: Exception) {
+                Timber.e(ex)
+                sendCommand(ShowMessageRes(R.string.saveFootprintError))
+            }
+        }
+    }
 
     private fun startLocationTracking() {
         stopLocationTracking()

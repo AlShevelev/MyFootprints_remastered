@@ -1,6 +1,7 @@
 package com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location_map.model
 
 import android.location.Location
+import com.shevelev.my_footprints_remastered.common_entities.PinColor
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.model.shared_footprint.SharedFootprint
 import com.shevelev.my_footprints_remastered.ui.activity_main.geolocation.GeolocationProviderData
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.model.ModelBaseImpl
@@ -21,13 +22,9 @@ constructor(
 ) : ModelBaseImpl(),
     SetLocationMapFragmentModel {
 
-    override var pinTextColor: Int
-        get() = sharedFootprint.pinTextColor
-        set(value) { sharedFootprint.pinTextColor = value }
-
-    override var pinBackgroundColor: Int
-        get() = sharedFootprint.pinBackgroundColor
-        set(value) { sharedFootprint.pinBackgroundColor = value }
+    override var pinColor: PinColor
+        get() = sharedFootprint.pinColor
+        set(value) { sharedFootprint.pinColor = value }
 
     override var manualLocation: Location?
         get() = sharedFootprint.manualSelectedLocation
@@ -45,8 +42,8 @@ constructor(
     override suspend fun updatePinInfo(): PinDrawInfo =
         withContext(dispatchersProvider.calculationsDispatcher) {
             pinDraw.draw(
-                sharedFootprint.pinBackgroundColor,
-                sharedFootprint.pinTextColor,
+                sharedFootprint.pinColor.backgroundColor,
+                sharedFootprint.pinColor.textColor,
                 sharedFootprint.image,
                 sharedFootprint.comment
             )

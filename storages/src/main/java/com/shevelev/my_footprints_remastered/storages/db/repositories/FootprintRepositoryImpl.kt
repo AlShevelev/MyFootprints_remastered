@@ -14,10 +14,30 @@ constructor(
 
     override fun getLast(): Footprint? = db.footprint.readLast()?.mapToFootprint()
 
+    override fun create(footprint: Footprint) = db.footprint.create(footprint.mapToFootprintDb())
+
     private fun FootprintDb.mapToFootprint() =
         Footprint(
             id = id,
             fileName = fileName,
-            created = created
+            latitude = latitude,
+            longitude = longitude,
+            comment = comment,
+            pinTextColor = pinTextColor,
+            pinBackgroundColor = pinBackgroundColor,
+            created = created,
+        )
+
+    private fun Footprint.mapToFootprintDb() =
+        FootprintDb(
+            id = id,
+            fileName = fileName,
+            latitude = latitude,
+            longitude = longitude,
+            comment = comment,
+            pinTextColor = pinTextColor,
+            pinBackgroundColor = pinBackgroundColor,
+            created = created,
+            createdSort = created.toInstant().epochSecond
         )
 }

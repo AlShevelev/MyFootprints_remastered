@@ -6,4 +6,6 @@ interface FootprintRepository {
     fun getCount(): Int
 
     fun getLast(): Footprint?
+
+    fun create(footprint: Footprint)
 }

@@ -1,5 +1,6 @@
 package com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location_map.view
 
+import android.widget.Button
 import android.widget.ImageButton
 import androidx.databinding.BindingAdapter
 

@@ -1,0 +1,5 @@
+package com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location.view
+
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.view.SaveBindingCall
+
+interface ButtonsBindingCall : SaveBindingCall

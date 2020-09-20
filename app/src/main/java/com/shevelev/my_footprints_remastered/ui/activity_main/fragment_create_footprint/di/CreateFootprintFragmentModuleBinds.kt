@@ -1,6 +1,8 @@
 package com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.di
 
 import androidx.lifecycle.ViewModel
+import com.shevelev.my_footprints_remastered.shared_use_cases.CreateEditFootprint
+import com.shevelev.my_footprints_remastered.shared_use_cases.CreateEditFootprintImpl
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.model.CreateFootprintFragmentModel
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.model.CreateFootprintFragmentModelImpl
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.model.data_bridge.CreateFootprintFragmentDataBridge
@@ -35,4 +37,7 @@ abstract class CreateFootprintFragmentModuleBinds {
 
     @Binds
     abstract fun provideLocationSettingsHelper(helper: LocationSettingsHelperImpl): LocationSettingsHelper
+
+    @Binds
+    abstract fun provideCreateEditFootprint(createEdit: CreateEditFootprintImpl): CreateEditFootprint
 }

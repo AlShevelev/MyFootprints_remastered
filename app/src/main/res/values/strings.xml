@@ -20,6 +20,7 @@
     <string name="currentLocationIs">Your last location is: {0} {1}</string>
 
     <string name="generalError">Unfortunately, an error was encountered during the operation.</string>
+    <string name="saveFootprintError">Can\'t save footprint, an error occurred while saving.</string>
 
     <string name="externalStorageExplanation">We need permission to read files on your device. We use it to fill a photo list.</string>
     <string name="externalStorageDenied">You haven\'t granted permission - we can\'t move to selecting photo, sorry.</string>

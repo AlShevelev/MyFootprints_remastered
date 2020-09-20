@@ -6,4 +6,6 @@ interface SetLocationFragmentModel : ModelBase {
     val isGooglePlayServicesAvailable: Boolean
 
     val canSave: Boolean
+
+    suspend fun save()
 }

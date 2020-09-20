@@ -3,6 +3,7 @@ package com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_f
 import android.graphics.Color
 import android.location.Location
 import androidx.annotation.ColorInt
+import com.shevelev.my_footprints_remastered.common_entities.PinColor
 import java.io.File
 import javax.inject.Inject
 
@@ -12,11 +13,7 @@ constructor() {
     var comment: String? = null
     var image: File? = null
 
-    @ColorInt
-    var pinTextColor: Int = Color.WHITE
-
-    @ColorInt
-    var pinBackgroundColor: Int = Color.RED
+    var pinColor: PinColor = PinColor(Color.WHITE, Color.RED)
 
     var manualSelectedLocation: Location? = null
 }

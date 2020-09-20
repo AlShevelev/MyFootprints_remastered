@@ -56,6 +56,8 @@
             android:enabled="@{viewModel.saveEnabled}"
             tools:enabled="true"
 
+            app:on_save_click="@{ () -> viewModel.onSaveClick()}"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/hGuidelineBottom48"
             app:layout_constraintBottom_toBottomOf="parent"

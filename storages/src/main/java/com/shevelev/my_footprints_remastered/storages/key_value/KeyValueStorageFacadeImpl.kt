@@ -1,5 +1,6 @@
 package com.shevelev.my_footprints_remastered.storages.key_value
 
+import com.shevelev.my_footprints_remastered.common_entities.PinColor
 import com.shevelev.my_footprints_remastered.storages.key_value.storages.NameConstants
 import com.shevelev.my_footprints_remastered.storages.key_value.storages.Storage
 import javax.inject.Inject
@@ -16,19 +17,26 @@ constructor(
 ) : KeyValueStorageFacade {
 
     private object Keys {
-        /**
-         * AES-encryption key (for API < 23)
-         */
-        const val CRYPTO_KEY_AES = "CRYPTO_KEY_AES"
+        const val PIN_COLOR_TEXT = "PIN_COLOR_TEXT"
+        const val PIN_COLOR_BACKGROUND = "PIN_COLOR_BACKGROUND"
     }
 
-//    override fun setAESCryptoKey(key: ByteArray) =
-//        keyValueStorage.update {
-//            it.putBytes(Keys.CRYPTO_KEY_AES, key)
-//        }
-//
-//    override fun getAESCryptoKey(): ByteArray? =
-//        keyValueStorage.read {
-//            it.readBytes(Keys.CRYPTO_KEY_AES)
-//        }
+    override fun savePinColor(pinColor: PinColor) {
+        keyValueStorage.update {
+            it.putInt(Keys.PIN_COLOR_TEXT, pinColor.textColor)
+            it.putInt(Keys.PIN_COLOR_BACKGROUND, pinColor.backgroundColor)
+        }
+    }
+
+    override fun loadPinColor(): PinColor? =
+        keyValueStorage.read {
+            val textColor = it.readInt(Keys.PIN_COLOR_TEXT)
+            val backgroundColor = it.readInt(Keys.PIN_COLOR_BACKGROUND)
+
+            if(textColor != null && backgroundColor != null) {
+                PinColor(textColor, backgroundColor)
+            } else {
+                null
+            }
+        }
 }

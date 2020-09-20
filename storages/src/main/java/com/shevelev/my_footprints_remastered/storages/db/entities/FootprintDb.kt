@@ -14,6 +14,21 @@ data class FootprintDb(
     @ColumnInfo(name = "file_name")
     val fileName: String,
 
+    @ColumnInfo(name = "latitude")
+    val latitude: Double,
+
+    @ColumnInfo(name = "longitude")
+    val longitude: Double,
+
+    @ColumnInfo(name = "comment")
+    val comment: String?,
+
+    @ColumnInfo(name = "pin_text_color")
+    val pinTextColor: Int,
+
+    @ColumnInfo(name = "pin_background_color")
+    val pinBackgroundColor: Int,
+
     @ColumnInfo(name = "created", typeAffinity = ColumnInfo.BLOB)
     val created: ZonedDateTime,
 

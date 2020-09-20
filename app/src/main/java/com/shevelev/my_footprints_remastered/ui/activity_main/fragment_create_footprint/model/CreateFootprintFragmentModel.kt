@@ -18,4 +18,6 @@ interface CreateFootprintFragmentModel : ModelBase {
     suspend fun processNewPhotoSelected(callbackAction: (SelectedPhotoLoadingState) -> Unit)
 
     suspend fun clearPhoto()
+
+    suspend fun save()
 }

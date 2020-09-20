@@ -29,5 +29,15 @@ constructor(
 
     override fun createTempFile(): File = File.createTempFile("tmp_", createFileName(), appContext.cacheDir)
 
+    override fun createFile(): File = File(appContext.filesDir, createFileName())
+
+    override fun copyFile(sourceFile: File, targetFile: File) {
+        sourceFile.copyTo(targetFile, true)
+    }
+
+    override fun deleteFile(file: File) {
+        file.delete()
+    }
+
     private fun createFileName() = "${IdUtil.generateLongId()}.jpg"
 }

@@ -65,6 +65,8 @@
 
             style="@style/Button.Blue"
 
+            app:on_save_click="@{() -> viewModel.onSaveClick()}"
+
             android:enabled="@{viewModel.saveEnabled}"
             tools:enabled="true"
 

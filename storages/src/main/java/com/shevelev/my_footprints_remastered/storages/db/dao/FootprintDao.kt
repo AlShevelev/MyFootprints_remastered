@@ -1,11 +1,15 @@
 package com.shevelev.my_footprints_remastered.storages.db.dao
 
 import androidx.room.Dao
+import androidx.room.Insert
 import androidx.room.Query
 import com.shevelev.my_footprints_remastered.storages.db.entities.FootprintDb
 
 @Dao
 interface FootprintDao {
+    @Insert
+    fun create(footprint: FootprintDb)
+
     @Query("select count(1) from footprint")
     fun readCount(): Int
 

@@ -5,6 +5,8 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.net.Uri
 import com.shevelev.my_footprints_remastered.R
+import com.shevelev.my_footprints_remastered.common_entities.PinColor
+import com.shevelev.my_footprints_remastered.shared_use_cases.CreateEditFootprint
 import com.shevelev.my_footprints_remastered.storages.files.FilesHelper
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.dto.SelectedPhotoLoadingState
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.model.data_bridge.CreateFootprintFragmentDataBridge
@@ -24,13 +26,13 @@ constructor(
     private val dataBridge: CreateFootprintFragmentDataBridge,
     override val geolocationProvider: GeolocationProviderManager,
     override val sharedFootprint: SharedFootprint,
-    private val filesHelper: FilesHelper
+    private val filesHelper: FilesHelper,
+    private val createEditFootprint: CreateEditFootprint
 ) : ModelBaseImpl(),
     CreateFootprintFragmentModel {
 
     override fun initSharedFootprint() {
-        sharedFootprint.pinTextColor = Color.WHITE
-        sharedFootprint.pinBackgroundColor = appContext.getColor(R.color.red)
+        sharedFootprint.pinColor = PinColor(Color.WHITE, appContext.getColor(R.color.red))
     }
 
     override val canSave: Boolean
@@ -72,6 +74,17 @@ constructor(
             sharedFootprint.image?.delete()
         }
         sharedFootprint.image = null
+    }
+
+    override suspend fun save() {
+        withContext(dispatchersProvider.ioDispatcher) {
+            createEditFootprint.create(
+                sharedFootprint.image!!,
+                sharedFootprint.manualSelectedLocation ?: geolocationProvider.lastLocation,
+                sharedFootprint.comment,
+                sharedFootprint.pinColor
+            )
+        }
     }
 
     private fun copyUriToFile(uri: Uri): File =

@@ -5,6 +5,7 @@ import androidx.annotation.ColorInt
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.shevelev.my_footprints_remastered.R
+import com.shevelev.my_footprints_remastered.common_entities.PinColor
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location_map.dto.PinInfo
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location_map.model.SetLocationMapFragmentModel
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location_map.view.ButtonsBindingCall
@@ -54,14 +55,13 @@ constructor(
     }
 
     override fun onColorDialogButtonClick() {
-        sendCommand(ShowColorDialog(model.pinTextColor, model.pinBackgroundColor))
+        sendCommand(ShowColorDialog(model.pinColor.textColor, model.pinColor.backgroundColor))
     }
 
     override fun onHelpButtonClick() = sendCommand(ShowMessageRes(R.string.mapPinHelp))
 
     fun onPinColorSelected(@ColorInt textColor: Int, @ColorInt backgroundColor: Int) {
-        model.pinTextColor = textColor
-        model.pinBackgroundColor = backgroundColor
+        model.pinColor = PinColor(textColor, backgroundColor)
 
         launch {
             try {
