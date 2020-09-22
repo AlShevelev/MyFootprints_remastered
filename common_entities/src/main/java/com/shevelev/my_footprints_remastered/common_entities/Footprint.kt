@@ -4,7 +4,7 @@ import org.threeten.bp.ZonedDateTime
 
 data class Footprint (
     val id: Long,
-    val fileName: String,
+    val imageContentUri: String,
 
     val latitude: Double,
     val longitude: Double,

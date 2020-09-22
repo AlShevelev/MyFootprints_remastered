@@ -30,18 +30,18 @@ constructor(
         get() = totalFootprintsChannel.asFlow()
 
 
-    private val lastFootprintFileNameChannel: ConflatedBroadcastChannel<String?> = ConflatedBroadcastChannel(null)
+    private val lastFootprintUriChannel: ConflatedBroadcastChannel<String?> = ConflatedBroadcastChannel(null)
     override val lastFootprintFileName: Flow<String?>
-        get() = lastFootprintFileNameChannel.asFlow()
+        get() = lastFootprintUriChannel.asFlow()
 
     override suspend fun init() {
         withContext(dispatchersProvider.ioDispatcher) {
             updateTotalFootprints(footprintRepository.getCount())
-            updateLastFootprintFileName(footprintRepository.getLast()?.fileName)
+            updateLastFootprintUri(footprintRepository.getLast()?.imageContentUri)
         }
     }
 
     override suspend fun updateTotalFootprints(total: Int) = totalFootprintsChannel.send(total)
 
-    override suspend fun updateLastFootprintFileName(last: String?) = lastFootprintFileNameChannel.send(last)
+    override suspend fun updateLastFootprintUri(last: String?) = lastFootprintUriChannel.send(last)
 }

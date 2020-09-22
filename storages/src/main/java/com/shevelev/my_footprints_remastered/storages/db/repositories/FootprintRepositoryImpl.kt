@@ -19,7 +19,7 @@ constructor(
     private fun FootprintDb.mapToFootprint() =
         Footprint(
             id = id,
-            fileName = fileName,
+            imageContentUri = imageContentUri,
             latitude = latitude,
             longitude = longitude,
             comment = comment,
@@ -31,7 +31,7 @@ constructor(
     private fun Footprint.mapToFootprintDb() =
         FootprintDb(
             id = id,
-            fileName = fileName,
+            imageContentUri = imageContentUri,
             latitude = latitude,
             longitude = longitude,
             comment = comment,

@@ -14,7 +14,6 @@ import com.shevelev.my_footprints_remastered.utils.resources.getStringFormatted
 import com.shevelev.my_footprints_remastered.utils.strings.toUpper
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import java.lang.UnsupportedOperationException
 import javax.inject.Inject
 
 class TitleFragmentViewModel
@@ -63,10 +62,6 @@ constructor(
 
     private fun getTotalFootprintsText(total: Int) = appContext.getStringFormatted(R.string.totalFootprints, total).toUpper()
 
-    private fun getLastFootprintUri(fileName: String?): Uri =
-        if(fileName == null) {
-            Uri.parse("android.resource://${appContext.packageName}/drawable/img_title_empty")
-        } else {
-            throw UnsupportedOperationException("Footprint displaying is not supported yet!")
-        }
+    private fun getLastFootprintUri(uri: String?): Uri =
+        Uri.parse(uri ?: "android.resource://${appContext.packageName}/drawable/img_title_empty")
 }
