@@ -1,5 +1,6 @@
 package com.shevelev.my_footprints_remastered.ui.activity_main.fragment_title.model.data_updater
 
+import android.net.Uri
 import com.shevelev.my_footprints_remastered.storages.db.repositories.FootprintRepository
 import com.shevelev.my_footprints_remastered.utils.coroutines.DispatchersProvider
 import com.shevelev.my_footprints_remastered.utils.di_scopes.ActivityScope
@@ -30,18 +31,18 @@ constructor(
         get() = totalFootprintsChannel.asFlow()
 
 
-    private val lastFootprintUriChannel: ConflatedBroadcastChannel<String?> = ConflatedBroadcastChannel(null)
-    override val lastFootprintFileName: Flow<String?>
+    private val lastFootprintUriChannel: ConflatedBroadcastChannel<Uri?> = ConflatedBroadcastChannel(null)
+    override val lastFootprintUri: Flow<Uri?>
         get() = lastFootprintUriChannel.asFlow()
 
     override suspend fun init() {
         withContext(dispatchersProvider.ioDispatcher) {
             updateTotalFootprints(footprintRepository.getCount())
-            updateLastFootprintUri(footprintRepository.getLast()?.imageContentUri)
+            updateLastFootprintUri(footprintRepository.getLast()?.let { Uri.parse(it.imageContentUri) })
         }
     }
 
     override suspend fun updateTotalFootprints(total: Int) = totalFootprintsChannel.send(total)
 
-    override suspend fun updateLastFootprintUri(last: String?) = lastFootprintUriChannel.send(last)
+    override suspend fun updateLastFootprintUri(last: Uri?) = lastFootprintUriChannel.send(last)
 }

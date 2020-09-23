@@ -12,9 +12,11 @@ import androidx.annotation.RequiresApi
 import com.shevelev.my_footprints_remastered.R
 import com.shevelev.my_footprints_remastered.common_entities.Footprint
 import com.shevelev.my_footprints_remastered.common_entities.PinColor
+import com.shevelev.my_footprints_remastered.entities.FootprintUpdateInfo
 import com.shevelev.my_footprints_remastered.storages.db.repositories.FootprintRepository
 import com.shevelev.my_footprints_remastered.storages.files.FilesHelper
 import com.shevelev.my_footprints_remastered.storages.key_value.KeyValueStorageFacade
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_title.model.data_updater.TitleDataUpdaterProvider
 import com.shevelev.my_footprints_remastered.utils.id_hash.IdUtil
 import kotlinx.coroutines.suspendCancellableCoroutine
 import org.threeten.bp.ZonedDateTime
@@ -28,12 +30,17 @@ constructor(
     private val appContext: Context,
     private val filesHelper: FilesHelper,
     private val footprintRepository: FootprintRepository,
-    private val keyValueStorageFacade: KeyValueStorageFacade
+    private val keyValueStorageFacade: KeyValueStorageFacade,
 ) : CreateEditFootprint {
 
     private val imageMimeType = "image/jpeg"
 
-    override suspend fun create(draftImageFile: File, location: Location, comment: String?, pinColor: PinColor) {
+    override suspend fun create(
+        draftImageFile: File,
+        location: Location,
+        comment: String?,
+        pinColor: PinColor): FootprintUpdateInfo {
+
         // Store the image
         val imageUri = if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             storeImageNewWay(draftImageFile, comment)
@@ -59,6 +66,8 @@ constructor(
 
         // Remove the draft file
         filesHelper.deleteFile(draftImageFile)
+
+        return FootprintUpdateInfo(imageUri, footprintRepository.getCount())
     }
 
     @RequiresApi(29)

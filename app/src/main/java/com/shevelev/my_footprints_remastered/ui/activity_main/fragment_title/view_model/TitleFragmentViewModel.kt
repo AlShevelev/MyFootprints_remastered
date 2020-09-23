@@ -44,7 +44,7 @@ constructor(
         }
 
         launch {
-            model.titleData.lastFootprintFileName.collect {
+            model.titleData.lastFootprintUri.collect {
                 _lastFootprintUri.value = getLastFootprintUri(it)
                 _loadingVisibility.value = View.INVISIBLE
                 _lastFootprintVisibility.value = View.VISIBLE
@@ -62,6 +62,6 @@ constructor(
 
     private fun getTotalFootprintsText(total: Int) = appContext.getStringFormatted(R.string.totalFootprints, total).toUpper()
 
-    private fun getLastFootprintUri(uri: String?): Uri =
-        Uri.parse(uri ?: "android.resource://${appContext.packageName}/drawable/img_title_empty")
+    private fun getLastFootprintUri(uri: Uri?): Uri =
+        uri ?: Uri.parse("android.resource://${appContext.packageName}/drawable/img_title_empty")
 }

@@ -11,6 +11,7 @@ import com.shevelev.my_footprints_remastered.storages.files.FilesHelper
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.dto.SelectedPhotoLoadingState
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.model.data_bridge.CreateFootprintFragmentDataBridge
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.model.shared_footprint.SharedFootprint
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_title.model.data_updater.TitleDataUpdaterProvider
 import com.shevelev.my_footprints_remastered.ui.activity_main.geolocation.GeolocationProviderManager
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.model.ModelBaseImpl
 import com.shevelev.my_footprints_remastered.utils.coroutines.DispatchersProvider
@@ -27,7 +28,8 @@ constructor(
     override val geolocationProvider: GeolocationProviderManager,
     override val sharedFootprint: SharedFootprint,
     private val filesHelper: FilesHelper,
-    private val createEditFootprint: CreateEditFootprint
+    private val createEditFootprint: CreateEditFootprint,
+    private val titleDataUpdaterProvider: TitleDataUpdaterProvider
 ) : ModelBaseImpl(),
     CreateFootprintFragmentModel {
 
@@ -77,7 +79,7 @@ constructor(
     }
 
     override suspend fun save() {
-        withContext(dispatchersProvider.ioDispatcher) {
+        val createInfo = withContext(dispatchersProvider.ioDispatcher) {
             createEditFootprint.create(
                 sharedFootprint.image!!,
                 sharedFootprint.manualSelectedLocation ?: geolocationProvider.lastLocation,
@@ -85,6 +87,9 @@ constructor(
                 sharedFootprint.pinColor
             )
         }
+
+        titleDataUpdaterProvider.updateLastFootprintUri(createInfo.lastFootprintImage)
+        titleDataUpdaterProvider.updateTotalFootprints(createInfo.totalFootprints)
     }
 
     private fun copyUriToFile(uri: Uri): File =
