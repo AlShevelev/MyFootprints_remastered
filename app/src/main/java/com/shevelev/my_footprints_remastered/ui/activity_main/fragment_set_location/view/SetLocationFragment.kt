@@ -9,11 +9,10 @@ import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_locat
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location_map.view.SetLocationMapFragment
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location_stub.view.SetLocationStubFragment
 import com.shevelev.my_footprints_remastered.ui.activity_main.navigation.MainActivityNavigation
+import com.shevelev.my_footprints_remastered.ui.shared.dialogs.ConfirmationDialog
+import com.shevelev.my_footprints_remastered.ui.shared.dialogs.OkDialog
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view.FragmentBaseMVVM
-import com.shevelev.my_footprints_remastered.ui.view_commands.AddMapForSetLocation
-import com.shevelev.my_footprints_remastered.ui.view_commands.AddStubForSetLocation
-import com.shevelev.my_footprints_remastered.ui.view_commands.MoveBack
-import com.shevelev.my_footprints_remastered.ui.view_commands.ViewCommand
+import com.shevelev.my_footprints_remastered.ui.view_commands.*
 import kotlinx.android.synthetic.main.fragment_set_location.*
 import timber.log.Timber
 import javax.inject.Inject
@@ -39,6 +38,7 @@ class SetLocationFragment : FragmentBaseMVVM<FragmentSetLocationBinding, SetLoca
             is MoveBack -> navigation.moveBack(this)
             is AddStubForSetLocation -> addStub()
             is AddMapForSetLocation -> addMap()
+            is MoveBackFromSetLocationToTitle -> navigation.moveBackFromSetLocationToTitle(this)
         }
     }
 

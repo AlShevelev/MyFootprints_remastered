@@ -14,11 +14,9 @@ import com.shevelev.my_footprints_remastered.ui.shared.widgets.screen_header.Scr
 import com.shevelev.my_footprints_remastered.ui.view_commands.*
 import com.shevelev.my_footprints_remastered.utils.coroutines.DispatchersProvider
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import java.lang.Exception
 import javax.inject.Inject
 
 class CreateFootprintFragmentViewModel
@@ -45,7 +43,9 @@ constructor(
     private var locationTrackingJob: Job? = null
 
     init {
-        model.initSharedFootprint()
+        launch {
+            model.initSharedFootprint()
+        }
 
         if(!model.geolocationProvider.isLocationTrackingEnabled) {
             sendCommand(AskAboutGeolocation())
@@ -58,7 +58,20 @@ constructor(
         }
     }
 
-    override fun onBackClick() = sendCommand(MoveBack())
+    override fun onBackClick() {
+        if(!model.canSave) {
+            sendCommand(MoveBack())
+        } else {
+            sendCommand(AskAboutFootprintInterruption())
+        }
+    }
+
+    fun onBackConfirmed() {
+        launch {
+            model.removeDraftFootprint()
+            sendCommand(MoveBack())
+        }
+    }
 
     override fun onAddPhotoClick() = sendCommand(MoveToSelectPhoto())
 
@@ -107,6 +120,7 @@ constructor(
         launch {
             try {
                 model.save()
+                sendCommand(MoveBack())
             } catch (ex: Exception) {
                 Timber.e(ex)
                 sendCommand(ShowMessageRes(R.string.saveFootprintError))

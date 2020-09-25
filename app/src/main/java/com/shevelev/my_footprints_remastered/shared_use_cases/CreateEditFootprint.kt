@@ -7,4 +7,6 @@ import java.io.File
 
 interface CreateEditFootprint {
     suspend fun create(draftImageFile: File, location: Location, comment: String?, pinColor: PinColor): FootprintUpdateInfo
+
+    suspend fun clearDraft(draftImageFile: File?)
 }

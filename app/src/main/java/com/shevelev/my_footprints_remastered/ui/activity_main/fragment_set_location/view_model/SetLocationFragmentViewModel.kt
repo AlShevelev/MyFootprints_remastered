@@ -6,10 +6,7 @@ import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_locat
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location.view.ButtonsBindingCall
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_model.ViewModelBase
 import com.shevelev.my_footprints_remastered.ui.shared.widgets.screen_header.ScreenHeaderBindingCall
-import com.shevelev.my_footprints_remastered.ui.view_commands.AddMapForSetLocation
-import com.shevelev.my_footprints_remastered.ui.view_commands.AddStubForSetLocation
-import com.shevelev.my_footprints_remastered.ui.view_commands.MoveBack
-import com.shevelev.my_footprints_remastered.ui.view_commands.ShowMessageRes
+import com.shevelev.my_footprints_remastered.ui.view_commands.*
 import com.shevelev.my_footprints_remastered.utils.coroutines.DispatchersProvider
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -40,6 +37,7 @@ constructor(
         launch {
             try {
                 model.save()
+                sendCommand(MoveBackFromSetLocationToTitle())
             } catch (ex: Exception) {
                 Timber.e(ex)
                 sendCommand(ShowMessageRes(R.string.saveFootprintError))

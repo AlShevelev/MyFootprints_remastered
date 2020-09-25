@@ -70,6 +70,10 @@ constructor(
         return FootprintUpdateInfo(imageUri, footprintRepository.getCount())
     }
 
+    override suspend fun clearDraft(draftImageFile: File?) {
+        draftImageFile?.let { filesHelper.deleteFile(it) }
+    }
+
     @RequiresApi(29)
     private fun storeImageNewWay(draftImageFile: File, comment: String?): Uri =
         with(appContext.contentResolver) {

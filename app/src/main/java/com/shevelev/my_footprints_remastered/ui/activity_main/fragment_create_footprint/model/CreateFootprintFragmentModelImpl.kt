@@ -8,6 +8,7 @@ import com.shevelev.my_footprints_remastered.R
 import com.shevelev.my_footprints_remastered.common_entities.PinColor
 import com.shevelev.my_footprints_remastered.shared_use_cases.CreateEditFootprint
 import com.shevelev.my_footprints_remastered.storages.files.FilesHelper
+import com.shevelev.my_footprints_remastered.storages.key_value.KeyValueStorageFacade
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.dto.SelectedPhotoLoadingState
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.model.data_bridge.CreateFootprintFragmentDataBridge
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.model.shared_footprint.SharedFootprint
@@ -29,12 +30,16 @@ constructor(
     override val sharedFootprint: SharedFootprint,
     private val filesHelper: FilesHelper,
     private val createEditFootprint: CreateEditFootprint,
-    private val titleDataUpdaterProvider: TitleDataUpdaterProvider
+    private val titleDataUpdaterProvider: TitleDataUpdaterProvider,
+    private val keyValueStorageFacade: KeyValueStorageFacade
 ) : ModelBaseImpl(),
     CreateFootprintFragmentModel {
 
-    override fun initSharedFootprint() {
-        sharedFootprint.pinColor = PinColor(Color.WHITE, appContext.getColor(R.color.red))
+    override suspend fun initSharedFootprint() {
+        val pinColor = withContext(dispatchersProvider.ioDispatcher) {
+            keyValueStorageFacade.loadPinColor()
+        } ?: PinColor(Color.WHITE, appContext.getColor(R.color.red))
+        sharedFootprint.pinColor = pinColor
     }
 
     override val canSave: Boolean
@@ -90,6 +95,12 @@ constructor(
 
         titleDataUpdaterProvider.updateLastFootprintUri(createInfo.lastFootprintImage)
         titleDataUpdaterProvider.updateTotalFootprints(createInfo.totalFootprints)
+    }
+
+    override suspend fun removeDraftFootprint() {
+        withContext(dispatchersProvider.ioDispatcher) {
+            createEditFootprint.clearDraft(sharedFootprint.image)
+        }
     }
 
     private fun copyUriToFile(uri: Uri): File =

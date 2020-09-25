@@ -25,11 +25,16 @@ import javax.inject.Inject
 
 @RuntimePermissions
 class CreateFootprintFragment : FragmentBaseMVVM<FragmentCreateFootprintBinding, CreateFootprintFragmentViewModel>() {
+    private val geolocationRequest = 8056
+    private val footprintInterruptionRequest = 4216
+
     @Inject
     internal lateinit var navigation: MainActivityNavigation
 
     @Inject
     internal lateinit var locationSettingsHelper: LocationSettingsHelper
+
+    override val isBackHandlerEnabled: Boolean = true
 
     override fun provideViewModelType(): Class<CreateFootprintFragmentViewModel> = CreateFootprintFragmentViewModel::class.java
 
@@ -50,7 +55,10 @@ class CreateFootprintFragment : FragmentBaseMVVM<FragmentCreateFootprintBinding,
             is MoveToCropPhoto -> navigation.moveToCropPhoto(this, command.photo)
             is MoveToEditPhoto -> navigation.moveToEditPhoto(this, command.photo)
             is MoveToSetLocation -> navigation.moveToSetLocation(this)
-            is AskAboutGeolocation -> ConfirmationDialog.show(this, R.string.enableLocationQuestion, R.string.goToSettings, R.string.notNow)
+
+            is AskAboutGeolocation -> ConfirmationDialog.show(geolocationRequest, this, R.string.enableLocationQuestion, R.string.goToSettings, R.string.notNow)
+            is AskAboutFootprintInterruption -> ConfirmationDialog.show(footprintInterruptionRequest, this, R.string.footprintInterruptionQuery, R.string.interrupt, R.string.cancel)
+
             is OpenLocationSettings -> locationSettingsHelper.openSettings(this)
         }
     }
@@ -63,13 +71,16 @@ class CreateFootprintFragment : FragmentBaseMVVM<FragmentCreateFootprintBinding,
     override fun onDialogResult(isCanceled: Boolean, requestCode: Int, data: Any?) {
         when(requestCode) {
             OkDialog.REQUEST_CODE -> proceedMoveToSelectPhotoPermissionRequest()
-            ConfirmationDialog.REQUEST_CODE -> if(!isCanceled) viewModel.onGotoLocationSettingsSelected()
+            geolocationRequest -> if(!isCanceled) viewModel.onGotoLocationSettingsSelected()
+            footprintInterruptionRequest -> if(!isCanceled) viewModel.onBackConfirmed()
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel.onViewCreated()
     }
+
+    override fun onBackPressed() = viewModel.onBackClick()
 
     @NeedsPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
     internal fun moveToSelectPhoto() = navigation.moveToSelectPhoto(this)

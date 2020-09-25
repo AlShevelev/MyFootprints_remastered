@@ -19,6 +19,7 @@ class MoveToSetLocation : ViewCommand
 class MoveToSelectPhoto : ViewCommand
 class MoveToCropPhoto(val photo: File): ViewCommand
 class MoveToEditPhoto(val photo: File): ViewCommand
+class MoveBackFromSetLocationToTitle : ViewCommand
 
 // Child fragments for SetLocationFragment
 class AddMapForSetLocation(): ViewCommand
@@ -29,6 +30,7 @@ class OpenGallery : ViewCommand
 class OpenLocationSettings : ViewCommand
 
 class AskAboutGeolocation : ViewCommand
+class AskAboutFootprintInterruption : ViewCommand
 
 class StartLoadingMap : ViewCommand
 

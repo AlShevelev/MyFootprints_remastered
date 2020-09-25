@@ -47,4 +47,6 @@
 
     <string name="timesSquare">Times Square, NYC</string>
     <string name="mapPinHelp">Use a long tap on the map to set pin location manually</string>
+    <string name="footprintInterruptionQuery">Do you want to interrupt the operation?</string>
+    <string name="interrupt">Interrupt</string>
 </resources>

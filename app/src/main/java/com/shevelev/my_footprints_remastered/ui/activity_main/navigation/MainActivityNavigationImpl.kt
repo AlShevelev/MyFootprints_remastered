@@ -7,6 +7,7 @@ import com.shevelev.my_footprints_remastered.R
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.view.CreateFootprintFragment
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_crop_photo.CropPhotoFragment
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_edit_photo.EditPhotoFragment
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location.view.SetLocationFragment
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_title.view.TitleFragment
 import com.shevelev.my_footprints_remastered.utils.di_scopes.ActivityScope
 import java.io.File
@@ -38,5 +39,9 @@ constructor() : MainActivityNavigation {
 
     override fun moveBack(fragment: Fragment) {
         fragment.findNavController().navigateUp()
+    }
+
+    override fun moveBackFromSetLocationToTitle(fragment: SetLocationFragment) {
+        fragment.findNavController().popBackStack(R.id.titleFragment, false)
     }
 }
