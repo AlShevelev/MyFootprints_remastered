@@ -16,6 +16,11 @@ constructor(
 
     override fun create(footprint: Footprint) = db.footprint.create(footprint.mapToFootprintDb())
 
+    /**
+     * Get all footprints sorted by creation moment in descending order
+     */
+    override fun getAll(): List<Footprint> = db.footprint.readAll().map { it.mapToFootprint() }
+
     private fun FootprintDb.mapToFootprint() =
         Footprint(
             id = id,

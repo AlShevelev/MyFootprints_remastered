@@ -9,6 +9,7 @@ import com.shevelev.my_footprints_remastered.R
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_model.ViewModelBase
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_title.model.TitleFragmentModel
 import com.shevelev.my_footprints_remastered.ui.view_commands.MoveToCreateFootprint
+import com.shevelev.my_footprints_remastered.ui.view_commands.MoveToGridGallery
 import com.shevelev.my_footprints_remastered.utils.coroutines.DispatchersProvider
 import com.shevelev.my_footprints_remastered.utils.resources.getStringFormatted
 import com.shevelev.my_footprints_remastered.utils.strings.toUpper
@@ -36,10 +37,14 @@ constructor(
     private val _lastFootprintVisibility = MutableLiveData<Int>(View.INVISIBLE)
     val lastFootprintVisibility: LiveData<Int> = _lastFootprintVisibility
 
+    private val _galleryEnabled = MutableLiveData<Boolean>(false)
+    val galleryEnabled: LiveData<Boolean> = _galleryEnabled
+
     init {
         launch {
             model.titleData.totalFootprints.collect {
                 _total.value = getTotalFootprintsText(it)
+                _galleryEnabled.value = it > 0
             }
         }
 
@@ -56,9 +61,9 @@ constructor(
         }
     }
 
-    fun onNewFootprintClick() {
-        sendCommand(MoveToCreateFootprint())
-    }
+    fun onNewFootprintClick() = sendCommand(MoveToCreateFootprint())
+
+    fun onGalleryClick() = sendCommand(MoveToGridGallery())
 
     private fun getTotalFootprintsText(total: Int) = appContext.getStringFormatted(R.string.totalFootprints, total).toUpper()
 

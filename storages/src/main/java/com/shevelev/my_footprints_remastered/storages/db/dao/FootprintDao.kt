@@ -15,4 +15,7 @@ interface FootprintDao {
 
     @Query("select * from footprint order by created_sort desc limit 1")
     fun readLast(): FootprintDb?
+
+    @Query("select * from footprint order by created_sort desc")
+    fun readAll(): List<FootprintDb>
 }

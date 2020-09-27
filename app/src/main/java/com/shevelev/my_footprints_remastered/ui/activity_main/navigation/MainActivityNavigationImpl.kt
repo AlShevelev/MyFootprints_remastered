@@ -44,4 +44,7 @@ constructor() : MainActivityNavigation {
     override fun moveBackFromSetLocationToTitle(fragment: SetLocationFragment) {
         fragment.findNavController().popBackStack(R.id.titleFragment, false)
     }
+
+    override fun moveToGridGallery(fragment: TitleFragment) =
+        fragment.findNavController().navigate(R.id.action_titleFragment_to_galleryGridFragment)
 }

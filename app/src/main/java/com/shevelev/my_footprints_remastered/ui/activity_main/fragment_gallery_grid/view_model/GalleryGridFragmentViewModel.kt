@@ -1,0 +1,51 @@
+package com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_grid.view_model
+
+import android.content.Context
+import android.view.View
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import com.shevelev.my_footprints_remastered.R
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_grid.model.GalleryGridFragmentModel
+import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_model.ViewModelBase
+import com.shevelev.my_footprints_remastered.ui.shared.recycler_view.versioned.VersionedListItem
+import com.shevelev.my_footprints_remastered.ui.shared.widgets.screen_header.ScreenHeaderBindingCall
+import com.shevelev.my_footprints_remastered.ui.view_commands.MoveBack
+import com.shevelev.my_footprints_remastered.utils.coroutines.DispatchersProvider
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+
+class GalleryGridFragmentViewModel
+@Inject
+constructor(
+    appContext: Context,
+    dispatchersProvider: DispatchersProvider,
+    model: GalleryGridFragmentModel
+) : ViewModelBase<GalleryGridFragmentModel>(dispatchersProvider, model),
+    ScreenHeaderBindingCall,
+    FootprintListItemEventsProcessor {
+
+    val title = appContext.getString(R.string.gallery)
+
+    private val _progressVisibility = MutableLiveData<Int>(View.VISIBLE)
+    val progressVisibility: LiveData<Int> = _progressVisibility
+
+    private val _listVisibility = MutableLiveData<Int>(View.INVISIBLE)
+    val listVisibility: LiveData<Int> = _listVisibility
+
+    private val _items = MutableLiveData<List<VersionedListItem>>()
+    val items: LiveData<List<VersionedListItem>> = _items
+
+    init {
+        launch {
+            _items.value = model.getItems()
+            _progressVisibility.value = View.INVISIBLE
+            _listVisibility.value = View.VISIBLE
+        }
+    }
+
+    override fun onBackClick() = sendCommand(MoveBack())
+
+    override fun onFootprintClick(id: Long) {
+        // do nothing so far
+    }
+}

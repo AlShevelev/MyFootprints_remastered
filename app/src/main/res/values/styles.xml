@@ -47,6 +47,12 @@
         <item name="android:textSize">@dimen/textSizeSmall</item>
     </style>
 
+    <!-- Gallery grid -->
+    <style name="Gallery.GridLabel" parent="TitleScreen.TotalLabel">
+        <item name="android:textSize">@dimen/textSizeSmall</item>
+        <item name="android:padding">4dp</item>
+    </style>
+
     <!-- Common buttons -->
     <style name="Button.Blue" parent="Widget.AppCompat.TextView">
         <item name="android:layout_height">@dimen/toolButtonSize</item>

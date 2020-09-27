@@ -20,4 +20,6 @@ interface MainActivityNavigation {
     fun moveBack(fragment: Fragment)
 
     fun moveBackFromSetLocationToTitle(fragment: SetLocationFragment)
+
+    fun moveToGridGallery(fragment: TitleFragment)
 }

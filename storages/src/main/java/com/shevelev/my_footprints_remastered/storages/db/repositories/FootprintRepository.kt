@@ -8,4 +8,9 @@ interface FootprintRepository {
     fun getLast(): Footprint?
 
     fun create(footprint: Footprint)
+
+    /**
+     * Get all footprints sorted by creation moment in descending order
+     */
+    fun getAll(): List<Footprint>
 }

@@ -10,6 +10,7 @@ import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_fo
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location.di.SetLocationFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_crop_photo.di.CropPhotoFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_edit_photo.di.EditPhotoFragmentComponent
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_grid.di.GalleryGridFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_select_photo.di.SelectPhotoFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location_map.di.SetLocationMapFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location_stub.di.SetLocationStubFragmentComponent
@@ -98,6 +99,8 @@ class DependencyInjectionStorage(private val app: Application) {
             SetLocationStubFragmentComponent::class -> getBase<CreateFootprintFragmentComponent>().setLocationStubFragment.build()
 
             SetLocationMapFragmentComponent::class -> getBase<CreateFootprintFragmentComponent>().setLocationMapFragment.build()
+
+            GalleryGridFragmentComponent::class -> getBase<MainActivityComponent>().galleryGridFragment.build()
 
             else -> throw UnsupportedOperationException("This component is not supported: ${type.simpleName}")
         } as T
