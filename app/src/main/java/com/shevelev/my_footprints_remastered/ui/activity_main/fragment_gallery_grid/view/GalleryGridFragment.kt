@@ -13,6 +13,7 @@ import com.shevelev.my_footprints_remastered.ui.activity_main.navigation.MainAct
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view.FragmentBaseMVVM
 import com.shevelev.my_footprints_remastered.ui.shared.recycler_view.versioned.VersionedListItem
 import com.shevelev.my_footprints_remastered.ui.view_commands.MoveBack
+import com.shevelev.my_footprints_remastered.ui.view_commands.MoveToOneGallery
 import com.shevelev.my_footprints_remastered.ui.view_commands.ViewCommand
 import com.shevelev.my_footprints_remastered.utils.resources.isPortrait
 import kotlinx.android.synthetic.main.fragment_gallery_grid.*
@@ -44,23 +45,22 @@ class GalleryGridFragment : FragmentBaseMVVM<FragmentGalleryGridBinding, Gallery
     override fun processViewCommand(command: ViewCommand) {
         when(command) {
             is MoveBack -> navigation.moveBack(this)
+            is MoveToOneGallery -> navigation.moveToOneGallery(this)
         }
     }
 
     private fun setListItems(items: List<VersionedListItem>) {
-        if(!::gridAdapter.isInitialized) {
-            val cols = if(requireContext().isPortrait()) 2 else 4
+        val cols = if(requireContext().isPortrait()) 2 else 4
 
-            gridLayoutManager = GridLayoutManager(context, cols)
+        gridLayoutManager = GridLayoutManager(context, cols)
 
-            gridAdapter = FootprintGridAdapter(viewModel)
-            gridAdapter.setHasStableIds(true)
+        gridAdapter = FootprintGridAdapter(viewModel)
+        gridAdapter.setHasStableIds(true)
 
-            footprintGrid.isSaveEnabled = false
-            footprintGrid.itemAnimator = null
-            footprintGrid.layoutManager = gridLayoutManager
-            footprintGrid.adapter = gridAdapter
-        }
+        footprintGrid.isSaveEnabled = false
+        footprintGrid.itemAnimator = null
+        footprintGrid.layoutManager = gridLayoutManager
+        footprintGrid.adapter = gridAdapter
 
         gridAdapter.update(items)
     }

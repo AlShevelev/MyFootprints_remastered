@@ -10,6 +10,7 @@ import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_model.ViewModel
 import com.shevelev.my_footprints_remastered.ui.shared.recycler_view.versioned.VersionedListItem
 import com.shevelev.my_footprints_remastered.ui.shared.widgets.screen_header.ScreenHeaderBindingCall
 import com.shevelev.my_footprints_remastered.ui.view_commands.MoveBack
+import com.shevelev.my_footprints_remastered.ui.view_commands.MoveToOneGallery
 import com.shevelev.my_footprints_remastered.utils.coroutines.DispatchersProvider
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -45,7 +46,5 @@ constructor(
 
     override fun onBackClick() = sendCommand(MoveBack())
 
-    override fun onFootprintClick(id: Long) {
-        // do nothing so far
-    }
+    override fun onFootprintClick(id: Long) = sendCommand(MoveToOneGallery())
 }

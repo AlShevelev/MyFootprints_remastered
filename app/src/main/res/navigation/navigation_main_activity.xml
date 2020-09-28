@@ -74,5 +74,17 @@
     <fragment
         android:id="@+id/galleryGridFragment"
         android:name="com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_grid.view.GalleryGridFragment"
-        android:label="GalleryGridFragment" />
+        android:label="GalleryGridFragment" >
+        <action
+            android:id="@+id/action_galleryGridFragment_to_galleryOneFragment"
+            app:destination="@id/galleryOneFragment"
+            app:enterAnim="@anim/nav_slide_in_right"
+            app:exitAnim="@anim/nav_slide_out_left"
+            app:popEnterAnim="@anim/nav_slide_in_left"
+            app:popExitAnim="@anim/nav_slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/galleryOneFragment"
+        android:name="com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_one.view.GalleryOneFragment"
+        android:label="GalleryOneFragment" />
 </navigation>

@@ -7,6 +7,7 @@ import com.shevelev.my_footprints_remastered.R
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.view.CreateFootprintFragment
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_crop_photo.CropPhotoFragment
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_edit_photo.EditPhotoFragment
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_grid.view.GalleryGridFragment
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location.view.SetLocationFragment
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_title.view.TitleFragment
 import com.shevelev.my_footprints_remastered.utils.di_scopes.ActivityScope
@@ -47,4 +48,7 @@ constructor() : MainActivityNavigation {
 
     override fun moveToGridGallery(fragment: TitleFragment) =
         fragment.findNavController().navigate(R.id.action_titleFragment_to_galleryGridFragment)
+
+    override fun moveToOneGallery(fragment: GalleryGridFragment) =
+        fragment.findNavController().navigate(R.id.action_galleryGridFragment_to_galleryOneFragment)
 }

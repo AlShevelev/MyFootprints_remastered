@@ -16,6 +16,7 @@ class ShowMessageText(val text: String): ViewCommand
 class MoveBack: ViewCommand
 class MoveToCreateFootprint : ViewCommand
 class MoveToGridGallery : ViewCommand
+class MoveToOneGallery : ViewCommand
 class MoveToSetLocation : ViewCommand
 class MoveToSelectPhoto : ViewCommand
 class MoveToCropPhoto(val photo: File): ViewCommand
