@@ -16,7 +16,6 @@ import com.shevelev.my_footprints_remastered.entities.FootprintUpdateInfo
 import com.shevelev.my_footprints_remastered.storages.db.repositories.FootprintRepository
 import com.shevelev.my_footprints_remastered.storages.files.FilesHelper
 import com.shevelev.my_footprints_remastered.storages.key_value.KeyValueStorageFacade
-import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_title.model.data_updater.TitleDataUpdaterProvider
 import com.shevelev.my_footprints_remastered.utils.id_hash.IdUtil
 import kotlinx.coroutines.suspendCancellableCoroutine
 import org.threeten.bp.ZonedDateTime
@@ -51,7 +50,7 @@ constructor(
         // Put a footprint into Db
         val footprint = Footprint(
             id = IdUtil.generateLongId(),
-            imageContentUri = imageUri.toString(),
+            imageContentUri = imageUri,
             latitude = location.latitude,
             longitude = location.longitude,
             comment = comment,

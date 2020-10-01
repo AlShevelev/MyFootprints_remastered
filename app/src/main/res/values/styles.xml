@@ -76,6 +76,18 @@
         <item name="android:background">@drawable/bcg_on_photo_button</item>
     </style>
 
+    <!-- Dialogs -->
+    <style name="BottomSheetDialogFragment.RoundCorners" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:colorBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
     <!-- Text styles -->
     <style name="Common.Base.TextStyle" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/black</item>

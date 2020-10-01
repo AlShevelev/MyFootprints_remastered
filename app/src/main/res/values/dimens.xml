@@ -27,4 +27,9 @@
     <dimen name="selectColorItemSize">40dp</dimen>
     <dimen name="selectColorMargin">5dp</dimen>
     <!--</editor-fold>-->
+
+    <!--<editor-fold desc="Dialogs">-->
+    <dimen name="bottomPaddingDialogRadius">10dp</dimen>
+    <dimen name="bottomPaddingDialogPadding">10dp</dimen>
+    <!--</editor-fold>-->
 </resources>

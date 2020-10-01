@@ -2,6 +2,7 @@ package com.shevelev.my_footprints_remastered.ui.shared.pin_draw
 
 import android.content.Context
 import android.graphics.*
+import android.net.Uri
 import androidx.annotation.ColorInt
 import com.shevelev.my_footprints_remastered.R
 import com.shevelev.my_footprints_remastered.utils.resources.getDimension
@@ -34,9 +35,13 @@ constructor(
     private val textMargin = 25.scale()
     private val textTagHeight = 80.scale()
 
-    override fun draw(backgroundColor: Int, textColor: Int, imageFile: File?, text: String?): PinDrawInfo {
-        val image = cropImageToCircle(imageFile)
+    override fun draw(backgroundColor: Int, textColor: Int, image: File?, text: String?): PinDrawInfo =
+        draw(backgroundColor, textColor, cropFileImageToCircle(image), text)
 
+    override fun draw(backgroundColor: Int, textColor: Int, image: Uri?, text: String?): PinDrawInfo =
+        draw(backgroundColor, textColor, cropUriImageToCircle(image), text)
+
+    private fun draw(backgroundColor: Int, textColor: Int, image: Bitmap?, text: String?): PinDrawInfo {
         return if(text.isNullOrBlank()) {
             drawWithoutText(image, backgroundColor)
         } else {
@@ -175,33 +180,44 @@ constructor(
             paint)
     }
 
-    private fun cropImageToCircle(imageFile: File?): Bitmap? =
+    private fun cropFileImageToCircle(imageFile: File?): Bitmap? =
         imageFile?.let {
-            val source = BitmapFactory.decodeFile(it.absolutePath)
-
-            val outputSize = source.width.coerceAtMost(source.height)
-            val output = Bitmap.createBitmap(outputSize, outputSize, Bitmap.Config.ARGB_8888)
-
-            val canvas = Canvas(output)
-            val paint = Paint()
-            paint.isAntiAlias = true
-
-            canvas.drawARGB(0, 0, 0, 0)
-            canvas.drawCircle(outputSize/2f, outputSize/2f, outputSize/2f, paint)
-
-            paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
-
-            val sourceRect = if(source.width > source.height) {
-                val left = (source.width-outputSize)/2
-                Rect(left, 0, source.width - left, outputSize)
-            } else {
-                val top = (source.height - outputSize) / 2
-                Rect(0, top, outputSize, source.height - top)
-            }
-            canvas.drawBitmap(source, sourceRect, Rect(0, 0, outputSize, outputSize), paint)
-
-            output
+            cropBitmapToCircle(BitmapFactory.decodeFile(it.absolutePath))
         }
+
+    private fun cropUriImageToCircle(imageUri: Uri?): Bitmap? =
+        imageUri?.let {
+            val bitmap = appContext.contentResolver.openInputStream(it).use { stream ->
+                BitmapFactory.decodeStream(stream)
+            }
+
+            cropBitmapToCircle(bitmap)
+        }
+
+    private fun cropBitmapToCircle(bitmap: Bitmap): Bitmap {
+        val outputSize = bitmap.width.coerceAtMost(bitmap.height)
+        val output = Bitmap.createBitmap(outputSize, outputSize, Bitmap.Config.ARGB_8888)
+
+        val canvas = Canvas(output)
+        val paint = Paint()
+        paint.isAntiAlias = true
+
+        canvas.drawARGB(0, 0, 0, 0)
+        canvas.drawCircle(outputSize/2f, outputSize/2f, outputSize/2f, paint)
+
+        paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
+
+        val bitmapRect = if(bitmap.width > bitmap.height) {
+            val left = (bitmap.width-outputSize)/2
+            Rect(left, 0, bitmap.width - left, outputSize)
+        } else {
+            val top = (bitmap.height - outputSize) / 2
+            Rect(0, top, outputSize, bitmap.height - top)
+        }
+        canvas.drawBitmap(bitmap, bitmapRect, Rect(0, 0, outputSize, outputSize), paint)
+
+        return output
+    }
 
     private fun Int.scale() = (this*scaleFactor).toInt() + 1
 }

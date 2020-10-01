@@ -77,8 +77,8 @@ constructor(
                 lastLocation = withContext(dispatchersProvider.ioDispatcher) {
                     lastLocationRepository.get()
                 } ?: Location(LocationManager.GPS_PROVIDER).apply {
-                    latitude = 40.758
-                    longitude = 73.9855         // Times Square, NYC, The USA
+                    latitude = 40.758896
+                    longitude = -73.985130         // Times Square, NYC, The USA
                     time = Date().time
                 }
             }

@@ -1,5 +1,6 @@
 package com.shevelev.my_footprints_remastered.storages.db.repositories
 
+import android.net.Uri
 import com.shevelev.my_footprints_remastered.common_entities.Footprint
 import com.shevelev.my_footprints_remastered.storages.db.core.DbCore
 import com.shevelev.my_footprints_remastered.storages.db.entities.FootprintDb
@@ -24,7 +25,7 @@ constructor(
     private fun FootprintDb.mapToFootprint() =
         Footprint(
             id = id,
-            imageContentUri = imageContentUri,
+            imageContentUri = Uri.parse(imageContentUri),
             latitude = latitude,
             longitude = longitude,
             comment = comment,
@@ -36,7 +37,7 @@ constructor(
     private fun Footprint.mapToFootprintDb() =
         FootprintDb(
             id = id,
-            imageContentUri = imageContentUri,
+            imageContentUri = imageContentUri.toString(),
             latitude = latitude,
             longitude = longitude,
             comment = comment,

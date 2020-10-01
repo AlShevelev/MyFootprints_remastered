@@ -9,6 +9,7 @@ import com.shevelev.my_footprints_remastered.common_entities.PinColor
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location_map.dto.PinInfo
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location_map.model.SetLocationMapFragmentModel
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location_map.view.ButtonsBindingCall
+import com.shevelev.my_footprints_remastered.ui.shared.Constants
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_model.ViewModelBase
 import com.shevelev.my_footprints_remastered.ui.view_commands.*
 import com.shevelev.my_footprints_remastered.utils.coroutines.DispatchersProvider
@@ -24,7 +25,7 @@ constructor(
 ) : ViewModelBase<SetLocationMapFragmentModel>(dispatchersProvider, model),
     ButtonsBindingCall {
 
-    private val startZoom = 18f
+    private val startZoom = Constants.MAP_START_ZOOM
 
     private val _pin = MutableLiveData<PinInfo>()
     val pin: LiveData<PinInfo> = _pin

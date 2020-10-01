@@ -25,8 +25,8 @@ constructor(
 ) : ViewModel(), CoroutineScope {
     private val scopeJob: Job = SupervisorJob()
 
-    private val errorHandler = CoroutineExceptionHandler { _, exception ->
-        handleError(exception)
+    private val errorHandler = CoroutineExceptionHandler { _, ex ->
+        handleError(ex)
     }
 
     @Suppress("UNCHECKED_CAST")

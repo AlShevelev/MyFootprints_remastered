@@ -38,7 +38,7 @@ constructor(
     override suspend fun init() {
         withContext(dispatchersProvider.ioDispatcher) {
             updateTotalFootprints(footprintRepository.getCount())
-            updateLastFootprintUri(footprintRepository.getLast()?.let { Uri.parse(it.imageContentUri) })
+            updateLastFootprintUri(footprintRepository.getLast()?.imageContentUri)
         }
     }
 

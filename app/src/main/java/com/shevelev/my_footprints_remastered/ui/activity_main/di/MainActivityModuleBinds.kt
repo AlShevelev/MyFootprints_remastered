@@ -9,6 +9,8 @@ import com.shevelev.my_footprints_remastered.ui.activity_main.geolocation.Geoloc
 import com.shevelev.my_footprints_remastered.ui.activity_main.geolocation.GeolocationProviderData
 import com.shevelev.my_footprints_remastered.ui.activity_main.geolocation.GeolocationProviderManager
 import com.shevelev.my_footprints_remastered.ui.activity_main.geolocation.GeolocationProviderImpl
+import com.shevelev.my_footprints_remastered.ui.shared.pin_draw.PinDraw
+import com.shevelev.my_footprints_remastered.ui.shared.pin_draw.PinDrawImpl
 import com.shevelev.my_footprints_remastered.utils.di_scopes.ActivityScope
 import dagger.Binds
 import dagger.Module
@@ -42,4 +44,8 @@ abstract class MainActivityModuleBinds {
     @Binds
     @ActivityScope
     abstract fun provideGeolocationProviderFlow(provider: GeolocationProviderImpl): GeolocationProviderData
+
+
+    @Binds
+    abstract fun providePinDraw(pinDraw: PinDrawImpl): PinDraw
 }

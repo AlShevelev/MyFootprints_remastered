@@ -1,8 +1,11 @@
 package com.shevelev.my_footprints_remastered.utils.resources
 
+import android.app.Activity
 import android.content.Context
 import android.content.res.Configuration
+import android.content.res.Resources
 import android.graphics.drawable.Drawable
+import android.util.Size
 import androidx.annotation.*
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
@@ -36,3 +39,11 @@ fun Context.getDimension(@DimenRes resId: Int): Float = this.resources.getDimens
 fun Context.isPortrait(): Boolean {
     return resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
 }
+
+/**
+ * Get screen size in pixels
+ */
+fun Context.getScreenSize(): Size =
+    Resources.getSystem().displayMetrics.let {
+        Size(it.widthPixels, it.heightPixels)
+    }

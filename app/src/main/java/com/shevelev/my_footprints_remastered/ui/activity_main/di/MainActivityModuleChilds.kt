@@ -5,6 +5,7 @@ import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_g
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_one.di.GalleryOneFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_select_photo.di.SelectPhotoFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_title.di.TitleFragmentComponent
+import com.shevelev.my_footprints_remastered.ui.shared.dialogs.map.MapDialogComponent
 import dagger.Module
 
 @Module(subcomponents = [
@@ -12,5 +13,6 @@ import dagger.Module
     SelectPhotoFragmentComponent::class,
     CreateFootprintFragmentComponent::class,
     GalleryGridFragmentComponent::class,
-    GalleryOneFragmentComponent::class])
+    GalleryOneFragmentComponent::class,
+    MapDialogComponent::class])
 class MainActivityModuleChilds

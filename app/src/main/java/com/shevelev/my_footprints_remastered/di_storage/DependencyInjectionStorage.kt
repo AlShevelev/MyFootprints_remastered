@@ -16,6 +16,7 @@ import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_select_ph
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location_map.di.SetLocationMapFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location_stub.di.SetLocationStubFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_title.di.TitleFragmentComponent
+import com.shevelev.my_footprints_remastered.ui.shared.dialogs.map.MapDialogComponent
 import com.shevelev.my_footprints_remastered.utils.id_hash.IdUtil
 import kotlin.reflect.KClass
 
@@ -104,6 +105,8 @@ class DependencyInjectionStorage(private val app: Application) {
             GalleryGridFragmentComponent::class -> getBase<MainActivityComponent>().galleryGridFragment.build()
 
             GalleryOneFragmentComponent::class -> getBase<MainActivityComponent>().galleryOneFragment.build()
+
+            MapDialogComponent::class -> getBase<MainActivityComponent>().mapDialog.build()
 
             else -> throw UnsupportedOperationException("This component is not supported: ${type.simpleName}")
         } as T
