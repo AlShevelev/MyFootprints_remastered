@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable name="viewModel" type="com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_pages.view_model.GalleryPagesFragmentViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black">
+        
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/locationDateText"
+
+            style="@style/Gallery.Page"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginStart="@dimen/titleScreenTotalLabelMargin"
+            android:layout_marginTop="@dimen/titleScreenTotalLabelMargin"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+
+            android:text="@{viewModel.createdAt}"
+            tools:text="20.0.2000 16:42" />
+
+        <TextView
+            android:id="@+id/commentText"
+
+            style="@style/Gallery.Page"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginStart="@dimen/titleScreenTotalLabelMargin"
+            android:layout_marginTop="@dimen/titleScreenTotalLabelMargin"
+            android:layout_marginEnd="@dimen/titleScreenTotalLabelMargin"
+            app:layout_constraintHorizontal_bias="0"
+
+            app:layout_constrainedWidth="true"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/locationDateText"
+
+            tools:visibility="visible"
+            android:visibility="@{viewModel.commentVisibility}"
+
+            android:text="@{viewModel.comment}"
+            tools:text="We\'re Knights of the Round Table. We dance whene\'er we\'re able. We do routines and chorus scenes" />
+
+        <ImageButton
+            android:id="@+id/mapButton"
+
+            style="@style/Button.OnPhoto.Light"
+
+            android:layout_marginStart="@dimen/onPhotoButtonMargin"
+            android:layout_marginBottom="@dimen/onPhotoButtonMargin"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            app:on_map_click="@{() -> viewModel.onMapClick()}"
+
+            app:srcCompat="@drawable/ic_location_14_20"
+            tools:ignore="ContentDescription"
+            />
+
+        <ImageButton
+            android:id="@+id/shareButton"
+
+            style="@style/Button.OnPhoto.Light"
+
+            android:layout_marginStart="@dimen/onPhotoButtonsGap"
+
+            app:layout_constraintStart_toEndOf="@+id/mapButton"
+            app:layout_constraintBottom_toBottomOf="@id/mapButton"
+
+            app:on_share_click="@{() -> viewModel.onShareClick()}"
+
+            app:srcCompat="@drawable/ic_share_18_20"
+            tools:ignore="ContentDescription"
+            />
+
+        <ImageButton
+            android:id="@+id/deleteButton"
+
+            style="@style/Button.OnPhoto.Light"
+
+            android:layout_marginEnd="@dimen/onPhotoButtonMargin"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/mapButton"
+
+            app:on_delete_click="@{() -> viewModel.onEditClick()}"
+
+            app:srcCompat="@drawable/ic_delete_14_18"
+            tools:ignore="ContentDescription"
+            />
+
+        <ImageButton
+            android:id="@+id/editButton"
+
+            style="@style/Button.OnPhoto.Light"
+
+            android:layout_marginEnd="@dimen/onPhotoButtonsGap"
+
+            app:layout_constraintEnd_toStartOf="@+id/deleteButton"
+            app:layout_constraintBottom_toBottomOf="@id/mapButton"
+
+            app:on_edit_click="@{() -> viewModel.onEditClick()}"
+
+            app:srcCompat="@drawable/ic_edit_19_18"
+            tools:ignore="ContentDescription"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

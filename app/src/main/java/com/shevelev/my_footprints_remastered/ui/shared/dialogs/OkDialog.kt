@@ -13,12 +13,12 @@ class OkDialog : DialogFragment() {
     companion object {
         const val REQUEST_CODE = 1642
 
-        private const val TEXT_KEY = "TEXT_KEY"
+        private const val ARG_TEXT = "ARG_TEXT"
 
         fun show(fragment: FragmentBase, @StringRes text: Int) {
             OkDialog().apply {
                 arguments = Bundle().apply {
-                    putInt(TEXT_KEY, text)
+                    putInt(ARG_TEXT, text)
                 }
                 show(fragment.childFragmentManager, null)
             }
@@ -28,7 +28,7 @@ class OkDialog : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
             AlertDialog.Builder(it)
-                .setMessage(requireArguments().getInt(TEXT_KEY))
+                .setMessage(requireArguments().getInt(ARG_TEXT))
                 .setCancelable(true)
                 .setPositiveButton(R.string.ok) { _, _ ->
                     (parentFragment as FragmentBase).onDialogResult(false, REQUEST_CODE, null)

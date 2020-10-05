@@ -29,6 +29,9 @@
         <item name="android:padding">6dp</item>
         <item name="android:textSize">@dimen/textSizeNormal</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="singleLine">true</item>
     </style>
 
     <!-- Create footprint screen -->
@@ -53,6 +56,12 @@
         <item name="android:padding">4dp</item>
     </style>
 
+    <!-- Gallery page-->
+    <style name="Gallery.Page" parent="TitleScreen.TotalLabel">
+        <item name="android:background">@drawable/bcg_gallery_page_text</item>
+        <item name="android:textColor">@color/white75</item>
+    </style>
+
     <!-- Common buttons -->
     <style name="Button.Blue" parent="Widget.AppCompat.TextView">
         <item name="android:layout_height">@dimen/toolButtonSize</item>
@@ -74,6 +83,11 @@
         <item name="android:layout_width">@dimen/onPhotoButtonSize</item>
         <item name="android:layout_height">@dimen/onPhotoButtonSize</item>
         <item name="android:background">@drawable/bcg_on_photo_button</item>
+    </style>
+
+    <style name="Button.OnPhoto.Light" parent="Button.OnPhoto">
+        <item name="android:background">@drawable/bcg_on_photo_button_dark</item>
+        <item name="android:tint">@color/white75</item>
     </style>
 
     <!-- Dialogs -->

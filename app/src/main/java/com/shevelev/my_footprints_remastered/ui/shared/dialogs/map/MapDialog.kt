@@ -27,12 +27,12 @@ import javax.inject.Inject
 
 class MapDialog : BottomSheetDialogFragmentBase(), OnMapReadyCallback {
     companion object {
-        private const val FOOTPRINT = "FOOTPRINT_KEY"
+        private const val ARG_FOOTPRINT = "ARG_FOOTPRINT"
 
         fun show(fragment: FragmentBase, footprint: Footprint) {
             MapDialog().apply {
                 arguments = Bundle().apply {
-                    putParcelable(FOOTPRINT, footprint)
+                    putParcelable(ARG_FOOTPRINT, footprint)
                 }
             }
             .show(fragment.childFragmentManager, null)
@@ -98,7 +98,7 @@ class MapDialog : BottomSheetDialogFragmentBase(), OnMapReadyCallback {
         map.uiSettings.isCompassEnabled = false
         map.uiSettings.isZoomControlsEnabled = true
 
-        with(requireArguments().getParcelable<Footprint>(FOOTPRINT)!!) {
+        with(requireArguments().getParcelable<Footprint>(ARG_FOOTPRINT)!!) {
             // Move a camera and zoom
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(latitude, longitude), Constants.MAP_START_ZOOM))
 

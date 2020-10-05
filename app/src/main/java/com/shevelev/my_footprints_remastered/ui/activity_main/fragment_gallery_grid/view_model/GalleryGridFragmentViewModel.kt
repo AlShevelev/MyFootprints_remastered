@@ -38,7 +38,7 @@ constructor(
 
     init {
         launch {
-            _items.value = model.getItems()
+            _items.value = model.loadItems()
             _progressVisibility.value = View.INVISIBLE
             _listVisibility.value = View.VISIBLE
         }
@@ -46,5 +46,9 @@ constructor(
 
     override fun onBackClick() = sendCommand(MoveBack())
 
-    override fun onFootprintClick(id: Long) = sendCommand(MoveToOneGallery())
+    override fun onFootprintClick(id: Long) {
+        model.items.let { items ->
+            sendCommand(MoveToOneGallery(items, items.indexOfFirst { it.id == id }))
+        }
+    }
 }

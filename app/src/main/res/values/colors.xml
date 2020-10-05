@@ -6,6 +6,7 @@
 
     <color name="black">@android:color/black</color>
     <color name="black50">#80000000</color>
+    <color name="black75">#BF000000</color>
 
     <color name="grayLight">#F0F0F0</color>
     <color name="gray">#afafaf</color>

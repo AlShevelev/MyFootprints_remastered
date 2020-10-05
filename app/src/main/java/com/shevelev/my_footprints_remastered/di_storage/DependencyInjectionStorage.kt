@@ -4,6 +4,7 @@ import android.app.Application
 import com.shevelev.my_footprints_remastered.application.di.AppComponent
 import com.shevelev.my_footprints_remastered.application.di.AppModule
 import com.shevelev.my_footprints_remastered.application.di.DaggerAppComponent
+import com.shevelev.my_footprints_remastered.common_entities.Footprint
 import com.shevelev.my_footprints_remastered.ui.di.UIComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.di.MainActivityComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.di.CreateFootprintFragmentComponent
@@ -11,7 +12,8 @@ import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_locat
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_crop_photo.di.CropPhotoFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_edit_photo.di.EditPhotoFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_grid.di.GalleryGridFragmentComponent
-import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_one.di.GalleryOneFragmentComponent
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_pages.di.GalleryPagesFragmentComponent
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_pages.di.GalleryPagesFragmentModule
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_select_photo.di.SelectPhotoFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location_map.di.SetLocationMapFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location_stub.di.SetLocationStubFragmentComponent
@@ -104,7 +106,10 @@ class DependencyInjectionStorage(private val app: Application) {
 
             GalleryGridFragmentComponent::class -> getBase<MainActivityComponent>().galleryGridFragment.build()
 
-            GalleryOneFragmentComponent::class -> getBase<MainActivityComponent>().galleryOneFragment.build()
+            GalleryPagesFragmentComponent::class ->
+                getBase<MainActivityComponent>().galleryPagesFragment
+                    .init(GalleryPagesFragmentModule(args[0] as List<Footprint>, args[1] as Int))
+                    .build()
 
             MapDialogComponent::class -> getBase<MainActivityComponent>().mapDialog.build()
 

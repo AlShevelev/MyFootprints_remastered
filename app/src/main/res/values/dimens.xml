@@ -22,6 +22,7 @@
     <dimen name="onPhotoSecondButtonMargin">55dp</dimen>
     <dimen name="onPhotoThirdButtonMargin">105dp</dimen>
     <dimen name="onPhotoButtonsGap">10dp</dimen>
+    <dimen name="onPhotoButtonsGapLarge">40dp</dimen>
 
     <!--<editor-fold desc="Color selection control">-->
     <dimen name="selectColorItemSize">40dp</dimen>

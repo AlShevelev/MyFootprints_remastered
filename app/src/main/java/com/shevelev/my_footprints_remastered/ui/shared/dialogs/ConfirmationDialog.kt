@@ -10,10 +10,10 @@ import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view.FragmentBase
 
 class ConfirmationDialog : DialogFragment() {
     companion object {
-        private const val REQUEST_CODE = "REQUEST_CODE"
-        private const val TEXT_KEY = "TEXT_KEY"
-        private const val POSITIVE_BUTTON_KEY = "POSITIVE_BUTTON_KEY"
-        private const val NEGATIVE_BUTTON_KEY = "NEGATIVE_BUTTON_KEY"
+        private const val ARG_REQUEST_CODE = "ARG_REQUEST_CODE"
+        private const val ARG_TEXT = "ARG_TEXT"
+        private const val ARG_POSITIVE_BUTTON = "ARG_POSITIVE_BUTTON"
+        private const val ARG_NEGATIVE_BUTTON = "ARG_NEGATIVE_BUTTON"
 
         fun show(
             requestCode: Int,
@@ -24,10 +24,10 @@ class ConfirmationDialog : DialogFragment() {
 
             ConfirmationDialog().apply {
                 arguments = Bundle().apply {
-                    putInt(REQUEST_CODE, requestCode)
-                    putInt(TEXT_KEY, text)
-                    putInt(POSITIVE_BUTTON_KEY, positiveButton)
-                    putInt(NEGATIVE_BUTTON_KEY, negativeButton)
+                    putInt(ARG_REQUEST_CODE, requestCode)
+                    putInt(ARG_TEXT, text)
+                    putInt(ARG_POSITIVE_BUTTON, positiveButton)
+                    putInt(ARG_NEGATIVE_BUTTON, negativeButton)
                 }
                 show(fragment.childFragmentManager, null)
             }
@@ -35,15 +35,15 @@ class ConfirmationDialog : DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val requestCode = requireArguments().getInt(REQUEST_CODE)
+        val requestCode = requireArguments().getInt(ARG_REQUEST_CODE)
 
         return activity?.let {
             AlertDialog.Builder(it)
-                .setMessage(requireArguments().getInt(TEXT_KEY))
-                .setPositiveButton(requireArguments().getInt(POSITIVE_BUTTON_KEY)) { _, _ ->
+                .setMessage(requireArguments().getInt(ARG_TEXT))
+                .setPositiveButton(requireArguments().getInt(ARG_POSITIVE_BUTTON)) { _, _ ->
                     (parentFragment as FragmentBase).onDialogResult(false, requestCode, null)
                 }
-                .setNegativeButton(requireArguments().getInt(NEGATIVE_BUTTON_KEY)) { _, _ ->
+                .setNegativeButton(requireArguments().getInt(ARG_NEGATIVE_BUTTON)) { _, _ ->
                     (parentFragment as FragmentBase).onDialogResult(true, requestCode, null)
                 }
                 .create()
@@ -51,6 +51,6 @@ class ConfirmationDialog : DialogFragment() {
     }
 
     override fun onCancel(dialog: DialogInterface) {
-        (parentFragment as FragmentBase).onDialogResult(true, requireArguments().getInt(REQUEST_CODE), null)
+        (parentFragment as FragmentBase).onDialogResult(true, requireArguments().getInt(ARG_REQUEST_CODE), null)
     }
 }

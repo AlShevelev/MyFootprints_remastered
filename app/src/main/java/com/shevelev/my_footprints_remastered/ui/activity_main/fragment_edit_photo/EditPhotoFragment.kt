@@ -25,7 +25,7 @@ import javax.inject.Inject
 
 class EditPhotoFragment : FragmentBase() {
     companion object {
-        const val FILE_PARAM_KEY = "FILE_PARAM_KEY"
+        const val ARG_FILE = "ARG_FILE"
 
         private const val CURRENT_FILTER_INDEX_KEY = "CURRENT_FILTER_INDEX_KEY"
         private const val BRIGHTNESS_FILTER_PROGRESS_KEY = "BRIGHTNESS_FILTER_INDEX_KEY"
@@ -68,7 +68,7 @@ class EditPhotoFragment : FragmentBase() {
         val saturationProgress = savedInstanceState?.getInt(SATURATION_FILTER_PROGRESS_KEY, defaultProgress) ?: defaultProgress
         val temperatureProgress = savedInstanceState?.getInt(TEMPERATURE_FILTER_PROGRESS_KEY, defaultProgress) ?: defaultProgress
 
-        val file = File(requireArguments().getString(FILE_PARAM_KEY)!!)
+        val file = File(requireArguments().getString(ARG_FILE)!!)
         val bitmap = BitmapFactory.decodeFile(file.absolutePath)
 
         renderer = MultiEffectSurfaceRenderer(

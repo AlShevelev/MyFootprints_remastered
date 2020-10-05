@@ -19,9 +19,9 @@ class SelectColorDialog : DialogFragment() {
     companion object {
         const val REQUEST_CODE = 1812
 
-        private const val TEXT_COLOR_KEY = "TEXT_COLOR_KEY"
-        private const val BACKGROUND_COLOR_KEY = "BACKGROUND_COLOR_KEY"
-        private const val SAMPLE_TEXT_KEY = "SAMPLE_TEXT_KEY"
+        private const val ARG_TEXT_COLOR = "ARG_TEXT_COLOR"
+        private const val ARG_BACKGROUND_COLOR = "ARG_BACKGROUND_COLOR"
+        private const val ARG_SAMPLE_TEXT = "ARG_SAMPLE_TEXT"
 
         fun show(
             fragment: FragmentBase,
@@ -34,9 +34,9 @@ class SelectColorDialog : DialogFragment() {
 
             SelectColorDialog().apply {
                 arguments = Bundle().apply {
-                    putInt(TEXT_COLOR_KEY, textColor)
-                    putInt(BACKGROUND_COLOR_KEY, backgroundColor)
-                    putInt(SAMPLE_TEXT_KEY, sampleText)
+                    putInt(ARG_TEXT_COLOR, textColor)
+                    putInt(ARG_BACKGROUND_COLOR, backgroundColor)
+                    putInt(ARG_SAMPLE_TEXT, sampleText)
                 }
                 show(fragment.childFragmentManager, null)
             }
@@ -47,8 +47,8 @@ class SelectColorDialog : DialogFragment() {
         var dialogView: SelectColorDialogView? = null
 
         return activity?.let {
-            val textColor = savedState?.getInt(TEXT_COLOR_KEY) ?: requireArguments().getInt(TEXT_COLOR_KEY)
-            val backgroundColor = savedState?.getInt(BACKGROUND_COLOR_KEY) ?: requireArguments().getInt(BACKGROUND_COLOR_KEY)
+            val textColor = savedState?.getInt(ARG_TEXT_COLOR) ?: requireArguments().getInt(ARG_TEXT_COLOR)
+            val backgroundColor = savedState?.getInt(ARG_BACKGROUND_COLOR) ?: requireArguments().getInt(ARG_BACKGROUND_COLOR)
 
             AlertDialog.Builder(it, R.style.App_Activity_Main_Dialog_Theme)
                 .setTitle(R.string.pinColorSelect)
@@ -58,7 +58,7 @@ class SelectColorDialog : DialogFragment() {
                     SelectColorDialogView(requireContext())
                         .apply {
                             dialogView = this
-                            setSampleText(it.getString(requireArguments().getInt(SAMPLE_TEXT_KEY)))
+                            setSampleText(it.getString(requireArguments().getInt(ARG_SAMPLE_TEXT)))
                             text = textColor
                             background = backgroundColor
                             showSample = it.isPortrait()
@@ -82,8 +82,8 @@ class SelectColorDialog : DialogFragment() {
         super.onSaveInstanceState(outState)
 
         dialog?.let {
-            outState.putInt(TEXT_COLOR_KEY, it.findViewById<SelectColorGrid>(R.id.textColorGrid).selectedColor)
-            outState.putInt(BACKGROUND_COLOR_KEY, it.findViewById<SelectColorGrid>(R.id.backgroundColorGrid).selectedColor)
+            outState.putInt(ARG_TEXT_COLOR, it.findViewById<SelectColorGrid>(R.id.textColorGrid).selectedColor)
+            outState.putInt(ARG_BACKGROUND_COLOR, it.findViewById<SelectColorGrid>(R.id.backgroundColorGrid).selectedColor)
         }
     }
 

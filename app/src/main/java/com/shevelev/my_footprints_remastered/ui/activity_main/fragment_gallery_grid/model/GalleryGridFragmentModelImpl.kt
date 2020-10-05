@@ -17,9 +17,10 @@ constructor(
 ) : GalleryGridFragmentModel,
     ModelBaseImpl() {
 
-    private lateinit var items: List<Footprint>
+    override lateinit var items: List<Footprint>
+        private set
 
-    override suspend fun getItems(): List<VersionedListItem> {
+    override suspend fun loadItems(): List<VersionedListItem> {
         items = withContext(dispatchersProvider.ioDispatcher) {
             footprintRepository.getAll()
         }

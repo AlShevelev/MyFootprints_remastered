@@ -27,6 +27,7 @@ buildscript {
         constraintlayout_version = "2.0.1"
         support_v4_version = "1.0.0"
         nav_version = '2.3.0'
+        view_pager_version = '1.0.0'
 
         // Utils
         timber_version = "4.7.1"

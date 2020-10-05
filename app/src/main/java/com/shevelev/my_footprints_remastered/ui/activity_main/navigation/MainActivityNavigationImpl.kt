@@ -4,10 +4,12 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.shevelev.my_footprints_remastered.R
+import com.shevelev.my_footprints_remastered.common_entities.Footprint
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.view.CreateFootprintFragment
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_crop_photo.CropPhotoFragment
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_edit_photo.EditPhotoFragment
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_grid.view.GalleryGridFragment
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_pages.view.GalleryPagesFragment
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location.view.SetLocationFragment
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_title.view.TitleFragment
 import com.shevelev.my_footprints_remastered.utils.di_scopes.ActivityScope
@@ -29,12 +31,12 @@ constructor() : MainActivityNavigation {
         fragment.findNavController().navigate(R.id.action_createFootprintFragment_to_selectPhotoFragment)
 
     override fun moveToCropPhoto(fragment: CreateFootprintFragment, photo: File) {
-        val bundle = bundleOf(CropPhotoFragment.FILE_PARAM_KEY to photo.absolutePath)
+        val bundle = bundleOf(CropPhotoFragment.ARG_FILE to photo.absolutePath)
         fragment.findNavController().navigate(R.id.action_createFootprintFragment_to_cropPhotoFragment, bundle)
     }
 
     override fun moveToEditPhoto(fragment: CreateFootprintFragment, photo: File) {
-        val bundle = bundleOf(EditPhotoFragment.FILE_PARAM_KEY to photo.absolutePath)
+        val bundle = bundleOf(EditPhotoFragment.ARG_FILE to photo.absolutePath)
         fragment.findNavController().navigate(R.id.action_createFootprintFragment_to_editPhotoFragment, bundle)
     }
 
@@ -49,6 +51,11 @@ constructor() : MainActivityNavigation {
     override fun moveToGridGallery(fragment: TitleFragment) =
         fragment.findNavController().navigate(R.id.action_titleFragment_to_galleryGridFragment)
 
-    override fun moveToOneGallery(fragment: GalleryGridFragment) =
-        fragment.findNavController().navigate(R.id.action_galleryGridFragment_to_galleryOneFragment)
+    override fun moveToOneGallery(fragment: GalleryGridFragment, footprints: List<Footprint>, currentIndex:Int) {
+        val bundle = bundleOf().apply {
+            putParcelableArrayList(GalleryPagesFragment.ARG_FOOTPRINTS_LIST, ArrayList(footprints))
+            putInt(GalleryPagesFragment.ARG_CURRENT_FOOTPRINT_INDEX, currentIndex)
+        }
+        fragment.findNavController().navigate(R.id.action_galleryGridFragment_to_galleryOneFragment, bundle)
+    }
 }

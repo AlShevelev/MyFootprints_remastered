@@ -85,6 +85,6 @@
     </fragment>
     <fragment
         android:id="@+id/galleryOneFragment"
-        android:name="com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_one.view.GalleryOneFragment"
+        android:name="com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_pages.view.GalleryPagesFragment"
         android:label="GalleryOneFragment" />
 </navigation>

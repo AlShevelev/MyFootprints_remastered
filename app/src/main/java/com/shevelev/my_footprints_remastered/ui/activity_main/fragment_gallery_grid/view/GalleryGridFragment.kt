@@ -45,7 +45,7 @@ class GalleryGridFragment : FragmentBaseMVVM<FragmentGalleryGridBinding, Gallery
     override fun processViewCommand(command: ViewCommand) {
         when(command) {
             is MoveBack -> navigation.moveBack(this)
-            is MoveToOneGallery -> navigation.moveToOneGallery(this)
+            is MoveToOneGallery -> navigation.moveToOneGallery(this, command.footprints, command.currentIndex)
         }
     }
 

@@ -20,7 +20,7 @@ import javax.inject.Inject
 
 class CropPhotoFragment : FragmentBase() {
     companion object {
-        const val FILE_PARAM_KEY = "FILE_PARAM_KEY"
+        const val ARG_FILE = "ARG_FILE"
     }
 
     private var croppingInProgress = false
@@ -38,7 +38,7 @@ class CropPhotoFragment : FragmentBase() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val file = File(requireArguments().getString(FILE_PARAM_KEY)!!)
+        val file = File(requireArguments().getString(ARG_FILE)!!)
 
         cropPhoto.load(file) {
             crossfade(true)

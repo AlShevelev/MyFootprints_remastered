@@ -3,6 +3,7 @@ package com.shevelev.my_footprints_remastered.ui.view_commands
 import android.location.Location
 import androidx.annotation.ColorInt
 import androidx.annotation.StringRes
+import com.shevelev.my_footprints_remastered.common_entities.Footprint
 import com.shevelev.my_footprints_remastered.ui.shared.pin_draw.PinDrawInfo
 import java.io.File
 
@@ -16,7 +17,12 @@ class ShowMessageText(val text: String): ViewCommand
 class MoveBack: ViewCommand
 class MoveToCreateFootprint : ViewCommand
 class MoveToGridGallery : ViewCommand
-class MoveToOneGallery : ViewCommand
+
+data class MoveToOneGallery(
+    val footprints: List<Footprint>,
+    val currentIndex: Int
+) : ViewCommand
+
 class MoveToSetLocation : ViewCommand
 class MoveToSelectPhoto : ViewCommand
 class MoveToCropPhoto(val photo: File): ViewCommand
@@ -46,4 +52,8 @@ data class ShowColorDialog(
     val textColor: Int,
     @ColorInt
     val backgroundColor: Int
+) : ViewCommand
+
+data class ShowMapDialog(
+    val footprint: Footprint
 ) : ViewCommand
