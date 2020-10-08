@@ -19,6 +19,7 @@ import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_title.vie
 import com.shevelev.my_footprints_remastered.ui.shared.dialogs.OkDialog
 import com.shevelev.my_footprints_remastered.ui.view_commands.MoveToCreateFootprint
 import com.shevelev.my_footprints_remastered.ui.view_commands.MoveToGridGallery
+import com.shevelev.my_footprints_remastered.ui.view_commands.MoveToMyWorld
 import kotlinx.android.synthetic.main.fragment_title.*
 import permissions.dispatcher.NeedsPermission
 import permissions.dispatcher.OnPermissionDenied
@@ -60,6 +61,7 @@ class TitleFragment : FragmentBaseMVVM<FragmentTitleBinding, TitleFragmentViewMo
         when(command) {
             is MoveToCreateFootprint -> moveToCreateFootprintWithPermissionCheck()
             is MoveToGridGallery -> navigation.moveToGridGallery(this)
+            is MoveToMyWorld -> navigation.moveToMyWorld(this)
         }
     }
 

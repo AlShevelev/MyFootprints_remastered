@@ -17,6 +17,7 @@ class ShowMessageText(val text: String): ViewCommand
 class MoveBack: ViewCommand
 class MoveToCreateFootprint : ViewCommand
 class MoveToGridGallery : ViewCommand
+class MoveToMyWorld : ViewCommand
 
 data class MoveToOneGallery(
     val footprints: List<Footprint>,
@@ -30,8 +31,8 @@ class MoveToEditPhoto(val photo: File): ViewCommand
 class MoveBackFromSetLocationToTitle : ViewCommand
 
 // Child fragments for SetLocationFragment
-class AddMapForSetLocation(): ViewCommand
-class AddStubForSetLocation(): ViewCommand
+class AddMapFragment : ViewCommand
+class AddStubFragment : ViewCommand
 
 class OpenCamera : ViewCommand
 class OpenGallery : ViewCommand

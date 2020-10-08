@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="@dimen/screenPadding">
+
+    <ImageView
+        android:id="@+id/backgroundEarth"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:srcCompat="@drawable/img_earth"
+        tools:ignore="ContentDescription" />
+
+    <View
+        android:id="@+id/photoFilter"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white75" />
+
+    <TextView
+        android:id="@+id/textViewTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/mapIsUnavailable"
+
+        style="@style/Text.SizeLarge.Normal.Black"
+
+        android:layout_gravity="center"
+ />
+</FrameLayout>

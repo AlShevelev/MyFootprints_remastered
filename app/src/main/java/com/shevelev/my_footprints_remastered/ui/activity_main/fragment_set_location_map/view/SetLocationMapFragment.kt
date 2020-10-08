@@ -80,7 +80,7 @@ class SetLocationMapFragment :
         // turn off rotation and compass
         map.uiSettings.isRotateGesturesEnabled = false
         map.uiSettings.isCompassEnabled = false
-        map.uiSettings.isZoomControlsEnabled = true
+        map.uiSettings.isZoomControlsEnabled = false
 
         map.setOnMapLongClickListener { viewModel.onMapLongClick(it.toAndroidLocation()) }
 

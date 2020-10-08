@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable name="viewModel" type="com.shevelev.my_footprints_remastered.ui.activity_main.fragment_my_world.view_model.MyWorldFragmentViewModel" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <FrameLayout
+            android:id="@+id/mapContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </FrameLayout>
+
+        <ImageButton
+            android:id="@+id/helpButton"
+
+            style="@style/Button.OnPhoto"
+
+            android:layout_gravity="top|start"
+
+            android:layout_marginStart="@dimen/onPhotoButtonMargin"
+            android:layout_marginTop="@dimen/onPhotoButtonMargin"
+
+            app:srcCompat="@drawable/ic_back_16_16"
+            tools:ignore="ContentDescription"
+
+            android:onClick="@{ () -> viewModel.onBackClick()}"
+            />
+    </FrameLayout>
+</layout>

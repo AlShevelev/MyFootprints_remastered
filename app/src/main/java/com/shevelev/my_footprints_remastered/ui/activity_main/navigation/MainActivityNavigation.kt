@@ -26,4 +26,6 @@ interface MainActivityNavigation {
     fun moveToGridGallery(fragment: TitleFragment)
 
     fun moveToOneGallery(fragment: GalleryGridFragment, footprints: List<Footprint>, currentIndex:Int)
+
+    fun moveToMyWorld(fragment: TitleFragment)
 }

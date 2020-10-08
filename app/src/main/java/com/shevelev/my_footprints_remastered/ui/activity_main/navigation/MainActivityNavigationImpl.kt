@@ -58,4 +58,7 @@ constructor() : MainActivityNavigation {
         }
         fragment.findNavController().navigate(R.id.action_galleryGridFragment_to_galleryOneFragment, bundle)
     }
+
+    override fun moveToMyWorld(fragment: TitleFragment) =
+        fragment.findNavController().navigate(R.id.action_titleFragment_to_myWorldFragment)
 }

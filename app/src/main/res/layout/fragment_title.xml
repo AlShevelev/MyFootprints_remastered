@@ -99,6 +99,8 @@
 
             android:drawableTop="@drawable/ic_globe_28_28"
 
+            android:onClick="@{() -> viewModel.onMyWorldClick()}"
+
             android:text="@string/myWorld"
             android:enabled="@{viewModel.galleryEnabled}"
 

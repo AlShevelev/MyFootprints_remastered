@@ -28,7 +28,7 @@ constructor(
     val saveEnabled = model.canSave
 
     init {
-        sendCommand(if(model.isGooglePlayServicesAvailable) AddMapForSetLocation() else AddStubForSetLocation())
+        sendCommand(if(model.isGooglePlayServicesAvailable) AddMapFragment() else AddStubFragment())
     }
 
     override fun onBackClick() = sendCommand(MoveBack())

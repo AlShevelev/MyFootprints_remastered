@@ -10,6 +10,7 @@ import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_model.ViewModel
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_title.model.TitleFragmentModel
 import com.shevelev.my_footprints_remastered.ui.view_commands.MoveToCreateFootprint
 import com.shevelev.my_footprints_remastered.ui.view_commands.MoveToGridGallery
+import com.shevelev.my_footprints_remastered.ui.view_commands.MoveToMyWorld
 import com.shevelev.my_footprints_remastered.utils.coroutines.DispatchersProvider
 import com.shevelev.my_footprints_remastered.utils.resources.getStringFormatted
 import com.shevelev.my_footprints_remastered.utils.strings.toUpper
@@ -64,6 +65,8 @@ constructor(
     fun onNewFootprintClick() = sendCommand(MoveToCreateFootprint())
 
     fun onGalleryClick() = sendCommand(MoveToGridGallery())
+
+    fun onMyWorldClick() = sendCommand(MoveToMyWorld())
 
     private fun getTotalFootprintsText(total: Int) = appContext.getStringFormatted(R.string.totalFootprints, total).toUpper()
 

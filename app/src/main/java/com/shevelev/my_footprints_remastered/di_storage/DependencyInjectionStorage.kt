@@ -14,6 +14,8 @@ import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_edit_phot
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_grid.di.GalleryGridFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_pages.di.GalleryPagesFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_pages.di.GalleryPagesFragmentModule
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_my_world.di.MyWorldFragmentComponent
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_my_world_map.di.MyWorldMapFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_select_photo.di.SelectPhotoFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location_map.di.SetLocationMapFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location_stub.di.SetLocationStubFragmentComponent
@@ -110,6 +112,10 @@ class DependencyInjectionStorage(private val app: Application) {
                 getBase<MainActivityComponent>().galleryPagesFragment
                     .init(GalleryPagesFragmentModule(args[0] as List<Footprint>, args[1] as Int))
                     .build()
+
+            MyWorldFragmentComponent::class -> getBase<MainActivityComponent>().myWorldFragment.build()
+
+            MyWorldMapFragmentComponent::class -> getBase<MyWorldFragmentComponent>().myWorldMapFragmentComponent.build()
 
             MapDialogComponent::class -> getBase<MainActivityComponent>().mapDialog.build()
 

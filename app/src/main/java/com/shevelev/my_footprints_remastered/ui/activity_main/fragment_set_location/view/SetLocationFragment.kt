@@ -1,6 +1,5 @@
 package com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location.view
 
-import com.google.android.gms.maps.SupportMapFragment
 import com.shevelev.my_footprints_remastered.R
 import com.shevelev.my_footprints_remastered.application.App
 import com.shevelev.my_footprints_remastered.databinding.FragmentSetLocationBinding
@@ -9,12 +8,8 @@ import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_locat
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location_map.view.SetLocationMapFragment
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location_stub.view.SetLocationStubFragment
 import com.shevelev.my_footprints_remastered.ui.activity_main.navigation.MainActivityNavigation
-import com.shevelev.my_footprints_remastered.ui.shared.dialogs.ConfirmationDialog
-import com.shevelev.my_footprints_remastered.ui.shared.dialogs.OkDialog
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view.FragmentBaseMVVM
 import com.shevelev.my_footprints_remastered.ui.view_commands.*
-import kotlinx.android.synthetic.main.fragment_set_location.*
-import timber.log.Timber
 import javax.inject.Inject
 
 class SetLocationFragment : FragmentBaseMVVM<FragmentSetLocationBinding, SetLocationFragmentViewModel>() {
@@ -36,8 +31,8 @@ class SetLocationFragment : FragmentBaseMVVM<FragmentSetLocationBinding, SetLoca
     override fun processViewCommand(command: ViewCommand) {
         when(command) {
             is MoveBack -> navigation.moveBack(this)
-            is AddStubForSetLocation -> addStub()
-            is AddMapForSetLocation -> addMap()
+            is AddStubFragment -> addStub()
+            is AddMapFragment -> addMap()
             is MoveBackFromSetLocationToTitle -> navigation.moveBackFromSetLocationToTitle(this)
         }
     }
