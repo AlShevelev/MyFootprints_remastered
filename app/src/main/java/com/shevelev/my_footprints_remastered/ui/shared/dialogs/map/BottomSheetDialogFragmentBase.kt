@@ -22,14 +22,7 @@ abstract class BottomSheetDialogFragmentBase: BottomSheetDialogFragment(), Corou
     private var isDestroyedBySystem = false
 
     private val scopeJob: Job = SupervisorJob()
-
-    private val errorHandler = CoroutineExceptionHandler { _, ex ->
-        Timber.e(ex)
-    }
-
-    /**
-     * Context of this scope.
-     */
+    private val errorHandler = CoroutineExceptionHandler { _, ex -> Timber.e(ex) }
     override val coroutineContext: CoroutineContext by lazy { scopeJob + dispatchersProvider.uiDispatcher + errorHandler }
 
     @Inject

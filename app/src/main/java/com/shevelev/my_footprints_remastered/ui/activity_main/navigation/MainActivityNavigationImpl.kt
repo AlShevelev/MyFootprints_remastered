@@ -10,6 +10,7 @@ import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_crop_phot
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_edit_photo.EditPhotoFragment
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_grid.view.GalleryGridFragment
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_pages.view.GalleryPagesFragment
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_my_world_map.view.MyWorldMapFragment
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location.view.SetLocationFragment
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_title.view.TitleFragment
 import com.shevelev.my_footprints_remastered.utils.di_scopes.ActivityScope
@@ -57,6 +58,14 @@ constructor() : MainActivityNavigation {
             putInt(GalleryPagesFragment.ARG_CURRENT_FOOTPRINT_INDEX, currentIndex)
         }
         fragment.findNavController().navigate(R.id.action_galleryGridFragment_to_galleryOneFragment, bundle)
+    }
+
+    override fun moveToOneGallery(fragment: MyWorldMapFragment, footprints: List<Footprint>, currentIndex: Int) {
+        val bundle = bundleOf().apply {
+            putParcelableArrayList(GalleryPagesFragment.ARG_FOOTPRINTS_LIST, ArrayList(footprints))
+            putInt(GalleryPagesFragment.ARG_CURRENT_FOOTPRINT_INDEX, currentIndex)
+        }
+        fragment.findNavController().navigate(R.id.action_myWorldFragment_to_galleryOneFragment, bundle)
     }
 
     override fun moveToMyWorld(fragment: TitleFragment) =

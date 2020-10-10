@@ -97,5 +97,13 @@
     <fragment
         android:id="@+id/myWorldFragment"
         android:name="com.shevelev.my_footprints_remastered.ui.activity_main.fragment_my_world.view.MyWorldFragment"
-        android:label="MyWorldFragment" />
+        android:label="MyWorldFragment" >
+        <action
+            android:id="@+id/action_myWorldFragment_to_galleryOneFragment"
+            app:destination="@id/galleryOneFragment"
+            app:enterAnim="@anim/nav_slide_in_right"
+            app:exitAnim="@anim/nav_slide_out_left"
+            app:popEnterAnim="@anim/nav_slide_in_left"
+            app:popExitAnim="@anim/nav_slide_out_right" />
+    </fragment>
 </navigation>

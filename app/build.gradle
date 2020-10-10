@@ -107,6 +107,7 @@ dependencies {
     implementation "com.isseiaoki:simplecropview:$crop_view_version"
 
     implementation "com.google.android.gms:play-services-maps:$maps_version"
+    implementation "com.google.maps.android:android-maps-utils:$maps_utils_version"
 
     testImplementation "junit:junit:$junit_version"
     androidTestImplementation "androidx.test.ext:junit:$junit_test_ext_version"

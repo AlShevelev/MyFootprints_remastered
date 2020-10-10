@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment
 import com.shevelev.my_footprints_remastered.common_entities.Footprint
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.view.CreateFootprintFragment
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_grid.view.GalleryGridFragment
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_my_world_map.view.MyWorldMapFragment
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location.view.SetLocationFragment
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_title.view.TitleFragment
 import java.io.File
@@ -26,6 +27,8 @@ interface MainActivityNavigation {
     fun moveToGridGallery(fragment: TitleFragment)
 
     fun moveToOneGallery(fragment: GalleryGridFragment, footprints: List<Footprint>, currentIndex:Int)
+
+    fun moveToOneGallery(fragment: MyWorldMapFragment, footprints: List<Footprint>, currentIndex:Int)
 
     fun moveToMyWorld(fragment: TitleFragment)
 }
