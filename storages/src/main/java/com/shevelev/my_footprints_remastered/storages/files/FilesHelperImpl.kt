@@ -29,13 +29,15 @@ constructor(
 
     override fun createTempFile(): File = File.createTempFile("tmp_", createFileName(), appContext.cacheDir)
 
-    override fun createImageFile(appName: String): File {
+    override fun createImageFile(appName: String): File = createImageFile(appName, createFileName())
+
+    override fun createImageFile(appName: String, fileName: String): File {
         val dir = File(appContext.externalMediaDirs[0], appName)
         if(!dir.exists()) {
             dir.mkdir()
         }
 
-        return File(dir, createFileName())
+        return File(dir, fileName)
     }
 
     override fun copyFile(sourceFile: File, targetFile: File) {

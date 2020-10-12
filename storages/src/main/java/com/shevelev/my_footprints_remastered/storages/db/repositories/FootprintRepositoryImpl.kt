@@ -17,6 +17,8 @@ constructor(
 
     override fun create(footprint: Footprint) = db.footprint.create(footprint.mapToFootprintDb())
 
+    override fun update(footprint: Footprint) = db.footprint.update(footprint.mapToFootprintDb())
+
     /**
      * Get all footprints sorted by creation moment in descending order
      */
@@ -26,6 +28,7 @@ constructor(
         Footprint(
             id = id,
             imageContentUri = Uri.parse(imageContentUri),
+            imageFileName = imageFileName,
             latitude = latitude,
             longitude = longitude,
             comment = comment,
@@ -38,6 +41,7 @@ constructor(
         FootprintDb(
             id = id,
             imageContentUri = imageContentUri.toString(),
+            imageFileName = imageFileName,
             latitude = latitude,
             longitude = longitude,
             comment = comment,

@@ -3,6 +3,7 @@ package com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_loca
 import android.content.Context
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
+import com.shevelev.my_footprints_remastered.common_entities.CreateFootprintInfo
 import com.shevelev.my_footprints_remastered.shared_use_cases.CreateEditFootprint
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.model.shared_footprint.SharedFootprint
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_title.model.data_updater.TitleDataUpdaterProvider
@@ -32,11 +33,12 @@ constructor(
     override suspend fun save() {
         val createInfo = withContext(dispatchersProvider.ioDispatcher) {
             createEditFootprint.create(
-                sharedFootprint.image!!,
-                sharedFootprint.manualSelectedLocation ?: geolocationProvider.lastLocation,
-                sharedFootprint.comment,
-                sharedFootprint.pinColor
-            )
+                CreateFootprintInfo(
+                    draftImageFile = sharedFootprint.image!!,
+                    location = sharedFootprint.manualSelectedLocation ?: geolocationProvider.lastLocation,
+                    comment = sharedFootprint.comment,
+                    pinColor = sharedFootprint.pinColor
+                ))
         }
 
         titleDataUpdaterProvider.updateLastFootprintUri(createInfo.lastFootprintImage)

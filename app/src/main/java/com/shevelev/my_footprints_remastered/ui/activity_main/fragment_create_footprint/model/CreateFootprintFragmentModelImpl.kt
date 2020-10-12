@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.net.Uri
 import com.shevelev.my_footprints_remastered.R
+import com.shevelev.my_footprints_remastered.common_entities.CreateFootprintInfo
 import com.shevelev.my_footprints_remastered.common_entities.PinColor
 import com.shevelev.my_footprints_remastered.shared_use_cases.CreateEditFootprint
 import com.shevelev.my_footprints_remastered.storages.files.FilesHelper
@@ -86,11 +87,12 @@ constructor(
     override suspend fun save() {
         val createInfo = withContext(dispatchersProvider.ioDispatcher) {
             createEditFootprint.create(
-                sharedFootprint.image!!,
-                sharedFootprint.manualSelectedLocation ?: geolocationProvider.lastLocation,
-                sharedFootprint.comment,
-                sharedFootprint.pinColor
-            )
+                CreateFootprintInfo(
+                    draftImageFile = sharedFootprint.image!!,
+                    location = sharedFootprint.manualSelectedLocation ?: geolocationProvider.lastLocation,
+                    comment = sharedFootprint.comment,
+                    pinColor = sharedFootprint.pinColor
+            ))
         }
 
         titleDataUpdaterProvider.updateLastFootprintUri(createInfo.lastFootprintImage)

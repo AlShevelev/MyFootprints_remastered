@@ -14,6 +14,9 @@ data class FootprintDb(
     @ColumnInfo(name = "image_content_uri")
     val imageContentUri: String,
 
+    @ColumnInfo(name = "image_file_name")
+    val imageFileName: String?,
+
     @ColumnInfo(name = "latitude")
     val latitude: Double,
 

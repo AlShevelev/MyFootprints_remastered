@@ -9,6 +9,8 @@ interface FootprintRepository {
 
     fun create(footprint: Footprint)
 
+    fun update(footprint: Footprint)
+
     /**
      * Get all footprints sorted by creation moment in descending order
      */

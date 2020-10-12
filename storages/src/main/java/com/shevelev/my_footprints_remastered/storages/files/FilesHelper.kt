@@ -13,6 +13,8 @@ interface FilesHelper {
 
     fun createImageFile(appName: String): File
 
+    fun createImageFile(appName: String, fileName: String): File
+
     fun copyFile(sourceFile: File, targetFile: File)
 
     fun deleteFile(file: File)

@@ -9,6 +9,10 @@ import org.threeten.bp.ZonedDateTime
 data class Footprint (
     val id: Long,
     val imageContentUri: Uri,
+    /**
+     * A name of file with an image for an old API (<29)
+     */
+    val imageFileName: String?,
 
     val latitude: Double,
     val longitude: Double,
