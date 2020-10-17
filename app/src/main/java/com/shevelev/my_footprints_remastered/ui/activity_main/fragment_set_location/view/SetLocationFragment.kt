@@ -2,6 +2,7 @@ package com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_loca
 
 import com.shevelev.my_footprints_remastered.R
 import com.shevelev.my_footprints_remastered.application.App
+import com.shevelev.my_footprints_remastered.common_entities.Footprint
 import com.shevelev.my_footprints_remastered.databinding.FragmentSetLocationBinding
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location.di.SetLocationFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location.view_model.SetLocationFragmentViewModel
@@ -13,6 +14,11 @@ import com.shevelev.my_footprints_remastered.ui.view_commands.*
 import javax.inject.Inject
 
 class SetLocationFragment : FragmentBaseMVVM<FragmentSetLocationBinding, SetLocationFragmentViewModel>() {
+    companion object {
+        const val ARG_FOOTPRINT = "ARG_FOOTPRINT"
+        const val ARG_IS_IMAGE_UPDATED = "ARG_IS_IMAGE_UPDATED"
+    }
+
     @Inject
     internal lateinit var navigation: MainActivityNavigation
 
@@ -24,7 +30,11 @@ class SetLocationFragment : FragmentBaseMVVM<FragmentSetLocationBinding, SetLoca
         binding.viewModel = viewModel
     }
 
-    override fun inject(key: String) = App.injections.get<SetLocationFragmentComponent>(key).inject(this)
+    override fun inject(key: String) {
+        val footprint = arguments?.getParcelable<Footprint>(ARG_FOOTPRINT)
+        val isImageUpdated = arguments?.getBoolean(ARG_IS_IMAGE_UPDATED)
+        App.injections.get<SetLocationFragmentComponent>(key, footprint, isImageUpdated).inject(this)
+    }
 
     override fun releaseInjection(key: String) = App.injections.release<SetLocationFragmentComponent>(key)
 

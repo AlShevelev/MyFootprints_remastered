@@ -4,24 +4,25 @@ import android.content.Context
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.shevelev.my_footprints_remastered.common_entities.CreateFootprintInfo
-import com.shevelev.my_footprints_remastered.shared_use_cases.CreateEditFootprint
+import com.shevelev.my_footprints_remastered.shared_use_cases.CreateUpdateFootprint
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.model.shared_footprint.SharedFootprint
-import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_title.model.data_updater.TitleDataUpdaterProvider
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flow.last.LastFootprintDataFlowProvider
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flow.last.LastFootprintInfo
 import com.shevelev.my_footprints_remastered.ui.activity_main.geolocation.GeolocationProviderData
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.model.ModelBaseImpl
 import com.shevelev.my_footprints_remastered.utils.coroutines.DispatchersProvider
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class SetLocationFragmentModelImpl
+open class InsertSetLocationFragmentModel
 @Inject
 constructor(
     private val appContext: Context,
-    private val dispatchersProvider: DispatchersProvider,
-    private val sharedFootprint: SharedFootprint,
-    private val createEditFootprint: CreateEditFootprint,
+    protected val dispatchersProvider: DispatchersProvider,
+    protected val sharedFootprint: SharedFootprint,
+    protected val createUpdateFootprint: CreateUpdateFootprint,
     private val geolocationProvider: GeolocationProviderData,
-    private val titleDataUpdaterProvider: TitleDataUpdaterProvider
+    private val lastFootprintDataFlowProvider: LastFootprintDataFlowProvider
 ) : ModelBaseImpl(),
     SetLocationFragmentModel  {
     override val isGooglePlayServicesAvailable: Boolean
@@ -32,7 +33,7 @@ constructor(
 
     override suspend fun save() {
         val createInfo = withContext(dispatchersProvider.ioDispatcher) {
-            createEditFootprint.create(
+            createUpdateFootprint.create(
                 CreateFootprintInfo(
                     draftImageFile = sharedFootprint.image!!,
                     location = sharedFootprint.manualSelectedLocation ?: geolocationProvider.lastLocation,
@@ -41,7 +42,11 @@ constructor(
                 ))
         }
 
-        titleDataUpdaterProvider.updateLastFootprintUri(createInfo.lastFootprintImage)
-        titleDataUpdaterProvider.updateTotalFootprints(createInfo.totalFootprints)
+        lastFootprintDataFlowProvider.update(
+            LastFootprintInfo(
+            lastFootprintId = createInfo.lastFootprintId,
+            lastFootprintUri = createInfo.lastFootprintImage,
+            totalFootprints = createInfo.totalFootprints
+        ))
     }
 }

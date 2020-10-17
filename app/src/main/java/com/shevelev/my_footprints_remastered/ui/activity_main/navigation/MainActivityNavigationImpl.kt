@@ -24,8 +24,23 @@ constructor() : MainActivityNavigation {
     override fun moveToCreateFootprint(fragment: TitleFragment) =
         fragment.findNavController().navigate(R.id.action_titleFragment_to_createFootprintFragment)
 
-    override fun moveToSetLocation(fragment: CreateFootprintFragment) {
-        fragment.findNavController().navigate(R.id.action_createFootprintFragment_to_setLocationFragment)
+    override fun moveToCreateFootprint(fragment: GalleryPagesFragment, oldFootprint: Footprint) {
+        val bundle = bundleOf().apply {
+            putParcelable(CreateFootprintFragment.ARG_FOOTPRINT, oldFootprint)
+        }
+        fragment.findNavController().navigate(R.id.action_galleryOneFragment_to_createFootprintFragment, bundle)
+    }
+
+    override fun moveToSetLocation(fragment: CreateFootprintFragment, oldFootprint: Footprint?, isImageUpdated: Boolean?) {
+        if(oldFootprint == null) {
+            fragment.findNavController().navigate(R.id.action_createFootprintFragment_to_setLocationFragment)
+        } else {
+            val bundle = bundleOf().apply {
+                putParcelable(SetLocationFragment.ARG_FOOTPRINT, oldFootprint)
+                putBoolean(SetLocationFragment.ARG_IS_IMAGE_UPDATED, isImageUpdated!!)
+            }
+            fragment.findNavController().navigate(R.id.action_createFootprintFragment_to_setLocationFragment, bundle)
+        }
     }
 
     override fun moveToSelectPhoto(fragment: CreateFootprintFragment) =

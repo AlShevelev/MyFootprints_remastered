@@ -26,43 +26,53 @@ constructor(
     model: TitleFragmentModel
 ) : ViewModelBase<TitleFragmentModel>(dispatchersProvider, model) {
 
-    private val _total = MutableLiveData<String>(getTotalFootprintsText(0))
+    private val _total = MutableLiveData(getTotalFootprintsText(0))
     val total = _total as LiveData<String>
 
     private val _lastFootprintUri = MutableLiveData<Uri>()
     val lastFootprintUri = _lastFootprintUri as LiveData<Uri>
 
-    private val _loadingVisibility = MutableLiveData<Int>(View.VISIBLE)
+    private val _loadingVisibility = MutableLiveData(View.VISIBLE)
     val loadingVisibility: LiveData<Int> = _loadingVisibility
 
-    private val _lastFootprintVisibility = MutableLiveData<Int>(View.INVISIBLE)
+    private val _lastFootprintVisibility = MutableLiveData(View.INVISIBLE)
     val lastFootprintVisibility: LiveData<Int> = _lastFootprintVisibility
 
-    private val _galleryEnabled = MutableLiveData<Boolean>(false)
+    private val _galleryEnabled = MutableLiveData(false)
     val galleryEnabled: LiveData<Boolean> = _galleryEnabled
 
     init {
         launch {
-            model.titleData.totalFootprints.collect {
-                _total.value = getTotalFootprintsText(it)
-                _galleryEnabled.value = it > 0
+            model.lastFootprintData.data.collect {
+                it?.let { lastFootprintInfo ->
+                    _total.value = getTotalFootprintsText(lastFootprintInfo.totalFootprints)
+                    _galleryEnabled.value = it.totalFootprints > 0
+
+                    _lastFootprintUri.value = getLastFootprintUri(lastFootprintInfo.lastFootprintUri)
+                    _loadingVisibility.value = View.INVISIBLE
+                    _lastFootprintVisibility.value = View.VISIBLE
+
+                    model.lastFootprintId = lastFootprintInfo.lastFootprintId
+                }
             }
         }
 
         launch {
-            model.titleData.lastFootprintUri.collect {
-                _lastFootprintUri.value = getLastFootprintUri(it)
-                _loadingVisibility.value = View.INVISIBLE
-                _lastFootprintVisibility.value = View.VISIBLE
+            model.updateFootprintData.data.collect {
+                it?.let { updatedFootprint ->
+                    if(updatedFootprint.id == model.lastFootprintId) {
+                        _lastFootprintUri.value = updatedFootprint.imageContentUri
+                    }
+                }
             }
         }
 
         launch {
-            model.titleData.init()
+            model.lastFootprintData.init()
         }
     }
 
-    fun onNewFootprintClick() = sendCommand(MoveToCreateFootprint())
+    fun onNewFootprintClick() = sendCommand(MoveToCreateFootprint(null))
 
     fun onGalleryClick() = sendCommand(MoveToGridGallery())
 

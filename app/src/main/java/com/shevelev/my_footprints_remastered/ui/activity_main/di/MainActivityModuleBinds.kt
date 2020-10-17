@@ -2,9 +2,12 @@ package com.shevelev.my_footprints_remastered.ui.activity_main.di
 
 import com.shevelev.my_footprints_remastered.ui.activity_main.navigation.MainActivityNavigation
 import com.shevelev.my_footprints_remastered.ui.activity_main.navigation.MainActivityNavigationImpl
-import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_title.model.data_updater.TitleDataUpdaterConsumer
-import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_title.model.data_updater.TitleDataUpdaterImpl
-import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_title.model.data_updater.TitleDataUpdaterProvider
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flow.last.LastFootprintDataFlowConsumer
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flow.last.LastFootprintDataFlowImpl
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flow.last.LastFootprintDataFlowProvider
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flow.update.UpdateFootprintDataFlowConsumer
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flow.update.UpdateFootprintDataFlowImpl
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flow.update.UpdateFootprintDataFlowProvider
 import com.shevelev.my_footprints_remastered.ui.activity_main.geolocation.GeolocationProviderApp
 import com.shevelev.my_footprints_remastered.ui.activity_main.geolocation.GeolocationProviderData
 import com.shevelev.my_footprints_remastered.ui.activity_main.geolocation.GeolocationProviderManager
@@ -23,11 +26,19 @@ import kotlinx.coroutines.FlowPreview
 abstract class MainActivityModuleBinds {
     @Binds
     @ActivityScope
-    abstract fun provideTitleDataUpdaterForProvider(updater: TitleDataUpdaterImpl): TitleDataUpdaterProvider
+    abstract fun provideTitleDataUpdaterForProvider(flow: LastFootprintDataFlowImpl): LastFootprintDataFlowProvider
 
     @Binds
     @ActivityScope
-    abstract fun provideTitleDataUpdaterForConsumer(updater: TitleDataUpdaterImpl): TitleDataUpdaterConsumer
+    abstract fun provideTitleDataUpdaterForConsumer(flow: LastFootprintDataFlowImpl): LastFootprintDataFlowConsumer
+
+    @Binds
+    @ActivityScope
+    abstract fun provideUpdateFootprintProvider(flow: UpdateFootprintDataFlowImpl): UpdateFootprintDataFlowProvider
+
+    @Binds
+    @ActivityScope
+    abstract fun provideUpdateFootprintConsumer(flow: UpdateFootprintDataFlowImpl): UpdateFootprintDataFlowConsumer
 
     @Binds
     @ActivityScope

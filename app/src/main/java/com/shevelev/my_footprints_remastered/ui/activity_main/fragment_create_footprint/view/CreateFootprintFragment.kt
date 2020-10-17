@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import com.shevelev.my_footprints_remastered.R
 import com.shevelev.my_footprints_remastered.application.App
+import com.shevelev.my_footprints_remastered.common_entities.Footprint
 import com.shevelev.my_footprints_remastered.databinding.FragmentCreateFootprintBinding
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.di.CreateFootprintFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.view_model.CreateFootprintFragmentViewModel
@@ -25,6 +26,10 @@ import javax.inject.Inject
 
 @RuntimePermissions
 class CreateFootprintFragment : FragmentBaseMVVM<FragmentCreateFootprintBinding, CreateFootprintFragmentViewModel>() {
+    companion object {
+        const val ARG_FOOTPRINT = "ARG_FOOTPRINT"
+    }
+
     private val geolocationRequest = 8056
     private val footprintInterruptionRequest = 4216
 
@@ -44,7 +49,10 @@ class CreateFootprintFragment : FragmentBaseMVVM<FragmentCreateFootprintBinding,
         binding.viewModel = viewModel
     }
 
-    override fun inject(key: String) = App.injections.get<CreateFootprintFragmentComponent>(key).inject(this)
+    override fun inject(key: String) {
+        val footprint = arguments?.getParcelable<Footprint>(ARG_FOOTPRINT)
+        App.injections.get<CreateFootprintFragmentComponent>(key, footprint).inject(this)
+    }
 
     override fun releaseInjection(key: String) = App.injections.release<CreateFootprintFragmentComponent>(key)
 
@@ -54,7 +62,7 @@ class CreateFootprintFragment : FragmentBaseMVVM<FragmentCreateFootprintBinding,
             is MoveToSelectPhoto -> moveToSelectPhotoWithPermissionCheck()
             is MoveToCropPhoto -> navigation.moveToCropPhoto(this, command.photo)
             is MoveToEditPhoto -> navigation.moveToEditPhoto(this, command.photo)
-            is MoveToSetLocation -> navigation.moveToSetLocation(this)
+            is MoveToSetLocation -> navigation.moveToSetLocation(this, command.oldFootprint, command.isImageUpdated)
 
             is AskAboutGeolocation -> ConfirmationDialog.show(geolocationRequest, this, R.string.enableLocationQuestion, R.string.goToSettings, R.string.notNow)
             is AskAboutFootprintInterruption -> ConfirmationDialog.show(footprintInterruptionRequest, this, R.string.footprintInterruptionQuery, R.string.interrupt, R.string.cancel)

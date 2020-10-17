@@ -13,6 +13,7 @@ import com.shevelev.my_footprints_remastered.ui.view_commands.MoveBack
 import com.shevelev.my_footprints_remastered.ui.view_commands.MoveToOneGallery
 import com.shevelev.my_footprints_remastered.utils.coroutines.DispatchersProvider
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
 class GalleryGridFragmentViewModel
@@ -27,10 +28,10 @@ constructor(
 
     val title = appContext.getString(R.string.gallery)
 
-    private val _progressVisibility = MutableLiveData<Int>(View.VISIBLE)
+    private val _progressVisibility = MutableLiveData(View.VISIBLE)
     val progressVisibility: LiveData<Int> = _progressVisibility
 
-    private val _listVisibility = MutableLiveData<Int>(View.INVISIBLE)
+    private val _listVisibility = MutableLiveData(View.INVISIBLE)
     val listVisibility: LiveData<Int> = _listVisibility
 
     private val _items = MutableLiveData<List<VersionedListItem>>()
@@ -41,6 +42,14 @@ constructor(
             _items.value = model.loadItems()
             _progressVisibility.value = View.INVISIBLE
             _listVisibility.value = View.VISIBLE
+        }
+
+        launch {
+            model.updateFootprintData.data.collect { footprint ->
+                footprint?.let {
+                    model.updateFootprint(footprint)?.let { _items.value = it }
+                }
+            }
         }
     }
 

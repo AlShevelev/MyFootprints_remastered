@@ -2,6 +2,7 @@ package com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_
 
 import com.shevelev.my_footprints_remastered.common_entities.Footprint
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_grid.view.grid.FootprintListItem
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flow.update.UpdateFootprintDataFlowConsumer
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.model.ModelBaseImpl
 import com.shevelev.my_footprints_remastered.ui.shared.recycler_view.versioned.VersionedListItem
 import com.shevelev.my_footprints_remastered.utils.coroutines.DispatchersProvider
@@ -13,11 +14,12 @@ class GalleryPagesFragmentModelImpl
 constructor(
     private val dispatchersProvider: DispatchersProvider,
     private val footprints: List<Footprint>,
-    override var currentIndex: Int
+    override var currentIndex: Int,
+    override val updateFootprintData: UpdateFootprintDataFlowConsumer
 ) : ModelBaseImpl(),
     GalleryPagesFragmentModel {
 
-    private lateinit var items: List<VersionedListItem>
+    private lateinit var items: MutableList<FootprintListItem>
 
     override suspend fun loadItems(): List<VersionedListItem> {
         items = withContext(dispatchersProvider.calculationsDispatcher) {
@@ -26,12 +28,23 @@ constructor(
                 version = 0,
                 isFirstItem = false,
                 isLastItem = false,
-                footprint = it
-            ) }
+                footprint = it)
+            }.toMutableList()
         }
 
         return items
     }
 
-    override fun getFootprint(index: Int): Footprint = (items[index] as FootprintListItem).footprint
+    override suspend fun updateFootprint(updatedFootprint: Footprint): List<VersionedListItem>? =
+        withContext(dispatchersProvider.calculationsDispatcher) {
+            items.indexOfFirst { it.footprint.id == updatedFootprint.id }
+                .takeIf { it != -1 }
+                ?.let { index ->
+                    val item = items[index]
+                    items[index] = item.copy(footprint = updatedFootprint, version = item.version+1)
+                    items
+                }
+        }
+
+    override fun getFootprint(index: Int): Footprint = items[index].footprint
 }

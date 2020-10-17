@@ -23,7 +23,7 @@ class GalleryGridFragment : FragmentBaseMVVM<FragmentGalleryGridBinding, Gallery
     @Inject
     internal lateinit var navigation: MainActivityNavigation
 
-    private lateinit var gridAdapter: FootprintGridAdapter
+    private val gridAdapter by lazy { FootprintGridAdapter(viewModel).apply { setHasStableIds(true) } }
     private lateinit var gridLayoutManager: GridLayoutManager
 
     override fun provideViewModelType(): Class<GalleryGridFragmentViewModel> = GalleryGridFragmentViewModel::class.java
@@ -40,6 +40,7 @@ class GalleryGridFragment : FragmentBaseMVVM<FragmentGalleryGridBinding, Gallery
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel.items.observe({viewLifecycleOwner.lifecycle}) { setListItems(it) }
+        initList()
     }
 
     override fun processViewCommand(command: ViewCommand) {
@@ -49,19 +50,15 @@ class GalleryGridFragment : FragmentBaseMVVM<FragmentGalleryGridBinding, Gallery
         }
     }
 
-    private fun setListItems(items: List<VersionedListItem>) {
+    private fun initList() {
         val cols = if(requireContext().isPortrait()) 2 else 4
-
         gridLayoutManager = GridLayoutManager(context, cols)
-
-        gridAdapter = FootprintGridAdapter(viewModel)
-        gridAdapter.setHasStableIds(true)
 
         footprintGrid.isSaveEnabled = false
         footprintGrid.itemAnimator = null
-        footprintGrid.layoutManager = gridLayoutManager
         footprintGrid.adapter = gridAdapter
-
-        gridAdapter.update(items)
+        footprintGrid.layoutManager = gridLayoutManager
     }
+
+    private fun setListItems(items: List<VersionedListItem>) = gridAdapter.update(items)
 }

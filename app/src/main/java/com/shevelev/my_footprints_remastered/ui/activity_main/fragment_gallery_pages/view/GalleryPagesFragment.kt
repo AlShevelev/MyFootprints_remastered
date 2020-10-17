@@ -16,6 +16,7 @@ import com.shevelev.my_footprints_remastered.ui.activity_main.navigation.MainAct
 import com.shevelev.my_footprints_remastered.ui.shared.dialogs.map.MapDialog
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view.FragmentBaseMVVM
 import com.shevelev.my_footprints_remastered.ui.shared.recycler_view.versioned.VersionedListItem
+import com.shevelev.my_footprints_remastered.ui.view_commands.MoveToCreateFootprint
 import com.shevelev.my_footprints_remastered.ui.view_commands.ShowMapDialog
 import com.shevelev.my_footprints_remastered.ui.view_commands.ViewCommand
 import kotlinx.android.synthetic.main.fragment_gallery_pages.*
@@ -27,9 +28,7 @@ class GalleryPagesFragment : FragmentBaseMVVM<FragmentGalleryPagesBinding, Galle
         const val ARG_CURRENT_FOOTPRINT_INDEX = "ARG_CURRENT_FOOTPRINT_INDEX"
     }
 
-    private lateinit var galleryPagesAdapter: GalleryPagesAdapter
-
-    private var needToUpdatePagerView: Boolean = false
+    private val galleryPagesAdapter by lazy { GalleryPagesAdapter(this) }
 
     @Inject
     internal lateinit var navigation: MainActivityNavigation
@@ -54,40 +53,29 @@ class GalleryPagesFragment : FragmentBaseMVVM<FragmentGalleryPagesBinding, Galle
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         viewModel.onViewReady()
 
-        needToUpdatePagerView = true
-
-        viewModel.items.observe({viewLifecycleOwner.lifecycle}) { updateGallery(it) }
-        viewModel.currentIndex.observe({viewLifecycleOwner.lifecycle}) { pager.setCurrentItem(it, false) }
-
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.items.observe({viewLifecycleOwner.lifecycle}) { updateGallery(it) }
+
+        pager.adapter = galleryPagesAdapter
         pager.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 viewModel.onPageSelected(position)
             }
         })
+        viewModel.currentIndex.observe({viewLifecycleOwner.lifecycle}) { pager.setCurrentItem(it, false) }
     }
 
     override fun processViewCommand(command: ViewCommand) {
         when(command) {
             is ShowMapDialog -> MapDialog.show(this, command.footprint)
+            is MoveToCreateFootprint -> navigation.moveToCreateFootprint(this, command.oldFootprint!!)
         }
     }
 
-    private fun updateGallery(items: List<VersionedListItem>) {
-        if(!::galleryPagesAdapter.isInitialized) {
-            galleryPagesAdapter = GalleryPagesAdapter(this)
-        }
-
-        if(needToUpdatePagerView) {
-            pager.adapter = galleryPagesAdapter
-            needToUpdatePagerView = false
-        }
-
-        galleryPagesAdapter.updateItems(items)
-    }
+    private fun updateGallery(items: List<VersionedListItem>) = galleryPagesAdapter.updateItems(items)
 }

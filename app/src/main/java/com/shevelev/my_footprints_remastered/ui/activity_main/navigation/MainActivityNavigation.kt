@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment
 import com.shevelev.my_footprints_remastered.common_entities.Footprint
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.view.CreateFootprintFragment
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_grid.view.GalleryGridFragment
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_pages.view.GalleryPagesFragment
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_my_world_map.view.MyWorldMapFragment
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location.view.SetLocationFragment
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_title.view.TitleFragment
@@ -12,7 +13,9 @@ import java.io.File
 interface MainActivityNavigation {
     fun moveToCreateFootprint(fragment: TitleFragment)
 
-    fun moveToSetLocation(fragment: CreateFootprintFragment)
+    fun moveToCreateFootprint(fragment: GalleryPagesFragment, oldFootprint: Footprint)
+
+    fun moveToSetLocation(fragment: CreateFootprintFragment, oldFootprint: Footprint?, isImageUpdated: Boolean?)
 
     fun moveToSelectPhoto(fragment: CreateFootprintFragment)
 

@@ -9,7 +9,7 @@ import com.shevelev.my_footprints_remastered.application.App
 import com.shevelev.my_footprints_remastered.databinding.FragmentMyWorldMapBinding
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_my_world_map.di.MyWorldMapFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_my_world_map.dto.FootprintOnMap
-import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_my_world_map.dto.FootprintsOnMap
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_my_world_map.dto.MapZoomAndLocation
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_my_world_map.view.markers_renderer.PinsRenderer
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_my_world_map.view_model.MyWorldMapFragmentViewModel
 import com.shevelev.my_footprints_remastered.ui.activity_main.navigation.MainActivityNavigation
@@ -65,6 +65,7 @@ class MyWorldMapFragment : FragmentBaseMVVM<FragmentMyWorldMapBinding, MyWorldMa
         map.uiSettings.isZoomControlsEnabled = false
 
         Timber.tag("GALLERY").d("showFootprints observed")
+        viewModel.zoomAndLocation.observe({viewLifecycleOwner.lifecycle}) { setZoomAndLocation(it) }
         viewModel.footprints.observe({viewLifecycleOwner.lifecycle}) { showFootprints(it) }
     }
 
@@ -74,11 +75,13 @@ class MyWorldMapFragment : FragmentBaseMVVM<FragmentMyWorldMapBinding, MyWorldMa
         mapFragment.getMapAsync(this)
     }
 
-    private fun showFootprints(footprints: FootprintsOnMap) {
+    private fun setZoomAndLocation(mapZoomAndLocation: MapZoomAndLocation) {
+        map?.moveCamera(CameraUpdateFactory.newLatLngZoom(mapZoomAndLocation.centerLocation, mapZoomAndLocation.zoomFactor))
+    }
+
+    private fun showFootprints(footprints: List<FootprintOnMap>) {
         Timber.tag("GALLERY").d("showFootprints")
         map?.let { map ->
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(footprints.centerLocation, footprints.zoomFactor))
-
             Timber.tag("GALLERY").d("camera moved")
             mapContainer.postDelayed({
                 clusterManager = ClusterManager<FootprintOnMap>(requireContext(), map).also { cm ->
@@ -105,7 +108,7 @@ class MyWorldMapFragment : FragmentBaseMVVM<FragmentMyWorldMapBinding, MyWorldMa
 
                     map.setOnMarkerClickListener(cm)
 
-                    footprints.footprints.forEach {
+                    footprints.forEach {
                         cm.addItem(it)
                     }
 

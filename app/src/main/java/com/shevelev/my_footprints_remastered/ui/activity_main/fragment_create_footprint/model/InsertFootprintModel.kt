@@ -7,13 +7,14 @@ import android.net.Uri
 import com.shevelev.my_footprints_remastered.R
 import com.shevelev.my_footprints_remastered.common_entities.CreateFootprintInfo
 import com.shevelev.my_footprints_remastered.common_entities.PinColor
-import com.shevelev.my_footprints_remastered.shared_use_cases.CreateEditFootprint
+import com.shevelev.my_footprints_remastered.shared_use_cases.CreateUpdateFootprint
 import com.shevelev.my_footprints_remastered.storages.files.FilesHelper
 import com.shevelev.my_footprints_remastered.storages.key_value.KeyValueStorageFacade
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.dto.SelectedPhotoLoadingState
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.model.data_bridge.CreateFootprintFragmentDataBridge
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.model.shared_footprint.SharedFootprint
-import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_title.model.data_updater.TitleDataUpdaterProvider
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flow.last.LastFootprintDataFlowProvider
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flow.last.LastFootprintInfo
 import com.shevelev.my_footprints_remastered.ui.activity_main.geolocation.GeolocationProviderManager
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.model.ModelBaseImpl
 import com.shevelev.my_footprints_remastered.utils.coroutines.DispatchersProvider
@@ -21,20 +22,23 @@ import kotlinx.coroutines.withContext
 import java.io.File
 import javax.inject.Inject
 
-class CreateFootprintFragmentModelImpl
+open class InsertFootprintModel
 @Inject
 constructor(
-    private val appContext: Context,
-    private val dispatchersProvider: DispatchersProvider,
+    protected val appContext: Context,
+    protected val dispatchersProvider: DispatchersProvider,
     private val dataBridge: CreateFootprintFragmentDataBridge,
     override val geolocationProvider: GeolocationProviderManager,
     override val sharedFootprint: SharedFootprint,
     private val filesHelper: FilesHelper,
-    private val createEditFootprint: CreateEditFootprint,
-    private val titleDataUpdaterProvider: TitleDataUpdaterProvider,
-    private val keyValueStorageFacade: KeyValueStorageFacade
+    protected val createUpdateFootprint: CreateUpdateFootprint,
+    private val lastFootprintDataFlowProvider: LastFootprintDataFlowProvider,
+    protected val keyValueStorageFacade: KeyValueStorageFacade
 ) : ModelBaseImpl(),
     CreateFootprintFragmentModel {
+
+    override var isImageUpdated = false
+        protected set
 
     override suspend fun initSharedFootprint() {
         val pinColor = withContext(dispatchersProvider.ioDispatcher) {
@@ -54,6 +58,8 @@ constructor(
         when {
             selectedPhotoFile != null -> {
                 sharedFootprint.image = selectedPhotoFile
+
+                isImageUpdated = true
                 callbackAction(SelectedPhotoLoadingState.Ready(sharedFootprint.image!!))
             }
             selectedPhotoUri != null -> {
@@ -63,6 +69,7 @@ constructor(
                     sharedFootprint.image = copyUriToFile(selectedPhotoUri)
                 }
 
+                isImageUpdated = true
                 callbackAction(SelectedPhotoLoadingState.Ready(sharedFootprint.image!!))
             }
             selectedPhotoBitmap != null -> {
@@ -72,6 +79,7 @@ constructor(
                     sharedFootprint.image = copyBitmapToFile(selectedPhotoBitmap)
                 }
 
+                isImageUpdated = true
                 callbackAction(SelectedPhotoLoadingState.Ready(sharedFootprint.image!!))
             }
         }
@@ -86,7 +94,7 @@ constructor(
 
     override suspend fun save() {
         val createInfo = withContext(dispatchersProvider.ioDispatcher) {
-            createEditFootprint.create(
+            createUpdateFootprint.create(
                 CreateFootprintInfo(
                     draftImageFile = sharedFootprint.image!!,
                     location = sharedFootprint.manualSelectedLocation ?: geolocationProvider.lastLocation,
@@ -95,17 +103,21 @@ constructor(
             ))
         }
 
-        titleDataUpdaterProvider.updateLastFootprintUri(createInfo.lastFootprintImage)
-        titleDataUpdaterProvider.updateTotalFootprints(createInfo.totalFootprints)
+        lastFootprintDataFlowProvider.update(
+            LastFootprintInfo(
+            lastFootprintId = createInfo.lastFootprintId,
+            lastFootprintUri = createInfo.lastFootprintImage,
+            totalFootprints = createInfo.totalFootprints
+        ))
     }
 
     override suspend fun removeDraftFootprint() {
         withContext(dispatchersProvider.ioDispatcher) {
-            createEditFootprint.clearDraft(sharedFootprint.image)
+            createUpdateFootprint.clearDraft(sharedFootprint.image)
         }
     }
 
-    private fun copyUriToFile(uri: Uri): File =
+    protected fun copyUriToFile(uri: Uri): File =
         filesHelper.createTempFile().also {
             filesHelper.saveUriToFile(uri, it)
         }

@@ -11,12 +11,18 @@ interface ViewCommand
 
 // Text messages
 class ShowMessageRes(@StringRes val textResId: Int): ViewCommand
+
 class ShowMessageText(val text: String): ViewCommand
 
 // Navigation
 class MoveBack: ViewCommand
-class MoveToCreateFootprint : ViewCommand
+
+data class MoveToCreateFootprint(
+    val oldFootprint: Footprint?
+) : ViewCommand
+
 class MoveToGridGallery : ViewCommand
+
 class MoveToMyWorld : ViewCommand
 
 data class MoveToOneGallery(
@@ -24,21 +30,32 @@ data class MoveToOneGallery(
     val currentIndex: Int
 ) : ViewCommand
 
-class MoveToSetLocation : ViewCommand
+data class MoveToSetLocation(
+    val oldFootprint: Footprint?,
+    val isImageUpdated: Boolean?
+) : ViewCommand
+
 class MoveToSelectPhoto : ViewCommand
+
 class MoveToCropPhoto(val photo: File): ViewCommand
+
 class MoveToEditPhoto(val photo: File): ViewCommand
+
 class MoveBackFromSetLocationToTitle : ViewCommand
 
 // Child fragments for SetLocationFragment
 class AddMapFragment : ViewCommand
+
 class AddStubFragment : ViewCommand
 
 class OpenCamera : ViewCommand
+
 class OpenGallery : ViewCommand
+
 class OpenLocationSettings : ViewCommand
 
 class AskAboutGeolocation : ViewCommand
+
 class AskAboutFootprintInterruption : ViewCommand
 
 class StartLoadingMap : ViewCommand

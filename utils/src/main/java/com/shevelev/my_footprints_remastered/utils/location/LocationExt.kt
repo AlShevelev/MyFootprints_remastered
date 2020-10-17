@@ -14,3 +14,5 @@ fun LatLng.toAndroidLocation(): Location =
             it.longitude = longitude
             it.time = Instant.now().epochSecond
         }
+
+fun Double.toAndroidLocation(longitude: Double): Location = LatLng(this, longitude).toAndroidLocation()

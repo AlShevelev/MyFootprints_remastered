@@ -93,7 +93,15 @@
     <fragment
         android:id="@+id/galleryOneFragment"
         android:name="com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_pages.view.GalleryPagesFragment"
-        android:label="GalleryOneFragment" />
+        android:label="GalleryOneFragment" >
+        <action
+            android:id="@+id/action_galleryOneFragment_to_createFootprintFragment"
+            app:destination="@id/createFootprintFragment"
+            app:enterAnim="@anim/nav_slide_in_right"
+            app:exitAnim="@anim/nav_slide_out_left"
+            app:popEnterAnim="@anim/nav_slide_in_left"
+            app:popExitAnim="@anim/nav_slide_out_right" />
+    </fragment>
     <fragment
         android:id="@+id/myWorldFragment"
         android:name="com.shevelev.my_footprints_remastered.ui.activity_main.fragment_my_world.view.MyWorldFragment"

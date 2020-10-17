@@ -1,4 +1,4 @@
-package com.shevelev.my_footprints_remastered.ui.shared.fragments_data_pass
+package com.shevelev.my_footprints_remastered.ui.shared.fragments_data_pass.push
 
 /**
  * Base class for passing data across fragments via push model (request - response)

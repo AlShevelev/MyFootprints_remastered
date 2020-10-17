@@ -12,7 +12,6 @@ import com.shevelev.my_footprints_remastered.R
 import com.shevelev.my_footprints_remastered.common_entities.CreateFootprintInfo
 import com.shevelev.my_footprints_remastered.common_entities.Footprint
 import com.shevelev.my_footprints_remastered.common_entities.UpdateFootprintInfo
-import com.shevelev.my_footprints_remastered.entities.FootprintUpdateInfo
 import com.shevelev.my_footprints_remastered.storages.db.repositories.FootprintRepository
 import com.shevelev.my_footprints_remastered.storages.files.FilesHelper
 import com.shevelev.my_footprints_remastered.storages.key_value.KeyValueStorageFacade
@@ -23,18 +22,18 @@ import java.io.File
 import javax.inject.Inject
 import kotlin.coroutines.resume
 
-class CreateEditFootprintImpl
+class CreateUpdateFootprintImpl
 @Inject
 constructor(
     private val appContext: Context,
     private val filesHelper: FilesHelper,
     private val footprintRepository: FootprintRepository,
     private val keyValueStorageFacade: KeyValueStorageFacade,
-) : CreateEditFootprint {
+) : CreateUpdateFootprint {
 
     private val imageMimeType = "image/jpeg"
 
-    override suspend fun create(info: CreateFootprintInfo): FootprintUpdateInfo {
+    override suspend fun create(info: CreateFootprintInfo): FootprintCreateInfo {
 
         // Store the image
         val imageInfo = if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -63,7 +62,7 @@ constructor(
         // Remove the draft file
         filesHelper.deleteFile(info.draftImageFile)
 
-        return FootprintUpdateInfo(imageInfo.first, footprintRepository.getCount())
+        return FootprintCreateInfo(footprint.id, footprint.imageContentUri, footprintRepository.getCount())
     }
 
     /**
@@ -103,7 +102,7 @@ constructor(
             // Get update result
             footprintRepository.getLast()
                 ?.takeIf { it.id == info.oldFootprint.id }
-                ?.let { FootprintUpdateInfo(it.imageContentUri, footprintRepository.getCount()) }
+                ?.let { FootprintUpdateInfo(footprint) }
         } else {
             null
         }

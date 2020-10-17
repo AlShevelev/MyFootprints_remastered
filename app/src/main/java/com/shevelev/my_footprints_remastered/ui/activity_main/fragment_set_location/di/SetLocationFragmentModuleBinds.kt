@@ -1,8 +1,6 @@
 package com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location.di
 
 import androidx.lifecycle.ViewModel
-import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location.model.SetLocationFragmentModel
-import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location.model.SetLocationFragmentModelImpl
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location.view_model.SetLocationFragmentViewModel
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_model.ViewModelKey
 import dagger.Binds
@@ -15,7 +13,4 @@ abstract class SetLocationFragmentModuleBinds {
     @IntoMap
     @ViewModelKey(SetLocationFragmentViewModel::class)
     abstract fun provideViewModel(viewModel: SetLocationFragmentViewModel): ViewModel
-
-    @Binds
-    abstract fun provideModel(model: SetLocationFragmentModelImpl): SetLocationFragmentModel
 }

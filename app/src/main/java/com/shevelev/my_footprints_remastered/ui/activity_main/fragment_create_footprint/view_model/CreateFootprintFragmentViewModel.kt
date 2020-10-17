@@ -1,6 +1,5 @@
 package com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.view_model
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.shevelev.my_footprints_remastered.R
@@ -13,16 +12,12 @@ import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_model.ViewModel
 import com.shevelev.my_footprints_remastered.ui.shared.widgets.screen_header.ScreenHeaderBindingCall
 import com.shevelev.my_footprints_remastered.ui.view_commands.*
 import com.shevelev.my_footprints_remastered.utils.coroutines.DispatchersProvider
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import javax.inject.Inject
 
-class CreateFootprintFragmentViewModel
-@Inject
+@Suppress("PropertyName", "LeakingThis")
+abstract class CreateFootprintFragmentViewModel
 constructor(
-    appContext: Context,
     dispatchersProvider: DispatchersProvider,
     model: CreateFootprintFragmentModel
 ) : ViewModelBase<CreateFootprintFragmentModel>(dispatchersProvider, model),
@@ -30,33 +25,15 @@ constructor(
     ScreenHeaderBindingCall,
     ButtonsBindingCall {
 
-    val title = appContext.getString(R.string.createFootprint)
+    abstract val title: String
 
-    private val _containerState = MutableLiveData<PhotoContainerState>(PhotoContainerState.Initial)
+    protected val _containerState = MutableLiveData<PhotoContainerState>(PhotoContainerState.Initial)
     val containerState: LiveData<PhotoContainerState> = _containerState
 
     val comment = MutableLiveData<String>()
 
-    private val _saveEnabled = MutableLiveData(model.canSave)
+    protected val _saveEnabled = MutableLiveData(model.canSave)
     val saveEnabled:LiveData<Boolean> = _saveEnabled
-
-    private var locationTrackingJob: Job? = null
-
-    init {
-        launch {
-            model.initSharedFootprint()
-        }
-
-        if(!model.geolocationProvider.isLocationTrackingEnabled) {
-            sendCommand(AskAboutGeolocation())
-        }
-
-        startLocationTracking()
-
-        comment.observeForever {
-            model.sharedFootprint.comment = it
-        }
-    }
 
     override fun onBackClick() {
         if(!model.canSave) {
@@ -109,13 +86,6 @@ constructor(
 
     fun onGotoLocationSettingsSelected() = sendCommand(OpenLocationSettings())
 
-    override fun onCleared() {
-        super.onCleared()
-        stopLocationTracking()
-    }
-
-    override fun onMoveToMapClick() = sendCommand(MoveToSetLocation())
-
     override fun onSaveClick() {
         launch {
             try {
@@ -126,18 +96,5 @@ constructor(
                 sendCommand(ShowMessageRes(R.string.saveFootprintError))
             }
         }
-    }
-
-    private fun startLocationTracking() {
-        stopLocationTracking()
-        locationTrackingJob = launch {
-            model.geolocationProvider.startTracking()
-        }
-    }
-
-    private fun stopLocationTracking() {
-        model.geolocationProvider.stopTracking()
-        locationTrackingJob?.takeIf { isActive }?.cancel()
-        locationTrackingJob = null
     }
 }

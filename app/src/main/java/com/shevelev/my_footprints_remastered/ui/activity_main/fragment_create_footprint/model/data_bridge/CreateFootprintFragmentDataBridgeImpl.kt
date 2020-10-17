@@ -2,7 +2,7 @@ package com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_f
 
 import android.graphics.Bitmap
 import android.net.Uri
-import com.shevelev.my_footprints_remastered.ui.shared.fragments_data_pass.FragmentsDataPushBase
+import com.shevelev.my_footprints_remastered.ui.shared.fragments_data_pass.push.FragmentsDataPushBase
 import java.io.File
 import javax.inject.Inject
 

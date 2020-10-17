@@ -7,9 +7,11 @@ import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_p
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_pages.view.ButtonsBindingCall
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_model.ViewModelBase
 import com.shevelev.my_footprints_remastered.ui.shared.recycler_view.versioned.VersionedListItem
+import com.shevelev.my_footprints_remastered.ui.view_commands.MoveToCreateFootprint
 import com.shevelev.my_footprints_remastered.ui.view_commands.ShowMapDialog
 import com.shevelev.my_footprints_remastered.utils.coroutines.DispatchersProvider
 import com.shevelev.my_footprints_remastered.utils.format.toShortDisplayString
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -41,6 +43,14 @@ constructor(
             _items.value = model.loadItems()
             _currentIndex.value = model.currentIndex
         }
+
+        launch {
+            model.updateFootprintData.data.collect { footprint ->
+                footprint?.let {
+                    model.updateFootprint(footprint)?.let { _items.value = it }
+                }
+            }
+        }
     }
 
     fun onViewReady() {
@@ -64,9 +74,7 @@ constructor(
         // TODO("Not yet implemented")
     }
 
-    override fun onEditClick() {
-        // TODO("Not yet implemented")
-    }
+    override fun onEditClick() = sendCommand(MoveToCreateFootprint(model.getFootprint(model.currentIndex)))
 
     override fun onDeleteClick() {
         // TODO("Not yet implemented")

@@ -6,6 +6,8 @@ import com.shevelev.my_footprints_remastered.common_entities.PinColor
 import com.shevelev.my_footprints_remastered.storages.db.repositories.FootprintRepository
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_my_world_map.dto.FootprintOnMap
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_my_world_map.dto.FootprintsOnMap
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_my_world_map.dto.MapZoomAndLocation
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flow.update.UpdateFootprintDataFlowConsumer
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.model.ModelBaseImpl
 import com.shevelev.my_footprints_remastered.utils.coroutines.DispatchersProvider
 import kotlinx.coroutines.withContext
@@ -15,36 +17,28 @@ class MyWorldMapFragmentModelImpl
 @Inject
 constructor(
     private val dispatchersProvider: DispatchersProvider,
-    private val footprintRepository: FootprintRepository
+    private val footprintRepository: FootprintRepository,
+    override val updateFootprintData: UpdateFootprintDataFlowConsumer
 ) : ModelBaseImpl(),
     MyWorldMapFragmentModel {
 
-    override lateinit var footprints: List<Footprint>
+    override lateinit var footprints: MutableList<Footprint>
         private set
 
     override suspend fun getFootprintsForMap(): FootprintsOnMap {
         if(!::footprints.isInitialized) {
             footprints = withContext(dispatchersProvider.ioDispatcher) {
-                footprintRepository.getAll()
+                footprintRepository.getAll().toMutableList()
             }
         }
 
-
         val result = withContext(dispatchersProvider.calculationsDispatcher) {
-            footprints.map {
-                FootprintOnMap(
-                    id = it.id,
-                    imageContentUri = it.imageContentUri,
-                    location = LatLng(it.latitude, it.longitude),
-                    comment = it.comment,
-                    pinColor = PinColor(it.pinTextColor, it.pinBackgroundColor)
-                )
-            }
+            footprints.map { it.mapToFootprintOnMap() }
         }
 
         val centerLocation = result.firstOrNull()?.position ?: LatLng(0.0, 0.0)
 
-        return FootprintsOnMap(result, 0f, centerLocation)
+        return FootprintsOnMap(result, MapZoomAndLocation(0f, centerLocation))
     }
 
     /**
@@ -52,4 +46,23 @@ constructor(
      * @return index of null if an item is not found
      */
     override fun getIndexById(id: Long): Int? = footprints.indexOfFirst { it.id == id }.takeIf { it != -1 }
+
+    override suspend fun updateFootprint(updatedFootprint: Footprint): List<FootprintOnMap>? =
+        withContext(dispatchersProvider.calculationsDispatcher) {
+            footprints.indexOfFirst { it.id == updatedFootprint.id }
+                .takeIf { it != -1 }
+                ?.let { index ->
+                    footprints[index] = updatedFootprint
+                    footprints.map { it.mapToFootprintOnMap() }
+                }
+        }
+
+    private fun Footprint.mapToFootprintOnMap(): FootprintOnMap =
+        FootprintOnMap(
+            id = id,
+            imageContentUri = imageContentUri,
+            location = LatLng(latitude, longitude),
+            comment = comment,
+            pinColor = PinColor(pinTextColor, pinBackgroundColor)
+        )
 }

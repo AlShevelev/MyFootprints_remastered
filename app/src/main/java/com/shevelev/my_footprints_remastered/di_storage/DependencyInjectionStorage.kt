@@ -8,6 +8,7 @@ import com.shevelev.my_footprints_remastered.common_entities.Footprint
 import com.shevelev.my_footprints_remastered.ui.di.UIComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.di.MainActivityComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.di.CreateFootprintFragmentComponent
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.di.CreateFootprintFragmentModule
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location.di.SetLocationFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_crop_photo.di.CropPhotoFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_edit_photo.di.EditPhotoFragmentComponent
@@ -17,6 +18,7 @@ import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_p
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_my_world.di.MyWorldFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_my_world_map.di.MyWorldMapFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_select_photo.di.SelectPhotoFragmentComponent
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location.di.SetLocationFragmentModule
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location_map.di.SetLocationMapFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location_stub.di.SetLocationStubFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_title.di.TitleFragmentComponent
@@ -92,7 +94,10 @@ class DependencyInjectionStorage(private val app: Application) {
 
             TitleFragmentComponent::class -> getBase<MainActivityComponent>().titleFragment.build()
 
-            CreateFootprintFragmentComponent::class -> getBase<MainActivityComponent>().createFootprintFragment.build()
+            CreateFootprintFragmentComponent::class ->
+                getBase<MainActivityComponent>().createFootprintFragment
+                    .init(CreateFootprintFragmentModule(args[0] as? Footprint))
+                    .build()
 
             SelectPhotoFragmentComponent::class -> getBase<CreateFootprintFragmentComponent>().selectPhotoFragment.build()
 
@@ -100,7 +105,10 @@ class DependencyInjectionStorage(private val app: Application) {
 
             EditPhotoFragmentComponent::class -> getBase<CreateFootprintFragmentComponent>().editPhotoFragment.build()
 
-            SetLocationFragmentComponent::class -> getBase<CreateFootprintFragmentComponent>().setLocationFragment.build()
+            SetLocationFragmentComponent::class ->
+                getBase<CreateFootprintFragmentComponent>().setLocationFragment
+                    .init(SetLocationFragmentModule(args[0] as? Footprint, args[1] as? Boolean))
+                    .build()
 
             SetLocationStubFragmentComponent::class -> getBase<CreateFootprintFragmentComponent>().setLocationStubFragment.build()
 

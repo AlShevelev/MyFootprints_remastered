@@ -2,12 +2,15 @@ package com.shevelev.my_footprints_remastered.ui.activity_main.fragment_my_world
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_my_world_map.dto.FootprintOnMap
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_my_world_map.dto.FootprintsOnMap
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_my_world_map.dto.MapZoomAndLocation
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_my_world_map.model.MyWorldMapFragmentModel
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_model.ViewModelBase
 import com.shevelev.my_footprints_remastered.ui.view_commands.MoveToOneGallery
 import com.shevelev.my_footprints_remastered.ui.view_commands.StartLoadingMap
 import com.shevelev.my_footprints_remastered.utils.coroutines.DispatchersProvider
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,12 +21,25 @@ constructor(
     model: MyWorldMapFragmentModel
 ) : ViewModelBase<MyWorldMapFragmentModel>(dispatchersProvider, model) {
 
-    private val _footprints = MutableLiveData<FootprintsOnMap>()
-    val footprints: LiveData<FootprintsOnMap> = _footprints
+    private val _footprints = MutableLiveData<List<FootprintOnMap>>()
+    val footprints: LiveData<List<FootprintOnMap>> = _footprints
+
+    private val _zoomAndLocation = MutableLiveData<MapZoomAndLocation>()
+    val zoomAndLocation: LiveData<MapZoomAndLocation> = _zoomAndLocation
 
     init {
         launch {
-            _footprints.value = model.getFootprintsForMap()
+            val footprintsForMap = model.getFootprintsForMap()
+            _zoomAndLocation.value = footprintsForMap.zoomAndLocation
+            _footprints.value = footprintsForMap.footprints
+        }
+
+        launch {
+            model.updateFootprintData.data.collect { footprint ->
+                footprint?.let {
+                    model.updateFootprint(footprint)?.let { _footprints.value = it }
+                }
+            }
         }
     }
 
