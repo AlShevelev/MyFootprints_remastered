@@ -8,6 +8,7 @@ import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_g
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_page.GalleryPageFragment
 import com.shevelev.my_footprints_remastered.ui.shared.recycler_view.versioned.VersionedDiffAlg
 import com.shevelev.my_footprints_remastered.ui.shared.recycler_view.versioned.VersionedListItem
+import timber.log.Timber
 
 class GalleryPagesAdapter(
     fragment: Fragment,
@@ -22,9 +23,11 @@ class GalleryPagesAdapter(
         diffResult.dispatchUpdatesTo(this)
     }
 
-    override fun createFragment(position: Int): Fragment {
-        return GalleryPageFragment.newInstance((items[position] as FootprintListItem).footprint.imageContentUri)
-    }
+    override fun createFragment(position: Int): Fragment =
+        (items[position] as FootprintListItem).let { footprintItem ->
+            Timber.tag("UPDATE_DEBUG").d("Create pager fragment: ${footprintItem.footprint.imageContentUri}")
+            GalleryPageFragment.newInstance(footprintItem.footprint.imageContentUri, footprintItem.useCacheForImage)
+        }
 
     override fun getItemId(position: Int): Long = if (position < 0) RecyclerView.NO_ID else items[position].id
 

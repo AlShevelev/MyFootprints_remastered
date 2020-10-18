@@ -37,7 +37,11 @@ constructor(
         launch {
             try {
                 model.save()
-                sendCommand(MoveBackFromSetLocationToTitle())
+                if(model.isInUpdateMode) {
+                    sendCommand(MoveBackFromSetLocationToPager())
+                } else {
+                    sendCommand(MoveBackFromSetLocationToTitle())
+                }
             } catch (ex: Exception) {
                 Timber.e(ex)
                 sendCommand(ShowMessageRes(R.string.saveFootprintError))

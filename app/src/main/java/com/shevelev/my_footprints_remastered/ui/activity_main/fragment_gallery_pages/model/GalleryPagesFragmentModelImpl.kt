@@ -28,8 +28,9 @@ constructor(
                 version = 0,
                 isFirstItem = false,
                 isLastItem = false,
-                footprint = it)
-            }.toMutableList()
+                footprint = it,
+                useCacheForImage = true
+            )}.toMutableList()
         }
 
         return items
@@ -41,7 +42,10 @@ constructor(
                 .takeIf { it != -1 }
                 ?.let { index ->
                     val item = items[index]
-                    items[index] = item.copy(footprint = updatedFootprint, version = item.version+1)
+                    items[index] = item.copy(
+                        footprint = updatedFootprint,
+                        version = item.version+1,
+                        useCacheForImage = false)
                     items
                 }
         }

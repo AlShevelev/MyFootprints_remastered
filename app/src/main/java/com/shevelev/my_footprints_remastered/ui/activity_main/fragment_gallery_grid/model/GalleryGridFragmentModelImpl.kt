@@ -32,7 +32,8 @@ constructor(
                     version = 0,
                     isFirstItem = false,
                     isLastItem = false,
-                    footprint = it
+                    footprint = it,
+                    useCacheForImage = true
                 )}
             }
             .also {
@@ -45,7 +46,11 @@ constructor(
                 .takeIf { it != -1 }
                 ?.let { index ->
                     val item = gridItems[index]
-                    gridItems[index] = item.copy(footprint = updatedFootprint, version = item.version+1)
+                    gridItems[index] = item.copy(
+                        footprint = updatedFootprint,
+                        version = item.version+1,
+                        useCacheForImage = false
+                    )
                     gridItems
                 }
         }

@@ -44,6 +44,7 @@ class SetLocationFragment : FragmentBaseMVVM<FragmentSetLocationBinding, SetLoca
             is AddStubFragment -> addStub()
             is AddMapFragment -> addMap()
             is MoveBackFromSetLocationToTitle -> navigation.moveBackFromSetLocationToTitle(this)
+            is MoveBackFromSetLocationToPager -> navigation.moveBackFromSetLocationToPager(this)
         }
     }
 

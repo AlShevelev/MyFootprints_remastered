@@ -28,7 +28,7 @@ class GalleryPagesFragment : FragmentBaseMVVM<FragmentGalleryPagesBinding, Galle
         const val ARG_CURRENT_FOOTPRINT_INDEX = "ARG_CURRENT_FOOTPRINT_INDEX"
     }
 
-    private val galleryPagesAdapter by lazy { GalleryPagesAdapter(this) }
+    private lateinit var galleryPagesAdapter: GalleryPagesAdapter
 
     @Inject
     internal lateinit var navigation: MainActivityNavigation
@@ -60,6 +60,8 @@ class GalleryPagesFragment : FragmentBaseMVVM<FragmentGalleryPagesBinding, Galle
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.items.observe({viewLifecycleOwner.lifecycle}) { updateGallery(it) }
+
+        galleryPagesAdapter = GalleryPagesAdapter(this)
 
         pager.adapter = galleryPagesAdapter
         pager.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {

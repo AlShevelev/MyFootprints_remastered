@@ -7,5 +7,7 @@ interface SetLocationFragmentModel : ModelBase {
 
     val canSave: Boolean
 
+    val isInUpdateMode: Boolean
+
     suspend fun save()
 }

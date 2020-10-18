@@ -24,14 +24,16 @@ constructor(
     lastFootprintDataFlowProvider: LastFootprintDataFlowProvider,
     private val oldFootprint: Footprint,
     private val isImageUpdated: Boolean,
-    private val updateFootprintDataFlowProvider: UpdateFootprintDataFlowProvider
+    private val updateFootprintDataFlowProvider: UpdateFootprintDataFlowProvider,
+    isInUpdateMode: Boolean
 ) : InsertSetLocationFragmentModel(
     appContext,
-    dispatchersProvider,
+    dispatchersProvider ,
     sharedFootprint,
     createUpdateFootprint,
     geolocationProvider,
-    lastFootprintDataFlowProvider)
+    lastFootprintDataFlowProvider,
+    isInUpdateMode)
 , SetLocationFragmentModel  {
 
     override suspend fun save() {

@@ -43,6 +43,8 @@ class MoveToEditPhoto(val photo: File): ViewCommand
 
 class MoveBackFromSetLocationToTitle : ViewCommand
 
+class MoveBackFromSetLocationToPager : ViewCommand
+
 // Child fragments for SetLocationFragment
 class AddMapFragment : ViewCommand
 

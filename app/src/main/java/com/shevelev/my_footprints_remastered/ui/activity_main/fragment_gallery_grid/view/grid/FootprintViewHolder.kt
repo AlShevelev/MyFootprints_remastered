@@ -2,6 +2,7 @@ package com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_
 
 import android.view.ViewGroup
 import coil.api.load
+import coil.request.CachePolicy
 import coil.request.RequestDisposable
 import com.shevelev.my_footprints_remastered.R
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_grid.view_model.FootprintListItemEventsProcessor
@@ -19,7 +20,13 @@ class FootprintViewHolder(
 
     override fun init(listItem: FootprintListItem, listItemEventsProcessor: FootprintListItemEventsProcessor) {
         itemView.setOnClickListener { listItemEventsProcessor.onFootprintClick(listItem.id) }
-        imageDispose = itemView.photoImage.load(listItem.footprint.imageContentUri)
+        imageDispose = itemView.photoImage.load(listItem.footprint.imageContentUri) {
+            if(listItem.useCacheForImage) {
+                memoryCachePolicy(CachePolicy.ENABLED)
+            } else {
+                memoryCachePolicy(CachePolicy.DISABLED)
+            }
+        }
 
         itemView.footprintDateText.text = listItem.footprint.created.toShortDisplayString()
     }

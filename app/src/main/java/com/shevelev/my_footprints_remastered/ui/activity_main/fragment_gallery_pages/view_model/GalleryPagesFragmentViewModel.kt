@@ -13,6 +13,7 @@ import com.shevelev.my_footprints_remastered.utils.coroutines.DispatchersProvide
 import com.shevelev.my_footprints_remastered.utils.format.toShortDisplayString
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 class GalleryPagesFragmentViewModel
@@ -46,6 +47,7 @@ constructor(
 
         launch {
             model.updateFootprintData.data.collect { footprint ->
+                Timber.tag("UPDATE_DEBUG").d("Update received in the pager: ${footprint?.imageContentUri}")
                 footprint?.let {
                     model.updateFootprint(footprint)?.let { _items.value = it }
                 }

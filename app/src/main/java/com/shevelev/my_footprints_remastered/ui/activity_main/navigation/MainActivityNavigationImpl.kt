@@ -64,6 +64,10 @@ constructor() : MainActivityNavigation {
         fragment.findNavController().popBackStack(R.id.titleFragment, false)
     }
 
+    override fun moveBackFromSetLocationToPager(fragment: SetLocationFragment) {
+        fragment.findNavController().popBackStack(R.id.galleryOneFragment, false)
+    }
+
     override fun moveToGridGallery(fragment: TitleFragment) =
         fragment.findNavController().navigate(R.id.action_titleFragment_to_galleryGridFragment)
 

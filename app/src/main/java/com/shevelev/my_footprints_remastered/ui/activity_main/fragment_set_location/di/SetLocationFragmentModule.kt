@@ -40,7 +40,8 @@ class SetLocationFragmentModule(
                 sharedFootprint,
                 createUpdateFootprint,
                 geolocationProvider,
-                lastFootprintDataFlowProvider
+                lastFootprintDataFlowProvider,
+                false
             )
         } else {
             UpdateSetLocationFragmentModel(
@@ -52,7 +53,8 @@ class SetLocationFragmentModule(
                 lastFootprintDataFlowProvider,
                 oldFootprint,
                 isImageUpdated!!,
-                updateFootprintDataFlowProvider
+                updateFootprintDataFlowProvider,
+                true
             )
         }
 }

@@ -22,7 +22,8 @@ constructor(
     protected val sharedFootprint: SharedFootprint,
     protected val createUpdateFootprint: CreateUpdateFootprint,
     private val geolocationProvider: GeolocationProviderData,
-    private val lastFootprintDataFlowProvider: LastFootprintDataFlowProvider
+    private val lastFootprintDataFlowProvider: LastFootprintDataFlowProvider,
+    override val isInUpdateMode: Boolean
 ) : ModelBaseImpl(),
     SetLocationFragmentModel  {
     override val isGooglePlayServicesAvailable: Boolean

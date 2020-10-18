@@ -99,10 +99,7 @@ constructor(
             // Store last used pin color
             keyValueStorageFacade.savePinColor(info.pinColor)
 
-            // Get update result
-            footprintRepository.getLast()
-                ?.takeIf { it.id == info.oldFootprint.id }
-                ?.let { FootprintUpdateInfo(footprint) }
+            FootprintUpdateInfo(footprint)
         } else {
             null
         }

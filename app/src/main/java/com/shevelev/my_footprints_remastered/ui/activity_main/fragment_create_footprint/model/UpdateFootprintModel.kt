@@ -17,6 +17,7 @@ import com.shevelev.my_footprints_remastered.ui.activity_main.geolocation.Geoloc
 import com.shevelev.my_footprints_remastered.utils.coroutines.DispatchersProvider
 import com.shevelev.my_footprints_remastered.utils.location.toAndroidLocation
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import javax.inject.Inject
 
 class UpdateFootprintModel
@@ -59,6 +60,7 @@ constructor(
     }
 
     override suspend fun save() {
+        Timber.tag("UPDATE_DEBUG").d("Start to update. IsImageUpdated $isImageUpdated")
         withContext(dispatchersProvider.ioDispatcher) {
             createUpdateFootprint.update(
                 UpdateFootprintInfo(
@@ -72,6 +74,8 @@ constructor(
             )
         }
         ?.let { editInfo ->
+            Timber.tag("UPDATE_DEBUG").d("Update completed. Old footprint: ${oldFootprint.imageContentUri}")
+            Timber.tag("UPDATE_DEBUG").d("Send update info: ${editInfo.updatedFootprint.imageContentUri}")
             updateFootprintDataFlowProvider.update(editInfo.updatedFootprint)
         }
     }

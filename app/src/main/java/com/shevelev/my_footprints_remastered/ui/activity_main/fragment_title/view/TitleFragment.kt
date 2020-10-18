@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import coil.api.load
+import coil.request.CachePolicy
 import coil.request.RequestDisposable
 import com.shevelev.my_footprints_remastered.R
 import com.shevelev.my_footprints_remastered.application.App
@@ -87,6 +88,8 @@ class TitleFragment : FragmentBaseMVVM<FragmentTitleBinding, TitleFragmentViewMo
 
     private fun updateLastFootprintImage(lastFootprintUri: Uri) {
         lastFootprintDispose?.takeIf { !it.isDisposed } ?.dispose()
-        lastFootprintDispose = lastFootprint.load(lastFootprintUri)
+        lastFootprintDispose = lastFootprint.load(lastFootprintUri) {
+            memoryCachePolicy(CachePolicy.DISABLED)
+        }
     }
 }

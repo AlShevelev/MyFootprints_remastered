@@ -8,5 +8,6 @@ data class FootprintListItem(
     override val version: Long,
     override val isFirstItem: Boolean,
     override val isLastItem: Boolean,
+    val useCacheForImage: Boolean,
     val footprint: Footprint
 ) : VersionedListItem
