@@ -21,6 +21,8 @@ constructor(
     model: MyWorldMapFragmentModel
 ) : ViewModelBase<MyWorldMapFragmentModel>(dispatchersProvider, model) {
 
+    private var manualZoomAndLocation: MapZoomAndLocation? = null
+
     private val _footprints = MutableLiveData<List<FootprintOnMap>>()
     val footprints: LiveData<List<FootprintOnMap>> = _footprints
 
@@ -43,7 +45,12 @@ constructor(
         }
     }
 
-    fun onViewCreated() = sendCommand(StartLoadingMap())
+    fun onViewCreated() {
+        manualZoomAndLocation?.let {
+            _zoomAndLocation.value = it
+        }
+        sendCommand(StartLoadingMap())
+    }
 
     fun onPinClick(id: Long){
         launch {
@@ -51,5 +58,9 @@ constructor(
                 sendCommand(MoveToOneGallery(model.footprints, it))
             }
         }
+    }
+
+    fun storeManualZoomAndLocation(zoomAndLocation: MapZoomAndLocation) {
+        manualZoomAndLocation = zoomAndLocation
     }
 }

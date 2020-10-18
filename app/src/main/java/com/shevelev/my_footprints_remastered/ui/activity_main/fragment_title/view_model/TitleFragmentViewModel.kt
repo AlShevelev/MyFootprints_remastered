@@ -16,7 +16,6 @@ import com.shevelev.my_footprints_remastered.utils.resources.getStringFormatted
 import com.shevelev.my_footprints_remastered.utils.strings.toUpper
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 class TitleFragmentViewModel
@@ -60,8 +59,6 @@ constructor(
 
         launch {
             model.updateFootprintData.data.collect { footprint ->
-                Timber.tag("UPDATE_DEBUG").d("Update received in the title: ${footprint?.imageContentUri}")
-
                 footprint?.let {
                     if(it.id == model.lastFootprintId) {
                         _lastFootprintUri.value = it.imageContentUri

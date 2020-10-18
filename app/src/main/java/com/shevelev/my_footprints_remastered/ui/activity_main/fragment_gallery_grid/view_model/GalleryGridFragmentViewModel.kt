@@ -12,9 +12,8 @@ import com.shevelev.my_footprints_remastered.ui.shared.widgets.screen_header.Scr
 import com.shevelev.my_footprints_remastered.ui.view_commands.MoveBack
 import com.shevelev.my_footprints_remastered.ui.view_commands.MoveToOneGallery
 import com.shevelev.my_footprints_remastered.utils.coroutines.DispatchersProvider
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.collect
-import timber.log.Timber
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class GalleryGridFragmentViewModel
@@ -47,7 +46,6 @@ constructor(
 
         launch {
             model.updateFootprintData.data.collect { footprint ->
-                Timber.tag("UPDATE_DEBUG").d("Update received in the grid: ${footprint?.imageContentUri}")
                 footprint?.let {
                     model.updateFootprint(footprint)?.let { _items.value = it }
                 }

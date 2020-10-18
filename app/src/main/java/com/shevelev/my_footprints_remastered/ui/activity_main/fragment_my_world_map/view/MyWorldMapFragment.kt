@@ -64,6 +64,10 @@ class MyWorldMapFragment : FragmentBaseMVVM<FragmentMyWorldMapBinding, MyWorldMa
         map.uiSettings.isCompassEnabled = false
         map.uiSettings.isZoomControlsEnabled = false
 
+        map.setOnCameraIdleListener {
+            viewModel.storeManualZoomAndLocation(MapZoomAndLocation(map.cameraPosition.zoom, map.cameraPosition.target))
+        }
+
         Timber.tag("GALLERY").d("showFootprints observed")
         viewModel.zoomAndLocation.observe({viewLifecycleOwner.lifecycle}) { setZoomAndLocation(it) }
         viewModel.footprints.observe({viewLifecycleOwner.lifecycle}) { showFootprints(it) }

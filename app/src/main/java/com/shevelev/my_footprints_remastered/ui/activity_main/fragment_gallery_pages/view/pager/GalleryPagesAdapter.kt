@@ -8,7 +8,6 @@ import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_g
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_page.GalleryPageFragment
 import com.shevelev.my_footprints_remastered.ui.shared.recycler_view.versioned.VersionedDiffAlg
 import com.shevelev.my_footprints_remastered.ui.shared.recycler_view.versioned.VersionedListItem
-import timber.log.Timber
 
 class GalleryPagesAdapter(
     fragment: Fragment,
@@ -25,7 +24,6 @@ class GalleryPagesAdapter(
 
     override fun createFragment(position: Int): Fragment =
         (items[position] as FootprintListItem).let { footprintItem ->
-            Timber.tag("UPDATE_DEBUG").d("Create pager fragment: ${footprintItem.footprint.imageContentUri}")
             GalleryPageFragment.newInstance(footprintItem.footprint.imageContentUri, footprintItem.useCacheForImage)
         }
 
