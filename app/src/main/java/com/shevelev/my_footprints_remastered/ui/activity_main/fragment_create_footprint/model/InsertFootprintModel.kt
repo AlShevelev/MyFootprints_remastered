@@ -14,7 +14,7 @@ import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_fo
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.model.data_bridge.CreateFootprintFragmentDataBridge
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.model.shared_footprint.SharedFootprint
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flow.last.LastFootprintDataFlowProvider
-import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flow.last.LastFootprintInfo
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flow.last.LastFootprintFlowInfo
 import com.shevelev.my_footprints_remastered.ui.activity_main.geolocation.GeolocationProviderManager
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.model.ModelBaseImpl
 import com.shevelev.my_footprints_remastered.utils.coroutines.DispatchersProvider
@@ -104,7 +104,7 @@ constructor(
         }
 
         lastFootprintDataFlowProvider.update(
-            LastFootprintInfo(
+            LastFootprintFlowInfo(
             lastFootprintId = createInfo.lastFootprintId,
             lastFootprintUri = createInfo.lastFootprintImage,
             totalFootprints = createInfo.totalFootprints

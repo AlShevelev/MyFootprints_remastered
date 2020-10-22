@@ -1,6 +1,8 @@
 package com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_pages.di
 
 import androidx.lifecycle.ViewModel
+import com.shevelev.my_footprints_remastered.shared_use_cases.CreateUpdateFootprint
+import com.shevelev.my_footprints_remastered.shared_use_cases.CreateUpdateFootprintImpl
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_pages.model.GalleryPagesFragmentModel
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_pages.model.GalleryPagesFragmentModelImpl
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_pages.view_model.GalleryPagesFragmentViewModel
@@ -23,4 +25,7 @@ abstract class GalleryPagesFragmentModuleBinds {
 
     @Binds
     abstract fun provideModel(model: GalleryPagesFragmentModelImpl): GalleryPagesFragmentModel
+
+    @Binds
+    abstract fun provideCreateEditFootprint(createUpdate: CreateUpdateFootprintImpl): CreateUpdateFootprint
 }

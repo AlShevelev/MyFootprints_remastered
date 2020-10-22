@@ -15,4 +15,9 @@ interface GalleryPagesFragmentModel : ModelBase {
     suspend fun updateFootprint(updatedFootprint: Footprint): List<VersionedListItem>?
 
     fun getFootprint(index: Int): Footprint
+
+    /**
+     * @return updated list of items
+     */
+    suspend fun deleteFootprint(): List<VersionedListItem>
 }

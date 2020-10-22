@@ -1,7 +1,6 @@
 package com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.view
 
 import android.Manifest
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import com.shevelev.my_footprints_remastered.R
@@ -13,11 +12,9 @@ import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_fo
 import com.shevelev.my_footprints_remastered.ui.activity_main.navigation.MainActivityNavigation
 import com.shevelev.my_footprints_remastered.ui.shared.dialogs.ConfirmationDialog
 import com.shevelev.my_footprints_remastered.ui.shared.dialogs.OkDialog
-import com.shevelev.my_footprints_remastered.ui.shared.dialogs.selectColor.SelectColorDialog
 import com.shevelev.my_footprints_remastered.ui.shared.external_intents.location_settings.LocationSettingsHelper
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view.FragmentBaseMVVM
 import com.shevelev.my_footprints_remastered.ui.view_commands.*
-import kotlinx.android.synthetic.main.fragment_create_footprint.*
 import permissions.dispatcher.NeedsPermission
 import permissions.dispatcher.OnPermissionDenied
 import permissions.dispatcher.OnShowRationale
@@ -64,8 +61,21 @@ class CreateFootprintFragment : FragmentBaseMVVM<FragmentCreateFootprintBinding,
             is MoveToEditPhoto -> navigation.moveToEditPhoto(this, command.photo)
             is MoveToSetLocation -> navigation.moveToSetLocation(this, command.oldFootprint, command.isImageUpdated)
 
-            is AskAboutGeolocation -> ConfirmationDialog.show(geolocationRequest, this, R.string.enableLocationQuestion, R.string.goToSettings, R.string.notNow)
-            is AskAboutFootprintInterruption -> ConfirmationDialog.show(footprintInterruptionRequest, this, R.string.footprintInterruptionQuery, R.string.interrupt, R.string.cancel)
+            is AskAboutGeolocation ->
+                ConfirmationDialog.show(
+                    geolocationRequest,
+                    this,
+                    R.string.enableLocationQuestion,
+                    R.string.goToSettings,
+                    R.string.notNow)
+
+            is AskAboutFootprintInterruption ->
+                ConfirmationDialog.show(
+                    footprintInterruptionRequest,
+                    this,
+                    R.string.footprintInterruptionQuery,
+                    R.string.interrupt,
+                    R.string.cancel)
 
             is OpenLocationSettings -> locationSettingsHelper.openSettings(this)
         }

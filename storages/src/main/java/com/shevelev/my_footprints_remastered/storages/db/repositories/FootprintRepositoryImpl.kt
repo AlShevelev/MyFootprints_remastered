@@ -19,6 +19,8 @@ constructor(
 
     override fun update(footprint: Footprint) = db.footprint.update(footprint.mapToFootprintDb())
 
+    override fun delete(id: Long) = db.footprint.delete(id)
+
     /**
      * Get all footprints sorted by creation moment in descending order
      */

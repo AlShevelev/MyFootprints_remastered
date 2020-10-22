@@ -29,6 +29,8 @@ interface MainActivityNavigation {
 
     fun moveBackFromSetLocationToPager(fragment: SetLocationFragment)
 
+    fun moveBackFromPagerToTitle(fragment: GalleryPagesFragment)
+
     fun moveToGridGallery(fragment: TitleFragment)
 
     fun moveToOneGallery(fragment: GalleryGridFragment, footprints: List<Footprint>, currentIndex:Int)

@@ -11,6 +11,8 @@ interface FootprintRepository {
 
     fun update(footprint: Footprint)
 
+    fun delete(id: Long)
+
     /**
      * Get all footprints sorted by creation moment in descending order
      */

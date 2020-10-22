@@ -1,5 +1,8 @@
 package com.shevelev.my_footprints_remastered.ui.activity_main.di
 
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flow.delete.DeleteFootprintDataFlowConsumer
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flow.delete.DeleteFootprintDataFlowImpl
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flow.delete.DeleteFootprintDataFlowProvider
 import com.shevelev.my_footprints_remastered.ui.activity_main.navigation.MainActivityNavigation
 import com.shevelev.my_footprints_remastered.ui.activity_main.navigation.MainActivityNavigationImpl
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flow.last.LastFootprintDataFlowConsumer
@@ -39,6 +42,14 @@ abstract class MainActivityModuleBinds {
     @Binds
     @ActivityScope
     abstract fun provideUpdateFootprintConsumer(flow: UpdateFootprintDataFlowImpl): UpdateFootprintDataFlowConsumer
+
+    @Binds
+    @ActivityScope
+    abstract fun provideDeleteFootprintProvider(flow: DeleteFootprintDataFlowImpl): DeleteFootprintDataFlowProvider
+
+    @Binds
+    @ActivityScope
+    abstract fun provideDeleteFootprintConsumer(flow: DeleteFootprintDataFlowImpl): DeleteFootprintDataFlowConsumer
 
     @Binds
     @ActivityScope

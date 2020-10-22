@@ -20,7 +20,7 @@ class LastFootprintDataFlowImpl
 constructor(
     private val dispatchersProvider: DispatchersProvider,
     private val footprintRepository: FootprintRepository
-) : FragmentsDataFlowImpl<LastFootprintInfo>(),
+) : FragmentsDataFlowImpl<LastFootprintFlowInfo>(),
     LastFootprintDataFlowConsumer,
     LastFootprintDataFlowProvider {
 
@@ -28,7 +28,7 @@ constructor(
         withContext(dispatchersProvider.ioDispatcher) {
             val lastFootprint = footprintRepository.getLast()
 
-            val lastInfo = LastFootprintInfo(
+            val lastInfo = LastFootprintFlowInfo(
                 totalFootprints = footprintRepository.getCount(),
                 lastFootprintUri = lastFootprint?.imageContentUri,
                 lastFootprintId = lastFootprint?.id

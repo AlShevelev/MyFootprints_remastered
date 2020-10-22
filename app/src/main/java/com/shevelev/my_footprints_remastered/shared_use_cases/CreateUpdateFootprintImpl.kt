@@ -110,6 +110,23 @@ constructor(
         return result
     }
 
+    override suspend fun delete(footprint: Footprint): FootprintDeleteInfo {
+        // Remove the image
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            deleteImageNewWay(footprint.imageContentUri)
+        } else {
+            footprint.imageFileName?.let { deleteImageOldWay(it) }
+        }
+
+        // Remove from Db
+        footprintRepository.delete(footprint.id)
+
+        val last = footprintRepository.getLast()
+        val count = footprintRepository.getCount()
+
+        return FootprintDeleteInfo(last?.id, last?.imageContentUri, count)
+    }
+
     override suspend fun clearDraft(draftImageFile: File?) {
         draftImageFile?.let { filesHelper.deleteFile(it) }
     }
@@ -172,6 +189,9 @@ constructor(
             return@with Pair(imageUri, null)
         }
 
+    @RequiresApi(29)
+    private fun deleteImageNewWay(imageUri: Uri) = appContext.contentResolver.delete(imageUri, null, null)
+
     private suspend fun storeImageOldWay(draftImageFile: File): Pair<Uri, String?> {
         val imageFile = filesHelper.createImageFile(appContext.getString(R.string.appName))
         filesHelper.copyFile(draftImageFile, imageFile)
@@ -185,6 +205,12 @@ constructor(
         filesHelper.copyFile(draftImageFile, oldImageFile)
 
         return Pair(scanFile(oldImageFile)!!, oldImageFile.name)
+    }
+
+    private suspend fun deleteImageOldWay(imageFileName: String) {
+        val imageFile = filesHelper.createImageFile(appContext.getString(R.string.appName), imageFileName)
+        imageFile.delete()
+        scanFile(imageFile)
     }
 
     private suspend fun scanFile(shot: File): Uri? {
@@ -201,5 +227,4 @@ constructor(
                 || info.pinColor.backgroundColor != info.oldFootprint.pinBackgroundColor
                 || info.pinColor.textColor != info.oldFootprint.pinTextColor
     }
-
 }

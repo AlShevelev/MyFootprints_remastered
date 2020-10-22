@@ -4,7 +4,6 @@ import android.location.Location
 import androidx.annotation.ColorInt
 import androidx.annotation.StringRes
 import com.shevelev.my_footprints_remastered.common_entities.Footprint
-import com.shevelev.my_footprints_remastered.ui.shared.pin_draw.PinDrawInfo
 import java.io.File
 
 interface ViewCommand
@@ -45,6 +44,8 @@ class MoveBackFromSetLocationToTitle : ViewCommand
 
 class MoveBackFromSetLocationToPager : ViewCommand
 
+class MoveBackFromPagerToTitle : ViewCommand
+
 // Child fragments for SetLocationFragment
 class AddMapFragment : ViewCommand
 
@@ -59,6 +60,8 @@ class OpenLocationSettings : ViewCommand
 class AskAboutGeolocation : ViewCommand
 
 class AskAboutFootprintInterruption : ViewCommand
+
+class AskAboutDelete : ViewCommand
 
 class StartLoadingMap : ViewCommand
 

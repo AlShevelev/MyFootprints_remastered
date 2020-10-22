@@ -3,7 +3,6 @@ package com.shevelev.my_footprints_remastered.ui.activity_main.fragment_my_world
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_my_world_map.dto.FootprintOnMap
-import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_my_world_map.dto.FootprintsOnMap
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_my_world_map.dto.MapZoomAndLocation
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_my_world_map.model.MyWorldMapFragmentModel
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_model.ViewModelBase
@@ -40,6 +39,14 @@ constructor(
             model.updateFootprintData.data.collect { footprint ->
                 footprint?.let {
                     model.updateFootprint(footprint)?.let { _footprints.value = it }
+                }
+            }
+        }
+
+        launch {
+            model.deleteFootprintData.data.collect { deletedFootprintInfo ->
+                deletedFootprintInfo?.let {
+                    _footprints.value = model.deleteFootprint(it.deletedFootprintId)
                 }
             }
         }

@@ -50,4 +50,7 @@
     <string name="mapPinHelp">Use a long tap on the map to set pin location manually</string>
     <string name="footprintInterruptionQuery">Do you want to interrupt the operation?</string>
     <string name="interrupt">Interrupt</string>
+
+    <string name="deleteFootprintQuestion">Are you sure you want to delete the footprint?</string>
+    <string name="delete">Delete</string>
 </resources>

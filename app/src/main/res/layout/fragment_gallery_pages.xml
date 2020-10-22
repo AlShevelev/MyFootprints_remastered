@@ -101,7 +101,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="@id/mapButton"
 
-            app:on_delete_click="@{() -> viewModel.onEditClick()}"
+            app:on_delete_click="@{() -> viewModel.onDeleteClick()}"
 
             app:srcCompat="@drawable/ic_delete_14_18"
             tools:ignore="ContentDescription"

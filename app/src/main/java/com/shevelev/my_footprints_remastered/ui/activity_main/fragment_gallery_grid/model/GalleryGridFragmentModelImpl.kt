@@ -3,6 +3,7 @@ package com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_
 import com.shevelev.my_footprints_remastered.common_entities.Footprint
 import com.shevelev.my_footprints_remastered.storages.db.repositories.FootprintRepository
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_grid.view.grid.FootprintListItem
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flow.delete.DeleteFootprintDataFlowConsumer
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flow.update.UpdateFootprintDataFlowConsumer
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.model.ModelBaseImpl
 import com.shevelev.my_footprints_remastered.ui.shared.recycler_view.versioned.VersionedListItem
@@ -15,7 +16,8 @@ class GalleryGridFragmentModelImpl
 constructor(
     private val dispatchersProvider: DispatchersProvider,
     private val footprintRepository: FootprintRepository,
-    override val updateFootprintData: UpdateFootprintDataFlowConsumer
+    override val updateFootprintData: UpdateFootprintDataFlowConsumer,
+    override val deleteFootprintData: DeleteFootprintDataFlowConsumer
 ) : GalleryGridFragmentModel,
     ModelBaseImpl() {
 
@@ -51,6 +53,16 @@ constructor(
                         version = item.version+1,
                         useCacheForImage = false
                     )
+                    gridItems
+                }
+        }
+
+    override suspend fun deleteFootprint(footprintId: Long): List<VersionedListItem> =
+        withContext(dispatchersProvider.calculationsDispatcher) {
+            gridItems
+                .indexOfFirst { it.id == footprintId }
+                .let {
+                    gridItems.removeAt(it)
                     gridItems
                 }
         }

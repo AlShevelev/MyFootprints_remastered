@@ -51,6 +51,14 @@ constructor(
                 }
             }
         }
+
+        launch {
+            model.deleteFootprintData.data.collect { deletedFootprintInfo ->
+                deletedFootprintInfo?.let {
+                    _items.value = model.deleteFootprint(it.deletedFootprintId)
+                }
+            }
+        }
     }
 
     override fun onBackClick() = sendCommand(MoveBack())

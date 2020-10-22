@@ -99,7 +99,7 @@
 
             android:layout_marginStart="@dimen/onPhotoButtonsGap"
 
-            app:on_delete_click="@{() -> viewModel.onEditClick()}"
+            app:on_delete_click="@{() -> viewModel.onDeleteClick()}"
 
             app:layout_constraintBottom_toBottomOf="@id/mapButton"
             app:layout_constraintStart_toEndOf="@+id/editButton"

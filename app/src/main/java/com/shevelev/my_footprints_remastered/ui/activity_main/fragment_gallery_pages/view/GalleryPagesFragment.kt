@@ -13,12 +13,12 @@ import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_p
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_pages.view.pager.GalleryPagesAdapter
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_pages.view_model.GalleryPagesFragmentViewModel
 import com.shevelev.my_footprints_remastered.ui.activity_main.navigation.MainActivityNavigation
+import com.shevelev.my_footprints_remastered.ui.shared.dialogs.ConfirmationDialog
+import com.shevelev.my_footprints_remastered.ui.shared.dialogs.OkDialog
 import com.shevelev.my_footprints_remastered.ui.shared.dialogs.map.MapDialog
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view.FragmentBaseMVVM
 import com.shevelev.my_footprints_remastered.ui.shared.recycler_view.versioned.VersionedListItem
-import com.shevelev.my_footprints_remastered.ui.view_commands.MoveToCreateFootprint
-import com.shevelev.my_footprints_remastered.ui.view_commands.ShowMapDialog
-import com.shevelev.my_footprints_remastered.ui.view_commands.ViewCommand
+import com.shevelev.my_footprints_remastered.ui.view_commands.*
 import kotlinx.android.synthetic.main.fragment_gallery_pages.*
 import javax.inject.Inject
 
@@ -27,6 +27,8 @@ class GalleryPagesFragment : FragmentBaseMVVM<FragmentGalleryPagesBinding, Galle
         const val ARG_FOOTPRINTS_LIST = "ARG_FOOTPRINTS_LIST"
         const val ARG_CURRENT_FOOTPRINT_INDEX = "ARG_CURRENT_FOOTPRINT_INDEX"
     }
+
+    private val deleteRequest = 44950
 
     private lateinit var galleryPagesAdapter: GalleryPagesAdapter
 
@@ -76,6 +78,21 @@ class GalleryPagesFragment : FragmentBaseMVVM<FragmentGalleryPagesBinding, Galle
         when(command) {
             is ShowMapDialog -> MapDialog.show(this, command.footprint)
             is MoveToCreateFootprint -> navigation.moveToCreateFootprint(this, command.oldFootprint!!)
+            is MoveBackFromPagerToTitle -> navigation.moveBackFromPagerToTitle(this)
+
+            is AskAboutDelete ->
+                ConfirmationDialog.show(
+                    deleteRequest,
+                    this,
+                    R.string.deleteFootprintQuestion,
+                    R.string.delete,
+                    R.string.cancel)
+        }
+    }
+
+    override fun onDialogResult(isCanceled: Boolean, requestCode: Int, data: Any?) {
+        when(requestCode) {
+            deleteRequest -> if(!isCanceled) viewModel.onDeleteConfirmed()
         }
     }
 

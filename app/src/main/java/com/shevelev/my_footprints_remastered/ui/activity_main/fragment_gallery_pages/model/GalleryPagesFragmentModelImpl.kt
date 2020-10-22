@@ -1,7 +1,12 @@
 package com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_pages.model
 
 import com.shevelev.my_footprints_remastered.common_entities.Footprint
+import com.shevelev.my_footprints_remastered.shared_use_cases.CreateUpdateFootprint
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_grid.view.grid.FootprintListItem
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flow.delete.DeleteFootprintDataFlowProvider
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flow.delete.DeleteFootprintFlowInfo
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flow.last.LastFootprintDataFlowProvider
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flow.last.LastFootprintFlowInfo
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flow.update.UpdateFootprintDataFlowConsumer
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.model.ModelBaseImpl
 import com.shevelev.my_footprints_remastered.ui.shared.recycler_view.versioned.VersionedListItem
@@ -15,7 +20,10 @@ constructor(
     private val dispatchersProvider: DispatchersProvider,
     private val footprints: List<Footprint>,
     override var currentIndex: Int,
-    override val updateFootprintData: UpdateFootprintDataFlowConsumer
+    override val updateFootprintData: UpdateFootprintDataFlowConsumer,
+    private val createUpdateFootprint: CreateUpdateFootprint,
+    private val lastFootprintDataFlowProvider: LastFootprintDataFlowProvider,
+    private val deleteFootprintDataFlowProvider: DeleteFootprintDataFlowProvider
 ) : ModelBaseImpl(),
     GalleryPagesFragmentModel {
 
@@ -51,4 +59,34 @@ constructor(
         }
 
     override fun getFootprint(index: Int): Footprint = items[index].footprint
+
+    override suspend fun deleteFootprint(): List<VersionedListItem> {
+        // Get footprint to delete
+        val footprintToDelete = items[currentIndex].footprint
+
+        // Delete it
+        val deleteResult = withContext(dispatchersProvider.ioDispatcher) {
+            createUpdateFootprint.delete(footprintToDelete)
+        }
+
+        // Update data on the Title screen
+        lastFootprintDataFlowProvider.update(LastFootprintFlowInfo(
+            totalFootprints = deleteResult.totalFootprints,
+            lastFootprintId = deleteResult.lastFootprintId,
+            lastFootprintUri = deleteResult.lastFootprintImage
+        ))
+
+        return if(deleteResult.totalFootprints == 0) {
+            return listOf()
+        } else {
+            deleteFootprintDataFlowProvider.update(DeleteFootprintFlowInfo(footprintToDelete.id))
+
+            items
+                .indexOfFirst { it.id == footprintToDelete.id }
+                .let {
+                    items.removeAt(it)
+                    items
+                }
+        }
+    }
 }

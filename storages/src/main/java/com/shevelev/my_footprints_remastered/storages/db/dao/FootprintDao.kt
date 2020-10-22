@@ -22,4 +22,7 @@ interface FootprintDao {
 
     @Update
     fun update(footprint: FootprintDb)
+
+    @Query("delete from footprint where footprint_id = :id")
+    fun delete(id: Long)
 }

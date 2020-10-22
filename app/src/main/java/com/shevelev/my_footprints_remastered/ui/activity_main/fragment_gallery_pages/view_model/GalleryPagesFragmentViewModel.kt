@@ -7,6 +7,8 @@ import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_p
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_pages.view.ButtonsBindingCall
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_model.ViewModelBase
 import com.shevelev.my_footprints_remastered.ui.shared.recycler_view.versioned.VersionedListItem
+import com.shevelev.my_footprints_remastered.ui.view_commands.AskAboutDelete
+import com.shevelev.my_footprints_remastered.ui.view_commands.MoveBackFromPagerToTitle
 import com.shevelev.my_footprints_remastered.ui.view_commands.MoveToCreateFootprint
 import com.shevelev.my_footprints_remastered.ui.view_commands.ShowMapDialog
 import com.shevelev.my_footprints_remastered.utils.coroutines.DispatchersProvider
@@ -76,7 +78,16 @@ constructor(
 
     override fun onEditClick() = sendCommand(MoveToCreateFootprint(model.getFootprint(model.currentIndex)))
 
-    override fun onDeleteClick() {
-        // TODO("Not yet implemented")
+    override fun onDeleteClick() = sendCommand(AskAboutDelete())
+
+    fun onDeleteConfirmed() {
+        launch {
+            val items = model.deleteFootprint()
+            if(items.isNotEmpty()) {
+                _items.value = items
+            } else {
+                sendCommand(MoveBackFromPagerToTitle())
+            }
+        }
     }
 }

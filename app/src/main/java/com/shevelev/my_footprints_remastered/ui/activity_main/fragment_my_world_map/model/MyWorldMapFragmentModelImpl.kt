@@ -7,8 +7,10 @@ import com.shevelev.my_footprints_remastered.storages.db.repositories.FootprintR
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_my_world_map.dto.FootprintOnMap
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_my_world_map.dto.FootprintsOnMap
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_my_world_map.dto.MapZoomAndLocation
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flow.delete.DeleteFootprintDataFlowConsumer
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flow.update.UpdateFootprintDataFlowConsumer
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.model.ModelBaseImpl
+import com.shevelev.my_footprints_remastered.ui.shared.recycler_view.versioned.VersionedListItem
 import com.shevelev.my_footprints_remastered.utils.coroutines.DispatchersProvider
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -18,7 +20,8 @@ class MyWorldMapFragmentModelImpl
 constructor(
     private val dispatchersProvider: DispatchersProvider,
     private val footprintRepository: FootprintRepository,
-    override val updateFootprintData: UpdateFootprintDataFlowConsumer
+    override val updateFootprintData: UpdateFootprintDataFlowConsumer,
+    override val deleteFootprintData: DeleteFootprintDataFlowConsumer
 ) : ModelBaseImpl(),
     MyWorldMapFragmentModel {
 
@@ -53,6 +56,16 @@ constructor(
                 .takeIf { it != -1 }
                 ?.let { index ->
                     footprints[index] = updatedFootprint
+                    footprints.map { it.mapToFootprintOnMap() }
+                }
+        }
+
+    override suspend fun deleteFootprint(footprintId: Long): List<FootprintOnMap> =
+        withContext(dispatchersProvider.calculationsDispatcher) {
+            footprints
+                .indexOfFirst { it.id == footprintId }
+                .let { index ->
+                    footprints.removeAt(index)
                     footprints.map { it.mapToFootprintOnMap() }
                 }
         }
