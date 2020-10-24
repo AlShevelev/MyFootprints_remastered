@@ -24,6 +24,8 @@ class MoveToGridGallery : ViewCommand
 
 class MoveToMyWorld : ViewCommand
 
+class MoveToSettings : ViewCommand
+
 data class MoveToOneGallery(
     val footprints: List<Footprint>,
     val currentIndex: Int
@@ -56,6 +58,10 @@ class OpenCamera : ViewCommand
 class OpenGallery : ViewCommand
 
 class OpenLocationSettings : ViewCommand
+
+data class OpenEmail (
+    val emailTo: String
+) : ViewCommand
 
 class AskAboutGeolocation : ViewCommand
 

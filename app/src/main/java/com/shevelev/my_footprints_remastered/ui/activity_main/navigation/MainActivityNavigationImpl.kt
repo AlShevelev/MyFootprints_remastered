@@ -93,4 +93,8 @@ constructor() : MainActivityNavigation {
 
     override fun moveToMyWorld(fragment: TitleFragment) =
         fragment.findNavController().navigate(R.id.action_titleFragment_to_myWorldFragment)
+
+    override fun moveToSettings(fragment: TitleFragment) {
+        fragment.findNavController().navigate(R.id.action_titleFragment_to_settingsFragment)
+    }
 }

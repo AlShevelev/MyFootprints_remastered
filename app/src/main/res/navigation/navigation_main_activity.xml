@@ -28,6 +28,13 @@
             app:exitAnim="@anim/nav_slide_out_left"
             app:popEnterAnim="@anim/nav_slide_in_left"
             app:popExitAnim="@anim/nav_slide_out_right" />
+        <action
+            android:id="@+id/action_titleFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment"
+            app:enterAnim="@anim/nav_slide_in_right"
+            app:exitAnim="@anim/nav_slide_out_left"
+            app:popEnterAnim="@anim/nav_slide_in_left"
+            app:popExitAnim="@anim/nav_slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/selectPhotoFragment"
@@ -114,4 +121,8 @@
             app:popEnterAnim="@anim/nav_slide_in_left"
             app:popExitAnim="@anim/nav_slide_out_right" />
     </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.shevelev.my_footprints_remastered.ui.activity_main.fragment_settings.view.SettingsFragment"
+        android:label="SettingsFragment" />
 </navigation>

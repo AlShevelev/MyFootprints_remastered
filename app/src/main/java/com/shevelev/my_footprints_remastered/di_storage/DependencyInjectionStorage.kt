@@ -21,6 +21,7 @@ import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_select_ph
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location.di.SetLocationFragmentModule
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location_map.di.SetLocationMapFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location_stub.di.SetLocationStubFragmentComponent
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_settings.di.SettingsFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_title.di.TitleFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.shared.dialogs.map.MapDialogComponent
 import com.shevelev.my_footprints_remastered.utils.id_hash.IdUtil
@@ -126,6 +127,8 @@ class DependencyInjectionStorage(private val app: Application) {
             MyWorldMapFragmentComponent::class -> getBase<MyWorldFragmentComponent>().myWorldMapFragmentComponent.build()
 
             MapDialogComponent::class -> getBase<MainActivityComponent>().mapDialog.build()
+
+            SettingsFragmentComponent::class -> getBase<MainActivityComponent>().settingsFragment.build()
 
             else -> throw UnsupportedOperationException("This component is not supported: ${type.simpleName}")
         } as T

@@ -122,4 +122,8 @@
     <style name="Text.SizeLarge.Normal.Black" parent="Common.Base.TextStyle.Single.Line">
         <item name="android:textSize">@dimen/textSizeLarge</item>
     </style>
+
+    <style name="Text.Link" parent="Text.SizeLarge.Normal.Black">
+        <item name="android:textColor">@color/blue</item>
+    </style>
 </resources>

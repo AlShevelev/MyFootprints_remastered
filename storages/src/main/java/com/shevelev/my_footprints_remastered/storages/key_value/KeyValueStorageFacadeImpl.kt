@@ -19,6 +19,7 @@ constructor(
     private object Keys {
         const val PIN_COLOR_TEXT = "PIN_COLOR_TEXT"
         const val PIN_COLOR_BACKGROUND = "PIN_COLOR_BACKGROUND"
+        const val USE_WIFI_TO_LOAD_GEO_DATA = "USE_WIFI_TO_LOAD_GEO_DATA"
     }
 
     override fun savePinColor(pinColor: PinColor) {
@@ -39,4 +40,15 @@ constructor(
                 null
             }
         }
+
+    override fun isUseWiFiToLoadGeoData(): Boolean =
+        keyValueStorage.read {
+            it.readBoolean(Keys.USE_WIFI_TO_LOAD_GEO_DATA) ?: true
+        }
+
+    override fun setUseWiFiToLoadGeoData(value: Boolean) {
+        keyValueStorage.update {
+            it.putBoolean(Keys.USE_WIFI_TO_LOAD_GEO_DATA, value)
+        }
+    }
 }

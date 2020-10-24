@@ -5,4 +5,7 @@ import com.shevelev.my_footprints_remastered.common_entities.PinColor
 interface KeyValueStorageFacade {
     fun savePinColor(pinColor: PinColor)
     fun loadPinColor(): PinColor?
+
+    fun isUseWiFiToLoadGeoData(): Boolean
+    fun setUseWiFiToLoadGeoData(value: Boolean)
 }

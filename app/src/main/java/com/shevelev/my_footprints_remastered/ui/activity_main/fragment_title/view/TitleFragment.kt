@@ -14,13 +14,10 @@ import com.shevelev.my_footprints_remastered.application.App
 import com.shevelev.my_footprints_remastered.databinding.FragmentTitleBinding
 import com.shevelev.my_footprints_remastered.ui.activity_main.navigation.MainActivityNavigation
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view.FragmentBaseMVVM
-import com.shevelev.my_footprints_remastered.ui.view_commands.ViewCommand
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_title.di.TitleFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_title.view_model.TitleFragmentViewModel
 import com.shevelev.my_footprints_remastered.ui.shared.dialogs.OkDialog
-import com.shevelev.my_footprints_remastered.ui.view_commands.MoveToCreateFootprint
-import com.shevelev.my_footprints_remastered.ui.view_commands.MoveToGridGallery
-import com.shevelev.my_footprints_remastered.ui.view_commands.MoveToMyWorld
+import com.shevelev.my_footprints_remastered.ui.view_commands.*
 import kotlinx.android.synthetic.main.fragment_title.*
 import permissions.dispatcher.NeedsPermission
 import permissions.dispatcher.OnPermissionDenied
@@ -63,6 +60,7 @@ class TitleFragment : FragmentBaseMVVM<FragmentTitleBinding, TitleFragmentViewMo
             is MoveToCreateFootprint -> moveToCreateFootprintWithPermissionCheck()
             is MoveToGridGallery -> navigation.moveToGridGallery(this)
             is MoveToMyWorld -> navigation.moveToMyWorld(this)
+            is MoveToSettings -> navigation.moveToSettings(this)
         }
     }
 

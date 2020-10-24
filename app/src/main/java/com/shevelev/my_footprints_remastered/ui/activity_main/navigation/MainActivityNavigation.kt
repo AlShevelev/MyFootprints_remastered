@@ -38,4 +38,6 @@ interface MainActivityNavigation {
     fun moveToOneGallery(fragment: MyWorldMapFragment, footprints: List<Footprint>, currentIndex:Int)
 
     fun moveToMyWorld(fragment: TitleFragment)
+
+    fun moveToSettings(fragment: TitleFragment)
 }

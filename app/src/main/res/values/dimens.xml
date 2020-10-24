@@ -12,6 +12,8 @@
     <dimen name="screenHeaderHeight">48dp</dimen>
     <dimen name="screenPadding">5dp</dimen>
     <dimen name="headerTextMargin">8dp</dimen>
+    <dimen name="marginSmall">5dp</dimen>
+    <dimen name="marginTextBlocks">25dp</dimen>
 
     <dimen name="toolButtonSize">40dp</dimen>
 

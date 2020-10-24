@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.shevelev.my_footprints_remastered.ui.activity_main.fragment_settings.view_model.SettingsFragmentViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/screenPadding"
+        android:paddingEnd="@dimen/screenPadding">
+
+        <com.shevelev.my_footprints_remastered.ui.shared.widgets.screen_header.ScreenHeader
+            android:id="@+id/header"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/screenHeaderHeight"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:on_back_click="@{ () -> viewModel.onBackClick() }"
+            app:title="@{viewModel.title}" />
+
+        <CheckBox
+            android:id="@+id/checkBox"
+            style="@style/Text.SizeNormal.Normal.Black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/marginSmall"
+            android:layout_marginTop="@dimen/marginSmall"
+            android:checked="@{viewModel.isUseWiFiToLoadGeoData}"
+            android:onClick="@{ () -> viewModel.onLoadGeoDataClick() }"
+            android:text="@string/loadViaWiFi"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/header"
+            tools:checked="false" />
+
+        <TextView
+            android:id="@+id/textView"
+            style="@style/Text.SizeLarge.Normal.Black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/marginSmall"
+            android:text="@string/haveQuestions"
+            android:onClick="@{ () -> viewModel.onEmailClick() }"
+            app:layout_constraintBottom_toTopOf="@+id/textView2"
+            app:layout_constraintStart_toStartOf="@+id/checkBox" />
+
+        <TextView
+            android:id="@+id/textView2"
+            style="@style/Text.Link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/marginTextBlocks"
+            android:onClick="@{ () -> viewModel.onEmailClick() }"
+            android:text="@string/contactEmail"
+            app:layout_constraintBottom_toTopOf="@+id/textView3"
+            app:layout_constraintStart_toStartOf="@+id/checkBox" />
+
+        <TextView
+            android:id="@+id/textView3"
+            style="@style/Text.SizeLarge.Normal.Black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/marginSmall"
+            android:text="@string/appVersion"
+            app:layout_constraintBottom_toTopOf="@+id/textView4"
+            app:layout_constraintStart_toStartOf="@+id/checkBox" />
+
+        <TextView
+            android:id="@+id/textView4"
+            style="@style/Text.SizeNormal.Normal.Black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/marginSmall"
+            android:text="@{viewModel.version}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/checkBox"
+            tools:text="1.0 (42)"
+
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

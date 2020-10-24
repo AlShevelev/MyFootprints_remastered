@@ -5,6 +5,7 @@ import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_fo
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_grid.di.GalleryGridFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_pages.di.GalleryPagesFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_my_world.di.MyWorldFragmentComponent
+import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_settings.di.SettingsFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_title.di.TitleFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.shared.dialogs.map.MapDialogComponent
 import com.shevelev.my_footprints_remastered.utils.di_scopes.ActivityScope
@@ -23,6 +24,7 @@ interface MainActivityComponent {
     val galleryGridFragment: GalleryGridFragmentComponent.Builder
     val galleryPagesFragment: GalleryPagesFragmentComponent.Builder
     val myWorldFragment: MyWorldFragmentComponent.Builder
+    val settingsFragment: SettingsFragmentComponent.Builder
     val mapDialog: MapDialogComponent.Builder
 
     fun inject(activity: MainActivity)

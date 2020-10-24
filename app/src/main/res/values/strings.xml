@@ -54,4 +54,8 @@
     <string name="deleteFootprintQuestion">Are you sure you want to delete the footprint?</string>
     <string name="delete">Delete</string>
     <string name="sendTo">Send to</string>
+    <string name="loadViaWiFi">Load geographic data via WiFi only</string>
+    <string name="appVersion">App version</string>
+    <string name="haveQuestions">Have questions?</string>
+    <string name="contactEmail">al.e.shevelev@gmail.com</string>
 </resources>
