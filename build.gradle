@@ -9,7 +9,7 @@ buildscript {
         target_sdk_version = 29
 
         // Build
-        gradle_version = '4.0.2'
+        gradle_version = '4.1.0'
         build_tools_version = "29.0.3"
 
         // Kotlin

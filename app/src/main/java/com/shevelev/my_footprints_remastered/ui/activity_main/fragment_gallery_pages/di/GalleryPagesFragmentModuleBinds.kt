@@ -6,6 +6,8 @@ import com.shevelev.my_footprints_remastered.shared_use_cases.CreateUpdateFootpr
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_pages.model.GalleryPagesFragmentModel
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_pages.model.GalleryPagesFragmentModelImpl
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_pages.view_model.GalleryPagesFragmentViewModel
+import com.shevelev.my_footprints_remastered.ui.shared.external_intents.share.SharingHelper
+import com.shevelev.my_footprints_remastered.ui.shared.external_intents.share.SharingHelperImpl
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_model.FragmentViewModelFactory
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_model.FragmentViewModelFactoryImpl
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_model.ViewModelKey
@@ -28,4 +30,7 @@ abstract class GalleryPagesFragmentModuleBinds {
 
     @Binds
     abstract fun provideCreateEditFootprint(createUpdate: CreateUpdateFootprintImpl): CreateUpdateFootprint
+
+    @Binds
+    abstract fun provideSharingHelper(helper: SharingHelperImpl): SharingHelper
 }

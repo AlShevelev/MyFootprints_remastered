@@ -16,9 +16,11 @@ import com.shevelev.my_footprints_remastered.ui.activity_main.navigation.MainAct
 import com.shevelev.my_footprints_remastered.ui.shared.dialogs.ConfirmationDialog
 import com.shevelev.my_footprints_remastered.ui.shared.dialogs.OkDialog
 import com.shevelev.my_footprints_remastered.ui.shared.dialogs.map.MapDialog
+import com.shevelev.my_footprints_remastered.ui.shared.external_intents.share.SharingHelper
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view.FragmentBaseMVVM
 import com.shevelev.my_footprints_remastered.ui.shared.recycler_view.versioned.VersionedListItem
 import com.shevelev.my_footprints_remastered.ui.view_commands.*
+import dagger.Lazy
 import kotlinx.android.synthetic.main.fragment_gallery_pages.*
 import javax.inject.Inject
 
@@ -34,6 +36,9 @@ class GalleryPagesFragment : FragmentBaseMVVM<FragmentGalleryPagesBinding, Galle
 
     @Inject
     internal lateinit var navigation: MainActivityNavigation
+
+    @Inject
+    internal lateinit var sharingHelper: Lazy<SharingHelper>
 
     override fun provideViewModelType(): Class<GalleryPagesFragmentViewModel> = GalleryPagesFragmentViewModel::class.java
 
@@ -87,6 +92,8 @@ class GalleryPagesFragment : FragmentBaseMVVM<FragmentGalleryPagesBinding, Galle
                     R.string.deleteFootprintQuestion,
                     R.string.delete,
                     R.string.cancel)
+
+            is StartSharing -> share(command.footprint)
         }
     }
 
@@ -97,4 +104,6 @@ class GalleryPagesFragment : FragmentBaseMVVM<FragmentGalleryPagesBinding, Galle
     }
 
     private fun updateGallery(items: List<VersionedListItem>) = galleryPagesAdapter.updateItems(items)
+
+    private fun share(footprint: Footprint) = sharingHelper.get().share(footprint, this)
 }

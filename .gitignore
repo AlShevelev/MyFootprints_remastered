@@ -86,3 +86,4 @@ lint/tmp/
 
 #api keys
 secure.properties
+/.idea/compiler.xml

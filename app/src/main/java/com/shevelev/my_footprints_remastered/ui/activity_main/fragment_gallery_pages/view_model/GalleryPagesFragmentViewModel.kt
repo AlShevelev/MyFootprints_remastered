@@ -7,10 +7,7 @@ import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_p
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_pages.view.ButtonsBindingCall
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_model.ViewModelBase
 import com.shevelev.my_footprints_remastered.ui.shared.recycler_view.versioned.VersionedListItem
-import com.shevelev.my_footprints_remastered.ui.view_commands.AskAboutDelete
-import com.shevelev.my_footprints_remastered.ui.view_commands.MoveBackFromPagerToTitle
-import com.shevelev.my_footprints_remastered.ui.view_commands.MoveToCreateFootprint
-import com.shevelev.my_footprints_remastered.ui.view_commands.ShowMapDialog
+import com.shevelev.my_footprints_remastered.ui.view_commands.*
 import com.shevelev.my_footprints_remastered.utils.coroutines.DispatchersProvider
 import com.shevelev.my_footprints_remastered.utils.format.toShortDisplayString
 import kotlinx.coroutines.flow.collect
@@ -72,9 +69,7 @@ constructor(
 
     override fun onMapClick() = sendCommand(ShowMapDialog(model.getFootprint(model.currentIndex)))
 
-    override fun onShareClick() {
-        // TODO("Not yet implemented")
-    }
+    override fun onShareClick() = sendCommand(StartSharing(model.getFootprint(model.currentIndex)))
 
     override fun onEditClick() = sendCommand(MoveToCreateFootprint(model.getFootprint(model.currentIndex)))
 

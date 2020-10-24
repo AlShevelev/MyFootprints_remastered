@@ -80,3 +80,7 @@ data class ShowColorDialog(
 data class ShowMapDialog(
     val footprint: Footprint
 ) : ViewCommand
+
+data class StartSharing(
+    val footprint: Footprint
+): ViewCommand
