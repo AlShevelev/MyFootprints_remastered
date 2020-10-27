@@ -8,4 +8,7 @@ interface KeyValueStorageFacade {
 
     fun isUseWiFiToLoadGeoData(): Boolean
     fun setUseWiFiToLoadGeoData(value: Boolean)
+
+    fun isCanLoadGeoForSingleFootprint(): Boolean
+    fun setCanLoadGeoForSingleFootprint(value: Boolean)
 }

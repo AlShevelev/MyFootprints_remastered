@@ -1,7 +1,7 @@
 package com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_pages.model
 
 import com.shevelev.my_footprints_remastered.common_entities.Footprint
-import com.shevelev.my_footprints_remastered.shared_use_cases.CreateUpdateFootprint
+import com.shevelev.my_footprints_remastered.shared_use_cases.creata_update_footprint.CreateUpdateFootprint
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_grid.view.grid.FootprintListItem
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flow.delete.DeleteFootprintDataFlowProvider
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flow.delete.DeleteFootprintFlowInfo

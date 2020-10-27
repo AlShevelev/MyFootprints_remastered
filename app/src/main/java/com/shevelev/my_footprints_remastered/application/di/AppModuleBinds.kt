@@ -14,6 +14,8 @@ import com.shevelev.my_footprints_remastered.storages.key_value.storages.Storage
 import com.shevelev.my_footprints_remastered.storages.key_value.storages.combined.CombinedStorage
 import com.shevelev.my_footprints_remastered.storages.key_value.storages.in_memory.InMemoryStorage
 import com.shevelev.my_footprints_remastered.storages.key_value.storages.shared_preferences.SharedPreferencesStorage
+import com.shevelev.my_footprints_remastered.utils.connection.ConnectionHelper
+import com.shevelev.my_footprints_remastered.utils.connection.ConnectionHelperImpl
 import com.shevelev.my_footprints_remastered.utils.di_scopes.ApplicationScope
 import dagger.Binds
 import dagger.Module
@@ -47,4 +49,7 @@ abstract class AppModuleBinds {
 
     @Binds
     abstract fun provideFilesHelper(helper: FilesHelperImpl): FilesHelper
+
+    @Binds
+    abstract fun provideConnectionHelper(helper: ConnectionHelperImpl): ConnectionHelper
 }

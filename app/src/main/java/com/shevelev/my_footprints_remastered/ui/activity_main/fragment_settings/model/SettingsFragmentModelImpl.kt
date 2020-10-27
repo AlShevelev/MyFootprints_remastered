@@ -14,23 +14,40 @@ constructor(
 ) : ModelBaseImpl(),
     SettingsFragmentModel {
 
-    private var _isUseWiFiToLoadGeoData: Boolean? = null
+    private var _isUseWiFiToLoadGeoData: Boolean = true
+    private var _isLoadGeoOnFootprintCreate: Boolean = true
 
     override suspend fun isUseWiFiToLoadGeoData(): Boolean {
-        if(_isUseWiFiToLoadGeoData == null) {
-            _isUseWiFiToLoadGeoData = withContext(dispatchersProvider.ioDispatcher) {
-                keyValueStorageFacade.isUseWiFiToLoadGeoData()
-            }
+        _isUseWiFiToLoadGeoData = withContext(dispatchersProvider.ioDispatcher) {
+            keyValueStorageFacade.isUseWiFiToLoadGeoData()
         }
-        return _isUseWiFiToLoadGeoData!!
+        return _isUseWiFiToLoadGeoData
     }
 
-    override suspend fun setUseWiFiToLoadGeoData(): Boolean =
-        _isUseWiFiToLoadGeoData!!.let {
-            withContext(dispatchersProvider.ioDispatcher) {
-                keyValueStorageFacade.setUseWiFiToLoadGeoData(!it)
-            }
-            _isUseWiFiToLoadGeoData = !it
-            !it
+    override suspend fun setUseWiFiToLoadGeoData(): Boolean {
+        _isUseWiFiToLoadGeoData = !_isUseWiFiToLoadGeoData
+
+        withContext(dispatchersProvider.ioDispatcher) {
+            keyValueStorageFacade.setUseWiFiToLoadGeoData(_isUseWiFiToLoadGeoData)
         }
+
+        return _isUseWiFiToLoadGeoData
+    }
+
+    override suspend fun isLoadGeoOnFootprintCreate(): Boolean {
+        _isLoadGeoOnFootprintCreate = withContext(dispatchersProvider.ioDispatcher) {
+            keyValueStorageFacade.isCanLoadGeoForSingleFootprint()
+        }
+        return _isLoadGeoOnFootprintCreate
+    }
+
+    override suspend fun setLoadGeoOnFootprintCreate(): Boolean {
+        _isLoadGeoOnFootprintCreate = !_isLoadGeoOnFootprintCreate
+
+        withContext(dispatchersProvider.ioDispatcher) {
+            keyValueStorageFacade.setCanLoadGeoForSingleFootprint(_isLoadGeoOnFootprintCreate)
+        }
+
+        return _isLoadGeoOnFootprintCreate
+    }
 }

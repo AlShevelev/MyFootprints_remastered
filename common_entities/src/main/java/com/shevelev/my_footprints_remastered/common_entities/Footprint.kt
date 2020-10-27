@@ -9,6 +9,7 @@ import org.threeten.bp.ZonedDateTime
 data class Footprint (
     val id: Long,
     val imageContentUri: Uri,
+
     /**
      * A name of file with an image for an old API (<29)
      */
@@ -22,5 +23,9 @@ data class Footprint (
     val pinTextColor: Int,
     val pinBackgroundColor: Int,
 
-    val created: ZonedDateTime
+    val created: ZonedDateTime,
+
+    val city: String?,
+    val country: String?,
+    val isGeoLoaded: Boolean
 ) : Parcelable

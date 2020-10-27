@@ -1,4 +1,4 @@
-package com.shevelev.my_footprints_remastered.shared_use_cases
+package com.shevelev.my_footprints_remastered.shared_use_cases.creata_update_footprint
 
 import android.content.ContentValues
 import android.content.Context
@@ -52,7 +52,10 @@ constructor(
             comment = info.comment,
             pinTextColor = info.pinColor.textColor,
             pinBackgroundColor = info.pinColor.backgroundColor,
-            created = ZonedDateTime.now()
+            created = ZonedDateTime.now(),
+            city = null,
+            country = null,
+            isGeoLoaded = false
         )
         footprintRepository.create(footprint)
 
@@ -92,7 +95,11 @@ constructor(
                 comment = info.comment,
                 pinTextColor = info.pinColor.textColor,
                 pinBackgroundColor = info.pinColor.backgroundColor,
-                created = info.oldFootprint.created
+                created = info.oldFootprint.created,
+                city = info.oldFootprint.city,
+                country = info.oldFootprint.country,
+                isGeoLoaded = info.oldFootprint.isGeoLoaded
+
             )
             footprintRepository.update(footprint)
 

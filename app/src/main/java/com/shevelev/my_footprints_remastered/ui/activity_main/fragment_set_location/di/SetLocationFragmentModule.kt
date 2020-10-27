@@ -2,7 +2,7 @@ package com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_loca
 
 import android.content.Context
 import com.shevelev.my_footprints_remastered.common_entities.Footprint
-import com.shevelev.my_footprints_remastered.shared_use_cases.CreateUpdateFootprint
+import com.shevelev.my_footprints_remastered.shared_use_cases.creata_update_footprint.CreateUpdateFootprint
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.model.shared_footprint.SharedFootprint
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location.model.InsertSetLocationFragmentModel
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_set_location.model.SetLocationFragmentModel

@@ -36,5 +36,14 @@ data class FootprintDb(
     val created: ZonedDateTime,
 
     @ColumnInfo(name = "created_sort", index = true)
-    val createdSort: Long
+    val createdSort: Long,
+
+    @ColumnInfo(name = "city")
+    val city: String?,
+
+    @ColumnInfo(name = "country")
+    val country: String?,
+
+    @ColumnInfo(name = "is_geo_loaded")
+    val isGeoLoaded: Boolean
 )

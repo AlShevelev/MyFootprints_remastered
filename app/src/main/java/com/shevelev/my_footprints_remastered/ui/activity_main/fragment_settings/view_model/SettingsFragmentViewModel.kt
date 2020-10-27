@@ -28,17 +28,27 @@ constructor(
     private val _isUseWiFiToLoadGeoData = MutableLiveData(true)
     val isUseWiFiToLoadGeoData: LiveData<Boolean> = _isUseWiFiToLoadGeoData
 
+    private val _isLoadGeoOnFootprintCreate = MutableLiveData(true)
+    val isLoadGeoOnFootprintCreate: LiveData<Boolean> = _isLoadGeoOnFootprintCreate
+
     init {
         launch {
             _isUseWiFiToLoadGeoData.value = model.isUseWiFiToLoadGeoData()
+            _isLoadGeoOnFootprintCreate.value = model.isLoadGeoOnFootprintCreate()
         }
     }
 
     fun onBackClick() = sendCommand(MoveBack())
 
-    fun onLoadGeoDataClick() {
+    fun onLoadWifiClick() {
         launch {
             _isUseWiFiToLoadGeoData.value = model.setUseWiFiToLoadGeoData()
+        }
+    }
+
+    fun onLoadGeoClick() {
+        launch {
+            _isLoadGeoOnFootprintCreate.value = model.setLoadGeoOnFootprintCreate()
         }
     }
 

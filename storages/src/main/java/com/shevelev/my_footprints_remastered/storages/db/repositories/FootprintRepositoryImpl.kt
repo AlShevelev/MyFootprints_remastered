@@ -19,6 +19,8 @@ constructor(
 
     override fun update(footprint: Footprint) = db.footprint.update(footprint.mapToFootprintDb())
 
+    override fun updateGeo(id: Long, city: String?, country: String?) = db.footprint.updateGeo(id, city, country)
+
     override fun delete(id: Long) = db.footprint.delete(id)
 
     /**
@@ -37,6 +39,9 @@ constructor(
             pinTextColor = pinTextColor,
             pinBackgroundColor = pinBackgroundColor,
             created = created,
+            city = city,
+            country = country,
+            isGeoLoaded = isGeoLoaded
         )
 
     private fun Footprint.mapToFootprintDb() =
@@ -50,6 +55,9 @@ constructor(
             pinTextColor = pinTextColor,
             pinBackgroundColor = pinBackgroundColor,
             created = created,
-            createdSort = created.toInstant().epochSecond
+            createdSort = created.toInstant().epochSecond,
+            city = city,
+            country = country,
+            isGeoLoaded = isGeoLoaded
         )
 }

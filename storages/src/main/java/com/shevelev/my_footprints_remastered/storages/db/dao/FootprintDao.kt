@@ -23,6 +23,9 @@ interface FootprintDao {
     @Update
     fun update(footprint: FootprintDb)
 
+    @Query("update footprint set city = :city, country = :country where footprint_id = :id")
+    fun updateGeo(id: Long, city: String?, country: String?)
+
     @Query("delete from footprint where footprint_id = :id")
     fun delete(id: Long)
 }

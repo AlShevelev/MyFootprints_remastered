@@ -1,4 +1,4 @@
-package com.shevelev.my_footprints_remastered.shared_use_cases
+package com.shevelev.my_footprints_remastered.shared_use_cases.creata_update_footprint
 
 import android.net.Uri
 

@@ -11,6 +11,8 @@ interface FootprintRepository {
 
     fun update(footprint: Footprint)
 
+    fun updateGeo(id: Long, city: String?, country: String?)
+
     fun delete(id: Long)
 
     /**

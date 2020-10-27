@@ -20,6 +20,7 @@ constructor(
         const val PIN_COLOR_TEXT = "PIN_COLOR_TEXT"
         const val PIN_COLOR_BACKGROUND = "PIN_COLOR_BACKGROUND"
         const val USE_WIFI_TO_LOAD_GEO_DATA = "USE_WIFI_TO_LOAD_GEO_DATA"
+        const val CAN_LOAD_GEO_FOR_SINGLE_FOOTPRINT = "CAN_LOAD_GEO_FOR_SINGLE_FOOTPRINT"
     }
 
     override fun savePinColor(pinColor: PinColor) {
@@ -49,6 +50,18 @@ constructor(
     override fun setUseWiFiToLoadGeoData(value: Boolean) {
         keyValueStorage.update {
             it.putBoolean(Keys.USE_WIFI_TO_LOAD_GEO_DATA, value)
+        }
+    }
+
+    override fun isCanLoadGeoForSingleFootprint(): Boolean =
+        keyValueStorage.read {
+            it.readBoolean(Keys.CAN_LOAD_GEO_FOR_SINGLE_FOOTPRINT) ?: true
+        }
+
+
+    override fun setCanLoadGeoForSingleFootprint(value: Boolean) {
+        keyValueStorage.update {
+            it.putBoolean(Keys.CAN_LOAD_GEO_FOR_SINGLE_FOOTPRINT, value)
         }
     }
 }
