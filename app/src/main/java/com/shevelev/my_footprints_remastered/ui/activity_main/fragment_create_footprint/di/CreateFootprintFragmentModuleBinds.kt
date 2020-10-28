@@ -2,6 +2,8 @@ package com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_f
 
 import com.shevelev.my_footprints_remastered.shared_use_cases.creata_update_footprint.CreateUpdateFootprint
 import com.shevelev.my_footprints_remastered.shared_use_cases.creata_update_footprint.CreateUpdateFootprintImpl
+import com.shevelev.my_footprints_remastered.shared_use_cases.update_geo.UpdateGeo
+import com.shevelev.my_footprints_remastered.shared_use_cases.update_geo.UpdateGeoImpl
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.model.data_bridge.CreateFootprintFragmentDataBridge
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.model.data_bridge.CreateFootprintFragmentDataBridgeImpl
 import com.shevelev.my_footprints_remastered.ui.shared.external_intents.location_settings.LocationSettingsHelper
@@ -26,4 +28,7 @@ abstract class CreateFootprintFragmentModuleBinds {
 
     @Binds
     abstract fun provideCreateEditFootprint(createUpdate: CreateUpdateFootprintImpl): CreateUpdateFootprint
+
+    @Binds
+    abstract fun provideUpdateGeo(update: UpdateGeoImpl): UpdateGeo
 }

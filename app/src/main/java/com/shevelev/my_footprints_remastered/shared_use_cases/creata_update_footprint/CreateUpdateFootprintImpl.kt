@@ -12,10 +12,13 @@ import com.shevelev.my_footprints_remastered.R
 import com.shevelev.my_footprints_remastered.common_entities.CreateFootprintInfo
 import com.shevelev.my_footprints_remastered.common_entities.Footprint
 import com.shevelev.my_footprints_remastered.common_entities.UpdateFootprintInfo
+import com.shevelev.my_footprints_remastered.services.update_geo.UpdateGeoService
+import com.shevelev.my_footprints_remastered.shared_use_cases.update_geo.UpdateGeo
 import com.shevelev.my_footprints_remastered.storages.db.repositories.FootprintRepository
 import com.shevelev.my_footprints_remastered.storages.files.FilesHelper
 import com.shevelev.my_footprints_remastered.storages.key_value.KeyValueStorageFacade
 import com.shevelev.my_footprints_remastered.utils.id_hash.IdUtil
+import dagger.Lazy
 import kotlinx.coroutines.suspendCancellableCoroutine
 import org.threeten.bp.ZonedDateTime
 import java.io.File
@@ -29,6 +32,7 @@ constructor(
     private val filesHelper: FilesHelper,
     private val footprintRepository: FootprintRepository,
     private val keyValueStorageFacade: KeyValueStorageFacade,
+    private val updateGeoUseCase: Lazy<UpdateGeo>
 ) : CreateUpdateFootprint {
 
     private val imageMimeType = "image/jpeg"
@@ -65,6 +69,11 @@ constructor(
         // Remove the draft file
         filesHelper.deleteFile(info.draftImageFile)
 
+        // Update geo data if needed
+        if(updateGeoUseCase.get().canLoad(true)) {
+            UpdateGeoService.start(appContext, footprint)
+        }
+
         return FootprintCreateInfo(footprint.id, footprint.imageContentUri, footprintRepository.getCount())
     }
 
@@ -85,6 +94,9 @@ constructor(
                 null
             }
 
+            val locationUpdated = info.location.latitude != info.oldFootprint.latitude ||
+                    info.location.longitude != info.oldFootprint.longitude
+
             // Update a footprint in Db
             val footprint = Footprint(
                 id = info.oldFootprint.id,
@@ -96,15 +108,20 @@ constructor(
                 pinTextColor = info.pinColor.textColor,
                 pinBackgroundColor = info.pinColor.backgroundColor,
                 created = info.oldFootprint.created,
-                city = info.oldFootprint.city,
-                country = info.oldFootprint.country,
-                isGeoLoaded = info.oldFootprint.isGeoLoaded
+                city = if(locationUpdated) null else info.oldFootprint.city,
+                country = if(locationUpdated) null else info.oldFootprint.country,
+                isGeoLoaded = !locationUpdated
 
             )
             footprintRepository.update(footprint)
 
             // Store last used pin color
             keyValueStorageFacade.savePinColor(info.pinColor)
+
+            // Update geo data if needed
+            if(locationUpdated && updateGeoUseCase.get().canLoad(true)) {
+                UpdateGeoService.start(appContext, footprint)
+            }
 
             FootprintUpdateInfo(footprint)
         } else {

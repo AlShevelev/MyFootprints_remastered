@@ -5,6 +5,7 @@ import com.shevelev.my_footprints_remastered.application.di.AppComponent
 import com.shevelev.my_footprints_remastered.application.di.AppModule
 import com.shevelev.my_footprints_remastered.application.di.DaggerAppComponent
 import com.shevelev.my_footprints_remastered.common_entities.Footprint
+import com.shevelev.my_footprints_remastered.services.di.ServicesComponent
 import com.shevelev.my_footprints_remastered.ui.di.UIComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.di.MainActivityComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.di.CreateFootprintFragmentComponent
@@ -90,6 +91,8 @@ class DependencyInjectionStorage(private val app: Application) {
             AppComponent::class -> DaggerAppComponent.builder().appModule(AppModule(app)).build()
 
             UIComponent::class -> getBase<AppComponent>().ui.build()
+
+            ServicesComponent::class -> getBase<AppComponent>().services.build()
 
             MainActivityComponent::class -> getBase<UIComponent>().mainActivity.build()
 
