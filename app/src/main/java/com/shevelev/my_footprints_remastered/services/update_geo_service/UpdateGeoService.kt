@@ -1,4 +1,4 @@
-package com.shevelev.my_footprints_remastered.services.update_geo
+package com.shevelev.my_footprints_remastered.services.update_geo_service
 
 import android.app.IntentService
 import android.content.Context
@@ -18,7 +18,7 @@ class UpdateGeoService : IntentService("UpdateGeoService") {
     companion object {
         private const val ACTION_UPDATE = "ACTION_UPDATE"
         private const val ARG_FOOTPRINT = "ARG_FOOTPRINT"
-        private const val INJECTION_KEY = "INJECTION_KEY"
+        private const val INJECTION_KEY = "INJECTION_KEY_GEO_SERVICE"
 
         @JvmStatic
         fun start(context: Context, footprint: Footprint) {

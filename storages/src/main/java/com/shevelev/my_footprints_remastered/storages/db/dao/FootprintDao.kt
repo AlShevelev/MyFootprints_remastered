@@ -20,6 +20,9 @@ interface FootprintDao {
     @Query("select * from footprint order by created_sort desc")
     fun readAll(): List<FootprintDb>
 
+    @Query("select * from footprint where is_geo_loaded = false")
+    fun readAllWithoutGeo(): List<FootprintDb>
+
     @Update
     fun update(footprint: FootprintDb)
 

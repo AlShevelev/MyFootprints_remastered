@@ -12,7 +12,7 @@ import com.shevelev.my_footprints_remastered.R
 import com.shevelev.my_footprints_remastered.common_entities.CreateFootprintInfo
 import com.shevelev.my_footprints_remastered.common_entities.Footprint
 import com.shevelev.my_footprints_remastered.common_entities.UpdateFootprintInfo
-import com.shevelev.my_footprints_remastered.services.update_geo.UpdateGeoService
+import com.shevelev.my_footprints_remastered.services.update_geo_service.UpdateGeoService
 import com.shevelev.my_footprints_remastered.shared_use_cases.update_geo.UpdateGeo
 import com.shevelev.my_footprints_remastered.storages.db.repositories.FootprintRepository
 import com.shevelev.my_footprints_remastered.storages.files.FilesHelper

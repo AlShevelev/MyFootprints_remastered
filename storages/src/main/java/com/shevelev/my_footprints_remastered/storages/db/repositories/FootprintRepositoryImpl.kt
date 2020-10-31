@@ -28,6 +28,8 @@ constructor(
      */
     override fun getAll(): List<Footprint> = db.footprint.readAll().map { it.mapToFootprint() }
 
+    override fun getAllWithoutGeo(): List<Footprint> = db.footprint.readAllWithoutGeo().map { it.mapToFootprint() }
+
     private fun FootprintDb.mapToFootprint() =
         Footprint(
             id = id,

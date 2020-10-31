@@ -32,7 +32,7 @@
         </activity>
 
         <service
-            android:name=".services.update_geo.UpdateGeoService"
+            android:name=".services.update_geo_service.UpdateGeoService"
             android:exported="false"
             />
 

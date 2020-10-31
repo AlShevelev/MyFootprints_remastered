@@ -19,7 +19,7 @@
         tools:src="@drawable/img_title_empty" />
 
     <TextView
-        android:id="@+id/footprintDateText"
+        android:id="@+id/footprintDateTextGeo"
 
         style="@style/Gallery.GridLabel"
         android:layout_width="wrap_content"

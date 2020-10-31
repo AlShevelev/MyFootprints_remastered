@@ -5,6 +5,7 @@ import coil.api.load
 import coil.request.CachePolicy
 import coil.request.RequestDisposable
 import com.shevelev.my_footprints_remastered.R
+import com.shevelev.my_footprints_remastered.common_entities.Footprint
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_grid.view_model.FootprintListItemEventsProcessor
 import com.shevelev.my_footprints_remastered.ui.shared.recycler_view.ViewHolderBase
 import com.shevelev.my_footprints_remastered.utils.format.toShortDisplayString
@@ -28,11 +29,38 @@ class FootprintViewHolder(
             }
         }
 
-        itemView.footprintDateText.text = listItem.footprint.created.toShortDisplayString()
+        itemView.footprintDateTextGeo.text = getFootprintText(listItem.footprint)
     }
 
     override fun release() {
         itemView.setOnClickListener(null)
         imageDispose?.takeIf { !it.isDisposed } ?.dispose()
+    }
+
+    private fun getFootprintText(footprint: Footprint): String {
+        val builder = StringBuffer()
+
+        builder.append(footprint.created.toShortDisplayString())
+
+        when {
+            !footprint.country.isNullOrBlank() && !footprint.city.isNullOrBlank() -> {
+                builder.append("; ")
+                builder.append(footprint.city)
+                builder.append(", ")
+                builder.append(footprint.country)
+            }
+
+            !footprint.country.isNullOrBlank() && footprint.city.isNullOrBlank() -> {
+                builder.append("; ")
+                builder.append(footprint.country)
+            }
+
+            footprint.country.isNullOrBlank() && !footprint.city.isNullOrBlank() -> {
+                builder.append("; ")
+                builder.append(footprint.city)
+            }
+        }
+
+        return builder.toString()
     }
 }

@@ -29,6 +29,7 @@ buildscript {
         support_v4_version = "1.0.0"
         nav_version = '2.3.0'
         view_pager_version = '1.0.0'
+        work_version = '2.4.0'
 
         // Utils
         timber_version = "4.7.1"

@@ -19,4 +19,6 @@ interface FootprintRepository {
      * Get all footprints sorted by creation moment in descending order
      */
     fun getAll(): List<Footprint>
+
+    fun getAllWithoutGeo(): List<Footprint>
 }
