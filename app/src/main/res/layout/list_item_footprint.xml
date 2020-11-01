@@ -27,6 +27,7 @@
         android:layout_height="wrap_content"
 
         android:layout_marginStart="@dimen/titleScreenTotalLabelMargin"
+        android:layout_marginEnd="@dimen/titleScreenTotalLabelMargin"
         android:layout_marginTop="@dimen/titleScreenTotalLabelMargin"
 
         android:layout_gravity="top|start"

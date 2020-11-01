@@ -43,21 +43,14 @@ class FootprintViewHolder(
         builder.append(footprint.created.toShortDisplayString())
 
         when {
-            !footprint.country.isNullOrBlank() && !footprint.city.isNullOrBlank() -> {
+            !footprint.city.isNullOrBlank() -> {
                 builder.append("; ")
                 builder.append(footprint.city)
-                builder.append(", ")
-                builder.append(footprint.country)
             }
 
-            !footprint.country.isNullOrBlank() && footprint.city.isNullOrBlank() -> {
+            !footprint.country.isNullOrBlank() -> {
                 builder.append("; ")
                 builder.append(footprint.country)
-            }
-
-            footprint.country.isNullOrBlank() && !footprint.city.isNullOrBlank() -> {
-                builder.append("; ")
-                builder.append(footprint.city)
             }
         }
 
