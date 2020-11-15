@@ -3,9 +3,11 @@ package com.shevelev.my_footprints_remastered.ui.activity_main.fragment_title.vi
 import android.content.Context
 import android.net.Uri
 import android.view.View
+import androidx.core.net.toUri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.shevelev.my_footprints_remastered.R
+import com.shevelev.my_footprints_remastered.storages.files.FilesHelper
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_model.ViewModelBase
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_title.model.TitleFragmentModel
 import com.shevelev.my_footprints_remastered.ui.view_commands.MoveToCreateFootprint
@@ -24,7 +26,8 @@ class TitleFragmentViewModel
 constructor(
     private val appContext: Context,
     dispatchersProvider: DispatchersProvider,
-    model: TitleFragmentModel
+    model: TitleFragmentModel,
+    private val filesHelper: FilesHelper
 ) : ViewModelBase<TitleFragmentModel>(dispatchersProvider, model) {
 
     private val _total = MutableLiveData(getTotalFootprintsText(0))
@@ -49,7 +52,7 @@ constructor(
                     _total.value = getTotalFootprintsText(lastFootprintInfo.totalFootprints)
                     _galleryEnabled.value = it.totalFootprints > 0
 
-                    _lastFootprintUri.value = getLastFootprintUri(lastFootprintInfo.lastFootprintUri)
+                    _lastFootprintUri.value = getLastFootprintUri(lastFootprintInfo.lastFootprintFileName)
                     _loadingVisibility.value = View.INVISIBLE
                     _lastFootprintVisibility.value = View.VISIBLE
 
@@ -62,7 +65,7 @@ constructor(
             model.updateFootprintData.data.collect { footprint ->
                 footprint?.let {
                     if(it.id == model.lastFootprintId) {
-                        _lastFootprintUri.value = it.imageContentUri
+                        _lastFootprintUri.value = getLastFootprintUri(it.imageFileName)
                     }
                 }
             }
@@ -83,6 +86,10 @@ constructor(
 
     private fun getTotalFootprintsText(total: Int) = appContext.getStringFormatted(R.string.totalFootprints, total).toUpper()
 
-    private fun getLastFootprintUri(uri: Uri?): Uri =
-        uri ?: Uri.parse("android.resource://${appContext.packageName}/drawable/img_title_empty")
+    private fun getLastFootprintUri(fileName: String?): Uri =
+        fileName
+            ?.let {
+                filesHelper.createImageFile(it).toUri()
+            }
+            ?: Uri.parse("android.resource://${appContext.packageName}/drawable/img_title_empty")
 }

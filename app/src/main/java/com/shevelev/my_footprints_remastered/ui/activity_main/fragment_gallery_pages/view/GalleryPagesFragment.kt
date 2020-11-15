@@ -14,7 +14,6 @@ import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_p
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_pages.view_model.GalleryPagesFragmentViewModel
 import com.shevelev.my_footprints_remastered.ui.activity_main.navigation.MainActivityNavigation
 import com.shevelev.my_footprints_remastered.ui.shared.dialogs.ConfirmationDialog
-import com.shevelev.my_footprints_remastered.ui.shared.dialogs.OkDialog
 import com.shevelev.my_footprints_remastered.ui.shared.dialogs.map.MapDialog
 import com.shevelev.my_footprints_remastered.ui.shared.external_intents.share.SharingHelper
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view.FragmentBaseMVVM
@@ -81,7 +80,13 @@ class GalleryPagesFragment : FragmentBaseMVVM<FragmentGalleryPagesBinding, Galle
 
     override fun processViewCommand(command: ViewCommand) {
         when(command) {
-            is ShowMapDialog -> MapDialog.show(this, command.footprint)
+            is ShowMapDialog -> MapDialog.show(
+                this,
+                command.pinColor,
+                command.imageFile,
+                command.comment,
+                command.location)
+
             is MoveToCreateFootprint -> navigation.moveToCreateFootprint(this, command.oldFootprint!!)
             is MoveBackFromPagerToTitle -> navigation.moveBackFromPagerToTitle(this)
 

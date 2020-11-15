@@ -5,7 +5,7 @@ import java.io.File
 
 data class CreateFootprintInfo(
     val draftImageFile: File,
-    val location: Location,
+    val location: GeoPoint,
     val comment: String?,
     val pinColor: PinColor
 )

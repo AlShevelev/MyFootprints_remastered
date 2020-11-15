@@ -2,16 +2,16 @@ package com.shevelev.my_footprints_remastered.ui.activity_main.fragment_my_world
 
 import com.google.android.gms.maps.model.LatLng
 import com.shevelev.my_footprints_remastered.common_entities.Footprint
-import com.shevelev.my_footprints_remastered.common_entities.PinColor
 import com.shevelev.my_footprints_remastered.storages.db.repositories.FootprintRepository
+import com.shevelev.my_footprints_remastered.storages.files.FilesHelper
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_my_world_map.dto.FootprintOnMap
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_my_world_map.dto.FootprintsOnMap
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_my_world_map.dto.MapZoomAndLocation
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flow.delete.DeleteFootprintDataFlowConsumer
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flow.update.UpdateFootprintDataFlowConsumer
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.model.ModelBaseImpl
-import com.shevelev.my_footprints_remastered.ui.shared.recycler_view.versioned.VersionedListItem
 import com.shevelev.my_footprints_remastered.utils.coroutines.DispatchersProvider
+import com.shevelev.my_footprints_remastered.utils.location.toMapLocation
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -21,7 +21,8 @@ constructor(
     private val dispatchersProvider: DispatchersProvider,
     private val footprintRepository: FootprintRepository,
     override val updateFootprintData: UpdateFootprintDataFlowConsumer,
-    override val deleteFootprintData: DeleteFootprintDataFlowConsumer
+    override val deleteFootprintData: DeleteFootprintDataFlowConsumer,
+    private val filesHelper: FilesHelper
 ) : ModelBaseImpl(),
     MyWorldMapFragmentModel {
 
@@ -73,9 +74,9 @@ constructor(
     private fun Footprint.mapToFootprintOnMap(): FootprintOnMap =
         FootprintOnMap(
             id = id,
-            imageContentUri = imageContentUri,
-            location = LatLng(latitude, longitude),
+            imageFile = filesHelper.createImageFile(imageFileName),
+            location = location.toMapLocation(),
             comment = comment,
-            pinColor = PinColor(pinTextColor, pinBackgroundColor)
+            pinColor = pinColor
         )
 }

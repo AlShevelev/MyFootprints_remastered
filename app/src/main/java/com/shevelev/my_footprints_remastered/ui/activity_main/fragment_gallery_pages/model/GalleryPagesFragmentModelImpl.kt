@@ -2,6 +2,7 @@ package com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_
 
 import com.shevelev.my_footprints_remastered.common_entities.Footprint
 import com.shevelev.my_footprints_remastered.shared_use_cases.creata_update_footprint.CreateUpdateFootprint
+import com.shevelev.my_footprints_remastered.storages.files.FilesHelper
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_grid.view.grid.FootprintListItem
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flow.delete.DeleteFootprintDataFlowProvider
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flow.delete.DeleteFootprintFlowInfo
@@ -18,51 +19,44 @@ class GalleryPagesFragmentModelImpl
 @Inject
 constructor(
     private val dispatchersProvider: DispatchersProvider,
-    private val footprints: List<Footprint>,
+    footprints: List<Footprint>,
     override var currentIndex: Int,
     override val updateFootprintData: UpdateFootprintDataFlowConsumer,
     private val createUpdateFootprint: CreateUpdateFootprint,
     private val lastFootprintDataFlowProvider: LastFootprintDataFlowProvider,
-    private val deleteFootprintDataFlowProvider: DeleteFootprintDataFlowProvider
+    private val deleteFootprintDataFlowProvider: DeleteFootprintDataFlowProvider,
+    private val filesHelper: FilesHelper
 ) : ModelBaseImpl(),
     GalleryPagesFragmentModel {
 
-    private lateinit var items: MutableList<FootprintListItem>
+    private val footprintsMutable = footprints.toMutableList()
 
-    override suspend fun loadItems(): List<VersionedListItem> {
-        items = withContext(dispatchersProvider.calculationsDispatcher) {
-            footprints.map { FootprintListItem(
-                id = it.id,
-                version = 0,
-                isFirstItem = false,
-                isLastItem = false,
-                footprint = it,
-                useCacheForImage = true
-            )}.toMutableList()
+    override suspend fun loadItems(): List<VersionedListItem> =
+        withContext(dispatchersProvider.calculationsDispatcher) {
+            footprintsMutable.map { it.mapToListItem() }.toMutableList()
         }
-
-        return items
-    }
 
     override suspend fun updateFootprint(updatedFootprint: Footprint): List<VersionedListItem>? =
         withContext(dispatchersProvider.calculationsDispatcher) {
-            items.indexOfFirst { it.footprint.id == updatedFootprint.id }
+            footprintsMutable.indexOfFirst { it.id == updatedFootprint.id }
                 .takeIf { it != -1 }
                 ?.let { index ->
-                    val item = items[index]
-                    items[index] = item.copy(
-                        footprint = updatedFootprint,
-                        version = item.version+1,
-                        useCacheForImage = false)
-                    items
+                    footprintsMutable[index] = updatedFootprint
+
+                    val result = footprintsMutable.map { it.mapToListItem() }.toMutableList()
+
+                    val updatedItem = result[index]
+                    result[index] = updatedItem.copy(version = updatedItem.version + 1, useCacheForImage = false)
+
+                    result
                 }
         }
 
-    override fun getFootprint(index: Int): Footprint = items[index].footprint
+    override fun getFootprint(index: Int): Footprint = footprintsMutable[index]
 
     override suspend fun deleteFootprint(): List<VersionedListItem> {
         // Get footprint to delete
-        val footprintToDelete = items[currentIndex].footprint
+        val footprintToDelete = footprintsMutable[currentIndex]
 
         // Delete it
         val deleteResult = withContext(dispatchersProvider.ioDispatcher) {
@@ -73,20 +67,28 @@ constructor(
         lastFootprintDataFlowProvider.update(LastFootprintFlowInfo(
             totalFootprints = deleteResult.totalFootprints,
             lastFootprintId = deleteResult.lastFootprintId,
-            lastFootprintUri = deleteResult.lastFootprintImage
+            lastFootprintFileName = deleteResult.lastFootprintImageFileName
         ))
 
         return if(deleteResult.totalFootprints == 0) {
-            return listOf()
+            listOf()
         } else {
             deleteFootprintDataFlowProvider.update(DeleteFootprintFlowInfo(footprintToDelete.id))
 
-            items
+            val result = footprintsMutable
                 .indexOfFirst { it.id == footprintToDelete.id }
-                .let {
-                    items.removeAt(it)
-                    items
+                .let { index ->
+                    footprintsMutable.removeAt(index)
+                    footprintsMutable.map { it.mapToListItem() }
                 }
+
+            if(currentIndex > footprintsMutable.lastIndex) {
+                currentIndex = footprintsMutable.lastIndex
+            }
+
+            result
         }
     }
+
+    private fun Footprint.mapToListItem() = FootprintListItem.create(this, filesHelper)
 }

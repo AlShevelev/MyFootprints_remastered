@@ -9,30 +9,44 @@ import android.widget.FrameLayout
 import androidx.fragment.app.DialogFragment
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.shevelev.my_footprints_remastered.R
 import com.shevelev.my_footprints_remastered.application.App
-import com.shevelev.my_footprints_remastered.common_entities.Footprint
+import com.shevelev.my_footprints_remastered.common_entities.GeoPoint
+import com.shevelev.my_footprints_remastered.common_entities.PinColor
 import com.shevelev.my_footprints_remastered.ui.shared.Constants
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view.FragmentBase
 import com.shevelev.my_footprints_remastered.ui.shared.pin_draw.PinDraw
+import com.shevelev.my_footprints_remastered.utils.location.toMapLocation
 import com.shevelev.my_footprints_remastered.utils.resources.getScreenSize
 import kotlinx.android.synthetic.main.dialog_map.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.File
 import javax.inject.Inject
 
 class MapDialog : BottomSheetDialogFragmentBase(), OnMapReadyCallback {
     companion object {
-        private const val ARG_FOOTPRINT = "ARG_FOOTPRINT"
+        private const val ARG_PIN_COLOR = "ARG_PIN_COLOR"
+        private const val ARG_IMAGE_FILE = "ARG_IMAGE_FILE"
+        private const val ARG_COMMENT = "ARG_COMMENT"
+        private const val ARG_LOCATION = "ARG_LOCATION"
 
-        fun show(fragment: FragmentBase, footprint: Footprint) {
+        fun show(
+            fragment: FragmentBase,
+            pinColor: PinColor,
+            imageFile: File,
+            comment: String?,
+            location: GeoPoint
+        ) {
             MapDialog().apply {
                 arguments = Bundle().apply {
-                    putParcelable(ARG_FOOTPRINT, footprint)
+                    putParcelable(ARG_PIN_COLOR, pinColor)
+                    putString(ARG_IMAGE_FILE, imageFile.absolutePath)
+                    comment?.let { putString(ARG_COMMENT, it) }
+                    putParcelable(ARG_LOCATION, location)
                 }
             }
             .show(fragment.childFragmentManager, null)
@@ -98,22 +112,26 @@ class MapDialog : BottomSheetDialogFragmentBase(), OnMapReadyCallback {
         map.uiSettings.isCompassEnabled = false
         map.uiSettings.isZoomControlsEnabled = true
 
-        with(requireArguments().getParcelable<Footprint>(ARG_FOOTPRINT)!!) {
-            // Move a camera and zoom
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(latitude, longitude), Constants.MAP_START_ZOOM))
+        val args = requireArguments()
+        val pinColor = args.getParcelable<PinColor>(ARG_PIN_COLOR)!!
+        val imageFile = File(requireArguments().getString(ARG_IMAGE_FILE)!!)
+        val comment = args.getString(ARG_COMMENT)
+        val location = args.getParcelable<GeoPoint>(ARG_LOCATION)!!
 
-            // Show a pin
-            launch {
-                val pinInfo = withContext(dispatchersProvider.calculationsDispatcher) {
-                    pinDraw.draw(pinBackgroundColor, pinTextColor, imageContentUri, comment)
-                }
+        // Move a camera and zoom
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(location.toMapLocation(), Constants.MAP_START_ZOOM))
 
-                map.addMarker(
-                    MarkerOptions()
-                    .position(LatLng(latitude, longitude))
-                    .icon(BitmapDescriptorFactory.fromBitmap(pinInfo.bitmap))
-                    .anchor(pinInfo.spearheadRelativeX, 1.0f))
+        // Show a pin
+        launch {
+            val pinInfo = withContext(dispatchersProvider.calculationsDispatcher) {
+                pinDraw.draw(pinColor.backgroundColor, pinColor.textColor, imageFile, comment)
             }
+
+            map.addMarker(
+                MarkerOptions()
+                .position(location.toMapLocation())
+                .icon(BitmapDescriptorFactory.fromBitmap(pinInfo.bitmap))
+                .anchor(pinInfo.spearheadRelativeX, 1.0f))
         }
     }
 

@@ -9,6 +9,7 @@ import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flo
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flow.update.UpdateFootprintDataFlowProvider
 import com.shevelev.my_footprints_remastered.ui.activity_main.geolocation.GeolocationProviderData
 import com.shevelev.my_footprints_remastered.utils.coroutines.DispatchersProvider
+import com.shevelev.my_footprints_remastered.utils.location.toGeoPoint
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -40,7 +41,7 @@ constructor(
             createUpdateFootprint.update(
                 UpdateFootprintInfo(
                     draftImageFile = sharedFootprint.image!!,
-                    location = sharedFootprint.manualSelectedLocation!!,
+                    location = sharedFootprint.manualSelectedLocation!!.toGeoPoint(),
                     comment = sharedFootprint.comment,
                     pinColor = sharedFootprint.pinColor,
                     isImageUpdated = isImageUpdated,

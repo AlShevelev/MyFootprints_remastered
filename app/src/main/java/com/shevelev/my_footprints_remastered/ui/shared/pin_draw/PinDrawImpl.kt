@@ -2,7 +2,6 @@ package com.shevelev.my_footprints_remastered.ui.shared.pin_draw
 
 import android.content.Context
 import android.graphics.*
-import android.net.Uri
 import androidx.annotation.ColorInt
 import com.shevelev.my_footprints_remastered.R
 import com.shevelev.my_footprints_remastered.utils.resources.getDimension
@@ -37,9 +36,6 @@ constructor(
 
     override fun draw(backgroundColor: Int, textColor: Int, image: File?, text: String?): PinDrawInfo =
         draw(backgroundColor, textColor, cropFileImageToCircle(image), text)
-
-    override fun draw(backgroundColor: Int, textColor: Int, image: Uri?, text: String?): PinDrawInfo =
-        draw(backgroundColor, textColor, cropUriImageToCircle(image), text)
 
     private fun draw(backgroundColor: Int, textColor: Int, image: Bitmap?, text: String?): PinDrawInfo {
         return if(text.isNullOrBlank()) {
@@ -183,15 +179,6 @@ constructor(
     private fun cropFileImageToCircle(imageFile: File?): Bitmap? =
         imageFile?.let {
             cropBitmapToCircle(BitmapFactory.decodeFile(it.absolutePath))
-        }
-
-    private fun cropUriImageToCircle(imageUri: Uri?): Bitmap? =
-        imageUri?.let {
-            val bitmap = appContext.contentResolver.openInputStream(it).use { stream ->
-                BitmapFactory.decodeStream(stream)
-            }
-
-            cropBitmapToCircle(bitmap)
         }
 
     private fun cropBitmapToCircle(bitmap: Bitmap): Bitmap {

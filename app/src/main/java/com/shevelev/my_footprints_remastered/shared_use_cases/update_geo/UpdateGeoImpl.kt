@@ -46,7 +46,7 @@ constructor(
                 return false
             } else {
                 val geoCoder = Geocoder(appContext, Locale.getDefault())
-                val addresses = geoCoder.getFromLocation(footprint.latitude, footprint.longitude, 1)
+                val addresses = geoCoder.getFromLocation(footprint.location.latitude, footprint.location.longitude, 1)
 
                 if (addresses.isNullOrEmpty()) {
                     footprintRepository.get().updateGeo(footprint.id, null, null)   // Ocean, desert etc.

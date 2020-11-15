@@ -1,6 +1,5 @@
 package com.shevelev.my_footprints_remastered.common_entities
 
-import android.net.Uri
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 import org.threeten.bp.ZonedDateTime
@@ -8,20 +7,14 @@ import org.threeten.bp.ZonedDateTime
 @Parcelize
 data class Footprint (
     val id: Long,
-    val imageContentUri: Uri,
 
-    /**
-     * A name of file with an image for an old API (<29)
-     */
-    val imageFileName: String?,
+    val imageFileName: String,
 
-    val latitude: Double,
-    val longitude: Double,
+    val location: GeoPoint,
 
     val comment: String?,
 
-    val pinTextColor: Int,
-    val pinBackgroundColor: Int,
+    val pinColor: PinColor,
 
     val created: ZonedDateTime,
 

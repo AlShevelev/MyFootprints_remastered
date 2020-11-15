@@ -1,7 +1,8 @@
 package com.shevelev.my_footprints_remastered.storages.db.repositories
 
-import android.net.Uri
 import com.shevelev.my_footprints_remastered.common_entities.Footprint
+import com.shevelev.my_footprints_remastered.common_entities.GeoPoint
+import com.shevelev.my_footprints_remastered.common_entities.PinColor
 import com.shevelev.my_footprints_remastered.storages.db.core.DbCore
 import com.shevelev.my_footprints_remastered.storages.db.entities.FootprintDb
 import javax.inject.Inject
@@ -33,13 +34,10 @@ constructor(
     private fun FootprintDb.mapToFootprint() =
         Footprint(
             id = id,
-            imageContentUri = Uri.parse(imageContentUri),
             imageFileName = imageFileName,
-            latitude = latitude,
-            longitude = longitude,
+            location = GeoPoint(latitude, longitude),
             comment = comment,
-            pinTextColor = pinTextColor,
-            pinBackgroundColor = pinBackgroundColor,
+            pinColor = PinColor(pinTextColor, pinBackgroundColor),
             created = created,
             city = city,
             country = country,
@@ -49,13 +47,12 @@ constructor(
     private fun Footprint.mapToFootprintDb() =
         FootprintDb(
             id = id,
-            imageContentUri = imageContentUri.toString(),
             imageFileName = imageFileName,
-            latitude = latitude,
-            longitude = longitude,
+            latitude = location.latitude,
+            longitude = location.longitude,
             comment = comment,
-            pinTextColor = pinTextColor,
-            pinBackgroundColor = pinBackgroundColor,
+            pinTextColor = pinColor.textColor,
+            pinBackgroundColor = pinColor.backgroundColor,
             created = created,
             createdSort = created.toInstant().epochSecond,
             city = city,

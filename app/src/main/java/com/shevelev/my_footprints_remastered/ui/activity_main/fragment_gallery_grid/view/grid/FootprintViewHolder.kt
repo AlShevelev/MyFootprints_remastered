@@ -5,7 +5,6 @@ import coil.api.load
 import coil.request.CachePolicy
 import coil.request.RequestDisposable
 import com.shevelev.my_footprints_remastered.R
-import com.shevelev.my_footprints_remastered.common_entities.Footprint
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_grid.view_model.FootprintListItemEventsProcessor
 import com.shevelev.my_footprints_remastered.ui.shared.recycler_view.ViewHolderBase
 import com.shevelev.my_footprints_remastered.utils.format.toShortDisplayString
@@ -21,7 +20,7 @@ class FootprintViewHolder(
 
     override fun init(listItem: FootprintListItem, listItemEventsProcessor: FootprintListItemEventsProcessor) {
         itemView.setOnClickListener { listItemEventsProcessor.onFootprintClick(listItem.id) }
-        imageDispose = itemView.photoImage.load(listItem.footprint.imageContentUri) {
+        imageDispose = itemView.photoImage.load(listItem.imageFile) {
             if(listItem.useCacheForImage) {
                 memoryCachePolicy(CachePolicy.ENABLED)
             } else {
@@ -29,7 +28,7 @@ class FootprintViewHolder(
             }
         }
 
-        itemView.footprintDateTextGeo.text = getFootprintText(listItem.footprint)
+        itemView.footprintDateTextGeo.text = getFootprintText(listItem)
     }
 
     override fun release() {
@@ -37,7 +36,7 @@ class FootprintViewHolder(
         imageDispose?.takeIf { !it.isDisposed } ?.dispose()
     }
 
-    private fun getFootprintText(footprint: Footprint): String {
+    private fun getFootprintText(footprint: FootprintListItem): String {
         val builder = StringBuffer()
 
         builder.append(footprint.created.toShortDisplayString())

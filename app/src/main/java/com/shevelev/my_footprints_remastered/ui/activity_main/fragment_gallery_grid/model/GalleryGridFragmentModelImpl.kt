@@ -2,6 +2,7 @@ package com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_
 
 import com.shevelev.my_footprints_remastered.common_entities.Footprint
 import com.shevelev.my_footprints_remastered.storages.db.repositories.FootprintRepository
+import com.shevelev.my_footprints_remastered.storages.files.FilesHelper
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_grid.view.grid.FootprintListItem
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flow.delete.DeleteFootprintDataFlowConsumer
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flow.update.UpdateFootprintDataFlowConsumer
@@ -17,53 +18,46 @@ constructor(
     private val dispatchersProvider: DispatchersProvider,
     private val footprintRepository: FootprintRepository,
     override val updateFootprintData: UpdateFootprintDataFlowConsumer,
-    override val deleteFootprintData: DeleteFootprintDataFlowConsumer
+    override val deleteFootprintData: DeleteFootprintDataFlowConsumer,
+    private val filesHelper: FilesHelper
 ) : GalleryGridFragmentModel,
     ModelBaseImpl() {
 
+    private var _items: MutableList<Footprint> = mutableListOf()
     override val items: List<Footprint>
-        get() = gridItems.map { it.footprint }
-
-    private lateinit var gridItems: MutableList<FootprintListItem>
+        get() = _items
 
     override suspend fun loadItems(): List<VersionedListItem> =
-        withContext(dispatchersProvider.ioDispatcher) { footprintRepository.getAll()}
-            .let { dbItems ->
-                dbItems.map { FootprintListItem(
-                    id = it.id,
-                    version = 0,
-                    isFirstItem = false,
-                    isLastItem = false,
-                    footprint = it,
-                    useCacheForImage = true
-                )}
-            }
-            .also {
-                gridItems = it.toMutableList()
-            }
+        withContext(dispatchersProvider.ioDispatcher) {
+            footprintRepository.getAll()
+                .let { dbItems ->
+                    _items = dbItems.toMutableList()
+                    dbItems.map { it.mapToListItem() }
+                }
+        }
 
     override suspend fun updateFootprint(updatedFootprint: Footprint): List<VersionedListItem>? =
         withContext(dispatchersProvider.calculationsDispatcher) {
-            gridItems.indexOfFirst { it.footprint.id == updatedFootprint.id }
+            items.indexOfFirst { it.id == updatedFootprint.id }
                 .takeIf { it != -1 }
                 ?.let { index ->
-                    val item = gridItems[index]
-                    gridItems[index] = item.copy(
-                        footprint = updatedFootprint,
-                        version = item.version+1,
-                        useCacheForImage = false
-                    )
-                    gridItems
+                    _items[index] = updatedFootprint
+
+                    val result = _items.map { it.mapToListItem() }.toMutableList()
+
+                    val updatedItem = result[index]
+                    result[index] = updatedItem.copy(version = updatedItem.version + 1, useCacheForImage = false)
+
+                    result
                 }
         }
 
     override suspend fun deleteFootprint(footprintId: Long): List<VersionedListItem> =
         withContext(dispatchersProvider.calculationsDispatcher) {
-            gridItems
-                .indexOfFirst { it.id == footprintId }
-                .let {
-                    gridItems.removeAt(it)
-                    gridItems
-                }
+            val index = _items.indexOfFirst { it.id == footprintId }
+            _items.removeAt(index)
+            _items.map { it.mapToListItem() }.toMutableList()
         }
+
+    private fun Footprint.mapToListItem() = FootprintListItem.create(this, filesHelper)
 }

@@ -30,7 +30,7 @@ constructor(
 
             val lastInfo = LastFootprintFlowInfo(
                 totalFootprints = footprintRepository.getCount(),
-                lastFootprintUri = lastFootprint?.imageContentUri,
+                lastFootprintFileName = lastFootprint?.imageFileName,
                 lastFootprintId = lastFootprint?.id
             )
 

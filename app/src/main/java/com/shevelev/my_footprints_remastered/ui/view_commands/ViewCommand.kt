@@ -4,6 +4,9 @@ import android.location.Location
 import androidx.annotation.ColorInt
 import androidx.annotation.StringRes
 import com.shevelev.my_footprints_remastered.common_entities.Footprint
+import com.shevelev.my_footprints_remastered.common_entities.GeoPoint
+import com.shevelev.my_footprints_remastered.common_entities.PinColor
+import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view.FragmentBase
 import java.io.File
 
 interface ViewCommand
@@ -84,7 +87,10 @@ data class ShowColorDialog(
 ) : ViewCommand
 
 data class ShowMapDialog(
-    val footprint: Footprint
+    val pinColor: PinColor,
+    val imageFile: File,
+    val comment: String?,
+    val location: GeoPoint
 ) : ViewCommand
 
 data class StartSharing(

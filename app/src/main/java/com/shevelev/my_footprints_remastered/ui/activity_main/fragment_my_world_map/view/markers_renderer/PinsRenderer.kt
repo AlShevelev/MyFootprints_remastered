@@ -51,7 +51,7 @@ class PinsRenderer(
                 pinDraw.draw(
                     footprint.pinColor.backgroundColor,
                     footprint.pinColor.textColor,
-                    footprint.imageContentUri,
+                    footprint.imageFile,
                     footprint.title
                 )
                 .also {

@@ -11,9 +11,9 @@ interface FilesHelper {
 
     fun createTempFile(): File
 
-    fun createImageFile(appName: String): File
+    fun createImageFile(): File
 
-    fun createImageFile(appName: String, fileName: String): File
+    fun createImageFile(fileName: String): File
 
     fun copyFile(sourceFile: File, targetFile: File)
 

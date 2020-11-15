@@ -18,6 +18,7 @@ import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flo
 import com.shevelev.my_footprints_remastered.ui.activity_main.geolocation.GeolocationProviderManager
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.model.ModelBaseImpl
 import com.shevelev.my_footprints_remastered.utils.coroutines.DispatchersProvider
+import com.shevelev.my_footprints_remastered.utils.location.toGeoPoint
 import kotlinx.coroutines.withContext
 import java.io.File
 import javax.inject.Inject
@@ -30,7 +31,7 @@ constructor(
     private val dataBridge: CreateFootprintFragmentDataBridge,
     override val geolocationProvider: GeolocationProviderManager,
     override val sharedFootprint: SharedFootprint,
-    private val filesHelper: FilesHelper,
+    protected val filesHelper: FilesHelper,
     protected val createUpdateFootprint: CreateUpdateFootprint,
     private val lastFootprintDataFlowProvider: LastFootprintDataFlowProvider,
     protected val keyValueStorageFacade: KeyValueStorageFacade
@@ -97,7 +98,7 @@ constructor(
             createUpdateFootprint.create(
                 CreateFootprintInfo(
                     draftImageFile = sharedFootprint.image!!,
-                    location = sharedFootprint.manualSelectedLocation ?: geolocationProvider.lastLocation,
+                    location = (sharedFootprint.manualSelectedLocation ?: geolocationProvider.lastLocation).toGeoPoint(),
                     comment = sharedFootprint.comment,
                     pinColor = sharedFootprint.pinColor
             ))
@@ -106,7 +107,7 @@ constructor(
         lastFootprintDataFlowProvider.update(
             LastFootprintFlowInfo(
             lastFootprintId = createInfo.lastFootprintId,
-            lastFootprintUri = createInfo.lastFootprintImage,
+            lastFootprintFileName = createInfo.lastFootprintImageFileName,
             totalFootprints = createInfo.totalFootprints
         ))
     }
@@ -117,7 +118,7 @@ constructor(
         }
     }
 
-    protected fun copyUriToFile(uri: Uri): File =
+    private fun copyUriToFile(uri: Uri): File =
         filesHelper.createTempFile().also {
             filesHelper.saveUriToFile(uri, it)
         }

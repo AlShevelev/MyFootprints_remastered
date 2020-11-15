@@ -3,6 +3,7 @@ package com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.shevelev.my_footprints_remastered.storages.files.FilesHelper
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_pages.model.GalleryPagesFragmentModel
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_pages.view.ButtonsBindingCall
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_model.ViewModelBase
@@ -18,7 +19,8 @@ class GalleryPagesFragmentViewModel
 @Inject
 constructor(
     dispatchersProvider: DispatchersProvider,
-    model: GalleryPagesFragmentModel
+    model: GalleryPagesFragmentModel,
+    private val filesHelper: FilesHelper
 ) : ViewModelBase<GalleryPagesFragmentModel>(dispatchersProvider, model),
     ButtonsBindingCall {
 
@@ -67,7 +69,15 @@ constructor(
         }
     }
 
-    override fun onMapClick() = sendCommand(ShowMapDialog(model.getFootprint(model.currentIndex)))
+    override fun onMapClick() {
+        val footprint = model.getFootprint(model.currentIndex)
+        sendCommand(ShowMapDialog(
+            pinColor = footprint.pinColor,
+            imageFile = filesHelper.createImageFile(footprint.imageFileName),
+            comment = footprint.comment,
+            location = footprint.location)
+        )
+    }
 
     override fun onShareClick() = sendCommand(StartSharing(model.getFootprint(model.currentIndex)))
 

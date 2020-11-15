@@ -16,6 +16,7 @@ import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flo
 import com.shevelev.my_footprints_remastered.ui.activity_main.geolocation.GeolocationProviderManager
 import com.shevelev.my_footprints_remastered.utils.coroutines.DispatchersProvider
 import com.shevelev.my_footprints_remastered.utils.location.toAndroidLocation
+import com.shevelev.my_footprints_remastered.utils.location.toGeoPoint
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -52,9 +53,9 @@ constructor(
         sharedFootprint.pinColor = pinColor
 
         sharedFootprint.comment = oldFootprint.comment
-        sharedFootprint.manualSelectedLocation = oldFootprint.latitude.toAndroidLocation(oldFootprint.longitude)
+        sharedFootprint.manualSelectedLocation = oldFootprint.location.toAndroidLocation()
         sharedFootprint.image = withContext(dispatchersProvider.ioDispatcher) {
-            copyUriToFile(oldFootprint.imageContentUri)
+            filesHelper.createImageFile(oldFootprint.imageFileName)
         }
     }
 
@@ -63,7 +64,7 @@ constructor(
             createUpdateFootprint.update(
                 UpdateFootprintInfo(
                     draftImageFile = sharedFootprint.image!!,
-                    location = sharedFootprint.manualSelectedLocation ?: geolocationProvider.lastLocation,
+                    location = (sharedFootprint.manualSelectedLocation ?: geolocationProvider.lastLocation).toGeoPoint(),
                     comment = sharedFootprint.comment,
                     pinColor = sharedFootprint.pinColor,
                     isImageUpdated = isImageUpdated,

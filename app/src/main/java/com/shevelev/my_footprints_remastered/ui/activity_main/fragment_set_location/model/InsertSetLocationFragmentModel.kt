@@ -11,6 +11,7 @@ import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flo
 import com.shevelev.my_footprints_remastered.ui.activity_main.geolocation.GeolocationProviderData
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.model.ModelBaseImpl
 import com.shevelev.my_footprints_remastered.utils.coroutines.DispatchersProvider
+import com.shevelev.my_footprints_remastered.utils.location.toGeoPoint
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -37,7 +38,7 @@ constructor(
             createUpdateFootprint.create(
                 CreateFootprintInfo(
                     draftImageFile = sharedFootprint.image!!,
-                    location = sharedFootprint.manualSelectedLocation ?: geolocationProvider.lastLocation,
+                    location = (sharedFootprint.manualSelectedLocation ?: geolocationProvider.lastLocation).toGeoPoint(),
                     comment = sharedFootprint.comment,
                     pinColor = sharedFootprint.pinColor
                 ))
@@ -46,7 +47,7 @@ constructor(
         lastFootprintDataFlowProvider.update(
             LastFootprintFlowInfo(
             lastFootprintId = createInfo.lastFootprintId,
-            lastFootprintUri = createInfo.lastFootprintImage,
+            lastFootprintFileName = createInfo.lastFootprintImageFileName,
             totalFootprints = createInfo.totalFootprints
         ))
     }

@@ -6,7 +6,6 @@ import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_my_world_
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flow.delete.DeleteFootprintDataFlowConsumer
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flow.update.UpdateFootprintDataFlowConsumer
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.model.ModelBase
-import com.shevelev.my_footprints_remastered.ui.shared.recycler_view.versioned.VersionedListItem
 
 interface MyWorldMapFragmentModel : ModelBase {
     val footprints: List<Footprint>

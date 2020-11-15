@@ -24,7 +24,7 @@ class GalleryPagesAdapter(
 
     override fun createFragment(position: Int): Fragment =
         (items[position] as FootprintListItem).let { footprintItem ->
-            GalleryPageFragment.newInstance(footprintItem.footprint.imageContentUri, footprintItem.useCacheForImage)
+            GalleryPageFragment.newInstance(footprintItem.imageFile, footprintItem.useCacheForImage)
         }
 
     override fun getItemId(position: Int): Long = if (position < 0) RecyclerView.NO_ID else items[position].id
