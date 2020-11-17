@@ -14,11 +14,11 @@ constructor(
 ): FootprintRepository {
     override fun getCount(): Int = db.footprint.readCount()
 
-    override fun getLast(): Footprint? = db.footprint.readLast()?.mapToFootprint()
+    override fun getLast(): Footprint? = db.footprint.readLast()?.mapToEntity()
 
-    override fun create(footprint: Footprint) = db.footprint.create(footprint.mapToFootprintDb())
+    override fun create(footprint: Footprint) = db.footprint.create(footprint.mapToDb())
 
-    override fun update(footprint: Footprint) = db.footprint.update(footprint.mapToFootprintDb())
+    override fun update(footprint: Footprint) = db.footprint.update(footprint.mapToDb())
 
     override fun updateGeo(id: Long, city: String?, country: String?) = db.footprint.updateGeo(id, city, country)
 
@@ -27,11 +27,11 @@ constructor(
     /**
      * Get all footprints sorted by creation moment in descending order
      */
-    override fun getAll(): List<Footprint> = db.footprint.readAll().map { it.mapToFootprint() }
+    override fun getAll(): List<Footprint> = db.footprint.readAll().map { it.mapToEntity() }
 
-    override fun getAllWithoutGeo(): List<Footprint> = db.footprint.readAllWithoutGeo().map { it.mapToFootprint() }
+    override fun getAllWithoutGeo(): List<Footprint> = db.footprint.readAllWithoutGeo().map { it.mapToEntity() }
 
-    private fun FootprintDb.mapToFootprint() =
+    private fun FootprintDb.mapToEntity() =
         Footprint(
             id = id,
             imageFileName = imageFileName,
@@ -44,7 +44,7 @@ constructor(
             isGeoLoaded = isGeoLoaded
         )
 
-    private fun Footprint.mapToFootprintDb() =
+    private fun Footprint.mapToDb() =
         FootprintDb(
             id = id,
             imageFileName = imageFileName,

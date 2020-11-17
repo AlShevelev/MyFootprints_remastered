@@ -7,6 +7,7 @@ import com.shevelev.my_footprints_remastered.common_entities.UpdateFootprintInfo
 import com.shevelev.my_footprints_remastered.services.update_geo_service.UpdateGeoService
 import com.shevelev.my_footprints_remastered.shared_use_cases.update_geo.UpdateGeo
 import com.shevelev.my_footprints_remastered.storages.db.repositories.FootprintRepository
+import com.shevelev.my_footprints_remastered.storages.db.repositories.SyncRecordRepository
 import com.shevelev.my_footprints_remastered.storages.files.FilesHelper
 import com.shevelev.my_footprints_remastered.storages.key_value.KeyValueStorageFacade
 import com.shevelev.my_footprints_remastered.utils.id_hash.IdUtil
@@ -22,7 +23,8 @@ constructor(
     private val filesHelper: FilesHelper,
     private val footprintRepository: FootprintRepository,
     private val keyValueStorageFacade: KeyValueStorageFacade,
-    private val updateGeoUseCase: Lazy<UpdateGeo>
+    private val updateGeoUseCase: Lazy<UpdateGeo>,
+    private val syncRecordRepository: SyncRecordRepository
 ) : CreateUpdateFootprint {
 
     override suspend fun create(info: CreateFootprintInfo): FootprintCreateInfo {
@@ -54,6 +56,8 @@ constructor(
         if(updateGeoUseCase.get().canLoad(true)) {
             UpdateGeoService.start(appContext, footprint)
         }
+
+        syncRecordRepository.addCreateRecord(footprint.id)
 
         return FootprintCreateInfo(footprint.id, imageFileName, footprintRepository.getCount())
     }
@@ -92,6 +96,8 @@ constructor(
                 UpdateGeoService.start(appContext, footprint)
             }
 
+            syncRecordRepository.addUpdateRecord(footprint.id)
+
             FootprintUpdateInfo(footprint)
         } else {
             null
@@ -112,6 +118,8 @@ constructor(
 
         val last = footprintRepository.getLast()
         val count = footprintRepository.getCount()
+
+        syncRecordRepository.addDeleteRecord(footprint.id)
 
         return FootprintDeleteInfo(last?.id, last?.imageFileName, count)
     }

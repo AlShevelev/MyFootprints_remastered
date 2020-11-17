@@ -1,9 +1,6 @@
 package com.shevelev.my_footprints_remastered.application.di
 
-import com.shevelev.my_footprints_remastered.storages.db.repositories.FootprintRepository
-import com.shevelev.my_footprints_remastered.storages.db.repositories.FootprintRepositoryImpl
-import com.shevelev.my_footprints_remastered.storages.db.repositories.LastLocationRepository
-import com.shevelev.my_footprints_remastered.storages.db.repositories.LastLocationRepositoryImpl
+import com.shevelev.my_footprints_remastered.storages.db.repositories.*
 import com.shevelev.my_footprints_remastered.storages.files.FilesHelper
 import com.shevelev.my_footprints_remastered.storages.files.FilesHelperImpl
 import com.shevelev.my_footprints_remastered.storages.key_value.KeyValueStorageFacade
@@ -28,6 +25,9 @@ abstract class AppModuleBinds {
 
     @Binds
     abstract fun provideLastLocationRepository(repository: LastLocationRepositoryImpl): LastLocationRepository
+
+    @Binds
+    abstract fun provideSyncRecordRepository(repository: SyncRecordRepositoryImpl): SyncRecordRepository
 
     //region Key-value storage
     @Binds
