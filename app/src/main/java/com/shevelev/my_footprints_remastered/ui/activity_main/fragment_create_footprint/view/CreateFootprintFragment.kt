@@ -25,10 +25,10 @@ import javax.inject.Inject
 class CreateFootprintFragment : FragmentBaseMVVM<FragmentCreateFootprintBinding, CreateFootprintFragmentViewModel>() {
     companion object {
         const val ARG_FOOTPRINT = "ARG_FOOTPRINT"
+        private const val EXPLANATION_REQUEST = 54848
+        private const val GEOLOCATION_REQUEST = 8056
+        private const val FOOTPRINT_INTERRUPTION_REQUEST = 4216
     }
-
-    private val geolocationRequest = 8056
-    private val footprintInterruptionRequest = 4216
 
     @Inject
     internal lateinit var navigation: MainActivityNavigation
@@ -63,7 +63,7 @@ class CreateFootprintFragment : FragmentBaseMVVM<FragmentCreateFootprintBinding,
 
             is AskAboutGeolocation ->
                 ConfirmationDialog.show(
-                    geolocationRequest,
+                    GEOLOCATION_REQUEST,
                     this,
                     R.string.enableLocationQuestion,
                     R.string.goToSettings,
@@ -71,7 +71,7 @@ class CreateFootprintFragment : FragmentBaseMVVM<FragmentCreateFootprintBinding,
 
             is AskAboutFootprintInterruption ->
                 ConfirmationDialog.show(
-                    footprintInterruptionRequest,
+                    FOOTPRINT_INTERRUPTION_REQUEST,
                     this,
                     R.string.footprintInterruptionQuery,
                     R.string.interrupt,
@@ -88,9 +88,9 @@ class CreateFootprintFragment : FragmentBaseMVVM<FragmentCreateFootprintBinding,
 
     override fun onDialogResult(isCanceled: Boolean, requestCode: Int, data: Any?) {
         when(requestCode) {
-            OkDialog.REQUEST_CODE -> proceedMoveToSelectPhotoPermissionRequest()
-            geolocationRequest -> if(!isCanceled) viewModel.onGotoLocationSettingsSelected()
-            footprintInterruptionRequest -> if(!isCanceled) viewModel.onBackConfirmed()
+            EXPLANATION_REQUEST -> proceedMoveToSelectPhotoPermissionRequest()
+            GEOLOCATION_REQUEST -> if(!isCanceled) viewModel.onGotoLocationSettingsSelected()
+            FOOTPRINT_INTERRUPTION_REQUEST -> if(!isCanceled) viewModel.onBackConfirmed()
         }
     }
 
@@ -105,7 +105,7 @@ class CreateFootprintFragment : FragmentBaseMVVM<FragmentCreateFootprintBinding,
 
     @OnShowRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)
     internal fun moveToSelectPhotoExplanation() =
-        OkDialog.show(this, R.string.externalStorageExplanation)
+        OkDialog.show(EXPLANATION_REQUEST, this, R.string.externalStorageExplanation)
 
     @OnPermissionDenied(Manifest.permission.WRITE_EXTERNAL_STORAGE)
     internal fun moveToSelectPhotoDenied() = showMessage(R.string.externalStorageDenied)

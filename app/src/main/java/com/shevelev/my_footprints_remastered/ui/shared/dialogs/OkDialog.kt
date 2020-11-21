@@ -11,13 +11,16 @@ import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view.FragmentBase
 
 class OkDialog : DialogFragment() {
     companion object {
-        const val REQUEST_CODE = 1642
-
+        private const val ARG_REQUEST_CODE = "ARG_REQUEST_CODE"
         private const val ARG_TEXT = "ARG_TEXT"
 
-        fun show(fragment: FragmentBase, @StringRes text: Int) {
+        fun show(
+            requestCode: Int,
+            fragment: FragmentBase,
+            @StringRes text: Int) {
             OkDialog().apply {
                 arguments = Bundle().apply {
+                    putInt(ARG_REQUEST_CODE, requestCode)
                     putInt(ARG_TEXT, text)
                 }
                 show(fragment.childFragmentManager, null)
@@ -31,13 +34,13 @@ class OkDialog : DialogFragment() {
                 .setMessage(requireArguments().getInt(ARG_TEXT))
                 .setCancelable(true)
                 .setPositiveButton(R.string.ok) { _, _ ->
-                    (parentFragment as FragmentBase).onDialogResult(false, REQUEST_CODE, null)
+                    (parentFragment as FragmentBase).onDialogResult(false, requireArguments().getInt(ARG_REQUEST_CODE), null)
                 }
                 .create()
         } ?: throw IllegalStateException("Activity cannot be null")
     }
 
     override fun onCancel(dialog: DialogInterface) {
-        (parentFragment as FragmentBase).onDialogResult(true, REQUEST_CODE, null)
+        (parentFragment as FragmentBase).onDialogResult(true, requireArguments().getInt(ARG_REQUEST_CODE), null)
     }
 }

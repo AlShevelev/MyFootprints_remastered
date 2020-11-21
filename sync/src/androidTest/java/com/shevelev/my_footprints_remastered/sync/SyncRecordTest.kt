@@ -4,8 +4,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.shevelev.my_footprints_remastered.common_entities.sync.SyncOperation
 import com.shevelev.my_footprints_remastered.storages.db.builder.DatabaseBuilder
-import com.shevelev.my_footprints_remastered.storages.db.repositories.SyncRecordRepository
-import com.shevelev.my_footprints_remastered.storages.db.repositories.SyncRecordRepositoryImpl
+import com.shevelev.my_footprints_remastered.sync.log_repositoty.SyncRecordRepository
+import com.shevelev.my_footprints_remastered.sync.log_repositoty.SyncRecordRepositoryImpl
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue

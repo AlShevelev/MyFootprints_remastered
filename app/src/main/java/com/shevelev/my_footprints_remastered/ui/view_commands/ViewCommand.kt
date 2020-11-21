@@ -6,7 +6,6 @@ import androidx.annotation.StringRes
 import com.shevelev.my_footprints_remastered.common_entities.Footprint
 import com.shevelev.my_footprints_remastered.common_entities.GeoPoint
 import com.shevelev.my_footprints_remastered.common_entities.PinColor
-import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view.FragmentBase
 import java.io.File
 
 interface ViewCommand
@@ -19,7 +18,7 @@ class ShowMessageText(val text: String): ViewCommand
 // Navigation
 class MoveBack: ViewCommand
 
-data class MoveToCreateFootprint(
+class MoveToCreateFootprint(
     val oldFootprint: Footprint?
 ) : ViewCommand
 
@@ -29,12 +28,12 @@ class MoveToMyWorld : ViewCommand
 
 class MoveToSettings : ViewCommand
 
-data class MoveToOneGallery(
+class MoveToOneGallery(
     val footprints: List<Footprint>,
     val currentIndex: Int
 ) : ViewCommand
 
-data class MoveToSetLocation(
+class MoveToSetLocation(
     val oldFootprint: Footprint?,
     val isImageUpdated: Boolean?
 ) : ViewCommand
@@ -62,7 +61,7 @@ class OpenGallery : ViewCommand
 
 class OpenLocationSettings : ViewCommand
 
-data class OpenEmail (
+class OpenEmail (
     val emailTo: String
 ) : ViewCommand
 
@@ -74,25 +73,31 @@ class AskAboutDelete : ViewCommand
 
 class StartLoadingMap : ViewCommand
 
-data class MoveAndZoomMap(
+class MoveAndZoomMap(
     val zoomFactor: Float,
     val location: Location
 ) : ViewCommand
 
-data class ShowColorDialog(
+class ShowColorDialog(
     @ColorInt
     val textColor: Int,
     @ColorInt
     val backgroundColor: Int
 ) : ViewCommand
 
-data class ShowMapDialog(
+class ShowMapDialog(
     val pinColor: PinColor,
     val imageFile: File,
     val comment: String?,
     val location: GeoPoint
 ) : ViewCommand
 
-data class StartSharing(
+class ShowGoogleDriveExplanationDialog: ViewCommand
+
+class ShowGoogleDriveFailDialog: ViewCommand
+
+class StartSharing(
     val footprint: Footprint
 ): ViewCommand
+
+class StartSignInToGoogleDrive: ViewCommand
