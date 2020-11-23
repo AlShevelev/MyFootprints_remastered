@@ -21,6 +21,7 @@ constructor(
         const val PIN_COLOR_BACKGROUND = "PIN_COLOR_BACKGROUND"
         const val USE_WIFI_TO_LOAD_GEO_DATA = "USE_WIFI_TO_LOAD_GEO_DATA"
         const val CAN_LOAD_GEO_FOR_SINGLE_FOOTPRINT = "CAN_LOAD_GEO_FOR_SINGLE_FOOTPRINT"
+        const val USE_WIFI_TO_BACKUP = "USE_WIFI_TO_BACKUP"
     }
 
     override fun savePinColor(pinColor: PinColor) {
@@ -47,11 +48,10 @@ constructor(
             it.readBoolean(Keys.USE_WIFI_TO_LOAD_GEO_DATA) ?: true
         }
 
-    override fun setUseWiFiToLoadGeoData(value: Boolean) {
+    override fun setUseWiFiToLoadGeoData(value: Boolean) =
         keyValueStorage.update {
             it.putBoolean(Keys.USE_WIFI_TO_LOAD_GEO_DATA, value)
         }
-    }
 
     override fun isCanLoadGeoForSingleFootprint(): Boolean =
         keyValueStorage.read {
@@ -59,9 +59,18 @@ constructor(
         }
 
 
-    override fun setCanLoadGeoForSingleFootprint(value: Boolean) {
+    override fun setCanLoadGeoForSingleFootprint(value: Boolean) =
         keyValueStorage.update {
             it.putBoolean(Keys.CAN_LOAD_GEO_FOR_SINGLE_FOOTPRINT, value)
         }
-    }
+
+    override fun isUseWiFiToBackup(): Boolean =
+        keyValueStorage.read {
+            it.readBoolean(Keys.USE_WIFI_TO_BACKUP) ?: true
+        }
+
+    override fun setUseWiFiToBackup(value: Boolean) =
+        keyValueStorage.update {
+            it.putBoolean(Keys.USE_WIFI_TO_BACKUP, value)
+        }
 }

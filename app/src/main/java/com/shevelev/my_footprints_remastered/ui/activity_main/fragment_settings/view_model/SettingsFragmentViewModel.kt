@@ -31,10 +31,14 @@ constructor(
     private val _isLoadGeoOnFootprintCreate = MutableLiveData(true)
     val isLoadGeoOnFootprintCreate: LiveData<Boolean> = _isLoadGeoOnFootprintCreate
 
+    private val _isUseWiFiToBackup = MutableLiveData(true)
+    val isUseWiFiToBackup: LiveData<Boolean> = _isUseWiFiToBackup
+
     init {
         launch {
             _isUseWiFiToLoadGeoData.value = model.isUseWiFiToLoadGeoData()
             _isLoadGeoOnFootprintCreate.value = model.isLoadGeoOnFootprintCreate()
+            _isUseWiFiToBackup.value = model.isUseWiFiToBackup()
         }
     }
 
@@ -49,6 +53,12 @@ constructor(
     fun onLoadGeoClick() {
         launch {
             _isLoadGeoOnFootprintCreate.value = model.setLoadGeoOnFootprintCreate()
+        }
+    }
+
+    fun onBackupWifiClick() {
+        launch {
+            _isUseWiFiToBackup.value = model.setUseWiFiToBackup()
         }
     }
 

@@ -16,6 +16,7 @@ constructor(
 
     private var _isUseWiFiToLoadGeoData: Boolean = true
     private var _isLoadGeoOnFootprintCreate: Boolean = true
+    private var _isUseWiFiToBackup = true
 
     override suspend fun isUseWiFiToLoadGeoData(): Boolean {
         _isUseWiFiToLoadGeoData = withContext(dispatchersProvider.ioDispatcher) {
@@ -49,5 +50,22 @@ constructor(
         }
 
         return _isLoadGeoOnFootprintCreate
+    }
+
+    override suspend fun isUseWiFiToBackup(): Boolean {
+        _isUseWiFiToBackup = withContext(dispatchersProvider.ioDispatcher) {
+            keyValueStorageFacade.isUseWiFiToBackup()
+        }
+        return _isUseWiFiToBackup
+    }
+
+    override suspend fun setUseWiFiToBackup(): Boolean {
+        _isUseWiFiToBackup = !_isUseWiFiToBackup
+
+        withContext(dispatchersProvider.ioDispatcher) {
+            keyValueStorageFacade.setUseWiFiToBackup(_isUseWiFiToBackup)
+        }
+
+        return _isUseWiFiToBackup
     }
 }

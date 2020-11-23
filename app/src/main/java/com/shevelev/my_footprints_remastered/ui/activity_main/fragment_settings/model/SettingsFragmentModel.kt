@@ -10,4 +10,8 @@ interface SettingsFragmentModel : ModelBase {
     suspend fun isLoadGeoOnFootprintCreate(): Boolean
 
     suspend fun setLoadGeoOnFootprintCreate(): Boolean
+
+    suspend fun isUseWiFiToBackup(): Boolean
+
+    suspend fun setUseWiFiToBackup(): Boolean
 }
