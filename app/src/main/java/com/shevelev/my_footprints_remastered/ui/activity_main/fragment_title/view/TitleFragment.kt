@@ -13,7 +13,7 @@ import coil.request.RequestDisposable
 import com.shevelev.my_footprints_remastered.R
 import com.shevelev.my_footprints_remastered.application.App
 import com.shevelev.my_footprints_remastered.databinding.FragmentTitleBinding
-import com.shevelev.my_footprints_remastered.sync.sign_in.GoogleDriveSignIn
+import com.shevelev.my_footprints_remastered.sync.gd_sign_in.GoogleDriveSignIn
 import com.shevelev.my_footprints_remastered.ui.activity_main.navigation.MainActivityNavigation
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view.FragmentBaseMVVM
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_title.di.TitleFragmentComponent

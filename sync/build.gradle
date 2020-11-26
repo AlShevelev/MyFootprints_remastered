@@ -49,6 +49,8 @@ dependencies {
     implementation "com.google.api-client:google-api-client-android:$google_api_client_version"
     implementation "com.google.http-client:google-http-client-gson:$google_http_client_version"
 
+    implementation "androidx.work:work-runtime-ktx:$work_version"
+
     testImplementation "junit:junit:$junit_version"
     androidTestImplementation "androidx.test.ext:junit:$junit_test_ext_version"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"

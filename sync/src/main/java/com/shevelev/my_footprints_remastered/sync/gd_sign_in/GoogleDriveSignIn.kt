@@ -1,4 +1,4 @@
-package com.shevelev.my_footprints_remastered.sync.sign_in
+package com.shevelev.my_footprints_remastered.sync.gd_sign_in
 
 import android.content.Intent
 import androidx.fragment.app.Fragment

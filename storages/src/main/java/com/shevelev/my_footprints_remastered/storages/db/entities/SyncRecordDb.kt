@@ -20,5 +20,8 @@ data class SyncRecordDb (
     val syncInProgress: Int,
 
     @ColumnInfo(name = "created", index = true)
-    val created: Long
+    val created: Long,
+
+    @ColumnInfo(name = "is_metadata_only_updated")
+    val isMetadataOnlyUpdated: Boolean?
 )

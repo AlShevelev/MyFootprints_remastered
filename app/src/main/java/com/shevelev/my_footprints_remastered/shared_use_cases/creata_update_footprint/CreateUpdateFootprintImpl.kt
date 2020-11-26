@@ -7,9 +7,9 @@ import com.shevelev.my_footprints_remastered.common_entities.UpdateFootprintInfo
 import com.shevelev.my_footprints_remastered.services.update_geo_service.UpdateGeoService
 import com.shevelev.my_footprints_remastered.shared_use_cases.update_geo.UpdateGeo
 import com.shevelev.my_footprints_remastered.storages.db.repositories.FootprintRepository
-import com.shevelev.my_footprints_remastered.sync.log_repositoty.SyncRecordRepository
 import com.shevelev.my_footprints_remastered.storages.files.FilesHelper
 import com.shevelev.my_footprints_remastered.storages.key_value.KeyValueStorageFacade
+import com.shevelev.my_footprints_remastered.sync.log_repositoty.SyncRecordRepository
 import com.shevelev.my_footprints_remastered.utils.id_hash.IdUtil
 import dagger.Lazy
 import org.threeten.bp.ZonedDateTime
@@ -24,7 +24,7 @@ constructor(
     private val footprintRepository: FootprintRepository,
     private val keyValueStorageFacade: KeyValueStorageFacade,
     private val updateGeoUseCase: Lazy<UpdateGeo>,
-    private val syncRecordRepository: com.shevelev.my_footprints_remastered.sync.log_repositoty.SyncRecordRepository
+    private val syncRecordRepository: SyncRecordRepository
 ) : CreateUpdateFootprint {
 
     override suspend fun create(info: CreateFootprintInfo): FootprintCreateInfo {
@@ -42,7 +42,8 @@ constructor(
             created = ZonedDateTime.now(),
             city = null,
             country = null,
-            isGeoLoaded = false
+            isGeoLoaded = false,
+            googleDriveFileId = null
         )
         footprintRepository.create(footprint)
 
@@ -83,8 +84,8 @@ constructor(
                 created = info.oldFootprint.created,
                 city = if(locationUpdated) null else info.oldFootprint.city,
                 country = if(locationUpdated) null else info.oldFootprint.country,
-                isGeoLoaded = !locationUpdated
-
+                isGeoLoaded = !locationUpdated,
+                googleDriveFileId = info.oldFootprint.googleDriveFileId
             )
             footprintRepository.update(footprint)
 
@@ -96,7 +97,7 @@ constructor(
                 UpdateGeoService.start(appContext, footprint)
             }
 
-            syncRecordRepository.addUpdateRecord(footprint.id)
+            syncRecordRepository.addUpdateRecord(footprint.id, !info.isImageUpdated)
 
             FootprintUpdateInfo(footprint)
         } else {

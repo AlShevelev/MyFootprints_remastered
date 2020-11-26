@@ -24,16 +24,17 @@ constructor(
     /**
      * Add the sync log record for a new footprint
      */
-    override fun addCreateRecord(footprintId: Long) = db.syncRecord.create(createDbRecord(footprintId, SyncOperation.CREATE))
+    override fun addCreateRecord(footprintId: Long) =
+        db.syncRecord.create(createDbRecord(footprintId, SyncOperation.CREATE, null))
 
     /**
      * Add the sync log record for an updated footprint
      */
-    override fun addUpdateRecord(footprintId: Long) {
+    override fun addUpdateRecord(footprintId: Long, isMetadataOnlyUpdated: Boolean) {
         db.runConsistent {
             val dbRecord = db.syncRecord.readLast(footprintId)
             if(dbRecord == null) {
-                db.syncRecord.create(createDbRecord(footprintId, SyncOperation.UPDATE))
+                db.syncRecord.create(createDbRecord(footprintId, SyncOperation.UPDATE, isMetadataOnlyUpdated))
             }
         }
     }
@@ -46,7 +47,7 @@ constructor(
             val dbRecord = db.syncRecord.readLast(footprintId)
 
             if(dbRecord == null) {
-                db.syncRecord.create(createDbRecord(footprintId, SyncOperation.DELETE))
+                db.syncRecord.create(createDbRecord(footprintId, SyncOperation.DELETE, null))
             } else {
                 when(dbRecord.operation.mapToOperation()) {
                     SyncOperation.CREATE -> db.syncRecord.deleteById(dbRecord.id)
@@ -101,12 +102,13 @@ constructor(
             else -> throw UnsupportedOperationException("This operation code is not supported: $this")
         }
 
-    private fun createDbRecord(footprintId: Long, operation: SyncOperation) =
+    private fun createDbRecord(footprintId: Long, operation: SyncOperation, isMetadataOnlyUpdated: Boolean?) =
         SyncRecordDb(
             id = IdUtil.generateLongId(),
             footprintId = footprintId,
             operation = operation.mapToDb(),
             syncInProgress = 0,
-            created = System.nanoTime()
+            created = System.nanoTime(),
+            isMetadataOnlyUpdated = isMetadataOnlyUpdated
         )
 }

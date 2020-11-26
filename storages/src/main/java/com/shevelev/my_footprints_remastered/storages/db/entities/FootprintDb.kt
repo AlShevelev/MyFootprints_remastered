@@ -42,5 +42,8 @@ data class FootprintDb(
     val country: String?,
 
     @ColumnInfo(name = "is_geo_loaded")
-    val isGeoLoaded: Boolean
+    val isGeoLoaded: Boolean,
+
+    @ColumnInfo(name = "gd_file_id")
+    val googleDriveFileId: String?
 )

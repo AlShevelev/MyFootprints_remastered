@@ -8,8 +8,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.shevelev.my_footprints_remastered.R
 import com.shevelev.my_footprints_remastered.storages.files.FilesHelper
-import com.shevelev.my_footprints_remastered.sync.sign_in.GoogleDriveSignIn
-import com.shevelev.my_footprints_remastered.sync.sign_in.GoogleDriveSignInStatus
+import com.shevelev.my_footprints_remastered.sync.gd_sign_in.GoogleDriveSignIn
+import com.shevelev.my_footprints_remastered.sync.gd_sign_in.GoogleDriveSignInStatus
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_title.model.TitleFragmentModel
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_model.ViewModelBase
 import com.shevelev.my_footprints_remastered.ui.view_commands.*

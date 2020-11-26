@@ -13,6 +13,8 @@ interface FootprintRepository {
 
     fun updateGeo(id: Long, city: String?, country: String?)
 
+    fun updateGoogleDriveFileId(id: Long, gdFileId: String)
+
     fun delete(id: Long)
 
     /**

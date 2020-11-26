@@ -6,6 +6,7 @@ import com.jakewharton.threetenabp.AndroidThreeTen
 import com.shevelev.my_footprints_remastered.application.di.AppComponent
 import com.shevelev.my_footprints_remastered.di_storage.DependencyInjectionStorage
 import com.shevelev.my_footprints_remastered.services.update_geo_worker.UpdateGeoWorkerManager
+import com.shevelev.my_footprints_remastered.services.sync_worker.SyncWorkerManager
 import com.shevelev.my_footprints_remastered.utils.id_hash.IdUtil
 import timber.log.Timber
 import javax.inject.Inject
@@ -31,5 +32,6 @@ class App : Application() {
         Timber.plant(timberTree)
 
         UpdateGeoWorkerManager.setupWorker(this.applicationContext)
+        SyncWorkerManager.setupWorker(this.applicationContext)
     }
 }

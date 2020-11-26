@@ -22,6 +22,8 @@ constructor(
 
     override fun updateGeo(id: Long, city: String?, country: String?) = db.footprint.updateGeo(id, city, country)
 
+    override fun updateGoogleDriveFileId(id: Long, gdFileId: String) = db.footprint.updateGoogleDriveFileId(id, gdFileId)
+
     override fun delete(id: Long) = db.footprint.delete(id)
 
     /**
@@ -41,7 +43,8 @@ constructor(
             created = created,
             city = city,
             country = country,
-            isGeoLoaded = isGeoLoaded
+            isGeoLoaded = isGeoLoaded,
+            googleDriveFileId = googleDriveFileId
         )
 
     private fun Footprint.mapToDb() =
@@ -57,6 +60,7 @@ constructor(
             createdSort = created.toInstant().epochSecond,
             city = city,
             country = country,
-            isGeoLoaded = isGeoLoaded
+            isGeoLoaded = isGeoLoaded,
+            googleDriveFileId = googleDriveFileId
         )
 }

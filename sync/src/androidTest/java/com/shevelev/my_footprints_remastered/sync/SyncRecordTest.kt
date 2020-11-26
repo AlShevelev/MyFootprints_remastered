@@ -60,7 +60,7 @@ class SyncRecordTest {
         val footprintId = 1L
 
         // Act
-        repository.addUpdateRecord(footprintId)
+        repository.addUpdateRecord(footprintId, true)
 
         // Assert
         val allRecords = repository.getAll()
@@ -77,10 +77,10 @@ class SyncRecordTest {
     fun updateAfterUpdate() {
         // Arrange
         val footprintId = 1L
-        repository.addUpdateRecord(footprintId)
+        repository.addUpdateRecord(footprintId, true)
 
         // Act
-        repository.addUpdateRecord(footprintId)
+        repository.addUpdateRecord(footprintId, true)
 
         // Assert
         val allRecords = repository.getAll()
@@ -100,7 +100,7 @@ class SyncRecordTest {
         repository.addCreateRecord(footprintId)
 
         // Act
-        repository.addUpdateRecord(footprintId)
+        repository.addUpdateRecord(footprintId, true)
 
         // Assert
         val allRecords = repository.getAll()
@@ -121,7 +121,7 @@ class SyncRecordTest {
         repository.getAllAndMark()              // Mark the record as "sync in progress"
 
         // Act
-        repository.addUpdateRecord(footprintId)
+        repository.addUpdateRecord(footprintId, true)
 
         // Assert
         val allRecords = repository.getAll()
@@ -146,9 +146,9 @@ class SyncRecordTest {
         repository.getAllAndMark()              // Mark the record as "sync in progress"
 
         // Act
-        repository.addUpdateRecord(footprintId)
+        repository.addUpdateRecord(footprintId, true)
         repository.clearMarks()
-        repository.addUpdateRecord(footprintId)
+        repository.addUpdateRecord(footprintId, true)
 
         // Assert
         val allRecords = repository.getAll()
@@ -172,7 +172,7 @@ class SyncRecordTest {
         repository.addDeleteRecord(footprintId)
 
         // Act
-        repository.addUpdateRecord(footprintId)
+        repository.addUpdateRecord(footprintId, true)
 
         // Assert
         val allRecords = repository.getAll()
@@ -208,7 +208,7 @@ class SyncRecordTest {
     fun deleteAfterUpdate() {
         // Arrange
         val footprintId = 1L
-        repository.addUpdateRecord(footprintId)
+        repository.addUpdateRecord(footprintId, true)
 
         // Act
         repository.addDeleteRecord(footprintId)

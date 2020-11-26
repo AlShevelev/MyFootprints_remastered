@@ -20,5 +20,7 @@ data class Footprint (
 
     val city: String?,
     val country: String?,
-    val isGeoLoaded: Boolean
+    val isGeoLoaded: Boolean,
+
+    val googleDriveFileId: String?
 ) : Parcelable
