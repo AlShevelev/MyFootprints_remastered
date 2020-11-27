@@ -6,5 +6,7 @@ package com.shevelev.my_footprints_remastered.common_entities.sync
 data class SyncRecord (
     val id: Long,
     val footprintId: Long,
-    val operation: SyncOperation
+    val operation: SyncOperation,
+    val isMetadataUpdated: Boolean?,
+    val isImageUpdated: Boolean?
 )

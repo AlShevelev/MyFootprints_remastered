@@ -16,7 +16,7 @@ interface SyncRecordRepository {
     /**
      * Add the sync log record for an updated footprint
      */
-    fun addUpdateRecord(footprintId: Long, isMetadataOnlyUpdated: Boolean)
+    fun addUpdateRecord(footprintId: Long, isMetadataUpdated: Boolean, isImageUpdated: Boolean)
 
     /**
      * Add the sync log record for a deleted footprint

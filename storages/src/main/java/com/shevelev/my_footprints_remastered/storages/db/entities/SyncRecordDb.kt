@@ -22,6 +22,9 @@ data class SyncRecordDb (
     @ColumnInfo(name = "created", index = true)
     val created: Long,
 
-    @ColumnInfo(name = "is_metadata_only_updated")
-    val isMetadataOnlyUpdated: Boolean?
+    @ColumnInfo(name = "is_metadata_updated")
+    val isMetadataUpdated: Boolean?,
+
+    @ColumnInfo(name = "is_image_updated")
+    val isImageUpdated: Boolean?
 )

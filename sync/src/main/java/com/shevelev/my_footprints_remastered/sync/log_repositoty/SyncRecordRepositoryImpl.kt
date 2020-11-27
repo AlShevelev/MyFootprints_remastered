@@ -25,16 +25,16 @@ constructor(
      * Add the sync log record for a new footprint
      */
     override fun addCreateRecord(footprintId: Long) =
-        db.syncRecord.create(createDbRecord(footprintId, SyncOperation.CREATE, null))
+        db.syncRecord.create(createDbRecord(footprintId, SyncOperation.CREATE, null, null))
 
     /**
      * Add the sync log record for an updated footprint
      */
-    override fun addUpdateRecord(footprintId: Long, isMetadataOnlyUpdated: Boolean) {
+    override fun addUpdateRecord(footprintId: Long, isMetadataUpdated: Boolean, isImageUpdated: Boolean) {
         db.runConsistent {
             val dbRecord = db.syncRecord.readLast(footprintId)
             if(dbRecord == null) {
-                db.syncRecord.create(createDbRecord(footprintId, SyncOperation.UPDATE, isMetadataOnlyUpdated))
+                db.syncRecord.create(createDbRecord(footprintId, SyncOperation.UPDATE, isMetadataUpdated, isImageUpdated))
             }
         }
     }
@@ -47,7 +47,7 @@ constructor(
             val dbRecord = db.syncRecord.readLast(footprintId)
 
             if(dbRecord == null) {
-                db.syncRecord.create(createDbRecord(footprintId, SyncOperation.DELETE, null))
+                db.syncRecord.create(createDbRecord(footprintId, SyncOperation.DELETE, null, null))
             } else {
                 when(dbRecord.operation.mapToOperation()) {
                     SyncOperation.CREATE -> db.syncRecord.deleteById(dbRecord.id)
@@ -84,7 +84,9 @@ constructor(
         SyncRecord(
             id = id,
             footprintId = footprintId,
-            operation = operation.mapToOperation()
+            operation = operation.mapToOperation(),
+            isMetadataUpdated = isMetadataUpdated,
+            isImageUpdated = isImageUpdated
         )
 
     private fun SyncOperation.mapToDb() =
@@ -102,13 +104,19 @@ constructor(
             else -> throw UnsupportedOperationException("This operation code is not supported: $this")
         }
 
-    private fun createDbRecord(footprintId: Long, operation: SyncOperation, isMetadataOnlyUpdated: Boolean?) =
+    private fun createDbRecord(
+        footprintId: Long,
+        operation: SyncOperation,
+        isMetadataUpdated: Boolean?,
+        isImageUpdated: Boolean?) =
+
         SyncRecordDb(
             id = IdUtil.generateLongId(),
             footprintId = footprintId,
             operation = operation.mapToDb(),
             syncInProgress = 0,
             created = System.nanoTime(),
-            isMetadataOnlyUpdated = isMetadataOnlyUpdated
+            isMetadataUpdated = isMetadataUpdated,
+            isImageUpdated = isImageUpdated
         )
 }

@@ -67,10 +67,13 @@ constructor(
      * @return null - nothing to update
      */
     override suspend fun update(info: UpdateFootprintInfo): FootprintUpdateInfo? {
-        val result = if(isNeedToUpdate(info)) {
+        val isMetadataUpdated = isMetadataUpdated(info)
+        val result = if(isMetadataUpdated || info.isImageUpdated) {
 
             // update the image
-            updateImage(info.draftImageFile, info.oldFootprint.imageFileName)
+            if(info.isImageUpdated) {
+                updateImage(info.draftImageFile, info.oldFootprint.imageFileName)
+            }
 
             val locationUpdated = info.location != info.oldFootprint.location
 
@@ -97,7 +100,7 @@ constructor(
                 UpdateGeoService.start(appContext, footprint)
             }
 
-            syncRecordRepository.addUpdateRecord(footprint.id, !info.isImageUpdated)
+            syncRecordRepository.addUpdateRecord(footprint.id, isMetadataUpdated, info.isImageUpdated)
 
             FootprintUpdateInfo(footprint)
         } else {
@@ -149,9 +152,8 @@ constructor(
         imageFile.delete()
     }
 
-    private fun isNeedToUpdate(info: UpdateFootprintInfo): Boolean {
-        return info.isImageUpdated
-                || info.comment != info.oldFootprint.comment
+    private fun isMetadataUpdated(info: UpdateFootprintInfo): Boolean {
+        return info.comment != info.oldFootprint.comment
                 || info.location != info.oldFootprint.location
                 || info.pinColor != info.oldFootprint.pinColor
     }
