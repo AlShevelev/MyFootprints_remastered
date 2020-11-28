@@ -1,8 +1,8 @@
-package com.shevelev.my_footprints_remastered.sync.core
+package com.shevelev.my_footprints_remastered.sync.sync_core
 
 import com.shevelev.my_footprints_remastered.common_entities.sync.SyncOperation
 import com.shevelev.my_footprints_remastered.storages.key_value.KeyValueStorageFacade
-import com.shevelev.my_footprints_remastered.sync.log_repositoty.SyncRecordRepository
+import com.shevelev.my_footprints_remastered.sync.sync_record_repository.SyncRecordRepository
 import com.shevelev.my_footprints_remastered.sync.gd_sign_in.GoogleDriveCredentials
 import com.shevelev.my_footprints_remastered.utils.connection.ConnectionHelper
 import com.shevelev.my_footprints_remastered.utils.connection.ConnectionInfo

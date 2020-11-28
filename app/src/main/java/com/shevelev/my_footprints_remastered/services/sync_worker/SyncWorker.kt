@@ -5,7 +5,7 @@ import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.shevelev.my_footprints_remastered.application.App
 import com.shevelev.my_footprints_remastered.services.di.ServicesComponent
-import com.shevelev.my_footprints_remastered.sync.core.SyncCore
+import com.shevelev.my_footprints_remastered.sync.sync_core.SyncCore
 import javax.inject.Inject
 
 class SyncWorker(

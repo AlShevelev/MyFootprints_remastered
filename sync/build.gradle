@@ -30,6 +30,10 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+    }
 }
 
 dependencies {
@@ -42,7 +46,9 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutines_version"
 
     implementation "com.google.dagger:dagger:$dagger_version"
+
     implementation "com.jakewharton.timber:timber:$timber_version"
+    implementation "com.jakewharton.threetenabp:threetenabp:$three_ten_abp_version"
 
     implementation "com.google.android.gms:play-services-auth:$goole_auth_version"
     implementation "com.google.apis:google-api-services-drive:$goole_drive_version"

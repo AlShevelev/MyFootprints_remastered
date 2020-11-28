@@ -1,4 +1,4 @@
-package com.shevelev.my_footprints_remastered.sync.log_repositoty
+package com.shevelev.my_footprints_remastered.sync.sync_record_repository
 
 import com.shevelev.my_footprints_remastered.common_entities.sync.SyncOperation
 import com.shevelev.my_footprints_remastered.common_entities.sync.SyncRecord

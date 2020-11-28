@@ -4,8 +4,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.shevelev.my_footprints_remastered.common_entities.sync.SyncOperation
 import com.shevelev.my_footprints_remastered.storages.db.builder.DatabaseBuilder
-import com.shevelev.my_footprints_remastered.sync.log_repositoty.SyncRecordRepository
-import com.shevelev.my_footprints_remastered.sync.log_repositoty.SyncRecordRepositoryImpl
+import com.shevelev.my_footprints_remastered.sync.sync_record_repository.SyncRecordRepository
+import com.shevelev.my_footprints_remastered.sync.sync_record_repository.SyncRecordRepositoryImpl
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -16,6 +16,7 @@ import org.junit.runner.RunWith
 /**
  *  Tests for [SyncRecordRepository]
  */
+@Suppress("BooleanLiteralArgument")
 @RunWith(AndroidJUnit4::class)
 class SyncRecordTest {
     companion object {
@@ -60,7 +61,7 @@ class SyncRecordTest {
         val footprintId = 1L
 
         // Act
-        repository.addUpdateRecord(footprintId, true)
+        repository.addUpdateRecord(footprintId, true, true)
 
         // Assert
         val allRecords = repository.getAll()
@@ -77,10 +78,10 @@ class SyncRecordTest {
     fun updateAfterUpdate() {
         // Arrange
         val footprintId = 1L
-        repository.addUpdateRecord(footprintId, true)
+        repository.addUpdateRecord(footprintId, true, true)
 
         // Act
-        repository.addUpdateRecord(footprintId, true)
+        repository.addUpdateRecord(footprintId, true, true)
 
         // Assert
         val allRecords = repository.getAll()
@@ -100,7 +101,7 @@ class SyncRecordTest {
         repository.addCreateRecord(footprintId)
 
         // Act
-        repository.addUpdateRecord(footprintId, true)
+        repository.addUpdateRecord(footprintId, true, true)
 
         // Assert
         val allRecords = repository.getAll()
@@ -121,7 +122,7 @@ class SyncRecordTest {
         repository.getAllAndMark()              // Mark the record as "sync in progress"
 
         // Act
-        repository.addUpdateRecord(footprintId, true)
+        repository.addUpdateRecord(footprintId, true, true)
 
         // Assert
         val allRecords = repository.getAll()
@@ -146,9 +147,9 @@ class SyncRecordTest {
         repository.getAllAndMark()              // Mark the record as "sync in progress"
 
         // Act
-        repository.addUpdateRecord(footprintId, true)
+        repository.addUpdateRecord(footprintId, true, true)
         repository.clearMarks()
-        repository.addUpdateRecord(footprintId, true)
+        repository.addUpdateRecord(footprintId, true, true)
 
         // Assert
         val allRecords = repository.getAll()
@@ -172,7 +173,7 @@ class SyncRecordTest {
         repository.addDeleteRecord(footprintId)
 
         // Act
-        repository.addUpdateRecord(footprintId, true)
+        repository.addUpdateRecord(footprintId, true, true)
 
         // Assert
         val allRecords = repository.getAll()
@@ -208,7 +209,7 @@ class SyncRecordTest {
     fun deleteAfterUpdate() {
         // Arrange
         val footprintId = 1L
-        repository.addUpdateRecord(footprintId, true)
+        repository.addUpdateRecord(footprintId, true, true)
 
         // Act
         repository.addDeleteRecord(footprintId)
@@ -284,5 +285,3 @@ class SyncRecordTest {
         assertEquals(dbRecord.operation, SyncOperation.DELETE)
     }
 }
-
-// Test a case when we can have a several records with the same footprintId (when we start syncing, update log and update sync process)

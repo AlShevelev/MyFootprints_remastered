@@ -1,4 +1,4 @@
-package com.shevelev.my_footprints_remastered.sync.core
+package com.shevelev.my_footprints_remastered.sync.sync_core
 
 interface SyncCore {
     /**

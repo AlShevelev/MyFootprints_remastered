@@ -1,14 +1,15 @@
-package com.shevelev.my_footprints_remastered.sync.gd_low_level
+package com.shevelev.my_footprints_remastered.sync.gd_operations
 
-import android.util.Base64
 import com.google.api.client.http.ByteArrayContent
 import com.google.api.client.http.javanet.NetHttpTransport
 import com.google.api.client.json.gson.GsonFactory
 import com.google.api.services.drive.Drive
 import com.google.api.services.drive.model.File
+import com.shevelev.my_footprints_remastered.sync.footprint_meta_gd_crypt.FootprintMetaGoogleDrive
 import com.shevelev.my_footprints_remastered.sync.gd_sign_in.GoogleDriveCredentials
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
+import java.lang.UnsupportedOperationException
 import javax.inject.Inject
 
 class GoogleDriveOperationsImpl
@@ -20,19 +21,24 @@ constructor(
 
     private companion object {
         private const val SPACE = "appDataFolder"
-        private const val METADATA = "footprints_metadata"
         private const val MIME_TYPE = "application/octet-stream"
+
+        private const val COMMENT = "COM"
+        private const val COMMENT_1 = "COM1"
+        private const val COMMENT_2 = "COM2"
+        private const val COMMENT_3 = "COM"
+        private const val ALL_THE_REST = "REST"
     }
 
     private val service: Drive? by lazy { createService() }
 
-    override fun create(metadata: ByteArray, content: ByteArray, fileName: String): GoogleDriveFileId =
+    override fun create(footprintMetadata: FootprintMetaGoogleDrive, content: ByteArray, fileName: String): GoogleDriveFileId =
         processDriveOperation { service ->
             val fileMetadata = File()
 
             fileMetadata.name = fileName
             fileMetadata.parents = listOf(SPACE)
-            fileMetadata.properties = mapOf(METADATA to metadata.toDriveString())
+            saveProperties(fileMetadata, footprintMetadata)
 
             val fileContent = ByteArrayContent(MIME_TYPE, content)
 
@@ -45,10 +51,10 @@ constructor(
             val fileRequest = service
                 .files()
                 .get(fileId.id)
-                .setFields("name, properties")
+                .setFields("name, appProperties")
 
             val fileMetadata = fileRequest.execute()
-            val metadata = fileMetadata.properties[METADATA]!!.fromDriveString()
+            val metadata = loadProperties(fileMetadata)
 
             ByteArrayOutputStream().use { outputStream ->
                 fileRequest.executeMediaAndDownloadTo(outputStream)
@@ -83,7 +89,7 @@ constructor(
             result
         }
 
-    override fun updateMetadata(metadata: ByteArray, fileId: GoogleDriveFileId): Unit =
+    override fun updateMetadata(footprintMetadata: FootprintMetaGoogleDrive, fileId: GoogleDriveFileId): Unit =
         processDriveOperation { service ->
             val oldFileMetadata = service
                 .files()
@@ -93,7 +99,7 @@ constructor(
 
             val newFileMetadata = File()
             newFileMetadata.name = oldFileMetadata.name
-            newFileMetadata.properties = mapOf(METADATA to metadata.toDriveString())
+            saveProperties(newFileMetadata, footprintMetadata)
 
             service.files().update(fileId.id, newFileMetadata).execute()
         }
@@ -103,19 +109,19 @@ constructor(
             val oldFileMetadata = service
                 .files()
                 .get(fileId.id)
-                .setFields("name, properties")
+                .setFields("name, appProperties")
                 .execute()
 
             val newFileMetadata = File()
             newFileMetadata.name = oldFileMetadata.name
-            newFileMetadata.properties = oldFileMetadata.properties
+            newFileMetadata.appProperties = oldFileMetadata.appProperties
 
             val fileContent = ByteArrayContent(MIME_TYPE, content)
 
             service.files().update(fileId.id, newFileMetadata, fileContent).execute()
         }
 
-    override fun updateAll(metadata: ByteArray, content: ByteArray, fileId: GoogleDriveFileId): Unit =
+    override fun updateAll(footprintMetadata: FootprintMetaGoogleDrive, content: ByteArray, fileId: GoogleDriveFileId): Unit =
         processDriveOperation { service ->
             val oldFileMetadata = service
                 .files()
@@ -125,7 +131,7 @@ constructor(
 
             val newFileMetadata = File()
             newFileMetadata.name = oldFileMetadata.name
-            newFileMetadata.properties = mapOf(METADATA to metadata.toDriveString())
+            saveProperties(newFileMetadata, footprintMetadata)
 
             val fileContent = ByteArrayContent(MIME_TYPE, content)
 
@@ -157,7 +163,33 @@ constructor(
         }
     }
 
-    private fun ByteArray.toDriveString() = Base64.encodeToString(this, Base64.DEFAULT)
+    private fun saveProperties(file: File, metadata: FootprintMetaGoogleDrive) {
+        file.appProperties = mutableMapOf<String, String>()
+            .apply {
+                put(ALL_THE_REST, metadata.mainData)
 
-    private fun String.fromDriveString() = Base64.decode(this, Base64.DEFAULT)
+                metadata.comment.forEachIndexed { index, line ->
+                    val key = when(index) {
+                        0 -> COMMENT
+                        1 -> COMMENT_1
+                        2 -> COMMENT_2
+                        3 -> COMMENT_3
+                        else -> throw UnsupportedOperationException("Comment is too long")
+                    }
+                    put(key, line)
+                }
+            }
+    }
+
+    private fun loadProperties(file: File): FootprintMetaGoogleDrive {
+        return FootprintMetaGoogleDrive(
+            mainData = file.appProperties[ALL_THE_REST]!!,
+            comment = listOfNotNull(
+                file.appProperties[COMMENT],
+                file.appProperties[COMMENT_1],
+                file.appProperties[COMMENT_2],
+                file.appProperties[COMMENT_3]
+            )
+        )
+    }
 }

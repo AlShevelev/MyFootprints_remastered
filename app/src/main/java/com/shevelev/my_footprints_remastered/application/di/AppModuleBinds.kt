@@ -11,8 +11,8 @@ import com.shevelev.my_footprints_remastered.storages.key_value.storages.Storage
 import com.shevelev.my_footprints_remastered.storages.key_value.storages.combined.CombinedStorage
 import com.shevelev.my_footprints_remastered.storages.key_value.storages.in_memory.InMemoryStorage
 import com.shevelev.my_footprints_remastered.storages.key_value.storages.shared_preferences.SharedPreferencesStorage
-import com.shevelev.my_footprints_remastered.sync.log_repositoty.SyncRecordRepository
-import com.shevelev.my_footprints_remastered.sync.log_repositoty.SyncRecordRepositoryImpl
+import com.shevelev.my_footprints_remastered.sync.sync_record_repository.SyncRecordRepository
+import com.shevelev.my_footprints_remastered.sync.sync_record_repository.SyncRecordRepositoryImpl
 import com.shevelev.my_footprints_remastered.utils.connection.ConnectionHelper
 import com.shevelev.my_footprints_remastered.utils.connection.ConnectionHelperImpl
 import com.shevelev.my_footprints_remastered.utils.di_scopes.ApplicationScope

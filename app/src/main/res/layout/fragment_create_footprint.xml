@@ -70,7 +70,7 @@
             android:inputType="text"
 
             android:hint="@string/addComment"
-            android:maxLength="300"
+            android:maxLength="100"
 
             style="@style/Text.SizeNormal.Normal.Black"
 
