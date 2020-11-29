@@ -33,6 +33,8 @@ constructor(
 
     override fun getAllWithoutGeo(): List<Footprint> = db.footprint.readAllWithoutGeo().map { it.mapToEntity() }
 
+    override fun getById(footprintId: Long): Footprint? = db.footprint.readById(footprintId)?.mapToEntity()
+
     private fun FootprintDb.mapToEntity() =
         Footprint(
             id = id,

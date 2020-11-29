@@ -25,7 +25,7 @@ constructor(
             "$it\n${getGoogleMapUrl(footprint)}"
         } ?: getGoogleMapUrl(footprint)
 
-        val photoFile = filesHelper.createImageFile(footprint.imageFileName)
+        val photoFile = filesHelper.getOrCreateImageFile(footprint.imageFileName)
         val photoFileUri = FileProvider.getUriForFile(appContext, BuildConfig.APPLICATION_ID + ".file_provider", photoFile)
 
         val shareIntent = Intent().apply {

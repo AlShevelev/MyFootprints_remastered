@@ -74,7 +74,7 @@ constructor(
     private fun Footprint.mapToFootprintOnMap(): FootprintOnMap =
         FootprintOnMap(
             id = id,
-            imageFile = filesHelper.createImageFile(imageFileName),
+            imageFile = filesHelper.getOrCreateImageFile(imageFileName),
             location = location.toMapLocation(),
             comment = comment,
             pinColor = pinColor

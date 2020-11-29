@@ -99,7 +99,7 @@ constructor(
     private fun getLastFootprintUri(fileName: String?): Uri =
         fileName
             ?.let {
-                filesHelper.createImageFile(it).toUri()
+                filesHelper.getOrCreateImageFile(it).toUri()
             }
             ?: Uri.parse("android.resource://${appContext.packageName}/drawable/img_title_empty")
 

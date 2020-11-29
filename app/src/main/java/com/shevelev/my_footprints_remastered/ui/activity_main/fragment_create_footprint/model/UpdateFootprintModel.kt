@@ -55,7 +55,7 @@ constructor(
         sharedFootprint.comment = oldFootprint.comment
         sharedFootprint.manualSelectedLocation = oldFootprint.location.toAndroidLocation()
         sharedFootprint.image = withContext(dispatchersProvider.ioDispatcher) {
-            filesHelper.createImageFile(oldFootprint.imageFileName)
+            filesHelper.getOrCreateImageFile(oldFootprint.imageFileName)
         }
     }
 

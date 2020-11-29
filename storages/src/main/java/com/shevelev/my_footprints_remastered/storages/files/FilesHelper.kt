@@ -11,11 +11,13 @@ interface FilesHelper {
 
     fun createTempFile(): File
 
-    fun createImageFile(): File
+    fun getOrCreateImageFile(): File
 
-    fun createImageFile(fileName: String): File
+    fun getOrCreateImageFile(fileName: String): File
 
     fun copyFile(sourceFile: File, targetFile: File)
 
     fun deleteFile(file: File)
+
+    fun readFileContent(file: File): ByteArray
 }

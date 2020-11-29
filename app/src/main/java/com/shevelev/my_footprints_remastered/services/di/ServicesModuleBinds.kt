@@ -2,6 +2,8 @@ package com.shevelev.my_footprints_remastered.services.di
 
 import com.shevelev.my_footprints_remastered.shared_use_cases.update_geo.UpdateGeo
 import com.shevelev.my_footprints_remastered.shared_use_cases.update_geo.UpdateGeoImpl
+import com.shevelev.my_footprints_remastered.sync.footprint_meta_gd_crypt.FootprintMetaGoogleDriveCrypt
+import com.shevelev.my_footprints_remastered.sync.footprint_meta_gd_crypt.FootprintMetaGoogleDriveCryptImpl
 import com.shevelev.my_footprints_remastered.sync.sync_core.SyncCore
 import com.shevelev.my_footprints_remastered.sync.sync_core.SyncCoreImpl
 import com.shevelev.my_footprints_remastered.sync.gd_sign_in.GoogleDriveCredentials
@@ -19,4 +21,7 @@ abstract class ServicesModuleBinds {
 
     @Binds
     abstract fun provideGoogleDriveCredentials(credentials: GoogleDriveCredentialsImpl): GoogleDriveCredentials
+
+    @Binds
+    abstract fun provideFootprintMetaGoogleDriveCrypt(crypt: FootprintMetaGoogleDriveCryptImpl): FootprintMetaGoogleDriveCrypt
 }

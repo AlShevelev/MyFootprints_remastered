@@ -8,5 +8,6 @@ data class SyncRecord (
     val footprintId: Long,
     val operation: SyncOperation,
     val isMetadataUpdated: Boolean?,
-    val isImageUpdated: Boolean?
+    val isImageUpdated: Boolean?,
+    val googleDriveFileId: String?
 )

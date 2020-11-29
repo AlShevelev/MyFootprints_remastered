@@ -25,7 +25,7 @@ constructor(
      * Add the sync log record for a new footprint
      */
     override fun addCreateRecord(footprintId: Long) =
-        db.syncRecord.create(createDbRecord(footprintId, SyncOperation.CREATE, null, null))
+        db.syncRecord.create(createDbRecord(footprintId, SyncOperation.CREATE, null, null, null))
 
     /**
      * Add the sync log record for an updated footprint
@@ -34,7 +34,7 @@ constructor(
         db.runConsistent {
             val dbRecord = db.syncRecord.readLast(footprintId)
             if(dbRecord == null) {
-                db.syncRecord.create(createDbRecord(footprintId, SyncOperation.UPDATE, isMetadataUpdated, isImageUpdated))
+                db.syncRecord.create(createDbRecord(footprintId, SyncOperation.UPDATE, isMetadataUpdated, isImageUpdated, null))
             }
         }
     }
@@ -42,12 +42,12 @@ constructor(
     /**
      * Add the sync log record for a deleted footprint
      */
-    override fun addDeleteRecord(footprintId: Long) {
+    override fun addDeleteRecord(footprintId: Long, googleDriveFileId: String?) {
         db.runConsistent {
             val dbRecord = db.syncRecord.readLast(footprintId)
 
             if(dbRecord == null) {
-                db.syncRecord.create(createDbRecord(footprintId, SyncOperation.DELETE, null, null))
+                db.syncRecord.create(createDbRecord(footprintId, SyncOperation.DELETE, null, null, googleDriveFileId))
             } else {
                 when(dbRecord.operation.mapToOperation()) {
                     SyncOperation.CREATE -> db.syncRecord.deleteById(dbRecord.id)
@@ -86,7 +86,8 @@ constructor(
             footprintId = footprintId,
             operation = operation.mapToOperation(),
             isMetadataUpdated = isMetadataUpdated,
-            isImageUpdated = isImageUpdated
+            isImageUpdated = isImageUpdated,
+            googleDriveFileId = googleDriveFileId
         )
 
     private fun SyncOperation.mapToDb() =
@@ -108,7 +109,8 @@ constructor(
         footprintId: Long,
         operation: SyncOperation,
         isMetadataUpdated: Boolean?,
-        isImageUpdated: Boolean?) =
+        isImageUpdated: Boolean?,
+        googleDriveFileId: String?) =
 
         SyncRecordDb(
             id = IdUtil.generateLongId(),
@@ -117,6 +119,7 @@ constructor(
             syncInProgress = 0,
             created = System.nanoTime(),
             isMetadataUpdated = isMetadataUpdated,
-            isImageUpdated = isImageUpdated
+            isImageUpdated = isImageUpdated,
+            googleDriveFileId = googleDriveFileId
         )
 }

@@ -123,7 +123,7 @@ constructor(
         val last = footprintRepository.getLast()
         val count = footprintRepository.getCount()
 
-        syncRecordRepository.addDeleteRecord(footprint.id)
+        syncRecordRepository.addDeleteRecord(footprint.id, footprint.googleDriveFileId)
 
         return FootprintDeleteInfo(last?.id, last?.imageFileName, count)
     }
@@ -133,14 +133,14 @@ constructor(
     }
 
     private fun storeImage(draftImageFile: File): String {
-        val imageFile = filesHelper.createImageFile()
+        val imageFile = filesHelper.getOrCreateImageFile()
         filesHelper.copyFile(draftImageFile, imageFile)
 
         return imageFile.name
     }
 
     private fun updateImage(draftImageFile: File, oldImageFileName: String): String {
-        val oldImageFile = filesHelper.createImageFile(oldImageFileName)
+        val oldImageFile = filesHelper.getOrCreateImageFile(oldImageFileName)
 
         filesHelper.copyFile(draftImageFile, oldImageFile)
 
@@ -148,7 +148,7 @@ constructor(
     }
 
     private fun deleteImage(imageFileName: String) {
-        val imageFile = filesHelper.createImageFile(imageFileName)
+        val imageFile = filesHelper.getOrCreateImageFile(imageFileName)
         imageFile.delete()
     }
 

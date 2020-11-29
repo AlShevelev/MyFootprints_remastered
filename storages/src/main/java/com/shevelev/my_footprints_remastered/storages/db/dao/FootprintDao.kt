@@ -23,6 +23,9 @@ interface FootprintDao {
     @Query("select * from footprint where is_geo_loaded = 0")
     fun readAllWithoutGeo(): List<FootprintDb>
 
+    @Query("select * from footprint where footprint_id = :footprintId")
+    fun readById(footprintId: Long): FootprintDb?
+
     @Update
     fun update(footprint: FootprintDb)
 

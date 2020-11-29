@@ -29,7 +29,7 @@ data class FootprintListItem(
                 isFirstItem = false,
                 isLastItem = false,
                 useCacheForImage = true,
-                imageFile = filesHelper.createImageFile(footprint.imageFileName),
+                imageFile = filesHelper.getOrCreateImageFile(footprint.imageFileName),
                 created = footprint.created,
                 city = footprint.city,
                 country = footprint.country

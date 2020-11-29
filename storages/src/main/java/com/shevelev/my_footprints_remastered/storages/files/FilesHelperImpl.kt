@@ -29,9 +29,9 @@ constructor(
 
     override fun createTempFile(): File = File.createTempFile("tmp_", createFileName(), appContext.cacheDir)
 
-    override fun createImageFile(): File = createImageFile(createFileName())
+    override fun getOrCreateImageFile(): File = getOrCreateImageFile(createFileName())
 
-    override fun createImageFile(fileName: String): File {
+    override fun getOrCreateImageFile(fileName: String): File {
         val dir = File(appContext.filesDir, "photos")
         if(!dir.exists()) {
             dir.mkdir()
@@ -47,6 +47,8 @@ constructor(
     override fun deleteFile(file: File) {
         file.delete()
     }
+
+    override fun readFileContent(file: File): ByteArray = file.readBytes()
 
     private fun createFileName() = "${IdUtil.generateLongId()}.jpg"
 }

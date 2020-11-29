@@ -73,7 +73,7 @@ constructor(
         val footprint = model.getFootprint(model.currentIndex)
         sendCommand(ShowMapDialog(
             pinColor = footprint.pinColor,
-            imageFile = filesHelper.createImageFile(footprint.imageFileName),
+            imageFile = filesHelper.getOrCreateImageFile(footprint.imageFileName),
             comment = footprint.comment,
             location = footprint.location)
         )

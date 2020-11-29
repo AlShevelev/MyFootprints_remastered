@@ -26,5 +26,8 @@ data class SyncRecordDb (
     val isMetadataUpdated: Boolean?,
 
     @ColumnInfo(name = "is_image_updated")
-    val isImageUpdated: Boolean?
+    val isImageUpdated: Boolean?,
+
+    @ColumnInfo(name = "gd_file_id")
+    val googleDriveFileId: String?
 )

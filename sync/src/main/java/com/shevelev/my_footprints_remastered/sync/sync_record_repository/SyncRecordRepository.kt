@@ -21,7 +21,7 @@ interface SyncRecordRepository {
     /**
      * Add the sync log record for a deleted footprint
      */
-    fun addDeleteRecord(footprintId: Long)
+    fun addDeleteRecord(footprintId: Long, googleDriveFileId: String?)
 
     /**
      * Delete the sync log record by its id (don't mix with footprint id!)

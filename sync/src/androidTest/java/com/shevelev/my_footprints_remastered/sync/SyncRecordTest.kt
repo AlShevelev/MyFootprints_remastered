@@ -170,7 +170,7 @@ class SyncRecordTest {
     fun updateAfterDelete() {
         // Arrange
         val footprintId = 1L
-        repository.addDeleteRecord(footprintId)
+        repository.addDeleteRecord(footprintId, null)
 
         // Act
         repository.addUpdateRecord(footprintId, true, true)
@@ -192,7 +192,7 @@ class SyncRecordTest {
         val footprintId = 1L
 
         // Act
-        repository.addDeleteRecord(footprintId)
+        repository.addDeleteRecord(footprintId, null)
 
         // Assert
         val allRecords = repository.getAll()
@@ -212,7 +212,7 @@ class SyncRecordTest {
         repository.addUpdateRecord(footprintId, true, true)
 
         // Act
-        repository.addDeleteRecord(footprintId)
+        repository.addDeleteRecord(footprintId, null)
 
         // Assert
         val allRecords = repository.getAll()
@@ -232,7 +232,7 @@ class SyncRecordTest {
         repository.addCreateRecord(footprintId)
 
         // Act
-        repository.addDeleteRecord(footprintId)
+        repository.addDeleteRecord(footprintId, null)
 
         // Assert
         val allRecords = repository.getAll()
@@ -248,7 +248,7 @@ class SyncRecordTest {
         repository.getAllAndMark()          // Mark the record as "sync in progress"
 
         // Act
-        repository.addDeleteRecord(footprintId)
+        repository.addDeleteRecord(footprintId, null)
 
         // Assert
         val allRecords = repository.getAll()
@@ -269,10 +269,10 @@ class SyncRecordTest {
     fun deleteAfterDelete() {
         // Arrange
         val footprintId = 1L
-        repository.addDeleteRecord(footprintId)
+        repository.addDeleteRecord(footprintId, null)
 
         // Act
-        repository.addDeleteRecord(footprintId)
+        repository.addDeleteRecord(footprintId, null)
 
         // Assert
         val allRecords = repository.getAll()

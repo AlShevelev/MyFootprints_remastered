@@ -23,4 +23,6 @@ interface FootprintRepository {
     fun getAll(): List<Footprint>
 
     fun getAllWithoutGeo(): List<Footprint>
+
+    fun getById(footprintId: Long): Footprint?
 }
