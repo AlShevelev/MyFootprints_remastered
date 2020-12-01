@@ -14,4 +14,7 @@ interface KeyValueStorageFacade {
 
     fun isUseWiFiToBackup(): Boolean
     fun setUseWiFiToBackup(value: Boolean)
+
+    fun isStartLoadingCompleted(): Boolean
+    fun setStartLoadingCompleted(value: Boolean)
 }
