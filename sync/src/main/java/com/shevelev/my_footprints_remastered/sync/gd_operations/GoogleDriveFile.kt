@@ -1,5 +1,6 @@
 package com.shevelev.my_footprints_remastered.sync.gd_operations
 
+import com.shevelev.my_footprints_remastered.common_entities.sync.GoogleDriveFileId
 import com.shevelev.my_footprints_remastered.sync.footprint_meta_gd_crypt.FootprintMetaGoogleDrive
 
 class GoogleDriveFile (

@@ -1,4 +1,4 @@
-package com.shevelev.my_footprints_remastered.sync.sync_record_repository
+package com.shevelev.my_footprints_remastered.sync.db_repositories
 
 import com.shevelev.my_footprints_remastered.common_entities.sync.SyncRecord
 

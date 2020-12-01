@@ -9,7 +9,7 @@ import com.shevelev.my_footprints_remastered.shared_use_cases.update_geo.UpdateG
 import com.shevelev.my_footprints_remastered.storages.db.repositories.FootprintRepository
 import com.shevelev.my_footprints_remastered.storages.files.FilesHelper
 import com.shevelev.my_footprints_remastered.storages.key_value.KeyValueStorageFacade
-import com.shevelev.my_footprints_remastered.sync.sync_record_repository.SyncRecordRepository
+import com.shevelev.my_footprints_remastered.sync.db_repositories.SyncRecordRepository
 import com.shevelev.my_footprints_remastered.utils.id_hash.IdUtil
 import dagger.Lazy
 import org.threeten.bp.ZonedDateTime

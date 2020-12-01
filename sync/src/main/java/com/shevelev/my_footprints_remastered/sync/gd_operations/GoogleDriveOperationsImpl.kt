@@ -5,6 +5,7 @@ import com.google.api.client.http.javanet.NetHttpTransport
 import com.google.api.client.json.gson.GsonFactory
 import com.google.api.services.drive.Drive
 import com.google.api.services.drive.model.File
+import com.shevelev.my_footprints_remastered.common_entities.sync.GoogleDriveFileId
 import com.shevelev.my_footprints_remastered.sync.footprint_meta_gd_crypt.FootprintMetaGoogleDrive
 import com.shevelev.my_footprints_remastered.sync.gd_sign_in.GoogleDriveCredentials
 import timber.log.Timber

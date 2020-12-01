@@ -6,9 +6,9 @@ import com.shevelev.my_footprints_remastered.storages.db.repositories.FootprintR
 import com.shevelev.my_footprints_remastered.storages.files.FilesHelper
 import com.shevelev.my_footprints_remastered.storages.key_value.KeyValueStorageFacade
 import com.shevelev.my_footprints_remastered.sync.footprint_meta_gd_crypt.FootprintMetaGoogleDriveCrypt
-import com.shevelev.my_footprints_remastered.sync.gd_operations.GoogleDriveFileId
+import com.shevelev.my_footprints_remastered.common_entities.sync.GoogleDriveFileId
 import com.shevelev.my_footprints_remastered.sync.gd_operations.GoogleDriveOperations
-import com.shevelev.my_footprints_remastered.sync.sync_record_repository.SyncRecordRepository
+import com.shevelev.my_footprints_remastered.sync.db_repositories.SyncRecordRepository
 import com.shevelev.my_footprints_remastered.sync.gd_sign_in.GoogleDriveCredentials
 import com.shevelev.my_footprints_remastered.utils.connection.ConnectionHelper
 import com.shevelev.my_footprints_remastered.utils.connection.ConnectionInfo
