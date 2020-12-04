@@ -1,7 +1,6 @@
 package com.shevelev.my_footprints_remastered.ui.activity_main.fragment_title.view
 
 import android.Manifest
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,12 +12,11 @@ import coil.request.RequestDisposable
 import com.shevelev.my_footprints_remastered.R
 import com.shevelev.my_footprints_remastered.application.App
 import com.shevelev.my_footprints_remastered.databinding.FragmentTitleBinding
-import com.shevelev.my_footprints_remastered.sync.gd_sign_in.GoogleDriveSignIn
-import com.shevelev.my_footprints_remastered.ui.activity_main.navigation.MainActivityNavigation
-import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view.FragmentBaseMVVM
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_title.di.TitleFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_title.view_model.TitleFragmentViewModel
+import com.shevelev.my_footprints_remastered.ui.activity_main.navigation.MainActivityNavigation
 import com.shevelev.my_footprints_remastered.ui.shared.dialogs.OkDialog
+import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view.FragmentBaseMVVM
 import com.shevelev.my_footprints_remastered.ui.view_commands.*
 import kotlinx.android.synthetic.main.fragment_title.*
 import permissions.dispatcher.NeedsPermission
@@ -31,17 +29,12 @@ import javax.inject.Inject
 class TitleFragment : FragmentBaseMVVM<FragmentTitleBinding, TitleFragmentViewModel>() {
     companion object {
         private const val LOCATION_EXPLANATION_REQUEST = 12359
-        private const val GD_EXPLANATION_REQUEST = 7065
-        private const val GD_FAIL_REQUEST = 9071
     }
 
     private var lastFootprintDispose: RequestDisposable? = null
 
     @Inject
     internal lateinit var navigation: MainActivityNavigation
-
-    @Inject
-    internal lateinit var googleDriveSignIn: GoogleDriveSignIn
 
     override fun provideViewModelType(): Class<TitleFragmentViewModel> = TitleFragmentViewModel::class.java
 
@@ -72,9 +65,6 @@ class TitleFragment : FragmentBaseMVVM<FragmentTitleBinding, TitleFragmentViewMo
             is MoveToGridGallery -> navigation.moveToGridGallery(this)
             is MoveToMyWorld -> navigation.moveToMyWorld(this)
             is MoveToSettings -> navigation.moveToSettings(this)
-            is ShowGoogleDriveExplanationDialog -> OkDialog.show(GD_EXPLANATION_REQUEST, this, R.string.googleDriveExplanation)
-            is ShowGoogleDriveFailDialog -> OkDialog.show(GD_FAIL_REQUEST, this, R.string.googleDriveFail)
-            is StartSignInToGoogleDrive -> googleDriveSignIn.continueSignIn(this)
         }
     }
 
@@ -86,13 +76,7 @@ class TitleFragment : FragmentBaseMVVM<FragmentTitleBinding, TitleFragmentViewMo
     override fun onDialogResult(isCanceled: Boolean, requestCode: Int, data: Any?) {
         when(requestCode) {
             LOCATION_EXPLANATION_REQUEST -> proceedMoveToCreateFootprintPermissionRequest()
-            GD_EXPLANATION_REQUEST -> viewModel.onGoogleDriveExplanationClosed()
         }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        googleDriveSignIn.processSignInActivityResult(requestCode, resultCode, data)
     }
 
     @NeedsPermission(Manifest.permission.ACCESS_FINE_LOCATION)

@@ -6,6 +6,8 @@ import com.shevelev.my_footprints_remastered.application.di.AppModule
 import com.shevelev.my_footprints_remastered.application.di.DaggerAppComponent
 import com.shevelev.my_footprints_remastered.common_entities.Footprint
 import com.shevelev.my_footprints_remastered.services.di.ServicesComponent
+import com.shevelev.my_footprints_remastered.ui.activity_first_loading.di.FirstLoadingActivityComponent
+import com.shevelev.my_footprints_remastered.ui.activity_first_loading.fragment_google_drive_sign_in.di.GoogleDriveSignInFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.di.UIComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.di.MainActivityComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.di.CreateFootprintFragmentComponent
@@ -132,6 +134,10 @@ class DependencyInjectionStorage(private val app: Application) {
             MapDialogComponent::class -> getBase<MainActivityComponent>().mapDialog.build()
 
             SettingsFragmentComponent::class -> getBase<MainActivityComponent>().settingsFragment.build()
+
+            FirstLoadingActivityComponent::class -> getBase<UIComponent>().firstLoadingActivity.build()
+
+            GoogleDriveSignInFragmentComponent::class -> getBase<FirstLoadingActivityComponent>().googleDriveSignInFragment.build()
 
             else -> throw UnsupportedOperationException("This component is not supported: ${type.simpleName}")
         } as T

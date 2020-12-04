@@ -48,6 +48,7 @@ abstract class FragmentBase: Fragment() {
 
         if(!isDestroyedBySystem) {
             releaseInjection(injectionKey)
+            final()
         }
     }
 
@@ -62,4 +63,6 @@ abstract class FragmentBase: Fragment() {
     protected fun showMessage(text: String) = Toast.makeText(context, text, Toast.LENGTH_LONG).show()
 
     protected fun showMessage(@StringRes text: Int) = Toast.makeText(context, text, Toast.LENGTH_LONG).show()
+
+    protected open fun final() {}
 }

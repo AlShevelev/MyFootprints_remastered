@@ -1,0 +1,11 @@
+package com.shevelev.my_footprints_remastered.ui.activity_first_loading.di
+
+import com.shevelev.my_footprints_remastered.ui.activity_first_loading.fragment_google_drive_sign_in.di.GoogleDriveSignInFragmentComponent
+import dagger.Module
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
+
+@ExperimentalCoroutinesApi
+@FlowPreview
+@Module(subcomponents = [GoogleDriveSignInFragmentComponent::class])
+class FirstLoadingActivityModuleChilds

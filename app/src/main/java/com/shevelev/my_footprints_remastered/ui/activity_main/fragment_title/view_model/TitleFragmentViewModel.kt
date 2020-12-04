@@ -8,11 +8,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.shevelev.my_footprints_remastered.R
 import com.shevelev.my_footprints_remastered.storages.files.FilesHelper
-import com.shevelev.my_footprints_remastered.sync.gd_sign_in.GoogleDriveSignIn
-import com.shevelev.my_footprints_remastered.sync.gd_sign_in.GoogleDriveSignInStatus
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_title.model.TitleFragmentModel
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_model.ViewModelBase
-import com.shevelev.my_footprints_remastered.ui.view_commands.*
+import com.shevelev.my_footprints_remastered.ui.view_commands.MoveToCreateFootprint
+import com.shevelev.my_footprints_remastered.ui.view_commands.MoveToGridGallery
+import com.shevelev.my_footprints_remastered.ui.view_commands.MoveToMyWorld
+import com.shevelev.my_footprints_remastered.ui.view_commands.MoveToSettings
 import com.shevelev.my_footprints_remastered.utils.coroutines.DispatchersProvider
 import com.shevelev.my_footprints_remastered.utils.resources.getStringFormatted
 import com.shevelev.my_footprints_remastered.utils.strings.toUpper
@@ -26,8 +27,7 @@ constructor(
     private val appContext: Context,
     dispatchersProvider: DispatchersProvider,
     model: TitleFragmentModel,
-    private val filesHelper: FilesHelper,
-    private val googleDriveSignIn: GoogleDriveSignIn
+    private val filesHelper: FilesHelper
 ) : ViewModelBase<TitleFragmentModel>(dispatchersProvider, model) {
 
     private val _total = MutableLiveData(getTotalFootprintsText(0))
@@ -72,16 +72,8 @@ constructor(
         }
 
         launch {
-            googleDriveSignIn.status.collect {
-                processGoogleDriveSignInStatus(it)
-            }
-        }
-
-        launch {
             model.lastFootprintData.init()
         }
-
-        googleDriveSignIn.startSignIn()
     }
 
     fun onNewFootprintClick() = sendCommand(MoveToCreateFootprint(null))
@@ -92,8 +84,6 @@ constructor(
 
     fun onSettingsClick() = sendCommand(MoveToSettings())
 
-    fun onGoogleDriveExplanationClosed() = sendCommand(StartSignInToGoogleDrive())
-
     private fun getTotalFootprintsText(total: Int) = appContext.getStringFormatted(R.string.totalFootprints, total).toUpper()
 
     private fun getLastFootprintUri(fileName: String?): Uri =
@@ -102,12 +92,4 @@ constructor(
                 filesHelper.getOrCreateImageFile(it).toUri()
             }
             ?: Uri.parse("android.resource://${appContext.packageName}/drawable/img_title_empty")
-
-    private fun processGoogleDriveSignInStatus(status: GoogleDriveSignInStatus) {
-        when(status) {
-            GoogleDriveSignInStatus.SHOW_EXPLANATION -> { sendCommand(ShowGoogleDriveExplanationDialog()) }
-            GoogleDriveSignInStatus.FAIL -> { sendCommand(ShowGoogleDriveFailDialog()) }
-            GoogleDriveSignInStatus.SUCCESS -> { /* do nothing */ }
-        }
-    }
 }

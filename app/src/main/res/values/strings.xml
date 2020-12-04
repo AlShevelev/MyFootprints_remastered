@@ -28,8 +28,8 @@
 
     <string name="geolocationExplanation">To create a footprint, we need access to the device location.</string>
     <string name="geolocationDenied">You haven\'t granted permission - we can\'t move to footprint creation, sorry.</string>
-    <string name="googleDriveExplanation">We about to ask you to sign in to Google Drive to backup and restore your footprints.</string>
-    <string name="googleDriveFail">An error occurred while signing in to Google Drive. Check your Internet connection and try again later.</string>
+    <string name="googleDriveExplanation">We about to ask you to sign in to Google Drive to backup and restore your footprints. Please connect to the Internet.</string>
+    <string name="googleDriveFail">An error occurred while signing in to Google Drive. Please check your Internet connection.</string>
 
     <string name="cameraDenied">You haven\'t granted permission - we can\'t open a camera application, sorry.</string>
     <string name="noCamera">A camera application is not found</string>

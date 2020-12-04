@@ -101,3 +101,6 @@ class StartSharing(
 ): ViewCommand
 
 class StartSignInToGoogleDrive: ViewCommand
+
+class ProcessSignInToGoogleDriveFail: ViewCommand
+class ProcessSignInToGoogleDriveSuccess: ViewCommand
