@@ -9,6 +9,8 @@ interface FilesHelper {
 
     fun saveBitmapToFile(bitmap: Bitmap, targetFile: File, compressRate: Int)
 
+    fun saveBitesToFile(bytes: ByteArray, targetFile: File)
+
     fun createTempFile(): File
 
     fun getOrCreateImageFile(): File

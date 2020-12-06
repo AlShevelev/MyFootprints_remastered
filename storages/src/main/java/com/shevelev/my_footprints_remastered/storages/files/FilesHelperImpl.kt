@@ -27,6 +27,12 @@ constructor(
         }
     }
 
+    override fun saveBitesToFile(bytes: ByteArray, targetFile: File) {
+        targetFile.outputStream().use { fileOut ->
+            fileOut.write(bytes)
+        }
+    }
+
     override fun createTempFile(): File = File.createTempFile("tmp_", createFileName(), appContext.cacheDir)
 
     override fun getOrCreateImageFile(): File = getOrCreateImageFile(createFileName())

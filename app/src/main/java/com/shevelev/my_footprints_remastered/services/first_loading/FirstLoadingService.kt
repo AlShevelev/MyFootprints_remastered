@@ -17,8 +17,10 @@ import com.shevelev.my_footprints_remastered.services.di.ServicesComponent
 import com.shevelev.my_footprints_remastered.services.first_loading.ui_communication.FirstLoadingServiceMessage
 import com.shevelev.my_footprints_remastered.services.first_loading.ui_communication.FirstLoadingServiceMessageSender
 import com.shevelev.my_footprints_remastered.services.update_geo_service.UpdateGeoService
+import com.shevelev.my_footprints_remastered.sync.first_loading_core.FirstLoadingCore
 import kotlinx.coroutines.delay
 import timber.log.Timber
+import javax.inject.Inject
 
 /**
  * Service for very first loading of footprints
@@ -53,18 +55,21 @@ class FirstLoadingService : IntentService("FirstLoadingService") {
     private lateinit var notificationBuilder: NotificationCompat.Builder
     private val notificationManager by lazy { getSystemService(NOTIFICATION_SERVICE) as NotificationManager }
 
+    @Inject
+    internal lateinit var core: FirstLoadingCore
+
     override fun onCreate() {
         super.onCreate()
 
         setForeground()
-//        App.injections.get<ServicesComponent>(UpdateGeoService.INJECTION_KEY).inject(this)
+        App.injections.get<ServicesComponent>(INJECTION_KEY).inject(this)
     }
 
     override fun onDestroy() {
         super.onDestroy()
 
         serviceIsRunning = false
-//        App.injections.release<ServicesComponent>(UpdateGeoService.INJECTION_KEY)
+        App.injections.release<ServicesComponent>(INJECTION_KEY)
     }
 
     override fun onHandleIntent(intent: Intent?) = processLoading(intent!!.getParcelableExtra(ARG_MESSENGER)!!)
@@ -75,13 +80,7 @@ class FirstLoadingService : IntentService("FirstLoadingService") {
      */
     private fun processLoading(messenger: Messenger) {
         val messagesSender = FirstLoadingServiceMessageSender(messenger)
-
-        for(i in 0..9) {
-            Timber.tag("FIRST_LOADING").d("[${Thread.currentThread().name}]FirstLoadingService.processLoading... $i")
-            updateNotificationProgress(i, 9)
-            messagesSender.sentProgress(i, 9)
-            Thread.sleep(1000L)
-        }
+        core.load()
         messagesSender.sendCompleted()
     }
 
