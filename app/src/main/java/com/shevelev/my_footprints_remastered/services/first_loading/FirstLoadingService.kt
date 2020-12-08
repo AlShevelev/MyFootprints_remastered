@@ -1,7 +1,6 @@
 package com.shevelev.my_footprints_remastered.services.first_loading
 
 import android.app.IntentService
-import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
@@ -12,14 +11,11 @@ import android.os.Messenger
 import androidx.core.app.NotificationCompat
 import com.shevelev.my_footprints_remastered.R
 import com.shevelev.my_footprints_remastered.application.App
-import com.shevelev.my_footprints_remastered.common_entities.Footprint
 import com.shevelev.my_footprints_remastered.services.di.ServicesComponent
-import com.shevelev.my_footprints_remastered.services.first_loading.ui_communication.FirstLoadingServiceMessage
-import com.shevelev.my_footprints_remastered.services.first_loading.ui_communication.FirstLoadingServiceMessageSender
-import com.shevelev.my_footprints_remastered.services.update_geo_service.UpdateGeoService
+import com.shevelev.my_footprints_remastered.services.first_loading.ui_communication.sender.FirstLoadingServiceMessageSenderCombined
+import com.shevelev.my_footprints_remastered.services.first_loading.ui_communication.sender.FirstLoadingServiceMessageSenderNotifications
+import com.shevelev.my_footprints_remastered.services.first_loading.ui_communication.sender.FirstLoadingServiceMessageSenderUI
 import com.shevelev.my_footprints_remastered.sync.first_loading_core.FirstLoadingCore
-import kotlinx.coroutines.delay
-import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -43,7 +39,6 @@ class FirstLoadingService : IntentService("FirstLoadingService") {
             }
             serviceIsRunning = true
 
-            Timber.tag("FIRST_LOADING").d("[${Thread.currentThread().name}]FirstLoadingService.start")
             val messenger = Messenger(messagesHandler)
             val intent = Intent(context, FirstLoadingService::class.java).apply {
                 putExtra(ARG_MESSENGER, messenger)
@@ -79,15 +74,21 @@ class FirstLoadingService : IntentService("FirstLoadingService") {
      * parameters.
      */
     private fun processLoading(messenger: Messenger) {
-        val messagesSender = FirstLoadingServiceMessageSender(messenger)
+        val messagesSender = FirstLoadingServiceMessageSenderCombined(
+            listOf(
+                FirstLoadingServiceMessageSenderUI(messenger),
+                FirstLoadingServiceMessageSenderNotifications(this, notificationBuilder, notificationManager, FOREGROUND_NOTIFICATION_ID)
+            )
+        )
+
+        core.setMessageSender(messagesSender)
         core.load()
-        messagesSender.sendCompleted()
     }
 
     private fun setForeground() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = "Test channel"
-            val descriptionText = "Test channel description"
+            val name = this.getString(R.string.appName)
+            val descriptionText = this.getString(R.string.appName)
             val importance = NotificationManager.IMPORTANCE_LOW
             val mChannel = NotificationChannel(FOREGROUND_NOTIFICATION_CHANNEL_ID, name, importance)
             mChannel.description = descriptionText
@@ -95,15 +96,10 @@ class FirstLoadingService : IntentService("FirstLoadingService") {
         }
 
         notificationBuilder = NotificationCompat.Builder(this, FOREGROUND_NOTIFICATION_CHANNEL_ID)
-            .setContentTitle(getText(R.string.appName))
-            .setContentText("Some text")
+            .setContentTitle(getString(R.string.firstLoading))
+            .setContentText("")
             .setSmallIcon(R.mipmap.ic_launcher)
 
         startForeground(FOREGROUND_NOTIFICATION_ID, notificationBuilder.build())
-    }
-
-    private fun updateNotificationProgress(current: Int, total: Int) {
-        notificationBuilder.setContentText("$current from $total")
-        notificationManager.notify(FOREGROUND_NOTIFICATION_ID, notificationBuilder.build())
     }
 }

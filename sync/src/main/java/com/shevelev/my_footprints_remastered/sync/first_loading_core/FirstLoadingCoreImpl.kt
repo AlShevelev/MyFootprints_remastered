@@ -22,25 +22,29 @@ constructor(
     private val keyValueStorage: KeyValueStorageFacade,
     private val footprintMetaGoogleDriveCrypt: FootprintMetaGoogleDriveCrypt
 ) : FirstLoadingCore {
-    /**
-     * Process loading
-     */
+
+    private lateinit var messageSender: FirstLoadingServiceMessageSender
+
+    override fun setMessageSender(sender: FirstLoadingServiceMessageSender) {
+        messageSender = sender
+    }
+
     override fun load() {
         try {
-            // Log event: files list loading
+            messageSender.sendListLoadStarted()
             val filesToLoad = getFilesToLoad()
-            // Log event: files list loaded
+            messageSender.sendListLoadCompleted()
 
-            filesToLoad.forEach {
-                // Log event: files processing
-                loadFile(it)
+            filesToLoad.forEachIndexed { index, file ->
+                loadFile(file)
+                messageSender.sendProgress(index, filesToLoad.size)
             }
 
             keyValueStorage.setStartLoadingCompleted(true)
-            // Log event: success
+            messageSender.sendSuccess()
         } catch (ex: Exception) {
             Timber.e(ex)
-            // Log event: fail
+            messageSender.sendFail()
         }
     }
 

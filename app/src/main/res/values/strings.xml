@@ -62,4 +62,11 @@
     <string name="appVersion">App version</string>
     <string name="haveQuestions">Have questions?</string>
     <string name="contactEmail">al.e.shevelev@gmail.com</string>
+
+    <string name="firstLoadingListLoading">The footprints list is being loaded…</string>
+    <string name="firstLoadingListLoaded">The footprints list is being loaded… done!</string>
+    <string name="firstLoadingListSuccess">All footprints have been loaded</string>
+    <string name="firstLoadingListFail">An error was encountered during footprints loading</string>
+    <string name="firstLoadingListProgress">Processed {0} of {1}</string>
+    <string name="firstLoading">Footprints loading</string>
 </resources>
