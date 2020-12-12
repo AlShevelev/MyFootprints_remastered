@@ -9,7 +9,7 @@ import com.shevelev.my_footprints_remastered.storages.key_value.KeyValueStorageF
 import com.shevelev.my_footprints_remastered.sync.gd_sign_in.GoogleDriveCredentials
 import com.shevelev.my_footprints_remastered.ui.activity_first_loading.di.FirstLoadingActivityComponent
 import com.shevelev.my_footprints_remastered.ui.activity_first_loading.fragment_google_drive_sign_in.view.GoogleDriveSignInFragment
-import com.shevelev.my_footprints_remastered.ui.activity_first_loading.fragment_loading_progress.LoadingProgressFragment
+import com.shevelev.my_footprints_remastered.ui.activity_first_loading.fragment_loading_progress.view.LoadingProgressFragment
 import com.shevelev.my_footprints_remastered.ui.activity_main.MainActivity
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view.ActivityBase
 import dagger.Lazy
@@ -43,6 +43,11 @@ class FirstLoadingActivity : ActivityBase() {
         }
     }
 
+    fun moveToMainScreen() {
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
+    }
+
     private fun initScreen() {
         if(googleDriveCredentials.needToSingIn) {
             updateFragment { add(R.id.fragmentContainer, GoogleDriveSignInFragment.newInstance()) }
@@ -60,10 +65,5 @@ class FirstLoadingActivity : ActivityBase() {
             fragmentAction(this)
             commit()
         }
-    }
-
-    private fun moveToMainScreen() {
-        startActivity(Intent(this, MainActivity::class.java))
-        finish()
     }
 }

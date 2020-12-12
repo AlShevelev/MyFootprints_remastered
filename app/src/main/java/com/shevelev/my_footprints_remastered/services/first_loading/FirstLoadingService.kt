@@ -30,14 +30,16 @@ class FirstLoadingService : IntentService("FirstLoadingService") {
 
         private const val ARG_MESSENGER = "ARG_MESSENGER"
 
-        private var serviceIsRunning = false
+        private var _serviceIsRunning = false
+        val serviceIsRunning: Boolean
+            get() = _serviceIsRunning
 
         @JvmStatic
         fun start(context: Context, messagesHandler: Handler) {
-            if(serviceIsRunning) {
+            if(_serviceIsRunning) {
                 return
             }
-            serviceIsRunning = true
+            _serviceIsRunning = true
 
             val messenger = Messenger(messagesHandler)
             val intent = Intent(context, FirstLoadingService::class.java).apply {
@@ -63,7 +65,7 @@ class FirstLoadingService : IntentService("FirstLoadingService") {
     override fun onDestroy() {
         super.onDestroy()
 
-        serviceIsRunning = false
+        _serviceIsRunning = false
         App.injections.release<ServicesComponent>(INJECTION_KEY)
     }
 

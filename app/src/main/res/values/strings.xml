@@ -19,6 +19,7 @@
     <string name="addPhoto">Add photo</string>
     <string name="mapIsUnavailable">The map is unavailable</string>
     <string name="currentLocationIs">Your last location is: {0} {1}</string>
+    <string name="tryAgain">Try again</string>
 
     <string name="generalError">Unfortunately, an error was encountered during the operation.</string>
     <string name="saveFootprintError">Can\'t save footprint, an error occurred while saving.</string>
@@ -28,7 +29,7 @@
 
     <string name="geolocationExplanation">To create a footprint, we need access to the device location.</string>
     <string name="geolocationDenied">You haven\'t granted permission - we can\'t move to footprint creation, sorry.</string>
-    <string name="googleDriveExplanation">We about to ask you to sign in to Google Drive to backup and restore your footprints. Please connect to the Internet.</string>
+    <string name="googleDriveExplanation">We are about to ask you to sign in to Google Drive to backup and restore your footprints. Please connect to the Internet.</string>
     <string name="googleDriveFail">An error occurred while signing in to Google Drive. Please check your Internet connection.</string>
 
     <string name="cameraDenied">You haven\'t granted permission - we can\'t open a camera application, sorry.</string>
@@ -69,4 +70,7 @@
     <string name="firstLoadingListFail">An error was encountered during footprints loading</string>
     <string name="firstLoadingListProgress">Processed {0} of {1}</string>
     <string name="firstLoading">Footprints loading</string>
+    <string name="firstLoadingStartMessage">We are about to load all of your footprints. Do not turn off your Internet connection, please.</string>
+    <string name="firstLoadingNoConnectionMessage">We are about to load all of your footprints. Turn on your Internet connection, please.</string>
+    <string name="firstLoadingLTEMessage">We are about to load all of your footprints. To avoid extra payments, we recommend using a WiFi connection.</string>
 </resources>

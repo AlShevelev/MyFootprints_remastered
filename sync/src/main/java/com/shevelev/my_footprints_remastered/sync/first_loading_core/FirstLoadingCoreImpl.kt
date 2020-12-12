@@ -7,6 +7,9 @@ import com.shevelev.my_footprints_remastered.storages.key_value.KeyValueStorageF
 import com.shevelev.my_footprints_remastered.sync.db_repositories.FirstLoadRecordRepository
 import com.shevelev.my_footprints_remastered.sync.footprint_meta_gd_crypt.FootprintMetaGoogleDriveCrypt
 import com.shevelev.my_footprints_remastered.sync.gd_operations.GoogleDriveOperations
+import com.shevelev.my_footprints_remastered.sync.gd_sign_in.GoogleDriveCredentials
+import com.shevelev.my_footprints_remastered.utils.connection.ConnectionHelper
+import com.shevelev.my_footprints_remastered.utils.connection.ConnectionInfo
 import com.shevelev.my_footprints_remastered.utils.id_hash.IdUtil
 import timber.log.Timber
 import java.io.File
@@ -18,9 +21,11 @@ constructor(
     private val firstLoadRecordRepository: FirstLoadRecordRepository,
     private val footprintRepository: FootprintRepository,
     private val googleDriveOperations: GoogleDriveOperations,
+    private val googleDriveCredentials: GoogleDriveCredentials,
     private val filesHelper: FilesHelper,
     private val keyValueStorage: KeyValueStorageFacade,
-    private val footprintMetaGoogleDriveCrypt: FootprintMetaGoogleDriveCrypt
+    private val footprintMetaGoogleDriveCrypt: FootprintMetaGoogleDriveCrypt,
+    private val connectionHelper: ConnectionHelper
 ) : FirstLoadingCore {
 
     private lateinit var messageSender: FirstLoadingServiceMessageSender
@@ -31,6 +36,11 @@ constructor(
 
     override fun load() {
         try {
+            if(connectionHelper.getConnectionInfo() == ConnectionInfo.NO_CONNECTION || googleDriveCredentials.needToSingIn) {
+                messageSender.sendFail()
+                return
+            }
+
             messageSender.sendListLoadStarted()
             val filesToLoad = getFilesToLoad()
             messageSender.sendListLoadCompleted()

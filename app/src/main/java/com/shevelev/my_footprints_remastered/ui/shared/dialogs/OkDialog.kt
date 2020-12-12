@@ -17,11 +17,16 @@ class OkDialog : DialogFragment() {
         fun show(
             requestCode: Int,
             fragment: FragmentBase,
-            @StringRes text: Int) {
+            @StringRes text: Int) = show(requestCode, fragment, fragment.requireContext().getString(text))
+
+        fun show(
+            requestCode: Int,
+            fragment: FragmentBase,
+            text: String) {
             OkDialog().apply {
                 arguments = Bundle().apply {
                     putInt(ARG_REQUEST_CODE, requestCode)
-                    putInt(ARG_TEXT, text)
+                    putString(ARG_TEXT, text)
                 }
                 show(fragment.childFragmentManager, null)
             }
@@ -31,7 +36,7 @@ class OkDialog : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
             AlertDialog.Builder(it)
-                .setMessage(requireArguments().getInt(ARG_TEXT))
+                .setMessage(requireArguments().getString(ARG_TEXT))
                 .setCancelable(true)
                 .setPositiveButton(R.string.ok) { _, _ ->
                     (parentFragment as FragmentBase).onDialogResult(false, requireArguments().getInt(ARG_REQUEST_CODE), null)

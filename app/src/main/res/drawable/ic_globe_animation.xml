@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android" android:oneshot="false">
+    <item android:drawable="@drawable/ic_globe_frame_1" android:duration="@integer/globe_animation_duration" />
+    <item android:drawable="@drawable/ic_globe_frame_2" android:duration="@integer/globe_animation_duration" />
+    <item android:drawable="@drawable/ic_globe_frame_3" android:duration="@integer/globe_animation_duration" />
+    <item android:drawable="@drawable/ic_globe_frame_4" android:duration="@integer/globe_animation_duration" />
+    <item android:drawable="@drawable/ic_globe_frame_5" android:duration="@integer/globe_animation_duration" />
+    <item android:drawable="@drawable/ic_globe_frame_6" android:duration="@integer/globe_animation_duration" />
+    <item android:drawable="@drawable/ic_globe_frame_7" android:duration="@integer/globe_animation_duration" />
+    <item android:drawable="@drawable/ic_globe_frame_8" android:duration="@integer/globe_animation_duration" />
+    <item android:drawable="@drawable/ic_globe_frame_9" android:duration="@integer/globe_animation_duration" />
+    <item android:drawable="@drawable/ic_globe_frame_10" android:duration="@integer/globe_animation_duration" />
+    <item android:drawable="@drawable/ic_globe_frame_11" android:duration="@integer/globe_animation_duration" />
+    <item android:drawable="@drawable/ic_globe_frame_12" android:duration="@integer/globe_animation_duration" />
+    <item android:drawable="@drawable/ic_globe_frame_13" android:duration="@integer/globe_animation_duration" />
+    <item android:drawable="@drawable/ic_globe_frame_14" android:duration="@integer/globe_animation_duration" />
+    <item android:drawable="@drawable/ic_globe_frame_15" android:duration="@integer/globe_animation_duration" />
+    <item android:drawable="@drawable/ic_globe_frame_16" android:duration="@integer/globe_animation_duration" />
+    <item android:drawable="@drawable/ic_globe_frame_17" android:duration="@integer/globe_animation_duration" />
+    <item android:drawable="@drawable/ic_globe_frame_18" android:duration="@integer/globe_animation_duration" />
+    <item android:drawable="@drawable/ic_globe_frame_19" android:duration="@integer/globe_animation_duration" />
+    <item android:drawable="@drawable/ic_globe_frame_20" android:duration="@integer/globe_animation_duration" />
+    <item android:drawable="@drawable/ic_globe_frame_21" android:duration="@integer/globe_animation_duration" />
+    <item android:drawable="@drawable/ic_globe_frame_22" android:duration="@integer/globe_animation_duration" />
+    <item android:drawable="@drawable/ic_globe_frame_23" android:duration="@integer/globe_animation_duration" />
+    <item android:drawable="@drawable/ic_globe_frame_24" android:duration="@integer/globe_animation_duration" />
+    <item android:drawable="@drawable/ic_globe_frame_25" android:duration="@integer/globe_animation_duration" />
+</animation-list>

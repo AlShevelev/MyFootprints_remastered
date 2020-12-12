@@ -1,6 +1,7 @@
 package com.shevelev.my_footprints_remastered.ui.view_commands
 
 import android.location.Location
+import android.view.View
 import androidx.annotation.ColorInt
 import androidx.annotation.StringRes
 import com.shevelev.my_footprints_remastered.common_entities.Footprint
@@ -50,6 +51,8 @@ class MoveBackFromSetLocationToPager : ViewCommand
 
 class MoveBackFromPagerToTitle : ViewCommand
 
+class MoveToMainScreen: ViewCommand
+
 // Child fragments for SetLocationFragment
 class AddMapFragment : ViewCommand
 
@@ -95,6 +98,8 @@ class ShowMapDialog(
 class ShowGoogleDriveExplanationDialog: ViewCommand
 
 class ShowGoogleDriveFailDialog: ViewCommand
+
+class ShowOkDialog(val text: String): ViewCommand
 
 class StartSharing(
     val footprint: Footprint

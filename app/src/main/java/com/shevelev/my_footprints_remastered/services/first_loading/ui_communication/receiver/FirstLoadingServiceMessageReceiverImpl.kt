@@ -5,11 +5,16 @@ import android.os.Message
 import com.shevelev.my_footprints_remastered.services.first_loading.FirstLoadingService
 import com.shevelev.my_footprints_remastered.services.first_loading.ui_communication.FirstLoadingServiceMessage
 import com.shevelev.my_footprints_remastered.services.first_loading.ui_communication.FirstLoadingServiceMessageCode
+import com.shevelev.my_footprints_remastered.utils.di_scopes.ApplicationScope
+import javax.inject.Inject
 
 /**
  * Receive messages from [FirstLoadingService]
  */
-class FirstLoadingServiceMessageReceiverImpl : FirstLoadingServiceMessageReceiver, Handler() {
+@ApplicationScope
+class FirstLoadingServiceMessageReceiverImpl
+@Inject
+constructor() : FirstLoadingServiceMessageReceiver, Handler() {
 
     private var onMessageListener: ((FirstLoadingServiceMessage) -> Unit)? = null
 

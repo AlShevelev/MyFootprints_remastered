@@ -35,4 +35,7 @@
     <dimen name="bottomPaddingDialogRadius">10dp</dimen>
     <dimen name="bottomPaddingDialogPadding">10dp</dimen>
     <!--</editor-fold>-->
+
+    <dimen name="loadingProgressImageSize">100dp</dimen>
+    <dimen name="loadingProgressTextGap">15dp</dimen>
 </resources>

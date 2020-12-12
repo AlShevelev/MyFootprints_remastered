@@ -1,5 +1,8 @@
 package com.shevelev.my_footprints_remastered.application.di
 
+import android.os.Handler
+import com.shevelev.my_footprints_remastered.services.first_loading.ui_communication.receiver.FirstLoadingServiceMessageReceiver
+import com.shevelev.my_footprints_remastered.services.first_loading.ui_communication.receiver.FirstLoadingServiceMessageReceiverImpl
 import com.shevelev.my_footprints_remastered.storages.db.repositories.*
 import com.shevelev.my_footprints_remastered.storages.files.FilesHelper
 import com.shevelev.my_footprints_remastered.storages.files.FilesHelperImpl
@@ -16,6 +19,7 @@ import com.shevelev.my_footprints_remastered.sync.db_repositories.SyncRecordRepo
 import com.shevelev.my_footprints_remastered.utils.connection.ConnectionHelper
 import com.shevelev.my_footprints_remastered.utils.connection.ConnectionHelperImpl
 import com.shevelev.my_footprints_remastered.utils.di_scopes.ApplicationScope
+import com.shevelev.my_footprints_remastered.utils.di_scopes.FragmentScope
 import dagger.Binds
 import dagger.Module
 import javax.inject.Named
@@ -54,4 +58,14 @@ abstract class AppModuleBinds {
 
     @Binds
     abstract fun provideConnectionHelper(helper: ConnectionHelperImpl): ConnectionHelper
+
+    //region A handler to connect to the FirstLoadingService (must be in ApplicationScope to provide reconnect to the service)
+    @Binds
+    @ApplicationScope
+    abstract fun provideFirstLoadingServiceMessageReceiver(receiver: FirstLoadingServiceMessageReceiverImpl): FirstLoadingServiceMessageReceiver
+
+    @Binds
+    @ApplicationScope
+    abstract fun provideFirstLoadingServiceMessageHandler(handler: FirstLoadingServiceMessageReceiverImpl): Handler
+    //endregion
 }
