@@ -6,4 +6,6 @@ sealed class Event {
     object ShowRestartButton: Event()
     object HideRestartButton: Event()
     class ShowWarningDialog(val text: String): Event()
+    object StartLoadingAnimation: Event()
+    object StopLoadingAnimation: Event()
 }

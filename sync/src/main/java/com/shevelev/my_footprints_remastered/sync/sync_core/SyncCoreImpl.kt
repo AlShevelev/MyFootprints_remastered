@@ -32,13 +32,17 @@ constructor(
      */
     override fun sync(): Boolean =
         try {
+            Timber.tag("SYNC_TEST").d("SyncWorker created")
             if(canSync()) {
+                Timber.tag("SYNC_TEST").d("Can sync - start syncing")
                 processSync()
             }
+            Timber.tag("SYNC_TEST").d("SyncWorker completed successfully")
             true
         } catch (ex: Exception) {
             syncRecordRepository.clearMarks()
-            Timber.e(ex)
+            Timber.tag("SYNC_TEST").e(ex)
+            Timber.tag("SYNC_TEST").d("SyncWorker completed unsuccessfully")
             false
         }
 
@@ -61,6 +65,7 @@ constructor(
 
     private fun processSync() {
         val recordsToSync = syncRecordRepository.getAllAndMark()
+        Timber.tag("SYNC_TEST").d("recordsToSync total: ${recordsToSync.size}")
 
         recordsToSync.forEach { record ->
             when(record.operation) {
@@ -68,11 +73,13 @@ constructor(
                 SyncOperation.UPDATE -> processUpdate(record)
                 SyncOperation.DELETE -> processDelete(record)
             }
+            Timber.tag("SYNC_TEST").d("delete sync record with id: ${record.id}")
             syncRecordRepository.deleteSyncRecord(record.id)
         }
     }
 
     private fun processCreate(syncRecord: SyncRecord) {
+        Timber.tag("SYNC_TEST").d("Process Create record")
         footprintRepository.getById(syncRecord.footprintId)?.let { footprint ->
             val metadata = footprintMetadataCrypt.encrypt(footprint)
             val content = filesHelper.readFileContent(filesHelper.getOrCreateImageFile(footprint.imageFileName))
@@ -83,12 +90,15 @@ constructor(
     }
 
     private fun processUpdate(syncRecord: SyncRecord) {
+        Timber.tag("SYNC_TEST").d("Process Update record")
         footprintRepository.getById(syncRecord.footprintId)?.let { footprint ->
             syncRecord.googleDriveFileId?.let {
                 val gdFileId = GoogleDriveFileId(it)
 
                 val isMetadataUpdated = syncRecord.isMetadataUpdated ?: true
                 val isContentUpdated = syncRecord.isImageUpdated ?: true
+
+                Timber.tag("SYNC_TEST").d("isMetadataUpdated: $isMetadataUpdated; isContentUpdated: $isContentUpdated")
 
                 val metadata = if(isMetadataUpdated) {
                     footprintMetadataCrypt.encrypt(footprint)
@@ -112,6 +122,7 @@ constructor(
     }
 
     private fun processDelete(syncRecord: SyncRecord) {
+        Timber.tag("SYNC_TEST").d("Process Delete record")
         syncRecord.googleDriveFileId?.let {
             operations.delete(GoogleDriveFileId(it))
         }

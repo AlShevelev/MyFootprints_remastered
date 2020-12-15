@@ -17,7 +17,7 @@ constructor(
 
     override fun getCredentials(): GoogleAccountCredential? =
         getAccount()?.let { account ->
-            val credentials = GoogleAccountCredential.usingOAuth2(appContext, listOf(DriveScopes.DRIVE_APPDATA))
+            val credentials = GoogleAccountCredential.usingOAuth2(appContext, listOf(DriveScopes.DRIVE_FILE))
             credentials.selectedAccount = account.account
             return@let credentials
         }

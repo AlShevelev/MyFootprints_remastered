@@ -6,6 +6,7 @@ import androidx.work.WorkerParameters
 import com.shevelev.my_footprints_remastered.application.App
 import com.shevelev.my_footprints_remastered.services.di.ServicesComponent
 import com.shevelev.my_footprints_remastered.sync.sync_core.SyncCore
+import timber.log.Timber
 import javax.inject.Inject
 
 class SyncWorker(
@@ -17,6 +18,7 @@ class SyncWorker(
     }
 
     init {
+        Timber.tag("SYNC_TEST").d("SyncWorker created")
         App.injections.get<ServicesComponent>(INJECTION_KEY).inject(this)
     }
 
@@ -28,5 +30,6 @@ class SyncWorker(
     override fun onStopped() {
         super.onStopped()
         App.injections.release<ServicesComponent>(INJECTION_KEY)
+        Timber.tag("SYNC_TEST").d("SyncWorker stopped")
     }
 }

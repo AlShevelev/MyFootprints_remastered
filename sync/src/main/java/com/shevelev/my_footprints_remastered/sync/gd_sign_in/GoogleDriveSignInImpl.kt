@@ -46,7 +46,7 @@ constructor(
         if (credentials.needToSingIn) {
             val signInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
-                .requestScopes(Scope(DriveScopes.DRIVE_APPDATA))
+                .requestScopes(Scope(DriveScopes.DRIVE_FILE))
                 .build()
 
             val client = GoogleSignIn.getClient(appContext, signInOptions)

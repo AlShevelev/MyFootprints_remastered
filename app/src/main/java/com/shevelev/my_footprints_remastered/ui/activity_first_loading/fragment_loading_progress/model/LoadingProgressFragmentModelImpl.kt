@@ -47,11 +47,13 @@ constructor(
                 is FirstLoadingServiceMessage.Success -> {
                     eventsListener?.invoke(Event.ShowMessage(appContext.getString(R.string.firstLoadingListSuccess)))
                     eventsListener?.invoke(Event.MoveToMainScreen)
+                    eventsListener?.invoke(Event.StopLoadingAnimation)
                 }
 
                 is FirstLoadingServiceMessage.Fail -> {
                     eventsListener?.invoke(Event.ShowMessage(appContext.getString(R.string.firstLoadingListFail)))
                     eventsListener?.invoke(Event.ShowRestartButton)
+                    eventsListener?.invoke(Event.StopLoadingAnimation)
                 }
 
                 is FirstLoadingServiceMessage.ListLoadStarted ->
@@ -82,6 +84,7 @@ constructor(
             if(warningWasShown) {
                 FirstLoadingService.start(appContext, eventsHandler)
                 eventsListener?.invoke(Event.HideRestartButton)
+                eventsListener?.invoke(Event.StartLoadingAnimation)
             } else {
                 warningWasShown = true
                 when(connectionHelper.getConnectionInfo()) {

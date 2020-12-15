@@ -21,8 +21,10 @@ constructor(
 ) : GoogleDriveOperations {
 
     private companion object {
-        private const val SPACE = "appDataFolder"
-        private const val MIME_TYPE = "application/octet-stream"
+        private const val SPACE = "drive"
+
+        private const val FILE_MIME_TYPE = "application/octet-stream"
+        private const val FOLDER_MIME_TYPE = "application/vnd.google-apps.folder"
 
         private const val COMMENT = "COM"
         private const val COMMENT_1 = "COM1"
@@ -31,25 +33,27 @@ constructor(
         private const val ALL_THE_REST = "REST"
     }
 
-    private val service: Drive? by lazy { createService() }
+    private val folderName = appName
+
+    private val service: GoogleDriveService? by lazy { createService() }
 
     override fun create(footprintMetadata: FootprintMetaGoogleDrive, content: ByteArray, fileName: String): GoogleDriveFileId =
-        processDriveOperation { service ->
+        processDriveOperation { drive, folderId ->
             val fileMetadata = File()
 
             fileMetadata.name = fileName
-            fileMetadata.parents = listOf(SPACE)
+            fileMetadata.parents = listOf(folderId.id)
             saveProperties(fileMetadata, footprintMetadata)
 
-            val fileContent = ByteArrayContent(MIME_TYPE, content)
+            val fileContent = ByteArrayContent(FILE_MIME_TYPE, content)
 
-            val result = service.files().create(fileMetadata, fileContent).execute()
+            val result = drive.files().create(fileMetadata, fileContent).execute()
             GoogleDriveFileId(result.id)
         }
 
     override fun read(fileId: GoogleDriveFileId): GoogleDriveFile =
-        processDriveOperation { service ->
-            val fileRequest = service
+        processDriveOperation { drive, _ ->
+            val fileRequest = drive
                 .files()
                 .get(fileId.id)
                 .setFields("name, appProperties")
@@ -66,19 +70,24 @@ constructor(
         }
 
     override fun readFilesList(): List<GoogleDriveFileId> =
-        processDriveOperation { service ->
+        processDriveOperation { drive, folderId ->
             var  pageToken: String? = null
 
             val result = mutableListOf<GoogleDriveFileId>()
 
+            Timber.tag("SYNC_TEST").d("Started to get files list. Folder Id is: $folderId")
+
             do {
-                val filesList = service
+                val filesList = drive
                     .files()
                     .list()
+                    .setQ("'${folderId.id}' in parents")
                     .setSpaces(SPACE)
                     .setFields("nextPageToken, files(id)")
                     .setPageToken(pageToken)
                     .execute()
+
+                Timber.tag("SYNC_TEST").d("Files list received")
 
                 filesList.files.forEach { file ->
                     result.add(GoogleDriveFileId(file.id))
@@ -91,8 +100,8 @@ constructor(
         }
 
     override fun updateMetadata(footprintMetadata: FootprintMetaGoogleDrive, fileId: GoogleDriveFileId): Unit =
-        processDriveOperation { service ->
-            val oldFileMetadata = service
+        processDriveOperation { drive, _ ->
+            val oldFileMetadata = drive
                 .files()
                 .get(fileId.id)
                 .setFields("name")
@@ -102,12 +111,12 @@ constructor(
             newFileMetadata.name = oldFileMetadata.name
             saveProperties(newFileMetadata, footprintMetadata)
 
-            service.files().update(fileId.id, newFileMetadata).execute()
+            drive.files().update(fileId.id, newFileMetadata).execute()
         }
 
     override fun updateContent(content: ByteArray, fileId: GoogleDriveFileId): Unit =
-        processDriveOperation { service ->
-            val oldFileMetadata = service
+        processDriveOperation { drive, _ ->
+            val oldFileMetadata = drive
                 .files()
                 .get(fileId.id)
                 .setFields("name, appProperties")
@@ -117,14 +126,14 @@ constructor(
             newFileMetadata.name = oldFileMetadata.name
             newFileMetadata.appProperties = oldFileMetadata.appProperties
 
-            val fileContent = ByteArrayContent(MIME_TYPE, content)
+            val fileContent = ByteArrayContent(FILE_MIME_TYPE, content)
 
-            service.files().update(fileId.id, newFileMetadata, fileContent).execute()
+            drive.files().update(fileId.id, newFileMetadata, fileContent).execute()
         }
 
     override fun updateAll(footprintMetadata: FootprintMetaGoogleDrive, content: ByteArray, fileId: GoogleDriveFileId): Unit =
-        processDriveOperation { service ->
-            val oldFileMetadata = service
+        processDriveOperation { drive, _ ->
+            val oldFileMetadata = drive
                 .files()
                 .get(fileId.id)
                 .setFields("name")
@@ -134,34 +143,66 @@ constructor(
             newFileMetadata.name = oldFileMetadata.name
             saveProperties(newFileMetadata, footprintMetadata)
 
-            val fileContent = ByteArrayContent(MIME_TYPE, content)
+            val fileContent = ByteArrayContent(FILE_MIME_TYPE, content)
 
-            service.files().update(fileId.id, newFileMetadata, fileContent).execute()
+            drive.files().update(fileId.id, newFileMetadata, fileContent).execute()
         }
 
     override fun delete(fileId: GoogleDriveFileId): Unit =
-        processDriveOperation { service ->
-            service.files().delete(fileId.id).execute()
+        processDriveOperation { drive, _ ->
+            drive.files().delete(fileId.id).execute()
         }
 
-    private fun createService(): Drive? =
+    private fun createService(): GoogleDriveService? =
         gdCredentials.getCredentials()?.let { credentials ->
             Drive.Builder(NetHttpTransport(), GsonFactory(), credentials)
                 .setApplicationName(appName)
                 .build()
         }
+            ?.let { service ->
+                Timber.tag("SYNC_TEST").d("GD service created. Folder name is: $folderName")
+                val folderId = getFolderByName(folderName, service) ?: createFolder(folderName, service)
+                GoogleDriveService(service, folderId)
+            }
 
-    private fun <TR>processDriveOperation(action: (service: Drive) -> TR): TR {
-        if(service == null) {
-            throw IllegalStateException("Drive service is not ready")
-        }
+    private fun getFolderByName(folderName: String, service: Drive): GoogleDriveFileId? =
+        service
+            .files()
+            .list()
+            .setQ("mimeType='$FOLDER_MIME_TYPE' and name='$folderName'")
+            .setSpaces(SPACE)
+            .setFields("files(id, name)")
+            .execute()
+            .let {
+                Timber.tag("SYNC_TEST").d("Folder list received. Total folders: ${it.size}")
+                it.files.firstOrNull()?.let { file -> GoogleDriveFileId(file.id) }
+            }
 
-        return try {
-            action(service!!)
-        } catch (ex: Exception) {
-            Timber.e(ex)
-            throw ex
-        }
+    private fun createFolder(folderName: String, service: Drive): GoogleDriveFileId {
+        val fileMetadata = File()
+
+        fileMetadata.name = folderName
+        fileMetadata.mimeType = FOLDER_MIME_TYPE
+
+        val result = service
+            .files()
+            .create(fileMetadata)
+            .setFields("id")
+            .execute()
+
+        Timber.tag("SYNC_TEST").d("Folder created. Id: ${result.id}")
+        return GoogleDriveFileId(result.id)
+    }
+
+    private fun <TR>processDriveOperation(action: (drive: Drive, folder: GoogleDriveFileId) -> TR): TR {
+        service?.let {
+            return try {
+                action(it.service, it.folder)
+            } catch (ex: Exception) {
+                Timber.e(ex)
+                throw ex
+            }
+        } ?: throw IllegalStateException("Drive service is not ready")
     }
 
     private fun saveProperties(file: File, metadata: FootprintMetaGoogleDrive) {

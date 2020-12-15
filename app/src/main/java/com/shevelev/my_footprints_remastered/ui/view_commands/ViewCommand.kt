@@ -109,3 +109,6 @@ class StartSignInToGoogleDrive: ViewCommand
 
 class ProcessSignInToGoogleDriveFail: ViewCommand
 class ProcessSignInToGoogleDriveSuccess: ViewCommand
+
+class StartAnimation: ViewCommand
+class StopAnimation: ViewCommand
