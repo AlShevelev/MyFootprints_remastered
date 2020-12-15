@@ -16,8 +16,8 @@ constructor(
 ) : ViewModelBase<MyWorldFragmentModel>(dispatchersProvider, model) {
 
     init {
-        sendCommand(if(model.isGooglePlayServicesAvailable) AddMapFragment() else AddStubFragment())
+        sendCommand(if(model.isGooglePlayServicesAvailable) AddMapFragment else AddStubFragment)
     }
 
-    fun onBackClick() = sendCommand(MoveBack())
+    fun onBackClick() = sendCommand(MoveBack)
 }

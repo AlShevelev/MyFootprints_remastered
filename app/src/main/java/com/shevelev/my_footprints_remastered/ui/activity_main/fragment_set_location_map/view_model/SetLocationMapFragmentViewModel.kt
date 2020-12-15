@@ -41,7 +41,7 @@ constructor(
     }
 
     fun onViewCreated() {
-        sendCommand(StartLoadingMap())
+        sendCommand(StartLoadingMap)
     }
 
     fun mapLoaded() {

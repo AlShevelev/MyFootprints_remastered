@@ -83,7 +83,7 @@ constructor(
 
     override fun onEditClick() = sendCommand(MoveToCreateFootprint(model.getFootprint(model.currentIndex)))
 
-    override fun onDeleteClick() = sendCommand(AskAboutDelete())
+    override fun onDeleteClick() = sendCommand(AskAboutDelete)
 
     fun onDeleteConfirmed() {
         launch {
@@ -91,7 +91,7 @@ constructor(
             if(items.isNotEmpty()) {
                 _items.value = items
             } else {
-                sendCommand(MoveBackFromPagerToTitle())
+                sendCommand(MoveBackFromPagerToTitle)
             }
         }
     }

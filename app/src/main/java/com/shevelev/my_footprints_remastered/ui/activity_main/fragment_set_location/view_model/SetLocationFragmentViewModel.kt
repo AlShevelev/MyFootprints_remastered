@@ -28,19 +28,19 @@ constructor(
     val saveEnabled = model.canSave
 
     init {
-        sendCommand(if(model.isGooglePlayServicesAvailable) AddMapFragment() else AddStubFragment())
+        sendCommand(if(model.isGooglePlayServicesAvailable) AddMapFragment else AddStubFragment)
     }
 
-    override fun onBackClick() = sendCommand(MoveBack())
+    override fun onBackClick() = sendCommand(MoveBack)
 
     override fun onSaveClick() {
         launch {
             try {
                 model.save()
                 if(model.isInUpdateMode) {
-                    sendCommand(MoveBackFromSetLocationToPager())
+                    sendCommand(MoveBackFromSetLocationToPager)
                 } else {
-                    sendCommand(MoveBackFromSetLocationToTitle())
+                    sendCommand(MoveBackFromSetLocationToTitle)
                 }
             } catch (ex: Exception) {
                 Timber.e(ex)

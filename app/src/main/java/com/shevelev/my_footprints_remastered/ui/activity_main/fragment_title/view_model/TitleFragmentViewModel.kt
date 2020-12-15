@@ -78,11 +78,11 @@ constructor(
 
     fun onNewFootprintClick() = sendCommand(MoveToCreateFootprint(null))
 
-    fun onGalleryClick() = sendCommand(MoveToGridGallery())
+    fun onGalleryClick() = sendCommand(MoveToGridGallery)
 
-    fun onMyWorldClick() = sendCommand(MoveToMyWorld())
+    fun onMyWorldClick() = sendCommand(MoveToMyWorld)
 
-    fun onSettingsClick() = sendCommand(MoveToSettings())
+    fun onSettingsClick() = sendCommand(MoveToSettings)
 
     private fun getTotalFootprintsText(total: Int) = appContext.getStringFormatted(R.string.totalFootprints, total).toUpper()
 

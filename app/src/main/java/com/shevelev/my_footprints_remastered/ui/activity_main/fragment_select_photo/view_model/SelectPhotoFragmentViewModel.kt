@@ -56,29 +56,29 @@ constructor(
     }
 
     override fun onBackClick() {
-        sendCommand(MoveBack())
+        sendCommand(MoveBack)
     }
 
     override fun onCameraClick() {
-        sendCommand(OpenCamera())
+        sendCommand(OpenCamera)
     }
 
     override fun onGalleryClick() {
-        sendCommand(OpenGallery())
+        sendCommand(OpenGallery)
     }
 
     override fun onPhotoClick(photo: Uri) {
         model.storeSelectedPhoto(photo)
-        sendCommand(MoveBack())
+        sendCommand(MoveBack)
     }
 
     fun onCameraImageCaptured(photo: File) {
         model.storeSelectedPhoto(photo)
-        sendCommand(MoveBack())
+        sendCommand(MoveBack)
     }
 
     fun onGalleryImageCaptured(photo: Uri) {
         model.storeSelectedPhoto(photo)
-        sendCommand(MoveBack())
+        sendCommand(MoveBack)
     }
 }

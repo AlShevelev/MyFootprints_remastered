@@ -28,15 +28,15 @@ constructor(
         googleDriveSignIn.startSignIn()
     }
 
-    fun onGoogleDriveExplanationClosed() = sendCommand(StartSignInToGoogleDrive())
+    fun onGoogleDriveExplanationClosed() = sendCommand(StartSignInToGoogleDrive)
 
-    fun onGoogleDriveFailClosed() = sendCommand(ProcessSignInToGoogleDriveFail())
+    fun onGoogleDriveFailClosed() = sendCommand(ProcessSignInToGoogleDriveFail)
 
     private fun processGoogleDriveSignInStatus(status: GoogleDriveSignInStatus) {
         when(status) {
-            GoogleDriveSignInStatus.SHOW_EXPLANATION -> sendCommand(ShowGoogleDriveExplanationDialog())
-            GoogleDriveSignInStatus.FAIL -> sendCommand(ShowGoogleDriveFailDialog())
-            GoogleDriveSignInStatus.SUCCESS -> sendCommand(ProcessSignInToGoogleDriveSuccess())
+            GoogleDriveSignInStatus.SHOW_EXPLANATION -> sendCommand(ShowGoogleDriveExplanationDialog)
+            GoogleDriveSignInStatus.FAIL -> sendCommand(ShowGoogleDriveFailDialog)
+            GoogleDriveSignInStatus.SUCCESS -> sendCommand(ProcessSignInToGoogleDriveSuccess)
         }
     }
 }

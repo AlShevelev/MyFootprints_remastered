@@ -31,7 +31,7 @@ constructor(
         }
 
         if(!model.geolocationProvider.isLocationTrackingEnabled) {
-            sendCommand(AskAboutGeolocation())
+            sendCommand(AskAboutGeolocation)
         }
 
         startLocationTracking()

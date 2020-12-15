@@ -42,7 +42,7 @@ constructor(
         }
     }
 
-    fun onBackClick() = sendCommand(MoveBack())
+    fun onBackClick() = sendCommand(MoveBack)
 
     fun onLoadWifiClick() {
         launch {

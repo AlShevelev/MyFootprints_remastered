@@ -13,8 +13,10 @@ import com.shevelev.my_footprints_remastered.ui.activity_main.navigation.MainAct
 import com.shevelev.my_footprints_remastered.ui.shared.dialogs.ConfirmationDialog
 import com.shevelev.my_footprints_remastered.ui.shared.dialogs.OkDialog
 import com.shevelev.my_footprints_remastered.ui.shared.external_intents.location_settings.LocationSettingsHelper
+import com.shevelev.my_footprints_remastered.ui.shared.keyboard.KeyboardUtils
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view.FragmentBaseMVVM
 import com.shevelev.my_footprints_remastered.ui.view_commands.*
+import kotlinx.android.synthetic.main.fragment_create_footprint.*
 import permissions.dispatcher.NeedsPermission
 import permissions.dispatcher.OnPermissionDenied
 import permissions.dispatcher.OnShowRationale
@@ -78,6 +80,8 @@ class CreateFootprintFragment : FragmentBaseMVVM<FragmentCreateFootprintBinding,
                     R.string.cancel)
 
             is OpenLocationSettings -> locationSettingsHelper.openSettings(this)
+
+            is HideSoftKeyboard -> KeyboardUtils.hideKeyboard(commentText)
         }
     }
 

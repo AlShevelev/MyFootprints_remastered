@@ -61,7 +61,7 @@ constructor(
         }
     }
 
-    override fun onBackClick() = sendCommand(MoveBack())
+    override fun onBackClick() = sendCommand(MoveBack)
 
     override fun onFootprintClick(id: Long) {
         model.items.let { items ->

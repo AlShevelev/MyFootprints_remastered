@@ -36,10 +36,10 @@ constructor(
                 is Event.ShowMessage -> _progressText.value = event.text
                 is Event.ShowRestartButton -> _restartButtonVisibility.value = View.VISIBLE
                 is Event.HideRestartButton -> _restartButtonVisibility.value = View.INVISIBLE
-                is Event.MoveToMainScreen -> sendCommand(MoveToMainScreen())
+                is Event.MoveToMainScreen -> sendCommand(MoveToMainScreen)
                 is Event.ShowWarningDialog -> sendCommand(ShowOkDialog(event.text))
-                is Event.StartLoadingAnimation -> sendCommand(StartAnimation())
-                is Event.StopLoadingAnimation -> sendCommand(StopAnimation())
+                is Event.StartLoadingAnimation -> sendCommand(StartAnimation)
+                is Event.StopLoadingAnimation -> sendCommand(StopAnimation)
             }
         }
 

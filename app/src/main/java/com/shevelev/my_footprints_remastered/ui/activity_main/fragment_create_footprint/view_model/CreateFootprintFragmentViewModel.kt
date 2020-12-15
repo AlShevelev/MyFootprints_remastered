@@ -37,16 +37,16 @@ constructor(
 
     override fun onBackClick() {
         if(!model.canSave) {
-            sendCommand(MoveBack())
+            sendCommand(MoveBack)
         } else {
-            sendCommand(AskAboutFootprintInterruption())
+            sendCommand(AskAboutFootprintInterruption)
         }
     }
 
     fun onBackConfirmed() {
         launch {
             model.removeDraftFootprint()
-            sendCommand(MoveBack())
+            sendCommand(MoveBack)
         }
     }
 
@@ -84,13 +84,17 @@ constructor(
         }
     }
 
-    fun onGotoLocationSettingsSelected() = sendCommand(OpenLocationSettings())
+    fun onGotoLocationSettingsSelected() {
+        sendCommand(HideSoftKeyboard)
+        sendCommand(OpenLocationSettings)
+    }
 
     override fun onSaveClick() {
         launch {
             try {
                 model.save()
-                sendCommand(MoveBack())
+                sendCommand(HideSoftKeyboard)
+                sendCommand(MoveBack)
             } catch (ex: Exception) {
                 Timber.e(ex)
                 sendCommand(ShowMessageRes(R.string.saveFootprintError))

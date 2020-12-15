@@ -1,7 +1,6 @@
 package com.shevelev.my_footprints_remastered.ui.view_commands
 
 import android.location.Location
-import android.view.View
 import androidx.annotation.ColorInt
 import androidx.annotation.StringRes
 import com.shevelev.my_footprints_remastered.common_entities.Footprint
@@ -17,17 +16,17 @@ class ShowMessageRes(@StringRes val textResId: Int): ViewCommand
 class ShowMessageText(val text: String): ViewCommand
 
 // Navigation
-class MoveBack: ViewCommand
+object MoveBack: ViewCommand
 
 class MoveToCreateFootprint(
     val oldFootprint: Footprint?
 ) : ViewCommand
 
-class MoveToGridGallery : ViewCommand
+object MoveToGridGallery : ViewCommand
 
-class MoveToMyWorld : ViewCommand
+object MoveToMyWorld : ViewCommand
 
-class MoveToSettings : ViewCommand
+object MoveToSettings : ViewCommand
 
 class MoveToOneGallery(
     val footprints: List<Footprint>,
@@ -45,36 +44,36 @@ class MoveToCropPhoto(val photo: File): ViewCommand
 
 class MoveToEditPhoto(val photo: File): ViewCommand
 
-class MoveBackFromSetLocationToTitle : ViewCommand
+object MoveBackFromSetLocationToTitle : ViewCommand
 
-class MoveBackFromSetLocationToPager : ViewCommand
+object MoveBackFromSetLocationToPager : ViewCommand
 
-class MoveBackFromPagerToTitle : ViewCommand
+object MoveBackFromPagerToTitle : ViewCommand
 
-class MoveToMainScreen: ViewCommand
+object MoveToMainScreen: ViewCommand
 
 // Child fragments for SetLocationFragment
-class AddMapFragment : ViewCommand
+object AddMapFragment : ViewCommand
 
-class AddStubFragment : ViewCommand
+object AddStubFragment : ViewCommand
 
-class OpenCamera : ViewCommand
+object OpenCamera : ViewCommand
 
-class OpenGallery : ViewCommand
+object OpenGallery : ViewCommand
 
-class OpenLocationSettings : ViewCommand
+object OpenLocationSettings : ViewCommand
 
 class OpenEmail (
     val emailTo: String
 ) : ViewCommand
 
-class AskAboutGeolocation : ViewCommand
+object AskAboutGeolocation : ViewCommand
 
-class AskAboutFootprintInterruption : ViewCommand
+object AskAboutFootprintInterruption : ViewCommand
 
-class AskAboutDelete : ViewCommand
+object AskAboutDelete : ViewCommand
 
-class StartLoadingMap : ViewCommand
+object StartLoadingMap : ViewCommand
 
 class MoveAndZoomMap(
     val zoomFactor: Float,
@@ -95,9 +94,9 @@ class ShowMapDialog(
     val location: GeoPoint
 ) : ViewCommand
 
-class ShowGoogleDriveExplanationDialog: ViewCommand
+object ShowGoogleDriveExplanationDialog: ViewCommand
 
-class ShowGoogleDriveFailDialog: ViewCommand
+object ShowGoogleDriveFailDialog: ViewCommand
 
 class ShowOkDialog(val text: String): ViewCommand
 
@@ -105,10 +104,12 @@ class StartSharing(
     val footprint: Footprint
 ): ViewCommand
 
-class StartSignInToGoogleDrive: ViewCommand
+object StartSignInToGoogleDrive: ViewCommand
 
-class ProcessSignInToGoogleDriveFail: ViewCommand
-class ProcessSignInToGoogleDriveSuccess: ViewCommand
+object  ProcessSignInToGoogleDriveFail: ViewCommand
+object ProcessSignInToGoogleDriveSuccess: ViewCommand
 
-class StartAnimation: ViewCommand
-class StopAnimation: ViewCommand
+object StartAnimation: ViewCommand
+object StopAnimation: ViewCommand
+
+object HideSoftKeyboard: ViewCommand

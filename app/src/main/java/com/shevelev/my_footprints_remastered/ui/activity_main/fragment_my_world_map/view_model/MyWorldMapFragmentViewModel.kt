@@ -56,7 +56,7 @@ constructor(
         manualZoomAndLocation?.let {
             _zoomAndLocation.value = it
         }
-        sendCommand(StartLoadingMap())
+        sendCommand(StartLoadingMap)
     }
 
     fun onPinClick(id: Long){
