@@ -68,14 +68,11 @@ constructor(
      */
     override suspend fun update(info: UpdateFootprintInfo): FootprintUpdateInfo? {
         val isMetadataUpdated = isMetadataUpdated(info)
-        return if(isMetadataUpdated || info.isImageUpdated) {
+        val result = if(isMetadataUpdated || info.isImageUpdated) {
 
             // update the image
             if(info.isImageUpdated) {
                 updateImage(info.draftImageFile, info.oldFootprint.imageFileName)
-
-                // Remove the draft file
-                filesHelper.deleteFile(info.draftImageFile)
             }
 
             val locationUpdated = info.location != info.oldFootprint.location
@@ -109,6 +106,11 @@ constructor(
         } else {
             null
         }
+
+        // Remove the draft file
+        filesHelper.deleteFile(info.draftImageFile)
+
+        return result
     }
 
     override suspend fun delete(footprint: Footprint): FootprintDeleteInfo {
