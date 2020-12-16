@@ -27,13 +27,13 @@ object SyncWorkerManager {
 //                .enqueueUniquePeriodicWork(WORK_NAME, ExistingPeriodicWorkPolicy.KEEP, updateWork)
 //-----------------------------------------------
             // Debug
-//            Timber.tag("SYNC_TEST").d("Work manager is setting up...")
-//            val updateWork = OneTimeWorkRequestBuilder<SyncWorker>().build()
-//
-//            WorkManager
-//                .getInstance(context)
-//                .enqueueUniqueWork(WORK_NAME, ExistingWorkPolicy.REPLACE, updateWork)
-//            Timber.tag("SYNC_TEST").d("Work manager is setting up...done!")
+            Timber.tag("SYNC_TEST").d("Work manager is setting up...")
+            val updateWork = OneTimeWorkRequestBuilder<SyncWorker>().build()
+
+            WorkManager
+                .getInstance(context)
+                .enqueueUniqueWork(WORK_NAME, ExistingWorkPolicy.REPLACE, updateWork)
+            Timber.tag("SYNC_TEST").d("Work manager is setting up...done!")
 //-----------------------------------------------
         } catch (ex: Exception) {
             Timber.e(ex)

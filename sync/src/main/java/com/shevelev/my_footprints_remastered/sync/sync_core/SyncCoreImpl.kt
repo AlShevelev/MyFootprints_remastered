@@ -90,9 +90,10 @@ constructor(
     }
 
     private fun processUpdate(syncRecord: SyncRecord) {
-        Timber.tag("SYNC_TEST").d("Process Update record")
+        Timber.tag("SYNC_TEST").d("Process Update record. SyncRecord is: $syncRecord")
         footprintRepository.getById(syncRecord.footprintId)?.let { footprint ->
-            syncRecord.googleDriveFileId?.let {
+            Timber.tag("SYNC_TEST").d("Footprint found")
+            footprint.googleDriveFileId?.let {
                 val gdFileId = GoogleDriveFileId(it)
 
                 val isMetadataUpdated = syncRecord.isMetadataUpdated ?: true
