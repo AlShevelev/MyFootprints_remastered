@@ -1,10 +1,11 @@
 package com.shevelev.my_footprints_remastered.services.sync_worker
 
 import android.content.Context
-import androidx.work.*
+import androidx.work.ExistingWorkPolicy
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.shevelev.my_footprints_remastered.BuildConfig
 import timber.log.Timber
-import java.util.concurrent.TimeUnit
 
 object SyncWorkerManager {
     private const val WORK_NAME = "${BuildConfig.APPLICATION_ID}.SYNC_WORKER"
@@ -27,13 +28,11 @@ object SyncWorkerManager {
 //                .enqueueUniquePeriodicWork(WORK_NAME, ExistingPeriodicWorkPolicy.KEEP, updateWork)
 //-----------------------------------------------
             // Debug
-            Timber.tag("SYNC_TEST").d("Work manager is setting up...")
             val updateWork = OneTimeWorkRequestBuilder<SyncWorker>().build()
 
             WorkManager
                 .getInstance(context)
                 .enqueueUniqueWork(WORK_NAME, ExistingWorkPolicy.REPLACE, updateWork)
-            Timber.tag("SYNC_TEST").d("Work manager is setting up...done!")
 //-----------------------------------------------
         } catch (ex: Exception) {
             Timber.e(ex)

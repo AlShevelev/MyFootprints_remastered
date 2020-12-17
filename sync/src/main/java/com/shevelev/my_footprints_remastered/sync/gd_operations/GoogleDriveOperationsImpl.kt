@@ -75,8 +75,6 @@ constructor(
 
             val result = mutableListOf<GoogleDriveFileId>()
 
-            Timber.tag("SYNC_TEST").d("Started to get files list. Folder Id is: $folderId")
-
             do {
                 val filesList = drive
                     .files()
@@ -86,8 +84,6 @@ constructor(
                     .setFields("nextPageToken, files(id)")
                     .setPageToken(pageToken)
                     .execute()
-
-                Timber.tag("SYNC_TEST").d("Files list received")
 
                 filesList.files.forEach { file ->
                     result.add(GoogleDriveFileId(file.id))
@@ -160,7 +156,6 @@ constructor(
                 .build()
         }
             ?.let { service ->
-                Timber.tag("SYNC_TEST").d("GD service created. Folder name is: $folderName")
                 val folderId = getFolderByName(folderName, service) ?: createFolder(folderName, service)
                 GoogleDriveService(service, folderId)
             }
@@ -174,7 +169,6 @@ constructor(
             .setFields("files(id, name)")
             .execute()
             .let {
-                Timber.tag("SYNC_TEST").d("Folder list received. Total folders: ${it.size}")
                 it.files.firstOrNull()?.let { file -> GoogleDriveFileId(file.id) }
             }
 
@@ -190,7 +184,6 @@ constructor(
             .setFields("id")
             .execute()
 
-        Timber.tag("SYNC_TEST").d("Folder created. Id: ${result.id}")
         return GoogleDriveFileId(result.id)
     }
 
