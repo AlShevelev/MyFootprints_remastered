@@ -22,7 +22,7 @@ class FirstLoadingServiceMessageSenderNotifications(
     override fun sendListLoadCompleted() = updateText(context.getString(R.string.firstLoadingListLoaded))
 
     override fun sendProgress(current: Int, total: Int) =
-        updateText(context.getStringFormatted(R.string.firstLoadingListProgress, current, total))
+        updateText(context.getStringFormatted(R.string.firstLoadingListProgress, current+1, total))
 
     override fun sendSuccess() = updateText(context.getString(R.string.firstLoadingListLoaded))
 

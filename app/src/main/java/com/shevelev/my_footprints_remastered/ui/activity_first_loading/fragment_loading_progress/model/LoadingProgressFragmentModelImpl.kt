@@ -38,7 +38,7 @@ constructor(
                     eventsListener?.invoke(Event.ShowMessage(
                         appContext.getStringFormatted(
                             R.string.firstLoadingListProgress,
-                            message.current,
+                            message.current+1,
                             message.total
                         ))
                     )

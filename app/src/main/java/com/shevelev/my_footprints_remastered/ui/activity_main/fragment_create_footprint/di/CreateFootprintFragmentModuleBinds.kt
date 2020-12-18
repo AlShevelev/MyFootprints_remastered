@@ -17,6 +17,7 @@ import dagger.Module
 @Module
 abstract class CreateFootprintFragmentModuleBinds {
     @Binds
+    @FragmentScope
     abstract fun provideViewModelFactory(factory: FragmentViewModelFactoryImpl): FragmentViewModelFactory
 
     @Binds

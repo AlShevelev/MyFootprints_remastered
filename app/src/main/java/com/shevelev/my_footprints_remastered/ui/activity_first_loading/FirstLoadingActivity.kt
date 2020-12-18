@@ -26,7 +26,9 @@ class FirstLoadingActivity : ActivityBase() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_first_loaing)
 
-        initScreen()
+        if(savedInstanceState == null) {
+            initScreen()
+        }
     }
 
     override fun inject(key: String) = App.injections.get<FirstLoadingActivityComponent>(key).inject(this)

@@ -11,7 +11,9 @@ import com.shevelev.my_footprints_remastered.ui.activity_first_loading.fragment_
 import com.shevelev.my_footprints_remastered.ui.activity_first_loading.fragment_loading_progress.view_model.LoadingProgressFragmentViewModel
 import com.shevelev.my_footprints_remastered.ui.shared.dialogs.OkDialog
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view.FragmentBaseMVVM
-import com.shevelev.my_footprints_remastered.ui.view_commands.*
+import com.shevelev.my_footprints_remastered.ui.view_commands.MoveToMainScreen
+import com.shevelev.my_footprints_remastered.ui.view_commands.ShowOkDialog
+import com.shevelev.my_footprints_remastered.ui.view_commands.ViewCommand
 import kotlinx.android.synthetic.main.fragment_loading_progress.*
 
 class LoadingProgressFragment : FragmentBaseMVVM<FragmentLoadingProgressBinding, LoadingProgressFragmentViewModel>() {
@@ -38,14 +40,22 @@ class LoadingProgressFragment : FragmentBaseMVVM<FragmentLoadingProgressBinding,
         animationProgress.apply {
             setBackgroundResource(R.drawable.ic_globe_animation)
         }
+
+        viewModel.animationIsStarted.observe({viewLifecycleOwner.lifecycle}) {
+            val animation = (animationProgress.background as AnimationDrawable)
+            if(it) {
+                animation.start()
+            } else {
+                animation.stop()
+            }
+        }
+
     }
 
     override fun processViewCommand(command: ViewCommand) {
         when(command) {
             is MoveToMainScreen -> (activity as? FirstLoadingActivity)?.moveToMainScreen()
             is ShowOkDialog -> OkDialog.show(WARNING_REQUEST, this, command.text)
-            is StartAnimation -> (animationProgress.background as AnimationDrawable).start()
-            is StopAnimation -> (animationProgress.background as AnimationDrawable).stop()
         }
     }
 

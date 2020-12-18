@@ -33,13 +33,18 @@ class GoogleDriveSignInFragment : FragmentBaseMVVM<FragmentGoogleDriveSignInBind
         binding.viewModel = viewModel
     }
 
-    override fun inject(key: String) = App.injections.get<GoogleDriveSignInFragmentComponent>(key).inject(this)
+    override fun inject(key: String) {
+        val component = App.injections.get<GoogleDriveSignInFragmentComponent>(key)
+        component.inject(this)
+    }
 
     override fun releaseInjection(key: String) = App.injections.release<GoogleDriveSignInFragmentComponent>(key)
 
     override fun processViewCommand(command: ViewCommand) {
         when(command) {
-            is ShowGoogleDriveExplanationDialog -> OkDialog.show(GD_EXPLANATION_REQUEST, this, R.string.googleDriveExplanation)
+            is ShowGoogleDriveExplanationDialog -> {
+                OkDialog.show(GD_EXPLANATION_REQUEST, this, R.string.googleDriveExplanation)
+            }
             is ShowGoogleDriveFailDialog -> OkDialog.show(GD_FAIL_REQUEST, this, R.string.googleDriveFail)
             is StartSignInToGoogleDrive -> googleDriveSignIn.continueSignIn(this)
             is ProcessSignInToGoogleDriveFail -> (activity as? FirstLoadingActivity)?.onGoogleDriveSignInFail()

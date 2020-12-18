@@ -1,6 +1,5 @@
 package com.shevelev.my_footprints_remastered.ui.activity_first_loading.fragment_loading_progress.view_model
 
-import android.util.EventLogTags
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,8 +8,6 @@ import com.shevelev.my_footprints_remastered.ui.activity_first_loading.fragment_
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_model.ViewModelBase
 import com.shevelev.my_footprints_remastered.ui.view_commands.MoveToMainScreen
 import com.shevelev.my_footprints_remastered.ui.view_commands.ShowOkDialog
-import com.shevelev.my_footprints_remastered.ui.view_commands.StartAnimation
-import com.shevelev.my_footprints_remastered.ui.view_commands.StopAnimation
 import com.shevelev.my_footprints_remastered.utils.coroutines.DispatchersProvider
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -30,6 +27,10 @@ constructor(
     val restartButtonVisibility: LiveData<Int>
         get() = _restartButtonVisibility
 
+    private val _animationIsStarted = MutableLiveData(false)
+    val animationIsStarted: LiveData<Boolean>
+        get() = _animationIsStarted
+
     init {
         model.setEventsListener { event ->
             when(event) {
@@ -38,8 +39,8 @@ constructor(
                 is Event.HideRestartButton -> _restartButtonVisibility.value = View.INVISIBLE
                 is Event.MoveToMainScreen -> sendCommand(MoveToMainScreen)
                 is Event.ShowWarningDialog -> sendCommand(ShowOkDialog(event.text))
-                is Event.StartLoadingAnimation -> sendCommand(StartAnimation)
-                is Event.StopLoadingAnimation -> sendCommand(StopAnimation)
+                is Event.StartLoadingAnimation -> _animationIsStarted.value = true
+                is Event.StopLoadingAnimation -> _animationIsStarted.value = false
             }
         }
 

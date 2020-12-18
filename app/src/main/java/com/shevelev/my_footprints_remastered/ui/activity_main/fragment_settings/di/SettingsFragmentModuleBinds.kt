@@ -9,6 +9,7 @@ import com.shevelev.my_footprints_remastered.ui.shared.external_intents.email.Se
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_model.FragmentViewModelFactory
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_model.FragmentViewModelFactoryImpl
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_model.ViewModelKey
+import com.shevelev.my_footprints_remastered.utils.di_scopes.FragmentScope
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -16,6 +17,7 @@ import dagger.multibindings.IntoMap
 @Module
 abstract class SettingsFragmentModuleBinds {
     @Binds
+    @FragmentScope
     abstract fun provideViewModelFactory(factory: FragmentViewModelFactoryImpl): FragmentViewModelFactory
 
     @Binds

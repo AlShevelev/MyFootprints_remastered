@@ -115,11 +115,21 @@
         <item name="android:singleLine">true</item>
     </style>
 
+    <style name="Common.Base.TextStyle.Multi.Lines" parent="Common.Base.TextStyle">
+        <item name="android:maxLines">5</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:singleLine">false</item>
+    </style>
+
     <style name="Text.SizeNormal.Normal.Black" parent="Common.Base.TextStyle.Single.Line">
         <item name="android:textSize">@dimen/textSizeNormal</item>
     </style>
 
     <style name="Text.SizeLarge.Normal.Black" parent="Common.Base.TextStyle.Single.Line">
+        <item name="android:textSize">@dimen/textSizeLarge</item>
+    </style>
+
+    <style name="Text.SizeLarge.Normal.Black.Multi" parent="Common.Base.TextStyle.Multi.Lines">
         <item name="android:textSize">@dimen/textSizeLarge</item>
     </style>
 

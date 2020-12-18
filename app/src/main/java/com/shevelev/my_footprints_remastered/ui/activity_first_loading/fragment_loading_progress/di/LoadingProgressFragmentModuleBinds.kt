@@ -18,6 +18,7 @@ import dagger.multibindings.IntoMap
 @Module
 abstract class LoadingProgressFragmentModuleBinds {
     @Binds
+    @FragmentScope
     abstract fun provideViewModelFactory(factory: FragmentViewModelFactoryImpl): FragmentViewModelFactory
 
     @Binds

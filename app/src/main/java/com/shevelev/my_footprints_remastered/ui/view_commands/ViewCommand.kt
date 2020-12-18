@@ -109,7 +109,4 @@ object StartSignInToGoogleDrive: ViewCommand
 object  ProcessSignInToGoogleDriveFail: ViewCommand
 object ProcessSignInToGoogleDriveSuccess: ViewCommand
 
-object StartAnimation: ViewCommand
-object StopAnimation: ViewCommand
-
 object HideSoftKeyboard: ViewCommand
