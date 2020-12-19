@@ -26,7 +26,6 @@ import kotlinx.coroutines.FlowPreview
 @ExperimentalCoroutinesApi
 abstract class GoogleDriveSignInFragmentModuleBinds {
     @Binds
-    @FragmentScope
     abstract fun provideViewModelFactory(factory: FragmentViewModelFactoryImpl): FragmentViewModelFactory
 
     @Binds

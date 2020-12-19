@@ -21,7 +21,6 @@ import dagger.multibindings.IntoMap
 @Module
 abstract class GalleryPagesFragmentModuleBinds {
     @Binds
-    @FragmentScope
     abstract fun provideViewModelFactory(factory: FragmentViewModelFactoryImpl): FragmentViewModelFactory
 
     @Binds

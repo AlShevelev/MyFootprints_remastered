@@ -19,7 +19,6 @@ import kotlinx.coroutines.FlowPreview
 @Module
 abstract class TitleFragmentModuleBinds {
     @Binds
-    @FragmentScope
     abstract fun provideViewModelFactory(factory: FragmentViewModelFactoryImpl): FragmentViewModelFactory
 
     @Binds

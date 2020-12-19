@@ -45,6 +45,7 @@ constructor(
 
     fun onBackConfirmed() {
         launch {
+            sendCommand(HideSoftKeyboard)
             model.removeDraftFootprint()
             sendCommand(MoveBack)
         }

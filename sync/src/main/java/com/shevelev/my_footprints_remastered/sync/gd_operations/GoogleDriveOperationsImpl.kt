@@ -29,7 +29,7 @@ constructor(
         private const val COMMENT = "COM"
         private const val COMMENT_1 = "COM1"
         private const val COMMENT_2 = "COM2"
-        private const val COMMENT_3 = "COM"
+        private const val COMMENT_3 = "COM3"
         private const val ALL_THE_REST = "REST"
     }
 
@@ -209,9 +209,9 @@ constructor(
                         1 -> COMMENT_1
                         2 -> COMMENT_2
                         3 -> COMMENT_3
-                        else -> throw UnsupportedOperationException("Comment is too long")
+                        else -> null
                     }
-                    put(key, line)
+                    key?.let { put(it, line) }
                 }
             }
     }
