@@ -47,6 +47,8 @@ class EditPhotoFragment : FragmentBase() {
 
     private lateinit var renderer: MultiEffectSurfaceRenderer
 
+    private lateinit var surface: GLSurfaceViewBitmap
+
     @Inject
     internal lateinit var navigation: MainActivityNavigation
 
@@ -81,7 +83,7 @@ class EditPhotoFragment : FragmentBase() {
                 TemperatureEffect(temperatureProgress.toFloat())
             ),
             BRIGHTNESS)
-        val surface = GLSurfaceViewBitmap.createAndAddToView(requireContext(), surfaceContainer, bitmap, renderer)
+        surface = GLSurfaceViewBitmap.createAndAddToView(requireContext(), surfaceContainer, bitmap, renderer)
 
         buttons = listOf(brightnessButton, contrastButton, saturationButton, temperatureButton)
 
@@ -96,6 +98,7 @@ class EditPhotoFragment : FragmentBase() {
 
         acceptButton.setOnClickListener {
             if(!savingInProgress) {
+                savingInProgress = true
                 surface.getBitmap {
                     dataBridge.putPhoto(it!!)
                     savingInProgress = false
@@ -135,8 +138,13 @@ class EditPhotoFragment : FragmentBase() {
         buttons.forEachIndexed { index, button ->
             button.isSelected = index == clickedIndex
         }
-        renderer.switch(clickedIndex)
-        effectValuesBar.progress = renderer.sourceFactor.toInt()
-        currentFilterIndex = clickedIndex
+
+        surface.getBitmap { bitmap ->
+            renderer = renderer.clone(requireContext(), bitmap!!, clickedIndex)
+            surface = GLSurfaceViewBitmap.createAndAddToView(requireContext(), surfaceContainer, bitmap, renderer)
+
+            effectValuesBar.progress = renderer.sourceFactor.toInt()
+            currentFilterIndex = clickedIndex
+        }
     }
 }

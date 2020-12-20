@@ -29,5 +29,8 @@ class MultiEffectSurfaceRenderer(
         surface.requestRender()
     }
 
+    fun clone(context: Context, bitmap: Bitmap, effectIndex: Int) =
+        MultiEffectSurfaceRenderer(context, bitmap, effects, effectIndex)
+
     fun getSourceFactor(index: Int) = effects[index].sourceFactor
 }

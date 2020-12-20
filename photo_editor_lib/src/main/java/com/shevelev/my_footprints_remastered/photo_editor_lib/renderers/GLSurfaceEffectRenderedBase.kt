@@ -12,8 +12,8 @@ import javax.microedition.khronos.opengles.GL10
  * Base class for all OpenGL renderers, based on Android Media Effects
  */
 abstract class GLSurfaceEffectRenderedBase(
-    private val context: Context,
-    private val bitmap: Bitmap
+    context: Context,
+    bitmap: Bitmap
 ) : GLSurfaceRenderedBase(context, bitmap, R.raw.original) {
 
     private var effectContext: EffectContext? = null
