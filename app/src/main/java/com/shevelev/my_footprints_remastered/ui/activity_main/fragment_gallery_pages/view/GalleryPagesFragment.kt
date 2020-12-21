@@ -9,6 +9,7 @@ import com.shevelev.my_footprints_remastered.R
 import com.shevelev.my_footprints_remastered.application.App
 import com.shevelev.my_footprints_remastered.common_entities.Footprint
 import com.shevelev.my_footprints_remastered.databinding.FragmentGalleryPagesBinding
+import com.shevelev.my_footprints_remastered.ui.activity_main.MainActivity
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_pages.di.GalleryPagesFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_pages.view.pager.GalleryPagesAdapter
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_pages.view_model.GalleryPagesFragmentViewModel
@@ -57,6 +58,8 @@ class GalleryPagesFragment : FragmentBaseMVVM<FragmentGalleryPagesBinding, Galle
     override fun releaseInjection(key: String) = App.injections.release<GalleryPagesFragmentComponent>(key)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        (activity as MainActivity).setSystemUIVisibility(false)
+
         viewModel.onViewReady()
 
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -76,6 +79,11 @@ class GalleryPagesFragment : FragmentBaseMVVM<FragmentGalleryPagesBinding, Galle
             }
         })
         viewModel.currentIndex.observe({viewLifecycleOwner.lifecycle}) { pager.setCurrentItem(it, false) }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        (activity as MainActivity).setSystemUIVisibility(true)
     }
 
     override fun processViewCommand(command: ViewCommand) {

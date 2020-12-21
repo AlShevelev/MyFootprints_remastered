@@ -26,43 +26,6 @@
             app:on_back_click="@{ () -> viewModel.onBackClick() }"
             app:title="@{viewModel.title}" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/hGuidelineBottom48"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_end="53dp" />
-
-        <ImageButton
-            android:id="@+id/mapButton"
-            app:srcCompat="@drawable/ic_location_14_20"
-
-            style="@style/Button.Tool"
-
-            app:on_move_to_map_click="@{ () -> viewModel.onMoveToMapClick() }"
-
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/hGuidelineBottom48"
-            app:layout_constraintBottom_toBottomOf="parent"
-            tools:ignore="ContentDescription" />
-
-        <Button
-            android:id="@+id/saveButton"
-            android:layout_width="wrap_content"
-            android:text="@string/save"
-
-            style="@style/Button.Blue"
-
-            android:enabled="@{viewModel.saveEnabled}"
-            tools:enabled="true"
-
-            app:on_save_click="@{ () -> viewModel.onSaveClick()}"
-
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/hGuidelineBottom48"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
-
         <EditText
             android:id="@+id/commentText"
             android:layout_width="0dp"
@@ -97,8 +60,42 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/commentText"
-            app:layout_constraintBottom_toTopOf="@id/hGuidelineBottom48"
+            app:layout_constraintBottom_toBottomOf="parent"
 
             tools:ignore="ContentDescription" />
+
+        <ImageButton
+            android:id="@+id/mapButton"
+            app:srcCompat="@drawable/ic_location_14_20"
+
+            style="@style/Button.OnPhoto"
+
+            app:on_move_to_map_click="@{ () -> viewModel.onMoveToMapClick() }"
+
+            android:layout_marginBottom="@dimen/onPhotoButtonMargin"
+            android:layout_marginStart="@dimen/onPhotoButtonMargin"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="wrap_content"
+            android:text="@string/save"
+
+            style="@style/Button.Blue"
+
+            android:enabled="@{viewModel.saveEnabled}"
+            tools:enabled="true"
+
+            app:on_save_click="@{ () -> viewModel.onSaveClick()}"
+
+            android:layout_marginBottom="@dimen/onPhotoButtonMargin"
+            android:layout_marginEnd="@dimen/onPhotoButtonMargin"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

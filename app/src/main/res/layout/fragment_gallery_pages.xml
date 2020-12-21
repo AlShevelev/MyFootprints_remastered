@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
 
             android:layout_marginStart="@dimen/titleScreenTotalLabelMargin"
-            android:layout_marginTop="@dimen/titleScreenTotalLabelMargin"
+            android:layout_marginTop="@dimen/systemBarButtonsMargin"
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -64,7 +64,7 @@
             style="@style/Button.OnPhoto.Light"
 
             android:layout_marginStart="@dimen/onPhotoButtonMargin"
-            android:layout_marginBottom="@dimen/onPhotoButtonMargin"
+            android:layout_marginBottom="@dimen/navigationBarButtonsMargin"
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

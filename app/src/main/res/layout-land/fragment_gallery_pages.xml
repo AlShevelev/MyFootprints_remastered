@@ -24,8 +24,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:layout_marginStart="@dimen/titleScreenTotalLabelMargin"
-            android:layout_marginTop="@dimen/titleScreenTotalLabelMargin"
+            android:layout_marginStart="@dimen/navigationBarButtonsMargin"
+            android:layout_marginTop="@dimen/systemBarButtonsMargin"
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -42,29 +42,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:layout_marginStart="@dimen/titleScreenTotalLabelMargin"
             android:layout_marginTop="@dimen/titleScreenTotalLabelMargin"
             android:layout_marginEnd="@dimen/titleScreenTotalLabelMargin"
-            app:layout_constraintHorizontal_bias="0"
+            android:text="@{viewModel.comment}"
 
-            app:layout_constrainedWidth="true"
-
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/locationDateText"
-
-            tools:visibility="visible"
             android:visibility="@{viewModel.commentVisibility}"
 
-            android:text="@{viewModel.comment}"
-            tools:text="We\'re Knights of the Round Table. We dance whene\'er we\'re able. We do routines and chorus scenes" />
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+
+            app:layout_constraintStart_toStartOf="@+id/locationDateText"
+            app:layout_constraintTop_toBottomOf="@+id/locationDateText"
+
+            tools:text="We\'re Knights of the Round Table. We dance whene\'er we\'re able. We do routines and chorus scenes"
+            tools:visibility="visible" />
 
         <ImageButton
             android:id="@+id/mapButton"
 
             style="@style/Button.OnPhoto.Light"
 
-            android:layout_marginStart="@dimen/onPhotoButtonMargin"
+            android:layout_marginStart="@dimen/navigationBarButtonsMargin"
             android:layout_marginBottom="@dimen/onPhotoButtonMargin"
 
             app:layout_constraintStart_toStartOf="parent"

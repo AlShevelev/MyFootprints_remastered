@@ -3,6 +3,9 @@
     <dimen name="textSizeNormal">15sp</dimen>
     <dimen name="textSizeLarge">17sp</dimen>
 
+    <dimen name="navigationBarButtonsMargin">52dp</dimen>
+    <dimen name="systemBarButtonsMargin">24dp</dimen>
+
     <dimen name="strokeThin">1dp</dimen>
     <dimen name="strokeNormal">2dp</dimen>
 
