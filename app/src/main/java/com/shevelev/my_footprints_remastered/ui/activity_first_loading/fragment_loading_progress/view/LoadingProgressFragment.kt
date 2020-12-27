@@ -14,7 +14,6 @@ import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view.FragmentBaseMVV
 import com.shevelev.my_footprints_remastered.ui.view_commands.MoveToMainScreen
 import com.shevelev.my_footprints_remastered.ui.view_commands.ShowOkDialog
 import com.shevelev.my_footprints_remastered.ui.view_commands.ViewCommand
-import kotlinx.android.synthetic.main.fragment_loading_progress.*
 
 class LoadingProgressFragment : FragmentBaseMVVM<FragmentLoadingProgressBinding, LoadingProgressFragmentViewModel>() {
     companion object {
@@ -37,12 +36,12 @@ class LoadingProgressFragment : FragmentBaseMVVM<FragmentLoadingProgressBinding,
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        animationProgress.apply {
+        binding?.animationProgress?.apply {
             setBackgroundResource(R.drawable.ic_globe_animation)
         }
 
         viewModel.animationIsStarted.observe({viewLifecycleOwner.lifecycle}) {
-            val animation = (animationProgress.background as AnimationDrawable)
+            val animation = (binding?.animationProgress?.background as AnimationDrawable)
             if(it) {
                 animation.start()
             } else {

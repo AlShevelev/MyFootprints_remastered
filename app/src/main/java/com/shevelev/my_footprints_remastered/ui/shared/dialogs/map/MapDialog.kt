@@ -16,12 +16,13 @@ import com.shevelev.my_footprints_remastered.R
 import com.shevelev.my_footprints_remastered.application.App
 import com.shevelev.my_footprints_remastered.common_entities.GeoPoint
 import com.shevelev.my_footprints_remastered.common_entities.PinColor
+import com.shevelev.my_footprints_remastered.databinding.DialogMapBinding
+import com.shevelev.my_footprints_remastered.databinding.FragmentCropPhotoBinding
 import com.shevelev.my_footprints_remastered.ui.shared.Constants
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view.FragmentBase
 import com.shevelev.my_footprints_remastered.ui.shared.pin_draw.PinDraw
 import com.shevelev.my_footprints_remastered.utils.location.toMapLocation
 import com.shevelev.my_footprints_remastered.utils.resources.getScreenSize
-import kotlinx.android.synthetic.main.dialog_map.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -56,13 +57,17 @@ class MapDialog : BottomSheetDialogFragmentBase(), OnMapReadyCallback {
     @Inject
     lateinit var pinDraw: PinDraw
 
+    private var binding: DialogMapBinding? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(DialogFragment.STYLE_NORMAL, R.style.BottomSheetDialogFragment_RoundCorners)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-        inflater.inflate(R.layout.dialog_map, container, false).also { view ->
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        binding = DialogMapBinding.inflate(inflater, container, false)
+
+        return binding!!.root.also { view ->
             val screenSize = requireContext().getScreenSize()
 
             view.findViewById<FrameLayout>(R.id.mapContainer).apply {
@@ -71,6 +76,12 @@ class MapDialog : BottomSheetDialogFragmentBase(), OnMapReadyCallback {
                 }
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
         super.onCreateDialog(savedInstanceState).apply {
@@ -103,7 +114,7 @@ class MapDialog : BottomSheetDialogFragmentBase(), OnMapReadyCallback {
 
         startLoadingMap()
 
-        closeButton.setOnClickListener { dismiss() }
+        binding!!.closeButton.setOnClickListener { dismiss() }
     }
 
     override fun onMapReady(map: GoogleMap) {

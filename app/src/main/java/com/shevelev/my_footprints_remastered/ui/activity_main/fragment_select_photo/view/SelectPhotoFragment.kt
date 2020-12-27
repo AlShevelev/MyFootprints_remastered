@@ -20,7 +20,6 @@ import com.shevelev.my_footprints_remastered.ui.view_commands.MoveBack
 import com.shevelev.my_footprints_remastered.ui.view_commands.OpenCamera
 import com.shevelev.my_footprints_remastered.ui.view_commands.OpenGallery
 import com.shevelev.my_footprints_remastered.ui.view_commands.ViewCommand
-import kotlinx.android.synthetic.main.fragment_select_photo.*
 import permissions.dispatcher.NeedsPermission
 import permissions.dispatcher.OnPermissionDenied
 import permissions.dispatcher.RuntimePermissions
@@ -91,6 +90,8 @@ class SelectPhotoFragment : FragmentBaseMVVM<FragmentSelectPhotoBinding, SelectP
 
             gridAdapter = PhotoGridAdapter(viewModel)
             gridAdapter.setHasStableIds(false)
+
+            val photosGrid = binding!!.photosGrid
 
             photosGrid.isSaveEnabled = false
             photosGrid.itemAnimator = null

@@ -10,11 +10,11 @@ import com.isseiaoki.simplecropview.CropImageView
 import com.isseiaoki.simplecropview.callback.CropCallback
 import com.shevelev.my_footprints_remastered.R
 import com.shevelev.my_footprints_remastered.application.App
+import com.shevelev.my_footprints_remastered.databinding.FragmentCropPhotoBinding
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.model.data_bridge.CreateFootprintFragmentDataBridge
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_crop_photo.di.CropPhotoFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.navigation.MainActivityNavigation
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view.FragmentBase
-import kotlinx.android.synthetic.main.fragment_crop_photo.*
 import java.io.File
 import javax.inject.Inject
 
@@ -27,31 +27,41 @@ class CropPhotoFragment : FragmentBase() {
 
     override val isBackHandlerEnabled: Boolean = true
 
+    private var binding: FragmentCropPhotoBinding? = null
+
     @Inject
     internal lateinit var navigation: MainActivityNavigation
 
     @Inject
     internal lateinit var dataBridge: CreateFootprintFragmentDataBridge
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_crop_photo, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        binding = FragmentCropPhotoBinding.inflate(inflater, container, false)
+        return binding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val file = File(requireArguments().getString(ARG_FILE)!!)
 
-        cropPhoto.load(file) {
-            crossfade(true)
-        }
-        cropPhoto.setCropMode(CropImageView.CropMode.FREE)
-        cropPhoto.setInitialFrameScale(0.75f)
-        cropPhoto.setMinFrameSizeInDp(100)
-        cropPhoto.setTouchPaddingInDp(10)
-        cropPhoto.setCompressFormat(Bitmap.CompressFormat.PNG)
-        cropPhoto.setCompressQuality(100)
+        with(binding!!) {
+            cropPhoto.load(file) {
+                crossfade(true)
+            }
+            cropPhoto.setCropMode(CropImageView.CropMode.FREE)
+            cropPhoto.setInitialFrameScale(0.75f)
+            cropPhoto.setMinFrameSizeInDp(100)
+            cropPhoto.setTouchPaddingInDp(10)
+            cropPhoto.setCompressFormat(Bitmap.CompressFormat.PNG)
+            cropPhoto.setCompressQuality(100)
 
-        acceptButton.setOnClickListener { cropAndComplete() }
-        cancelButton.setOnClickListener { complete() }
+            acceptButton.setOnClickListener { cropAndComplete() }
+            cancelButton.setOnClickListener { complete() }
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 
     override fun inject(key: String) = App.injections.get<CropPhotoFragmentComponent>(key).inject(this)
@@ -68,7 +78,7 @@ class CropPhotoFragment : FragmentBase() {
         }
 
         croppingInProgress = true
-        cropPhoto.cropAsync(object: CropCallback{
+        binding!!.cropPhoto.cropAsync(object: CropCallback{
             override fun onSuccess(cropped: Bitmap?) {
                 croppingInProgress = false
                 dataBridge.putPhoto(cropped!!)

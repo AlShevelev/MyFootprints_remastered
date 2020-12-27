@@ -18,7 +18,6 @@ import com.shevelev.my_footprints_remastered.ui.shared.pin_draw.PinDraw
 import com.shevelev.my_footprints_remastered.ui.view_commands.MoveToOneGallery
 import com.shevelev.my_footprints_remastered.ui.view_commands.StartLoadingMap
 import com.shevelev.my_footprints_remastered.ui.view_commands.ViewCommand
-import kotlinx.android.synthetic.main.fragment_my_world_map.*
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -87,7 +86,7 @@ class MyWorldMapFragment : FragmentBaseMVVM<FragmentMyWorldMapBinding, MyWorldMa
         Timber.tag("GALLERY").d("showFootprints")
         map?.let { map ->
             Timber.tag("GALLERY").d("camera moved")
-            mapContainer.postDelayed({
+            binding!!.mapContainer.postDelayed({
                 clusterManager = ClusterManager<FootprintOnMap>(requireContext(), map).also { cm ->
                     Timber.tag("GALLERY").d("cluster manager set")
 

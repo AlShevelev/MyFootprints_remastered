@@ -16,7 +16,6 @@ import com.shevelev.my_footprints_remastered.ui.shared.external_intents.location
 import com.shevelev.my_footprints_remastered.ui.shared.keyboard.KeyboardUtils
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view.FragmentBaseMVVM
 import com.shevelev.my_footprints_remastered.ui.view_commands.*
-import kotlinx.android.synthetic.main.fragment_create_footprint.*
 import permissions.dispatcher.NeedsPermission
 import permissions.dispatcher.OnPermissionDenied
 import permissions.dispatcher.OnShowRationale
@@ -81,7 +80,7 @@ class CreateFootprintFragment : FragmentBaseMVVM<FragmentCreateFootprintBinding,
 
             is OpenLocationSettings -> locationSettingsHelper.openSettings(this)
 
-            is HideSoftKeyboard -> KeyboardUtils.hideKeyboard(commentText)
+            is HideSoftKeyboard -> binding?.commentText?.let { KeyboardUtils.hideKeyboard(it) }
         }
     }
 

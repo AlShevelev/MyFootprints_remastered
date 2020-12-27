@@ -21,7 +21,6 @@ import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view.FragmentBaseMVV
 import com.shevelev.my_footprints_remastered.ui.shared.recycler_view.versioned.VersionedListItem
 import com.shevelev.my_footprints_remastered.ui.view_commands.*
 import dagger.Lazy
-import kotlinx.android.synthetic.main.fragment_gallery_pages.*
 import javax.inject.Inject
 
 class GalleryPagesFragment : FragmentBaseMVVM<FragmentGalleryPagesBinding, GalleryPagesFragmentViewModel>() {
@@ -71,6 +70,8 @@ class GalleryPagesFragment : FragmentBaseMVVM<FragmentGalleryPagesBinding, Galle
         viewModel.items.observe({viewLifecycleOwner.lifecycle}) { updateGallery(it) }
 
         galleryPagesAdapter = GalleryPagesAdapter(this)
+
+        val pager = binding!!.pager
 
         pager.adapter = galleryPagesAdapter
         pager.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {

@@ -16,7 +16,6 @@ import com.shevelev.my_footprints_remastered.ui.view_commands.MoveBack
 import com.shevelev.my_footprints_remastered.ui.view_commands.MoveToOneGallery
 import com.shevelev.my_footprints_remastered.ui.view_commands.ViewCommand
 import com.shevelev.my_footprints_remastered.utils.resources.isPortrait
-import kotlinx.android.synthetic.main.fragment_gallery_grid.*
 import javax.inject.Inject
 
 class GalleryGridFragment : FragmentBaseMVVM<FragmentGalleryGridBinding, GalleryGridFragmentViewModel>() {
@@ -51,13 +50,15 @@ class GalleryGridFragment : FragmentBaseMVVM<FragmentGalleryGridBinding, Gallery
     }
 
     private fun initList() {
-        val cols = if(requireContext().isPortrait()) 2 else 4
-        gridLayoutManager = GridLayoutManager(context, cols)
+        with(binding!!) {
+            val cols = if(requireContext().isPortrait()) 2 else 4
+            gridLayoutManager = GridLayoutManager(context, cols)
 
-        footprintGrid.isSaveEnabled = false
-        footprintGrid.itemAnimator = null
-        footprintGrid.adapter = gridAdapter
-        footprintGrid.layoutManager = gridLayoutManager
+            footprintGrid.isSaveEnabled = false
+            footprintGrid.itemAnimator = null
+            footprintGrid.adapter = gridAdapter
+            footprintGrid.layoutManager = gridLayoutManager
+        }
     }
 
     private fun setListItems(items: List<VersionedListItem>) = gridAdapter.update(items)

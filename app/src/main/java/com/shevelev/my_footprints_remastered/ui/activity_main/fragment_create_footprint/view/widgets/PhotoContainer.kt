@@ -3,10 +3,13 @@ package com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_f
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
+import android.widget.Button
 import android.widget.FrameLayout
+import android.widget.ImageButton
+import android.widget.ProgressBar
 import coil.api.load
+import com.github.chrisbanes.photoview.PhotoView
 import com.shevelev.my_footprints_remastered.R
-import kotlinx.android.synthetic.main.view_photo_container.view.*
 
 class PhotoContainer
 @JvmOverloads
@@ -30,10 +33,10 @@ constructor(
     init {
         inflate(context, R.layout.view_photo_container, this)
 
-        addPhotoButton.setOnClickListener { onAddClickListener?.invoke() }
-        clearPhotoButton.setOnClickListener { onClearClickListener?.invoke() }
-        cropPhotoButton.setOnClickListener { onCropClickListener?.invoke() }
-        filterPhotoButton.setOnClickListener { onFilterClickListener?.invoke() }
+        findViewById<Button>(R.id.addPhotoButton).setOnClickListener { onAddClickListener?.invoke() }
+        findViewById<ImageButton>(R.id.clearPhotoButton).setOnClickListener { onClearClickListener?.invoke() }
+        findViewById<ImageButton>(R.id.cropPhotoButton).setOnClickListener { onCropClickListener?.invoke() }
+        findViewById<ImageButton>(R.id.filterPhotoButton).setOnClickListener { onFilterClickListener?.invoke() }
 
     }
 
@@ -54,6 +57,14 @@ constructor(
     }
 
     private fun updateState() {
+        val photoImage = findViewById<PhotoView>(R.id.photoImage)
+        val photoFilter = findViewById<View>(R.id.photoFilter)
+        val addPhotoButton = findViewById<Button>(R.id.addPhotoButton)
+        val loading = findViewById<ProgressBar>(R.id.loading)
+        val clearPhotoButton = findViewById<ImageButton>(R.id.clearPhotoButton)
+        val cropPhotoButton = findViewById<ImageButton>(R.id.cropPhotoButton)
+        val filterPhotoButton = findViewById<ImageButton>(R.id.filterPhotoButton)
+
         when(state) {
             is PhotoContainerState.Initial -> {
                 photoImage.load(R.drawable.img_title_empty) {

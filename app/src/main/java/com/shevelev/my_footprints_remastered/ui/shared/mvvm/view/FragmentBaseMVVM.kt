@@ -22,10 +22,10 @@ import javax.inject.Inject
  * Base class for all fragments
  */
 abstract class FragmentBaseMVVM<VDB: ViewDataBinding, VM: ViewModelBase<out ModelBase>> : FragmentBase() {
-    private lateinit var binding: VDB
+    protected var binding: VDB? = null
+        private set
 
     private lateinit var _viewModel: VM
-
     protected val viewModel: VM
         get() = _viewModel
 
@@ -43,10 +43,18 @@ abstract class FragmentBaseMVVM<VDB: ViewDataBinding, VM: ViewModelBase<out Mode
         _viewModel.command.observe({viewLifecycleOwner.lifecycle}) { processViewCommandGeneral(it) }
 
         binding = DataBindingUtil.inflate(inflater, this.layoutResId(), container, false)
-        binding.lifecycleOwner = this
 
-        linkViewModel(binding, _viewModel)
-        return binding.root
+        return binding?.let {
+            it.lifecycleOwner = this
+
+            linkViewModel(it, _viewModel)
+            it.root
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 
     abstract fun provideViewModelType(): Class<VM>

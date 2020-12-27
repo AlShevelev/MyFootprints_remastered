@@ -12,7 +12,7 @@ import com.shevelev.my_footprints_remastered.photo_editor_lib.renderers.effect.e
 import com.shevelev.my_footprints_remastered.photo_editor_lib.renderers.effect.effects.TemperatureEffect
 import com.shevelev.photo_editor.cross_activity_communication.CrossActivityCommunicator
 import com.shevelev.my_footprints_remastered.photo_editor_lib.renderers.effect.MultiEffectSurfaceRenderer
-import kotlinx.android.synthetic.main.activity_combined.*
+import com.shevelev.photo_editor.databinding.ActivityCombinedBinding
 
 class CombinedActivity : AppCompatActivity() {
     companion object {
@@ -30,33 +30,37 @@ class CombinedActivity : AppCompatActivity() {
 
     private var currentEffectIndex = BRIGHTNESS
 
+    private lateinit var binding: ActivityCombinedBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_combined)
+
+        binding = ActivityCombinedBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val bitmap = CrossActivityCommunicator.bitmap!!
         renderer = MultiEffectSurfaceRenderer(
             this,
             bitmap,
             listOf(
-                BrightnessEffect(filterValuesBar.progress.toFloat()),
-                ContrastEffect(filterValuesBar.progress.toFloat()),
-                SaturationEffect(filterValuesBar.progress.toFloat()),
-                TemperatureEffect(filterValuesBar.progress.toFloat())
+                BrightnessEffect(binding.filterValuesBar.progress.toFloat()),
+                ContrastEffect(binding.filterValuesBar.progress.toFloat()),
+                SaturationEffect(binding.filterValuesBar.progress.toFloat()),
+                TemperatureEffect(binding.filterValuesBar.progress.toFloat())
             ),
             BRIGHTNESS)
-        val surface = GLSurfaceViewBitmap.createAndAddToView(this, surfaceContainer, bitmap, renderer)
+        val surface = GLSurfaceViewBitmap.createAndAddToView(this, binding.surfaceContainer, bitmap, renderer)
 
-        brightnessButton.isSelected = true
+        binding.brightnessButton.isSelected = true
 
-        buttons = listOf(brightnessButton, contrastButton, saturationButton, temperatureButton)
+        buttons = listOf(binding.brightnessButton, binding.contrastButton, binding.saturationButton, binding.temperatureButton)
 
-        brightnessButton.setOnClickListener { onButtonClick(BRIGHTNESS) }
-        contrastButton.setOnClickListener { onButtonClick(CONTRAST) }
-        saturationButton.setOnClickListener { onButtonClick(SATURATION) }
-        temperatureButton.setOnClickListener { onButtonClick(TEMPERATURE) }
+        binding.brightnessButton.setOnClickListener { onButtonClick(BRIGHTNESS) }
+        binding.contrastButton.setOnClickListener { onButtonClick(CONTRAST) }
+        binding.saturationButton.setOnClickListener { onButtonClick(SATURATION) }
+        binding.temperatureButton.setOnClickListener { onButtonClick(TEMPERATURE) }
 
-        filterValuesBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        binding.filterValuesBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 renderer.update(progress.toFloat())
             }
@@ -68,12 +72,12 @@ class CombinedActivity : AppCompatActivity() {
             }
         })
 
-        cancelButton.setOnClickListener {
+        binding.cancelButton.setOnClickListener {
             setResult(Activity.RESULT_CANCELED)
             finish()
         }
 
-        acceptButton.setOnClickListener {
+        binding.acceptButton.setOnClickListener {
             surface.getBitmap {
                 CrossActivityCommunicator.bitmap = it
                 setResult(Activity.RESULT_OK)
@@ -91,7 +95,7 @@ class CombinedActivity : AppCompatActivity() {
             button.isSelected = index == clickedIndex
         }
         renderer.switch(clickedIndex)
-        filterValuesBar.progress = renderer.sourceFactor.toInt()
+        binding.filterValuesBar.progress = renderer.sourceFactor.toInt()
         currentEffectIndex = clickedIndex
     }
 }

@@ -5,7 +5,6 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.shevelev.my_footprints_remastered.R
-import kotlinx.android.synthetic.main.dialog_select_color.view.*
 
 /**
  * Dialog view for color selection
@@ -17,6 +16,15 @@ constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
+    private val textColorGrid
+        get() = findViewById<SelectColorGrid>(R.id.textColorGrid)
+
+    private val sampleTextLabel
+        get() = findViewById<SelectColorSampleTextView>(R.id.sampleTextLabel)
+
+    private val backgroundColorGrid
+        get() = findViewById<SelectColorGrid>(R.id.backgroundColorGrid)
+
     /**
      * Text color
      */

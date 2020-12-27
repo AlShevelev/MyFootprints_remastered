@@ -6,9 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import com.shevelev.my_footprints_remastered.R
 import com.shevelev.my_footprints_remastered.application.App
+import com.shevelev.my_footprints_remastered.databinding.FragmentEditPhotoBinding
 import com.shevelev.my_footprints_remastered.photo_editor_lib.GLSurfaceViewBitmap
+import com.shevelev.my_footprints_remastered.photo_editor_lib.renderers.effect.MultiEffectSurfaceRenderer
 import com.shevelev.my_footprints_remastered.photo_editor_lib.renderers.effect.effects.BrightnessEffect
 import com.shevelev.my_footprints_remastered.photo_editor_lib.renderers.effect.effects.ContrastEffect
 import com.shevelev.my_footprints_remastered.photo_editor_lib.renderers.effect.effects.SaturationEffect
@@ -18,8 +19,6 @@ import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_edit_phot
 import com.shevelev.my_footprints_remastered.ui.activity_main.navigation.MainActivityNavigation
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view.FragmentBase
 import com.shevelev.my_footprints_remastered.ui.shared.standard_widet_ext.setOnChangeListener
-import com.shevelev.my_footprints_remastered.photo_editor_lib.renderers.effect.MultiEffectSurfaceRenderer
-import kotlinx.android.synthetic.main.fragment_edit_photo.*
 import java.io.File
 import javax.inject.Inject
 
@@ -49,6 +48,8 @@ class EditPhotoFragment : FragmentBase() {
 
     private lateinit var surface: GLSurfaceViewBitmap
 
+    private var binding: FragmentEditPhotoBinding? = null
+
     @Inject
     internal lateinit var navigation: MainActivityNavigation
 
@@ -57,57 +58,65 @@ class EditPhotoFragment : FragmentBase() {
     @Inject
     internal lateinit var dataBridge: CreateFootprintFragmentDataBridge
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_edit_photo, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        binding = FragmentEditPhotoBinding.inflate(inflater, container, false)
+        return binding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val defaultProgress = effectValuesBar.progress
+        with(binding!!) {
+            val defaultProgress = effectValuesBar.progress
 
-        currentFilterIndex = savedInstanceState?.getInt(CURRENT_FILTER_INDEX_KEY, BRIGHTNESS) ?: BRIGHTNESS
-        val brightnessProgress = savedInstanceState?.getInt(BRIGHTNESS_FILTER_PROGRESS_KEY, defaultProgress) ?: defaultProgress
-        val contrastProgress = savedInstanceState?.getInt(CONTRAST_FILTER_PROGRESS_KEY, defaultProgress) ?: defaultProgress
-        val saturationProgress = savedInstanceState?.getInt(SATURATION_FILTER_PROGRESS_KEY, defaultProgress) ?: defaultProgress
-        val temperatureProgress = savedInstanceState?.getInt(TEMPERATURE_FILTER_PROGRESS_KEY, defaultProgress) ?: defaultProgress
+            currentFilterIndex = savedInstanceState?.getInt(CURRENT_FILTER_INDEX_KEY, BRIGHTNESS) ?: BRIGHTNESS
+            val brightnessProgress = savedInstanceState?.getInt(BRIGHTNESS_FILTER_PROGRESS_KEY, defaultProgress) ?: defaultProgress
+            val contrastProgress = savedInstanceState?.getInt(CONTRAST_FILTER_PROGRESS_KEY, defaultProgress) ?: defaultProgress
+            val saturationProgress = savedInstanceState?.getInt(SATURATION_FILTER_PROGRESS_KEY, defaultProgress) ?: defaultProgress
+            val temperatureProgress = savedInstanceState?.getInt(TEMPERATURE_FILTER_PROGRESS_KEY, defaultProgress) ?: defaultProgress
 
-        val file = File(requireArguments().getString(ARG_FILE)!!)
-        val bitmap = BitmapFactory.decodeFile(file.absolutePath)
+            val file = File(requireArguments().getString(ARG_FILE)!!)
+            val bitmap = BitmapFactory.decodeFile(file.absolutePath)
 
-        renderer = MultiEffectSurfaceRenderer(
-            requireContext(),
-            bitmap,
-            listOf(
-                BrightnessEffect(brightnessProgress.toFloat()),
-                ContrastEffect(contrastProgress.toFloat()),
-                SaturationEffect(saturationProgress.toFloat()),
-                TemperatureEffect(temperatureProgress.toFloat())
-            ),
-            BRIGHTNESS)
-        surface = GLSurfaceViewBitmap.createAndAddToView(requireContext(), surfaceContainer, bitmap, renderer)
+            renderer = MultiEffectSurfaceRenderer(
+                requireContext(),
+                bitmap,
+                listOf(
+                    BrightnessEffect(brightnessProgress.toFloat()),
+                    ContrastEffect(contrastProgress.toFloat()),
+                    SaturationEffect(saturationProgress.toFloat()),
+                    TemperatureEffect(temperatureProgress.toFloat())
+                ),
+                BRIGHTNESS)
+            surface = GLSurfaceViewBitmap.createAndAddToView(requireContext(), surfaceContainer, bitmap, renderer)
 
-        buttons = listOf(brightnessButton, contrastButton, saturationButton, temperatureButton)
+            buttons = listOf(brightnessButton, contrastButton, saturationButton, temperatureButton)
 
-        brightnessButton.setOnClickListener { onButtonClick(BRIGHTNESS) }
-        contrastButton.setOnClickListener { onButtonClick(CONTRAST) }
-        saturationButton.setOnClickListener { onButtonClick(SATURATION) }
-        temperatureButton.setOnClickListener { onButtonClick(TEMPERATURE) }
+            brightnessButton.setOnClickListener { onButtonClick(BRIGHTNESS) }
+            contrastButton.setOnClickListener { onButtonClick(CONTRAST) }
+            saturationButton.setOnClickListener { onButtonClick(SATURATION) }
+            temperatureButton.setOnClickListener { onButtonClick(TEMPERATURE) }
 
-        effectValuesBar.setOnChangeListener { renderer.update(it.toFloat()) }
+            effectValuesBar.setOnChangeListener { renderer.update(it.toFloat()) }
 
-        cancelButton.setOnClickListener { complete() }
+            cancelButton.setOnClickListener { complete() }
 
-        acceptButton.setOnClickListener {
-            if(!savingInProgress) {
-                savingInProgress = true
-                surface.getBitmap {
-                    dataBridge.putPhoto(it!!)
-                    savingInProgress = false
-                    complete()
+            acceptButton.setOnClickListener {
+                if(!savingInProgress) {
+                    savingInProgress = true
+                    surface.getBitmap {
+                        dataBridge.putPhoto(it!!)
+                        savingInProgress = false
+                        complete()
+                    }
                 }
             }
-        }
 
-        buttons[currentFilterIndex].performClick()
+            buttons[currentFilterIndex].performClick()
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 
     override fun inject(key: String) = App.injections.get<EditPhotoFragmentComponent>(key).inject(this)
@@ -141,9 +150,9 @@ class EditPhotoFragment : FragmentBase() {
 
         surface.getBitmap { bitmap ->
             renderer = renderer.clone(requireContext(), bitmap!!, clickedIndex)
-            surface = GLSurfaceViewBitmap.createAndAddToView(requireContext(), surfaceContainer, bitmap, renderer)
+            surface = GLSurfaceViewBitmap.createAndAddToView(requireContext(), binding!!.surfaceContainer, bitmap, renderer)
 
-            effectValuesBar.progress = renderer.sourceFactor.toInt()
+            binding!!.effectValuesBar.progress = renderer.sourceFactor.toInt()
             currentFilterIndex = clickedIndex
         }
     }

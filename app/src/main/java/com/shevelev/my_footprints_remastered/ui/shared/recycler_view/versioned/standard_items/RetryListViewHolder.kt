@@ -1,10 +1,10 @@
 package com.shevelev.my_footprints_remastered.ui.shared.recycler_view.versioned.standard_items
 
 import android.view.ViewGroup
+import android.widget.Button
 import com.shevelev.my_footprints_remastered.R
 import com.shevelev.my_footprints_remastered.ui.shared.recycler_view.RetryListItemEventsProcessor
 import com.shevelev.my_footprints_remastered.ui.shared.recycler_view.ViewHolderBase
-import kotlinx.android.synthetic.main.list_item_retry.view.*
 
 class RetryListViewHolder<TEventsProcessor: RetryListItemEventsProcessor>(
     parentView: ViewGroup
@@ -14,13 +14,13 @@ class RetryListViewHolder<TEventsProcessor: RetryListItemEventsProcessor>(
 ) {
 
     override fun init(listItem: RetryListItem, listItemEventsProcessor: TEventsProcessor) {
-        itemView.retryButton.setOnClickListener {
+        itemView.findViewById<Button>(R.id.retryButton).setOnClickListener {
             listItemEventsProcessor.onRetryLoadPage()
         }
     }
 
     override fun release() {
         super.release()
-        itemView.retryButton.setOnClickListener(null)
+        itemView.findViewById<Button>(R.id.retryButton).setOnClickListener(null)
     }
 }

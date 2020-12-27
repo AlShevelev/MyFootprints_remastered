@@ -18,7 +18,6 @@ import com.shevelev.my_footprints_remastered.ui.activity_main.navigation.MainAct
 import com.shevelev.my_footprints_remastered.ui.shared.dialogs.OkDialog
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view.FragmentBaseMVVM
 import com.shevelev.my_footprints_remastered.ui.view_commands.*
-import kotlinx.android.synthetic.main.fragment_title.*
 import permissions.dispatcher.NeedsPermission
 import permissions.dispatcher.OnPermissionDenied
 import permissions.dispatcher.OnShowRationale
@@ -90,7 +89,7 @@ class TitleFragment : FragmentBaseMVVM<FragmentTitleBinding, TitleFragmentViewMo
 
     private fun updateLastFootprintImage(lastFootprintUri: Uri) {
         lastFootprintDispose?.takeIf { !it.isDisposed } ?.dispose()
-        lastFootprintDispose = lastFootprint.load(lastFootprintUri) {
+        lastFootprintDispose = binding!!.lastFootprint.load(lastFootprintUri) {
             memoryCachePolicy(CachePolicy.DISABLED)
         }
     }

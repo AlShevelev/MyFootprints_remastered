@@ -8,22 +8,26 @@ import com.shevelev.my_footprints_remastered.photo_editor_lib.GLSurfaceViewBitma
 import com.shevelev.my_footprints_remastered.photo_editor_lib.renderers.effect.effects.BrightnessEffect
 import com.shevelev.photo_editor.cross_activity_communication.CrossActivityCommunicator
 import com.shevelev.my_footprints_remastered.photo_editor_lib.renderers.effect.OneEffectSurfaceRenderer
-import kotlinx.android.synthetic.main.activity_brightness.*
+import com.shevelev.photo_editor.databinding.ActivityBrightnessBinding
 
 class BrightnessActivity : AppCompatActivity() {
     companion object {
         const val REQUEST = 42
     }
 
+    private lateinit var binding: ActivityBrightnessBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_brightness)
+
+        binding = ActivityBrightnessBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val bitmap = CrossActivityCommunicator.bitmap!!
-        val renderer = OneEffectSurfaceRenderer(this, bitmap, BrightnessEffect(brightnessBar.progress.toFloat()))
-        val surface = GLSurfaceViewBitmap.createAndAddToView(this, surfaceContainer, bitmap, renderer)
+        val renderer = OneEffectSurfaceRenderer(this, bitmap, BrightnessEffect(binding.brightnessBar.progress.toFloat()))
+        val surface = GLSurfaceViewBitmap.createAndAddToView(this, binding.surfaceContainer, bitmap, renderer)
 
-        brightnessBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        binding.brightnessBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 renderer.update(progress.toFloat())
             }
@@ -35,12 +39,12 @@ class BrightnessActivity : AppCompatActivity() {
             }
         })
 
-        cancelButton.setOnClickListener {
+        binding.cancelButton.setOnClickListener {
             setResult(Activity.RESULT_CANCELED)
             finish()
         }
 
-        acceptButton.setOnClickListener {
+        binding.acceptButton.setOnClickListener {
             surface.getBitmap {
                 CrossActivityCommunicator.bitmap = it
                 setResult(Activity.RESULT_OK)

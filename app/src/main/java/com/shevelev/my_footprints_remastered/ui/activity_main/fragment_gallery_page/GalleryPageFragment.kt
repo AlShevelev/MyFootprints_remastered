@@ -7,9 +7,8 @@ import android.view.ViewGroup
 import coil.api.load
 import coil.request.CachePolicy
 import coil.request.RequestDisposable
-import com.shevelev.my_footprints_remastered.R
+import com.shevelev.my_footprints_remastered.databinding.FragmentGalleryPageBinding
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view.FragmentBase
-import kotlinx.android.synthetic.main.fragment_gallery_page.*
 import java.io.File
 
 class GalleryPageFragment : FragmentBase() {
@@ -26,8 +25,11 @@ class GalleryPageFragment : FragmentBase() {
 
     private var imageDispose: RequestDisposable? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_gallery_page, container, false)
+    private var binding: FragmentGalleryPageBinding? = null
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        binding = FragmentGalleryPageBinding.inflate(inflater, container, false)
+        return binding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -36,7 +38,7 @@ class GalleryPageFragment : FragmentBase() {
         val imageFile = File(requireArguments().getString(ARG_IMAGE_FILE)!!)
         val useImageCache = requireArguments().getBoolean(ARG_USE_IMAGE_CACHE)
 
-        imageDispose = imageContainer.load(imageFile) {
+        imageDispose = binding!!.imageContainer.load(imageFile) {
             if(useImageCache) {
                 memoryCachePolicy(CachePolicy.ENABLED)
             } else {
@@ -48,5 +50,6 @@ class GalleryPageFragment : FragmentBase() {
     override fun onDestroyView() {
         super.onDestroyView()
         imageDispose?.takeIf { !it.isDisposed } ?.dispose()
+        binding = null
     }
 }

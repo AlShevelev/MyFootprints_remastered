@@ -6,32 +6,37 @@ import android.graphics.BitmapFactory
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.shevelev.photo_editor.cross_activity_communication.CrossActivityCommunicator
-import kotlinx.android.synthetic.main.activity_main.*
+import com.shevelev.photo_editor.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         CrossActivityCommunicator.bitmap = BitmapFactory.decodeResource(resources, R.drawable.img_test_port)
 
-        brightnessButton.setOnClickListener {
+        binding.brightnessButton.setOnClickListener {
             startActivityForResult(Intent(this, BrightnessActivity::class.java), BrightnessActivity.REQUEST)
         }
 
-        contrastButton.setOnClickListener {
+        binding.contrastButton.setOnClickListener {
             startActivityForResult(Intent(this, ContrastActivity::class.java), ContrastActivity.REQUEST)
         }
 
-        saturationButton.setOnClickListener {
+        binding.saturationButton.setOnClickListener {
             startActivityForResult(Intent(this, SaturationActivity::class.java), SaturationActivity.REQUEST)
         }
 
-        whiteBalanceButton.setOnClickListener {
+        binding.whiteBalanceButton.setOnClickListener {
             startActivityForResult(Intent(this, WhiteBalanceActivity::class.java), WhiteBalanceActivity.REQUEST)
         }
 
-        combinedButton.setOnClickListener {
+        binding.combinedButton.setOnClickListener {
             startActivityForResult(Intent(this, CombinedActivity::class.java), CombinedActivity.REQUEST)
         }
     }
@@ -44,19 +49,19 @@ class MainActivity : AppCompatActivity() {
 
         when(requestCode) {
             BrightnessActivity.REQUEST -> {
-                resultImage.setImageBitmap(CrossActivityCommunicator.bitmap)
+                binding.resultImage.setImageBitmap(CrossActivityCommunicator.bitmap)
             }
             ContrastActivity.REQUEST -> {
-                resultImage.setImageBitmap(CrossActivityCommunicator.bitmap)
+                binding.resultImage.setImageBitmap(CrossActivityCommunicator.bitmap)
             }
             SaturationActivity.REQUEST -> {
-                resultImage.setImageBitmap(CrossActivityCommunicator.bitmap)
+                binding.resultImage.setImageBitmap(CrossActivityCommunicator.bitmap)
             }
             WhiteBalanceActivity.REQUEST -> {
-                resultImage.setImageBitmap(CrossActivityCommunicator.bitmap)
+                binding.resultImage.setImageBitmap(CrossActivityCommunicator.bitmap)
             }
             CombinedActivity.REQUEST -> {
-                resultImage.setImageBitmap(CrossActivityCommunicator.bitmap)
+                binding.resultImage.setImageBitmap(CrossActivityCommunicator.bitmap)
             }
         }
     }
