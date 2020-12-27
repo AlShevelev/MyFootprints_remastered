@@ -9,16 +9,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.Scope
 import com.google.api.services.drive.DriveScopes
 import com.shevelev.my_footprints_remastered.utils.di_scopes.FragmentScope
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.channels.ConflatedBroadcastChannel
-import kotlinx.coroutines.channels.sendBlocking
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
-@FlowPreview
-@ExperimentalCoroutinesApi
 @FragmentScope
 class GoogleDriveSignInImpl
 @Inject
@@ -30,15 +25,15 @@ constructor(
         private const val SIGN_IN_REQUEST = 43481
     }
 
-    private val statusChannel: ConflatedBroadcastChannel<GoogleDriveSignInStatus> = ConflatedBroadcastChannel()
-    override val status: Flow<GoogleDriveSignInStatus>
-        get() = statusChannel.asFlow()
+    private val statusFlow: MutableStateFlow<GoogleDriveSignInStatus?> = MutableStateFlow(null)
+    override val status: Flow<GoogleDriveSignInStatus?>
+        get() = statusFlow.asStateFlow()
 
     override fun startSignIn() {
         if (credentials.needToSingIn) {
-            statusChannel.sendBlocking(GoogleDriveSignInStatus.SHOW_EXPLANATION)
+            statusFlow.value = GoogleDriveSignInStatus.SHOW_EXPLANATION
         } else {
-            statusChannel.sendBlocking(GoogleDriveSignInStatus.SUCCESS)
+            statusFlow.value = GoogleDriveSignInStatus.SUCCESS
         }
     }
 
@@ -52,15 +47,15 @@ constructor(
             val client = GoogleSignIn.getClient(appContext, signInOptions)
             fragment.startActivityForResult(client.signInIntent, SIGN_IN_REQUEST)
         } else {
-            statusChannel.sendBlocking(GoogleDriveSignInStatus.SUCCESS)
+            statusFlow.value = GoogleDriveSignInStatus.SUCCESS
         }
     }
 
     override fun processSignInActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if(requestCode == SIGN_IN_REQUEST && resultCode == Activity.RESULT_OK) {
-            statusChannel.sendBlocking(GoogleDriveSignInStatus.SUCCESS)
+            statusFlow.value = GoogleDriveSignInStatus.SUCCESS
         } else {
-            statusChannel.sendBlocking(GoogleDriveSignInStatus.FAIL)
+            statusFlow.value = GoogleDriveSignInStatus.FAIL
         }
     }
 }

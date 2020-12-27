@@ -33,7 +33,7 @@ constructor(
     init {
         launch {
             model.lastLocationFlow.collect {
-                if(model.manualLocation == null) {
+                if(model.manualLocation == null && it != null) {
                     _pin.value = PinInfo(it, model.pinInfo ?: model.updatePinInfo())
                 }
             }

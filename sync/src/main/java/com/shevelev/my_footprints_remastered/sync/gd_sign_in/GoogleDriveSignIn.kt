@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 import kotlinx.coroutines.flow.Flow
 
 interface GoogleDriveSignIn {
-    val status: Flow<GoogleDriveSignInStatus>
+    val status: Flow<GoogleDriveSignInStatus?>
 
     fun startSignIn()
 

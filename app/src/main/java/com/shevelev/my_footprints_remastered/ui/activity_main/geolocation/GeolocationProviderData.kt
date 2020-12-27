@@ -4,7 +4,7 @@ import android.location.Location
 import kotlinx.coroutines.flow.Flow
 
 interface GeolocationProviderData {
-    val lastLocationFlow: Flow<Location>
+    val lastLocationFlow: Flow<Location?>
 
     val lastLocation: Location
 }

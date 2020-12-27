@@ -27,11 +27,13 @@ constructor(
     init {
         launch {
             model.locationProvider.lastLocationFlow.collect {
-                _lastLocation.value = appContext.getStringFormatted(
-                    R.string.currentLocationIs,
-                    Location.convert(it.latitude, Location.FORMAT_DEGREES),
-                    Location.convert(it.longitude, Location.FORMAT_DEGREES)
-                )
+                if(it!=null) {
+                    _lastLocation.value = appContext.getStringFormatted(
+                        R.string.currentLocationIs,
+                        Location.convert(it.latitude, Location.FORMAT_DEGREES),
+                        Location.convert(it.longitude, Location.FORMAT_DEGREES)
+                    )
+                }
             }
         }
     }

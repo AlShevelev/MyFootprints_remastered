@@ -36,7 +36,7 @@ constructor(
     override val lastLocation: Location
         get() = manualLocation ?: locationProvider.lastLocation
 
-    override val lastLocationFlow: Flow<Location>
+    override val lastLocationFlow: Flow<Location?>
         get() = locationProvider.lastLocationFlow
 
     override suspend fun updatePinInfo(): PinDrawInfo =

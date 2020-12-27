@@ -92,9 +92,9 @@ class FirstLoadingService : IntentService("FirstLoadingService") {
             val name = this.getString(R.string.appName)
             val descriptionText = this.getString(R.string.appName)
             val importance = NotificationManager.IMPORTANCE_LOW
-            val mChannel = NotificationChannel(FOREGROUND_NOTIFICATION_CHANNEL_ID, name, importance)
-            mChannel.description = descriptionText
-            notificationManager.createNotificationChannel(mChannel)
+            val channel = NotificationChannel(FOREGROUND_NOTIFICATION_CHANNEL_ID, name, importance)
+            channel.description = descriptionText
+            notificationManager.createNotificationChannel(channel)
         }
 
         notificationBuilder = NotificationCompat.Builder(this, FOREGROUND_NOTIFICATION_CHANNEL_ID)

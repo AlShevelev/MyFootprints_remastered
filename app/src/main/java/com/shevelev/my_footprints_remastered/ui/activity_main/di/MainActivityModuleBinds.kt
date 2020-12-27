@@ -3,8 +3,6 @@ package com.shevelev.my_footprints_remastered.ui.activity_main.di
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flow.delete.DeleteFootprintDataFlowConsumer
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flow.delete.DeleteFootprintDataFlowImpl
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flow.delete.DeleteFootprintDataFlowProvider
-import com.shevelev.my_footprints_remastered.ui.activity_main.navigation.MainActivityNavigation
-import com.shevelev.my_footprints_remastered.ui.activity_main.navigation.MainActivityNavigationImpl
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flow.last.LastFootprintDataFlowConsumer
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flow.last.LastFootprintDataFlowImpl
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flow.last.LastFootprintDataFlowProvider
@@ -13,18 +11,16 @@ import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flo
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flow.update.UpdateFootprintDataFlowProvider
 import com.shevelev.my_footprints_remastered.ui.activity_main.geolocation.GeolocationProviderApp
 import com.shevelev.my_footprints_remastered.ui.activity_main.geolocation.GeolocationProviderData
-import com.shevelev.my_footprints_remastered.ui.activity_main.geolocation.GeolocationProviderManager
 import com.shevelev.my_footprints_remastered.ui.activity_main.geolocation.GeolocationProviderImpl
+import com.shevelev.my_footprints_remastered.ui.activity_main.geolocation.GeolocationProviderManager
+import com.shevelev.my_footprints_remastered.ui.activity_main.navigation.MainActivityNavigation
+import com.shevelev.my_footprints_remastered.ui.activity_main.navigation.MainActivityNavigationImpl
 import com.shevelev.my_footprints_remastered.ui.shared.pin_draw.PinDraw
 import com.shevelev.my_footprints_remastered.ui.shared.pin_draw.PinDrawImpl
 import com.shevelev.my_footprints_remastered.utils.di_scopes.ActivityScope
 import dagger.Binds
 import dagger.Module
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
 
-@FlowPreview
-@ExperimentalCoroutinesApi
 @Module
 abstract class MainActivityModuleBinds {
     @Binds

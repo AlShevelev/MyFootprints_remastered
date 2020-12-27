@@ -9,20 +9,15 @@ import android.location.LocationManager
 import com.shevelev.my_footprints_remastered.storages.db.repositories.LastLocationRepository
 import com.shevelev.my_footprints_remastered.utils.coroutines.DispatchersProvider
 import com.shevelev.my_footprints_remastered.utils.di_scopes.ActivityScope
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.channels.ConflatedBroadcastChannel
-import kotlinx.coroutines.channels.sendBlocking
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.util.*
 import java.util.concurrent.Executors
 import javax.inject.Inject
 
-@FlowPreview
-@ExperimentalCoroutinesApi
 @ActivityScope
 class GeolocationProviderImpl
 @Inject
@@ -55,9 +50,9 @@ constructor(
     override lateinit var lastLocation: Location
         private set
 
-    private val lastLocationChannel: ConflatedBroadcastChannel<Location> = ConflatedBroadcastChannel()
-    override val lastLocationFlow: Flow<Location>
-        get() = lastLocationChannel.asFlow()
+    private val lastLocationMutableFlow: MutableStateFlow<Location?> = MutableStateFlow(null)
+    override val lastLocationFlow: Flow<Location?>
+        get() = lastLocationMutableFlow.asStateFlow()
 
     override val isLocationTrackingEnabled: Boolean
         get() {
@@ -84,7 +79,7 @@ constructor(
             }
 
             Timber.tag("LOCATION").d("First location: ${lastLocation.latitude}:${lastLocation.longitude}")
-            lastLocationChannel.send(lastLocation)
+            lastLocationMutableFlow.value = lastLocation
 
             isTracking = true
 
@@ -131,7 +126,7 @@ constructor(
             lastLocationRepository.update(newLocation)
         }
 
-        lastLocationChannel.sendBlocking(newLocation)
+        lastLocationMutableFlow.value = newLocation
     }
 
     private fun registerListener(provider: String) {

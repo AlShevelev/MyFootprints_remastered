@@ -1,20 +1,18 @@
 package com.shevelev.my_footprints_remastered.ui.shared.fragments_data_pass.flow
 
 import com.shevelev.my_footprints_remastered.utils.di_scopes.ActivityScope
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
-@FlowPreview
-@ExperimentalCoroutinesApi
 @ActivityScope
 open class FragmentsDataFlowImpl<T> : FragmentsDataFlowConsumer<T>, FragmentsDataFlowProvider<T> {
-    private val dataChannel: BroadcastChannel<T?> = BroadcastChannel(1)
+    private val dataFlow: MutableStateFlow<T?> = MutableStateFlow(null)
 
     override val data: Flow<T?>
-        get() = dataChannel.asFlow()
+        get() = dataFlow.asStateFlow()
 
-    override suspend fun update(updatedData: T) = dataChannel.send(updatedData)
+    override suspend fun update(updatedData: T) {
+        dataFlow.value = updatedData
+    }
 }

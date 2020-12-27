@@ -7,15 +7,10 @@ import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_title.vie
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_model.FragmentViewModelFactory
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_model.FragmentViewModelFactoryImpl
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_model.ViewModelKey
-import com.shevelev.my_footprints_remastered.utils.di_scopes.FragmentScope
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
 
-@FlowPreview
-@ExperimentalCoroutinesApi
 @Module
 abstract class TitleFragmentModuleBinds {
     @Binds

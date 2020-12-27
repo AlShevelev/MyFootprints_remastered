@@ -15,7 +15,7 @@ interface SetLocationMapFragmentModel : ModelBase {
 
     val lastLocation: Location
 
-    val lastLocationFlow: Flow<Location>
+    val lastLocationFlow: Flow<Location?>
 
     suspend fun updatePinInfo(): PinDrawInfo
 }

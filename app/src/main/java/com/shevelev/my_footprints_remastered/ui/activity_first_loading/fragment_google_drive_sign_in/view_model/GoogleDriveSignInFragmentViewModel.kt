@@ -32,7 +32,7 @@ constructor(
 
     fun onGoogleDriveFailClosed() = sendCommand(ProcessSignInToGoogleDriveFail)
 
-    private fun processGoogleDriveSignInStatus(status: GoogleDriveSignInStatus) {
+    private fun processGoogleDriveSignInStatus(status: GoogleDriveSignInStatus?) {
         when(status) {
             GoogleDriveSignInStatus.SHOW_EXPLANATION -> sendCommand(ShowGoogleDriveExplanationDialog)
             GoogleDriveSignInStatus.FAIL -> sendCommand(ShowGoogleDriveFailDialog)
