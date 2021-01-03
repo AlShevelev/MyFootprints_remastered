@@ -7,9 +7,9 @@ import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.ProgressBar
-import coil.api.load
 import com.github.chrisbanes.photoview.PhotoView
 import com.shevelev.my_footprints_remastered.R
+import com.shevelev.my_footprints_remastered.ui.shared.glide.load
 
 class PhotoContainer
 @JvmOverloads
@@ -67,9 +67,7 @@ constructor(
 
         when(state) {
             is PhotoContainerState.Initial -> {
-                photoImage.load(R.drawable.img_title_empty) {
-                    crossfade(true)
-                }
+                photoImage.load(R.drawable.img_title_empty, crossFade = true)
 
                 photoImage.visibility = View.VISIBLE
                 photoFilter.visibility = View.VISIBLE
@@ -89,9 +87,7 @@ constructor(
                 filterPhotoButton.visibility = View.INVISIBLE
             }
             is PhotoContainerState.Ready -> {
-                photoImage.load((state as PhotoContainerState.Ready).image) {
-                    crossfade(true)
-                }
+                photoImage.load((state as PhotoContainerState.Ready).image, crossFade = true)
 
                 photoImage.visibility = View.VISIBLE
                 photoFilter.visibility = View.INVISIBLE

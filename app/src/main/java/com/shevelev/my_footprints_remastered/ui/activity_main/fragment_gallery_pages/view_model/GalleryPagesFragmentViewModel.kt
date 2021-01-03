@@ -3,7 +3,7 @@ package com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.shevelev.my_footprints_remastered.storages.files.FilesHelper
+import com.shevelev.my_footprints_remastered.storages.files.BitmapFilesHelper
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_pages.model.GalleryPagesFragmentModel
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_pages.view.ButtonsBindingCall
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_model.ViewModelBase
@@ -20,7 +20,7 @@ class GalleryPagesFragmentViewModel
 constructor(
     dispatchersProvider: DispatchersProvider,
     model: GalleryPagesFragmentModel,
-    private val filesHelper: FilesHelper
+    private val filesHelper: BitmapFilesHelper
 ) : ViewModelBase<GalleryPagesFragmentModel>(dispatchersProvider, model),
     ButtonsBindingCall {
 

@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import coil.api.load
-import coil.request.CachePolicy
-import coil.request.RequestDisposable
 import com.shevelev.my_footprints_remastered.databinding.FragmentGalleryPageBinding
+import com.shevelev.my_footprints_remastered.ui.shared.glide.GlideTarget
+import com.shevelev.my_footprints_remastered.ui.shared.glide.clear
+import com.shevelev.my_footprints_remastered.ui.shared.glide.load
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view.FragmentBase
 import java.io.File
 
@@ -23,7 +23,7 @@ class GalleryPageFragment : FragmentBase() {
             }}
     }
 
-    private var imageDispose: RequestDisposable? = null
+    private var imageDispose: GlideTarget? = null
 
     private var binding: FragmentGalleryPageBinding? = null
 
@@ -38,18 +38,12 @@ class GalleryPageFragment : FragmentBase() {
         val imageFile = File(requireArguments().getString(ARG_IMAGE_FILE)!!)
         val useImageCache = requireArguments().getBoolean(ARG_USE_IMAGE_CACHE)
 
-        imageDispose = binding!!.imageContainer.load(imageFile) {
-            if(useImageCache) {
-                memoryCachePolicy(CachePolicy.ENABLED)
-            } else {
-                memoryCachePolicy(CachePolicy.DISABLED)
-            }
-        }
+        imageDispose = binding!!.imageContainer.load(imageFile, skipMemoryCache = !useImageCache)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        imageDispose?.takeIf { !it.isDisposed } ?.dispose()
+        imageDispose?.clear(requireContext())
         binding = null
     }
 }

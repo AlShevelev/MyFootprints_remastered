@@ -8,7 +8,7 @@ import com.shevelev.my_footprints_remastered.R
 import com.shevelev.my_footprints_remastered.common_entities.CreateFootprintInfo
 import com.shevelev.my_footprints_remastered.common_entities.PinColor
 import com.shevelev.my_footprints_remastered.shared_use_cases.creata_update_footprint.CreateUpdateFootprint
-import com.shevelev.my_footprints_remastered.storages.files.FilesHelper
+import com.shevelev.my_footprints_remastered.storages.files.BitmapFilesHelper
 import com.shevelev.my_footprints_remastered.storages.key_value.KeyValueStorageFacade
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.dto.SelectedPhotoLoadingState
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.model.data_bridge.CreateFootprintFragmentDataBridge
@@ -31,7 +31,7 @@ constructor(
     private val dataBridge: CreateFootprintFragmentDataBridge,
     override val geolocationProvider: GeolocationProviderManager,
     override val sharedFootprint: SharedFootprint,
-    protected val filesHelper: FilesHelper,
+    protected val filesHelper: BitmapFilesHelper,
     protected val createUpdateFootprint: CreateUpdateFootprint,
     private val lastFootprintDataFlowProvider: LastFootprintDataFlowProvider,
     protected val keyValueStorageFacade: KeyValueStorageFacade
@@ -58,7 +58,7 @@ constructor(
 
         when {
             selectedPhotoFile != null -> {
-                sharedFootprint.image = selectedPhotoFile
+                sharedFootprint.image = filesHelper.checkAndCorrectOrientation(selectedPhotoFile)
 
                 isImageUpdated = true
                 callbackAction(SelectedPhotoLoadingState.Ready(sharedFootprint.image!!))
@@ -118,13 +118,14 @@ constructor(
         }
     }
 
-    private fun copyUriToFile(uri: Uri): File =
-        filesHelper.createTempFile().also {
+    private fun copyUriToFile(uri: Uri): File {
+        return filesHelper.createTempFile().also {
             filesHelper.saveUriToFile(uri, it)
         }
+    }
 
     private fun copyBitmapToFile(bitmap: Bitmap): File =
         filesHelper.createTempFile().also {
-            filesHelper.saveBitmapToFile(bitmap, it, 75)
+            filesHelper.saveBitmapToFile(bitmap, it)
         }
 }

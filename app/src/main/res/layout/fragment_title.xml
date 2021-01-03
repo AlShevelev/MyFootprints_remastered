@@ -96,17 +96,12 @@
             android:id="@+id/myWorldButton"
             style="@style/TitleScreen.Button"
             android:layout_width="wrap_content"
-
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/titleScreenButtonsMargin"
-
             android:drawableTop="@drawable/ic_globe_28_28"
-
             android:enabled="@{viewModel.galleryEnabled}"
-
             android:onClick="@{() -> viewModel.onMyWorldClick()}"
             android:text="@string/myWorld"
-
             app:layout_constraintBottom_toTopOf="@+id/hGuideline8"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/vGuideline5"
@@ -134,14 +129,10 @@
             android:id="@+id/settingsButton"
             style="@style/TitleScreen.Button"
             android:layout_width="wrap_content"
-
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/ic_settings_28_28"
-
             android:onClick="@{() -> viewModel.onSettingsClick()}"
-
             android:text="@string/settings"
-
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/vGuideline5"

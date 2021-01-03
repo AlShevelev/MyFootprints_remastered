@@ -7,7 +7,7 @@ import com.shevelev.my_footprints_remastered.common_entities.UpdateFootprintInfo
 import com.shevelev.my_footprints_remastered.services.update_geo_service.UpdateGeoService
 import com.shevelev.my_footprints_remastered.shared_use_cases.update_geo.UpdateGeo
 import com.shevelev.my_footprints_remastered.storages.db.repositories.FootprintRepository
-import com.shevelev.my_footprints_remastered.storages.files.FilesHelper
+import com.shevelev.my_footprints_remastered.storages.files.BitmapFilesHelper
 import com.shevelev.my_footprints_remastered.storages.key_value.KeyValueStorageFacade
 import com.shevelev.my_footprints_remastered.sync.db_repositories.SyncRecordRepository
 import com.shevelev.my_footprints_remastered.utils.id_hash.IdUtil
@@ -20,7 +20,7 @@ class CreateUpdateFootprintImpl
 @Inject
 constructor(
     private val appContext: Context,
-    private val filesHelper: FilesHelper,
+    private val filesHelper: BitmapFilesHelper,
     private val footprintRepository: FootprintRepository,
     private val keyValueStorageFacade: KeyValueStorageFacade,
     private val updateGeoUseCase: Lazy<UpdateGeo>,

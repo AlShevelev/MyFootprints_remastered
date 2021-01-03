@@ -3,7 +3,7 @@ package com.shevelev.my_footprints_remastered.sync.sync_core
 import com.shevelev.my_footprints_remastered.common_entities.sync.SyncOperation
 import com.shevelev.my_footprints_remastered.common_entities.sync.SyncRecord
 import com.shevelev.my_footprints_remastered.storages.db.repositories.FootprintRepository
-import com.shevelev.my_footprints_remastered.storages.files.FilesHelper
+import com.shevelev.my_footprints_remastered.storages.files.BitmapFilesHelper
 import com.shevelev.my_footprints_remastered.storages.key_value.KeyValueStorageFacade
 import com.shevelev.my_footprints_remastered.sync.footprint_meta_gd_crypt.FootprintMetaGoogleDriveCrypt
 import com.shevelev.my_footprints_remastered.common_entities.sync.GoogleDriveFileId
@@ -25,7 +25,7 @@ constructor(
     private val footprintRepository: FootprintRepository,
     private val operations: GoogleDriveOperations,
     private val footprintMetadataCrypt: FootprintMetaGoogleDriveCrypt,
-    private val filesHelper: FilesHelper
+    private val filesHelper: BitmapFilesHelper
 ) : SyncCore {
     /**
      * @return true in case of success

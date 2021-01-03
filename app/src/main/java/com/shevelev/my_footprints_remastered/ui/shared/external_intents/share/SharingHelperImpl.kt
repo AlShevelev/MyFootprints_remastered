@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment
 import com.shevelev.my_footprints_remastered.BuildConfig
 import com.shevelev.my_footprints_remastered.R
 import com.shevelev.my_footprints_remastered.common_entities.Footprint
-import com.shevelev.my_footprints_remastered.storages.files.FilesHelper
+import com.shevelev.my_footprints_remastered.storages.files.BitmapFilesHelper
 import com.shevelev.my_footprints_remastered.ui.shared.Constants
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
@@ -18,7 +18,7 @@ class SharingHelperImpl
 @Inject
 constructor(
     private val appContext: Context,
-    private val filesHelper: FilesHelper
+    private val filesHelper: BitmapFilesHelper
 ) : SharingHelper {
     override fun share(footprint: Footprint, fragment: Fragment) {
         val text = footprint.comment?.let {

@@ -45,7 +45,12 @@ class FirstLoadingService : IntentService("FirstLoadingService") {
             val intent = Intent(context, FirstLoadingService::class.java).apply {
                 putExtra(ARG_MESSENGER, messenger)
             }
-            context.startForegroundService(intent)
+
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                context.startForegroundService(intent)
+            } else {
+                context.startService(intent)
+            }
         }
     }
 
@@ -100,7 +105,7 @@ class FirstLoadingService : IntentService("FirstLoadingService") {
         notificationBuilder = NotificationCompat.Builder(this, FOREGROUND_NOTIFICATION_CHANNEL_ID)
             .setContentTitle(getString(R.string.firstLoading))
             .setContentText("")
-            .setSmallIcon(R.mipmap.ic_launcher)
+            .setSmallIcon(R.drawable.ic_brightness_20_20)
 
         startForeground(FOREGROUND_NOTIFICATION_ID, notificationBuilder.build())
     }

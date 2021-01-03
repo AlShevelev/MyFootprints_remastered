@@ -7,7 +7,7 @@ import androidx.core.net.toUri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.shevelev.my_footprints_remastered.R
-import com.shevelev.my_footprints_remastered.storages.files.FilesHelper
+import com.shevelev.my_footprints_remastered.storages.files.BitmapFilesHelper
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_title.model.TitleFragmentModel
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view_model.ViewModelBase
 import com.shevelev.my_footprints_remastered.ui.view_commands.MoveToCreateFootprint
@@ -27,7 +27,7 @@ constructor(
     private val appContext: Context,
     dispatchersProvider: DispatchersProvider,
     model: TitleFragmentModel,
-    private val filesHelper: FilesHelper
+    private val filesHelper: BitmapFilesHelper
 ) : ViewModelBase<TitleFragmentModel>(dispatchersProvider, model) {
 
     private val _total = MutableLiveData(getTotalFootprintsText(0))

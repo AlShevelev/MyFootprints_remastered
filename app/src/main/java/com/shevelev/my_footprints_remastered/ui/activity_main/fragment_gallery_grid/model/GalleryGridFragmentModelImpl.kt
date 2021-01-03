@@ -2,7 +2,7 @@ package com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_
 
 import com.shevelev.my_footprints_remastered.common_entities.Footprint
 import com.shevelev.my_footprints_remastered.storages.db.repositories.FootprintRepository
-import com.shevelev.my_footprints_remastered.storages.files.FilesHelper
+import com.shevelev.my_footprints_remastered.storages.files.BitmapFilesHelper
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_grid.view.grid.FootprintListItem
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flow.delete.DeleteFootprintDataFlowConsumer
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragments_data_flow.update.UpdateFootprintDataFlowConsumer
@@ -19,7 +19,7 @@ constructor(
     private val footprintRepository: FootprintRepository,
     override val updateFootprintData: UpdateFootprintDataFlowConsumer,
     override val deleteFootprintData: DeleteFootprintDataFlowConsumer,
-    private val filesHelper: FilesHelper
+    private val filesHelper: BitmapFilesHelper
 ) : GalleryGridFragmentModel,
     ModelBaseImpl() {
 

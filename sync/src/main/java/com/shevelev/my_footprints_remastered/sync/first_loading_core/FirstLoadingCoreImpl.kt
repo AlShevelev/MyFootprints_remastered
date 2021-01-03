@@ -2,7 +2,7 @@ package com.shevelev.my_footprints_remastered.sync.first_loading_core
 
 import com.shevelev.my_footprints_remastered.common_entities.sync.GoogleDriveFileId
 import com.shevelev.my_footprints_remastered.storages.db.repositories.FootprintRepository
-import com.shevelev.my_footprints_remastered.storages.files.FilesHelper
+import com.shevelev.my_footprints_remastered.storages.files.BitmapFilesHelper
 import com.shevelev.my_footprints_remastered.storages.key_value.KeyValueStorageFacade
 import com.shevelev.my_footprints_remastered.sync.db_repositories.FirstLoadRecordRepository
 import com.shevelev.my_footprints_remastered.sync.footprint_meta_gd_crypt.FootprintMetaGoogleDriveCrypt
@@ -22,7 +22,7 @@ constructor(
     private val footprintRepository: FootprintRepository,
     private val googleDriveOperations: GoogleDriveOperations,
     private val googleDriveCredentials: GoogleDriveCredentials,
-    private val filesHelper: FilesHelper,
+    private val filesHelper: BitmapFilesHelper,
     private val keyValueStorage: KeyValueStorageFacade,
     private val footprintMetaGoogleDriveCrypt: FootprintMetaGoogleDriveCrypt,
     private val connectionHelper: ConnectionHelper

@@ -4,12 +4,14 @@ import android.graphics.Bitmap
 import android.net.Uri
 import java.io.File
 
-interface FilesHelper {
+interface BitmapFilesHelper {
     fun saveUriToFile(uri: Uri, targetFile: File)
 
-    fun saveBitmapToFile(bitmap: Bitmap, targetFile: File, compressRate: Int)
+    fun saveBitmapToFile(bitmap: Bitmap, targetFile: File)
 
     fun saveBitesToFile(bytes: ByteArray, targetFile: File)
+
+    fun checkAndCorrectOrientation(file: File): File
 
     fun createTempFile(): File
 

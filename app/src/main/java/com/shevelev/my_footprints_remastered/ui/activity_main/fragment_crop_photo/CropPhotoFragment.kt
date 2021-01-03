@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import coil.api.load
 import com.isseiaoki.simplecropview.CropImageView
 import com.isseiaoki.simplecropview.callback.CropCallback
 import com.shevelev.my_footprints_remastered.R
@@ -14,6 +13,7 @@ import com.shevelev.my_footprints_remastered.databinding.FragmentCropPhotoBindin
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.model.data_bridge.CreateFootprintFragmentDataBridge
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_crop_photo.di.CropPhotoFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.navigation.MainActivityNavigation
+import com.shevelev.my_footprints_remastered.ui.shared.glide.load
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view.FragmentBase
 import java.io.File
 import javax.inject.Inject
@@ -44,9 +44,7 @@ class CropPhotoFragment : FragmentBase() {
         val file = File(requireArguments().getString(ARG_FILE)!!)
 
         with(binding!!) {
-            cropPhoto.load(file) {
-                crossfade(true)
-            }
+            cropPhoto.load(file, crossFade = true)
             cropPhoto.setCropMode(CropImageView.CropMode.FREE)
             cropPhoto.setInitialFrameScale(0.75f)
             cropPhoto.setMinFrameSizeInDp(100)

@@ -4,8 +4,8 @@ import android.os.Handler
 import com.shevelev.my_footprints_remastered.services.first_loading.ui_communication.receiver.FirstLoadingServiceMessageReceiver
 import com.shevelev.my_footprints_remastered.services.first_loading.ui_communication.receiver.FirstLoadingServiceMessageReceiverImpl
 import com.shevelev.my_footprints_remastered.storages.db.repositories.*
-import com.shevelev.my_footprints_remastered.storages.files.FilesHelper
-import com.shevelev.my_footprints_remastered.storages.files.FilesHelperImpl
+import com.shevelev.my_footprints_remastered.storages.files.BitmapFilesHelper
+import com.shevelev.my_footprints_remastered.storages.files.BitmapFilesHelperImpl
 import com.shevelev.my_footprints_remastered.storages.key_value.KeyValueStorageFacade
 import com.shevelev.my_footprints_remastered.storages.key_value.KeyValueStorageFacadeImpl
 import com.shevelev.my_footprints_remastered.storages.key_value.storages.NameConstants
@@ -19,7 +19,6 @@ import com.shevelev.my_footprints_remastered.sync.db_repositories.SyncRecordRepo
 import com.shevelev.my_footprints_remastered.utils.connection.ConnectionHelper
 import com.shevelev.my_footprints_remastered.utils.connection.ConnectionHelperImpl
 import com.shevelev.my_footprints_remastered.utils.di_scopes.ApplicationScope
-import com.shevelev.my_footprints_remastered.utils.di_scopes.FragmentScope
 import dagger.Binds
 import dagger.Module
 import javax.inject.Named
@@ -54,7 +53,7 @@ abstract class AppModuleBinds {
     //endregion
 
     @Binds
-    abstract fun provideFilesHelper(helper: FilesHelperImpl): FilesHelper
+    abstract fun provideFilesHelper(helper: BitmapFilesHelperImpl): BitmapFilesHelper
 
     @Binds
     abstract fun provideConnectionHelper(helper: ConnectionHelperImpl): ConnectionHelper

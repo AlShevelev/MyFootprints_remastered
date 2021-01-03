@@ -1,7 +1,7 @@
 package com.shevelev.my_footprints_remastered.ui.activity_main.fragment_gallery_grid.view.grid
 
 import com.shevelev.my_footprints_remastered.common_entities.Footprint
-import com.shevelev.my_footprints_remastered.storages.files.FilesHelper
+import com.shevelev.my_footprints_remastered.storages.files.BitmapFilesHelper
 import com.shevelev.my_footprints_remastered.ui.shared.recycler_view.versioned.VersionedListItem
 import org.threeten.bp.ZonedDateTime
 import java.io.File
@@ -22,7 +22,7 @@ data class FootprintListItem(
 ) : VersionedListItem {
 
     companion object {
-        fun create(footprint: Footprint, filesHelper: FilesHelper) =
+        fun create(footprint: Footprint, filesHelper: BitmapFilesHelper) =
             FootprintListItem(
                 id = footprint.id,
                 version = 0,

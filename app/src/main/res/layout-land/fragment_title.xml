@@ -80,12 +80,10 @@
             style="@style/TitleScreen.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:layout_marginTop="@dimen/titleScreenButtonsMargin"
-
             android:drawableTop="@drawable/ic_globe_28_28"
+            android:onClick="@{() -> viewModel.onMyWorldClick()}"
             android:text="@string/myWorld"
-
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/galleryButton"
             app:layout_constraintHorizontal_bias="0.5"
@@ -98,12 +96,10 @@
             style="@style/TitleScreen.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:drawableTop="@drawable/ic_gallery_28_28"
             android:text="@string/gallery"
-
             android:layout_marginTop="@dimen/titleScreenButtonsMargin"
-
+            android:onClick="@{() -> viewModel.onGalleryClick()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/settingsButton"
             app:layout_constraintHorizontal_bias="0.5"
@@ -113,15 +109,12 @@
         <Button
             android:id="@+id/settingsButton"
             style="@style/TitleScreen.Button"
-
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:drawableTop="@drawable/ic_settings_28_28"
             android:text="@string/settings"
-
             android:layout_marginTop="@dimen/titleScreenButtonsMargin"
-
+            android:onClick="@{() -> viewModel.onSettingsClick()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"

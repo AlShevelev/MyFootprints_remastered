@@ -7,7 +7,7 @@ import com.shevelev.my_footprints_remastered.common_entities.Footprint
 import com.shevelev.my_footprints_remastered.common_entities.PinColor
 import com.shevelev.my_footprints_remastered.common_entities.UpdateFootprintInfo
 import com.shevelev.my_footprints_remastered.shared_use_cases.creata_update_footprint.CreateUpdateFootprint
-import com.shevelev.my_footprints_remastered.storages.files.FilesHelper
+import com.shevelev.my_footprints_remastered.storages.files.BitmapFilesHelper
 import com.shevelev.my_footprints_remastered.storages.key_value.KeyValueStorageFacade
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.model.data_bridge.CreateFootprintFragmentDataBridge
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.model.shared_footprint.SharedFootprint
@@ -28,7 +28,7 @@ constructor(
     dataBridge: CreateFootprintFragmentDataBridge,
     geolocationProvider: GeolocationProviderManager,
     sharedFootprint: SharedFootprint,
-    filesHelper: FilesHelper,
+    filesHelper: BitmapFilesHelper,
     createUpdateFootprint: CreateUpdateFootprint,
     lastFootprintDataFlowProvider: LastFootprintDataFlowProvider,
     keyValueStorageFacade: KeyValueStorageFacade,

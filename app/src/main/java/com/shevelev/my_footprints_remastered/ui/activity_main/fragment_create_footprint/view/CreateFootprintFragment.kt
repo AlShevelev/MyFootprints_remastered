@@ -103,13 +103,13 @@ class CreateFootprintFragment : FragmentBaseMVVM<FragmentCreateFootprintBinding,
 
     override fun onBackPressed() = viewModel.onBackClick()
 
-    @NeedsPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    @NeedsPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
     internal fun moveToSelectPhoto() = navigation.moveToSelectPhoto(this)
 
-    @OnShowRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    @OnShowRationale(Manifest.permission.READ_EXTERNAL_STORAGE)
     internal fun moveToSelectPhotoExplanation() =
         OkDialog.show(EXPLANATION_REQUEST, this, R.string.externalStorageExplanation)
 
-    @OnPermissionDenied(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    @OnPermissionDenied(Manifest.permission.READ_EXTERNAL_STORAGE)
     internal fun moveToSelectPhotoDenied() = showMessage(R.string.externalStorageDenied)
 }

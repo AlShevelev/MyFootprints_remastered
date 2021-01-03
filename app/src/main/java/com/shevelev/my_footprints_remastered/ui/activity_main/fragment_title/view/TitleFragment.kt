@@ -6,9 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import coil.api.load
-import coil.request.CachePolicy
-import coil.request.RequestDisposable
 import com.shevelev.my_footprints_remastered.R
 import com.shevelev.my_footprints_remastered.application.App
 import com.shevelev.my_footprints_remastered.databinding.FragmentTitleBinding
@@ -16,6 +13,9 @@ import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_title.di.
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_title.view_model.TitleFragmentViewModel
 import com.shevelev.my_footprints_remastered.ui.activity_main.navigation.MainActivityNavigation
 import com.shevelev.my_footprints_remastered.ui.shared.dialogs.OkDialog
+import com.shevelev.my_footprints_remastered.ui.shared.glide.GlideTarget
+import com.shevelev.my_footprints_remastered.ui.shared.glide.clear
+import com.shevelev.my_footprints_remastered.ui.shared.glide.load
 import com.shevelev.my_footprints_remastered.ui.shared.mvvm.view.FragmentBaseMVVM
 import com.shevelev.my_footprints_remastered.ui.view_commands.*
 import permissions.dispatcher.NeedsPermission
@@ -30,7 +30,7 @@ class TitleFragment : FragmentBaseMVVM<FragmentTitleBinding, TitleFragmentViewMo
         private const val LOCATION_EXPLANATION_REQUEST = 12359
     }
 
-    private var lastFootprintDispose: RequestDisposable? = null
+    private var lastFootprintDispose: GlideTarget? = null
 
     @Inject
     internal lateinit var navigation: MainActivityNavigation
@@ -54,7 +54,7 @@ class TitleFragment : FragmentBaseMVVM<FragmentTitleBinding, TitleFragmentViewMo
     }
 
     override fun onDestroyView() {
-        lastFootprintDispose?.takeIf { !it.isDisposed } ?.dispose()
+        lastFootprintDispose?.clear(requireContext())
         super.onDestroyView()
     }
 
@@ -88,9 +88,7 @@ class TitleFragment : FragmentBaseMVVM<FragmentTitleBinding, TitleFragmentViewMo
     internal fun moveToSelectPhotoDenied() = showMessage(R.string.geolocationDenied)
 
     private fun updateLastFootprintImage(lastFootprintUri: Uri) {
-        lastFootprintDispose?.takeIf { !it.isDisposed } ?.dispose()
-        lastFootprintDispose = binding!!.lastFootprint.load(lastFootprintUri) {
-            memoryCachePolicy(CachePolicy.DISABLED)
-        }
+        lastFootprintDispose?.clear(requireContext())
+        lastFootprintDispose = binding!!.lastFootprint.load(lastFootprintUri)
     }
 }
