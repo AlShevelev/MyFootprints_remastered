@@ -44,7 +44,7 @@ class CropPhotoFragment : FragmentBase() {
         val file = File(requireArguments().getString(ARG_FILE)!!)
 
         with(binding!!) {
-            cropPhoto.load(file, crossFade = true)
+            cropPhoto.load(file)
             cropPhoto.setCropMode(CropImageView.CropMode.FREE)
             cropPhoto.setInitialFrameScale(0.75f)
             cropPhoto.setMinFrameSizeInDp(100)
