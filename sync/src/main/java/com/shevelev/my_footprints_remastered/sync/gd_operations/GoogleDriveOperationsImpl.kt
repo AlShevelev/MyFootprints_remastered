@@ -6,11 +6,11 @@ import com.google.api.client.json.gson.GsonFactory
 import com.google.api.services.drive.Drive
 import com.google.api.services.drive.model.File
 import com.shevelev.my_footprints_remastered.common_entities.sync.GoogleDriveFileId
+import com.shevelev.my_footprints_remastered.sync.BuildConfig
 import com.shevelev.my_footprints_remastered.sync.footprint_meta_gd_crypt.FootprintMetaGoogleDrive
 import com.shevelev.my_footprints_remastered.sync.gd_sign_in.GoogleDriveCredentials
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
-import java.lang.UnsupportedOperationException
 import javax.inject.Inject
 
 class GoogleDriveOperationsImpl
@@ -33,7 +33,14 @@ constructor(
         private const val ALL_THE_REST = "REST"
     }
 
-    private val folderName = appName
+    private val folderName: String
+        get() {
+            return if(BuildConfig.DEBUG) {
+                "$appName Backup Debug"
+            } else {
+                "$appName Backup"
+            }
+        }
 
     private val service: GoogleDriveService? by lazy { createService() }
 

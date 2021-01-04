@@ -2,6 +2,10 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
+ext {
+    applicationIdSuffix = ""
+}
+
 android {
     compileSdkVersion target_sdk_version
     buildToolsVersion "$build_tools_version"
@@ -55,13 +59,12 @@ android {
     productFlavors {
         prod {
             dimension "my-footprints-config-type"
-
             buildConfigField "Boolean", 'CRASH_REPORTS_ENABLED', "true"
         }
         dev {
             dimension "my-footprints-config-type"
-
             buildConfigField "Boolean", 'CRASH_REPORTS_ENABLED', "false"
+            applicationIdSuffix ".dev"
         }
     }
 
