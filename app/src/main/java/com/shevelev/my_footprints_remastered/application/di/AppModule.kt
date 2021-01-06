@@ -6,6 +6,7 @@ import com.shevelev.my_footprints_remastered.BuildConfig
 import com.shevelev.my_footprints_remastered.storages.db.builder.DatabaseBuilder
 import com.shevelev.my_footprints_remastered.storages.db.core.DbCore
 import com.shevelev.my_footprints_remastered.utils.coroutines.DispatchersProvider
+import com.shevelev.my_footprints_remastered.utils.crashlytics.CrashlyticsFacade
 import com.shevelev.my_footprints_remastered.utils.di_scopes.ApplicationScope
 import com.shevelev.my_footprints_remastered.utils.logging.TimberTreeDebug
 import com.shevelev.my_footprints_remastered.utils.logging.TimberTreeRelease
@@ -34,10 +35,10 @@ class AppModule(
     }
 
     @Provides
-    internal fun provideTimberTree(): Timber.Tree =
+    internal fun provideTimberTree(crashlytics: CrashlyticsFacade): Timber.Tree =
         when(BuildConfig.FLAVOR) {
             "dev" -> TimberTreeDebug()
-            "prod" -> TimberTreeRelease(/*crashlytics*/)
+            "prod" -> TimberTreeRelease(crashlytics)
             else -> throw UnsupportedOperationException("This flavor is not supported: ${BuildConfig.FLAVOR}")
         }
 

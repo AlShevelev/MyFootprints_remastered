@@ -1,6 +1,7 @@
 package com.shevelev.my_footprints_remastered.application.di
 
 import android.os.Handler
+import com.shevelev.my_footprints_remastered.crashlytics.CrashlyticsFacadeImpl
 import com.shevelev.my_footprints_remastered.services.first_loading.ui_communication.receiver.FirstLoadingServiceMessageReceiver
 import com.shevelev.my_footprints_remastered.services.first_loading.ui_communication.receiver.FirstLoadingServiceMessageReceiverImpl
 import com.shevelev.my_footprints_remastered.storages.db.repositories.*
@@ -18,6 +19,9 @@ import com.shevelev.my_footprints_remastered.sync.db_repositories.SyncRecordRepo
 import com.shevelev.my_footprints_remastered.sync.db_repositories.SyncRecordRepositoryImpl
 import com.shevelev.my_footprints_remastered.utils.connection.ConnectionHelper
 import com.shevelev.my_footprints_remastered.utils.connection.ConnectionHelperImpl
+import com.shevelev.my_footprints_remastered.utils.crashlytics.CrashlyticsFacade
+import com.shevelev.my_footprints_remastered.utils.device_info.DeviceInfoProvider
+import com.shevelev.my_footprints_remastered.utils.device_info.DeviceInfoProviderImpl
 import com.shevelev.my_footprints_remastered.utils.di_scopes.ApplicationScope
 import dagger.Binds
 import dagger.Module
@@ -67,4 +71,10 @@ abstract class AppModuleBinds {
     @ApplicationScope
     abstract fun provideFirstLoadingServiceMessageHandler(handler: FirstLoadingServiceMessageReceiverImpl): Handler
     //endregion
+
+    @Binds
+    abstract fun provideDeviceInfoProviderImpl(provider: DeviceInfoProviderImpl): DeviceInfoProvider
+
+    @Binds
+    abstract fun provideCrashlyticsFacade(facade: CrashlyticsFacadeImpl): CrashlyticsFacade
 }

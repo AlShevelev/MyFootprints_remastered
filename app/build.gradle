@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'com.google.firebase.crashlytics'
 
 ext {
     applicationIdSuffix = ""
@@ -41,9 +43,13 @@ android {
     }
 
     buildTypes {
+        debug {
+            manifestPlaceholders = [crashlyticsCollectionEnabled:"false"]
+        }
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            manifestPlaceholders = [crashlyticsCollectionEnabled:"true"]
         }
     }
 
@@ -59,11 +65,9 @@ android {
     productFlavors {
         prod {
             dimension "my-footprints-config-type"
-            buildConfigField "Boolean", 'CRASH_REPORTS_ENABLED', "true"
         }
         dev {
             dimension "my-footprints-config-type"
-            buildConfigField "Boolean", 'CRASH_REPORTS_ENABLED', "false"
             applicationIdSuffix ".dev"
         }
     }
@@ -81,6 +85,8 @@ dependencies {
     implementation project(":sync")
 
     implementation fileTree(dir: "libs", include: ["*.jar"])
+
+    implementation "com.google.firebase:firebase-crashlytics-ktx:$firebase_crashlytics"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_coroutines_version"
