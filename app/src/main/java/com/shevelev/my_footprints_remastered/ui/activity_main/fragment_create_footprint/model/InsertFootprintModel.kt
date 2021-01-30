@@ -7,6 +7,8 @@ import android.net.Uri
 import com.shevelev.my_footprints_remastered.R
 import com.shevelev.my_footprints_remastered.common_entities.CreateFootprintInfo
 import com.shevelev.my_footprints_remastered.common_entities.PinColor
+import com.shevelev.my_footprints_remastered.image_type_detector.ImageType
+import com.shevelev.my_footprints_remastered.image_type_detector.ImageTypeDetector
 import com.shevelev.my_footprints_remastered.shared_use_cases.creata_update_footprint.CreateUpdateFootprint
 import com.shevelev.my_footprints_remastered.storages.files.BitmapFilesHelper
 import com.shevelev.my_footprints_remastered.storages.key_value.KeyValueStorageFacade
@@ -21,6 +23,7 @@ import com.shevelev.my_footprints_remastered.utils.coroutines.DispatchersProvide
 import com.shevelev.my_footprints_remastered.utils.location.toGeoPoint
 import kotlinx.coroutines.withContext
 import java.io.File
+import java.lang.Error
 import javax.inject.Inject
 
 open class InsertFootprintModel
@@ -34,7 +37,8 @@ constructor(
     protected val filesHelper: BitmapFilesHelper,
     protected val createUpdateFootprint: CreateUpdateFootprint,
     private val lastFootprintDataFlowProvider: LastFootprintDataFlowProvider,
-    protected val keyValueStorageFacade: KeyValueStorageFacade
+    protected val keyValueStorageFacade: KeyValueStorageFacade,
+    private val imageTypeDetector: ImageTypeDetector
 ) : ModelBaseImpl(),
     CreateFootprintFragmentModel {
 
@@ -66,12 +70,20 @@ constructor(
             selectedPhotoUri != null -> {
                 callbackAction(SelectedPhotoLoadingState.Loading)
 
-                withContext(dispatchersProvider.ioDispatcher) {
-                    sharedFootprint.image = copyUriToFile(selectedPhotoUri)
+                val imageType = withContext(dispatchersProvider.ioDispatcher) {
+                    imageTypeDetector.getImageType(appContext, selectedPhotoUri)
                 }
 
-                isImageUpdated = true
-                callbackAction(SelectedPhotoLoadingState.Ready(sharedFootprint.image!!))
+                if(imageType == ImageType.UNDEFINED) {
+                    callbackAction(SelectedPhotoLoadingState.Error(R.string.imageFormatUnsupported))
+                } else {
+                    withContext(dispatchersProvider.ioDispatcher) {
+                        sharedFootprint.image = copyUriToFile(selectedPhotoUri)
+                    }
+
+                    isImageUpdated = true
+                    callbackAction(SelectedPhotoLoadingState.Ready(sharedFootprint.image!!))
+                }
             }
             selectedPhotoBitmap != null -> {
                 callbackAction(SelectedPhotoLoadingState.Loading)

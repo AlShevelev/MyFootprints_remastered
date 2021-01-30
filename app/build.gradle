@@ -47,7 +47,7 @@ android {
             manifestPlaceholders = [crashlyticsCollectionEnabled:"false"]
         }
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             manifestPlaceholders = [crashlyticsCollectionEnabled:"true"]
         }
@@ -83,6 +83,7 @@ dependencies {
     implementation project(":storages")
     implementation project(":photo_editor_lib")
     implementation project(":sync")
+    implementation project(":image_type_detector")
 
     implementation fileTree(dir: "libs", include: ["*.jar"])
 

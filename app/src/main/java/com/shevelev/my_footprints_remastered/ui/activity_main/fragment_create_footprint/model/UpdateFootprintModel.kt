@@ -6,6 +6,7 @@ import com.shevelev.my_footprints_remastered.R
 import com.shevelev.my_footprints_remastered.common_entities.Footprint
 import com.shevelev.my_footprints_remastered.common_entities.PinColor
 import com.shevelev.my_footprints_remastered.common_entities.UpdateFootprintInfo
+import com.shevelev.my_footprints_remastered.image_type_detector.ImageTypeDetector
 import com.shevelev.my_footprints_remastered.shared_use_cases.creata_update_footprint.CreateUpdateFootprint
 import com.shevelev.my_footprints_remastered.storages.files.BitmapFilesHelper
 import com.shevelev.my_footprints_remastered.storages.key_value.KeyValueStorageFacade
@@ -33,7 +34,8 @@ constructor(
     lastFootprintDataFlowProvider: LastFootprintDataFlowProvider,
     keyValueStorageFacade: KeyValueStorageFacade,
     private val oldFootprint: Footprint,
-    private val updateFootprintDataFlowProvider: UpdateFootprintDataFlowProvider
+    private val updateFootprintDataFlowProvider: UpdateFootprintDataFlowProvider,
+    imageTypeDetector: ImageTypeDetector
 ) : InsertFootprintModel(
         appContext,
         dispatchersProvider,
@@ -43,7 +45,8 @@ constructor(
         filesHelper,
         createUpdateFootprint,
         lastFootprintDataFlowProvider,
-        keyValueStorageFacade
+        keyValueStorageFacade,
+        imageTypeDetector
 ), CreateFootprintFragmentModel {
 
     override suspend fun initSharedFootprint() {

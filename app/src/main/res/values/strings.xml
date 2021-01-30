@@ -75,4 +75,6 @@
     <string name="firstLoadingStartMessage">We are about to load all of your footprints. Do not turn off your Internet connection, please.</string>
     <string name="firstLoadingNoConnectionMessage">We are about to load all of your footprints. Turn on your Internet connection, please.</string>
     <string name="firstLoadingLTEMessage">We are about to load all of your footprints. To avoid extra payments, we recommend using a WiFi connection.</string>
+
+    <string name="imageFormatUnsupported">This image format is not supported</string>
 </resources>

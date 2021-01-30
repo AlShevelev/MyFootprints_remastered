@@ -1,5 +1,6 @@
 package com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.di
 
+import com.shevelev.my_footprints_remastered.image_type_detector.dagger.ImageTypeDetectorModule
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_footprint.view.CreateFootprintFragment
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_crop_photo.di.CropPhotoFragmentComponent
 import com.shevelev.my_footprints_remastered.ui.activity_main.fragment_edit_photo.di.EditPhotoFragmentComponent
@@ -13,7 +14,8 @@ import dagger.Subcomponent
 @Subcomponent(modules = [
     CreateFootprintFragmentModuleBinds::class,
     CreateFootprintFragmentModuleChilds::class,
-    CreateFootprintFragmentModule::class])
+    CreateFootprintFragmentModule::class,
+    ImageTypeDetectorModule::class])
 @FragmentScope
 interface CreateFootprintFragmentComponent {
     @Subcomponent.Builder

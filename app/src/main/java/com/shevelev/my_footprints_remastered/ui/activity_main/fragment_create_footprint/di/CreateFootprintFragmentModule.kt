@@ -3,6 +3,7 @@ package com.shevelev.my_footprints_remastered.ui.activity_main.fragment_create_f
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import com.shevelev.my_footprints_remastered.common_entities.Footprint
+import com.shevelev.my_footprints_remastered.image_type_detector.ImageTypeDetector
 import com.shevelev.my_footprints_remastered.shared_use_cases.creata_update_footprint.CreateUpdateFootprint
 import com.shevelev.my_footprints_remastered.storages.files.BitmapFilesHelper
 import com.shevelev.my_footprints_remastered.storages.key_value.KeyValueStorageFacade
@@ -69,7 +70,8 @@ class CreateFootprintFragmentModule(
         createUpdateFootprint: CreateUpdateFootprint,
         lastFootprintDataFlowProvider: LastFootprintDataFlowProvider,
         keyValueStorageFacade: KeyValueStorageFacade,
-        updateFootprintDataFlowProvider: UpdateFootprintDataFlowProvider
+        updateFootprintDataFlowProvider: UpdateFootprintDataFlowProvider,
+        imageTypeDetector: ImageTypeDetector
     ): CreateFootprintFragmentModel =
         if(oldFootprint == null) {
             InsertFootprintModel(
@@ -81,7 +83,8 @@ class CreateFootprintFragmentModule(
                 filesHelper,
                 createUpdateFootprint,
                 lastFootprintDataFlowProvider,
-                keyValueStorageFacade
+                keyValueStorageFacade,
+                imageTypeDetector
             )
         } else {
             UpdateFootprintModel(
@@ -95,7 +98,8 @@ class CreateFootprintFragmentModule(
                 lastFootprintDataFlowProvider,
                 keyValueStorageFacade,
                 oldFootprint,
-                updateFootprintDataFlowProvider
+                updateFootprintDataFlowProvider,
+                imageTypeDetector
             )
         }
 }

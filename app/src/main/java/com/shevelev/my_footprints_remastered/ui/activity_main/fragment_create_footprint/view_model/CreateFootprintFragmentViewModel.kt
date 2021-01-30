@@ -78,7 +78,13 @@ constructor(
             model.processNewPhotoSelected { state ->
                 when(state) {
                     is SelectedPhotoLoadingState.Ready -> _containerState.value = PhotoContainerState.Ready(state.file)
+
                     is SelectedPhotoLoadingState.Loading -> _containerState.value = PhotoContainerState.Loading
+
+                    is SelectedPhotoLoadingState.Error -> {
+                        _containerState.value = PhotoContainerState.Initial
+                        sendCommand(ShowMessageRes(state.errorTextResId))
+                    }
                 }
             }
             _saveEnabled.value = model.canSave

@@ -1,5 +1,6 @@
 package com.shevelev.my_footprints_remastered.ui.shared.external_intents.gallery
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -17,6 +18,7 @@ constructor(
         private const val REQUEST = 1761
     }
 
+    @SuppressLint("IntentReset")
     override fun takeGalleryPhoto(fragment: Fragment): Boolean {
         val takePictureIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
 

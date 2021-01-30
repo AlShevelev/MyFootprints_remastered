@@ -35,7 +35,7 @@ constructor(
 
                 do {
                     val mimeType = cursor.getString(mimeTypeColumn)
-                    if(!mimeType.startsWith("image/") || mimeType == "image/gif") {   // GIFs are not supported
+                    if(mimeType != "image/jpeg" && mimeType != "image/png") {
                         continue
                     }
 

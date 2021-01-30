@@ -87,3 +87,4 @@ lint/tmp/
 #api keys
 secure.properties
 /.idea/compiler.xml
+/app/prod/release/output-metadata.json
