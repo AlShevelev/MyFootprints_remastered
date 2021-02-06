@@ -18,7 +18,6 @@ import com.shevelev.my_footprints_remastered.ui.shared.pin_draw.PinDraw
 import com.shevelev.my_footprints_remastered.ui.view_commands.MoveToOneGallery
 import com.shevelev.my_footprints_remastered.ui.view_commands.StartLoadingMap
 import com.shevelev.my_footprints_remastered.ui.view_commands.ViewCommand
-import timber.log.Timber
 import javax.inject.Inject
 
 class MyWorldMapFragment : FragmentBaseMVVM<FragmentMyWorldMapBinding, MyWorldMapFragmentViewModel>(), OnMapReadyCallback {
@@ -67,7 +66,6 @@ class MyWorldMapFragment : FragmentBaseMVVM<FragmentMyWorldMapBinding, MyWorldMa
             viewModel.storeManualZoomAndLocation(MapZoomAndLocation(map.cameraPosition.zoom, map.cameraPosition.target))
         }
 
-        Timber.tag("GALLERY").d("showFootprints observed")
         viewModel.zoomAndLocation.observe({viewLifecycleOwner.lifecycle}) { setZoomAndLocation(it) }
         viewModel.footprints.observe({viewLifecycleOwner.lifecycle}) { showFootprints(it) }
     }
@@ -83,18 +81,13 @@ class MyWorldMapFragment : FragmentBaseMVVM<FragmentMyWorldMapBinding, MyWorldMa
     }
 
     private fun showFootprints(footprints: List<FootprintOnMap>) {
-        Timber.tag("GALLERY").d("showFootprints")
         map?.let { map ->
-            Timber.tag("GALLERY").d("camera moved")
             binding!!.mapContainer.postDelayed({
                 clusterManager = ClusterManager<FootprintOnMap>(requireContext(), map).also { cm ->
-                    Timber.tag("GALLERY").d("cluster manager set")
-
                     cm.renderer = PinsRenderer(requireContext(), pinsDraw, map, cm)
 
                     // Click on single pin
                     cm.setOnClusterItemClickListener { pin ->
-                        Timber.tag("GALLERY").d("on pin click: ${pin.id}")
                         viewModel.onPinClick(pin.id)
                         true
                     }

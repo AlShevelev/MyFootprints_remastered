@@ -28,6 +28,8 @@ constructor(
     private val _zoomAndLocation = MutableLiveData<MapZoomAndLocation>()
     val zoomAndLocation: LiveData<MapZoomAndLocation> = _zoomAndLocation
 
+    private var isMapLoaded = false
+
     init {
         launch {
             val footprintsForMap = model.getFootprintsForMap()
@@ -56,7 +58,11 @@ constructor(
         manualZoomAndLocation?.let {
             _zoomAndLocation.value = it
         }
-        sendCommand(StartLoadingMap)
+
+        if(!isMapLoaded) {
+            sendCommand(StartLoadingMap)
+        }
+        isMapLoaded = true
     }
 
     fun onPinClick(id: Long){
